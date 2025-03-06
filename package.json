@@ -2,6 +2,7 @@
   "name": "2025_1_VelvetPulls",
   "version": "0.0.1",
   "description": "Лучший фронтенд-проект",
+  "type": "module",
   "main": "./server/server.js",
   "scripts": {
     "prestart": "npm run compile:templates",

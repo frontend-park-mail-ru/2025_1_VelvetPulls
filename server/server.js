@@ -1,17 +1,16 @@
 'use strict';
 
-const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
+import express from "express";
+import morgan from "morgan"
+import path from "path";
 
 const app = express();
 const port = 8081;
 const hostname = 'localhost';
 
-app.use(morgan('dev'));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
-app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
-app.use(express.static(path.resolve(__dirname, 'images')));
+app.use(morgan("dev"));
+app.use(express.static("public"));
+app.use(express.static("images"));
 
 app.get('/login', (req, res) => {
     res.send('Hello World')

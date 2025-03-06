@@ -1,5 +1,3 @@
-'use strict';
-
 import express from "express";
 import morgan from "morgan"
 import path from "path";
@@ -12,11 +10,11 @@ app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(express.static("images"));
 
-app.get('/login', (req, res) => {
+app.post('/login', (req, res) => {
     res.send('Hello World')
 });
   
-app.get('/signup', (req, res) => {
+app.post('/signup', (req, res) => {
   res.send('Hello World!!!')
 });
 

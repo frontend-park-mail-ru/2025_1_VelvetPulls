@@ -1,0 +1,140 @@
+@font-face {
+    font-family: 'Racing Sans One';
+    src: url('fonts/RacingSansOne-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+:root {
+	--white: #fff;
+	--black: #000;
+	--gray: #a1a1a1;
+	--bg: #eee;
+	--active: #f6f6f6;
+	--error: #ca4f4f;
+	--main: #34ab45;
+	--dark-main: #298f38;
+
+    --font-family: "Inter", sans-serif;
+    --second-family: "Racing Sans One", sans-serif;
+    
+    --container-width: 1440px;
+    --container-padding-x: 15px;
+
+    --transition-duration: 0.2s;
+}
+
+.auth-body {
+    font-family: var(--font-family);
+    font-weight: normal;
+    font-size: 16px;
+    color: var(--black);
+    background-color: var(--white);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 35%;
+    box-shadow: 0 0px 15px 0px var(--black);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.auth-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 10% 20% 10%;
+}
+
+.auth-form__input-box {
+    border: none;
+    background: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 10px 15px 10px 15px;
+    margin-bottom: 15px;
+    background: var(--bg);
+    color: var(--black);
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+
+.auth-form__input-box::placeholder {
+    color: var(--black);
+    font-size: 16px;
+}
+.auth-form__input-box:focus {
+    border: 2px solid var(--black); 
+    background-color: var(--active);
+    outline: none;
+}
+
+.auth-form__button-primary {
+    border: none;
+    background: none;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px 10px 30px;
+    width: 40%;
+    background-color: var(--black);
+    color: var(--white);
+    font-size: 16px;
+    border-radius: 12px;
+    align-self: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    margin: 5%;
+    font-family: var(--second-family);
+    font-size: 44px;
+}
+
+.register-link--link {
+    color: var(--main);
+    text-decoration: none;
+}
+
+.register-link {
+    display: flex;
+    justify-content: center;
+    align-items: bottom;
+    margin: 5%;
+}
+
+.auth-body__background {
+    font-family: var(--second-family);
+    color: var(--bg);
+    font-size: 256px;
+    position: absolute;
+    top: 50%; 
+    left: 5%;
+    bottom: auto; 
+    right: 5%;
+    z-index: -1;
+    transform: translateY(-120%); 
+    white-space: nowrap;
+    pointer-events: none;
+}

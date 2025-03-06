@@ -5,6 +5,7 @@ body {
     display: flex;
     height: 100vh;
 }
+
 #sidebar-title{
     width: auto;
     color: #985199;

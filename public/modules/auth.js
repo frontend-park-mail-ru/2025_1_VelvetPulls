@@ -1,6 +1,6 @@
 import { API } from "./api"
 
-export class auth {
+export class Auth {
     constructor() {
         this.API = API;
     }

@@ -1,4 +1,4 @@
-import { goToPage } from '../src/router';
+import { goToPage } from '../modules/router';
 import './common.css';
 import './fonts.css';
 

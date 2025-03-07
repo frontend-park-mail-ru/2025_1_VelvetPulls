@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="styles.css" type="text/css">
     <title>Signup</title>
 </head>
-<body class="auth-body">
-    <div class="container">
-      <div class="logo">
+<body id="auth-body">
+    <div id="main-auth">
+      <div class="main-auth__logo">
         ./Keftegr@m
       </div>
       <form method="post" class="auth-form">
@@ -16,19 +16,19 @@
           <input class="auth-form__input" type="text" id="username" name="username" placeholder="Имя пользователя">
         </div>
         <div class="auth-form__input-wrapper">
-          <input class="auth-form__input" type="tel" id="phone" name="phone" placeholder="Телефон (123-45-678)">
+          <input class="auth-form__input" type="tel" id="phone" name="phone" placeholder="Телефон (123-456-67-89)">
         </div>
         <div class="auth-form__input-wrapper">
-          <input class="auth-form__input" type="password" id="password1" name="password1" placeholder="Пароль">
+          <input class="auth-form__input" type="password" id="password" name="password" placeholder="Пароль">
         </div>
         <div class="auth-form__input-wrapper">
-          <input class="auth-form__input" type="password" id="password2" name="password2" placeholder="Подтвердите пароль">
+          <input class="auth-form__input" type="password" id="confirm-password" name="confirm-password" placeholder="Подтвердите пароль">
         </div>
         <button type="submit" class="auth-form__button">Войти</button>
       </form>
       <div class="register-link">
         Нет аккаунта?
-        <a class ="register-link--link" href="">Создать</a>
+        <a class ="register-link__link" href="">Создать</a>
       </div>
     </div>
   </body>

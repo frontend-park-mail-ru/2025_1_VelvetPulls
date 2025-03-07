@@ -32,7 +32,7 @@
     --container-padding-x: 15px;
 }
 
-.auth-body {
+#auth-body {
     font-family: var(--font-family);
     font-weight: normal;
     font-size: 16px;
@@ -45,7 +45,7 @@
     height: 100vh;
 }
 
-.container {
+#main-auth {
     width: 35%;
     box-shadow: 0 0px 15px 0px var(--black);
     border-radius: 20px;
@@ -85,9 +85,11 @@
     border: 2px solid var(--error);
     background-color: var(--white);
 }
+
 .auth-form__input:invalid::placeholder {
     color: var(--error);
 }
+
 .auth-form__input:focus {
     border: 2px solid var(--black); 
     background-color: var(--active);
@@ -114,7 +116,7 @@
     cursor: pointer;
 }
 
-.logo {
+.main-auth__logo {
     display: flex;
     justify-content: center;
     pointer-events: none;
@@ -125,7 +127,7 @@
     user-select: none;
 }
 
-.register-link--link {
+.register-link__link {
     color: var(--main);
     text-decoration: none;
 }
@@ -151,6 +153,12 @@
     width: 24px;
     height: 24px;
     pointer-events: none;
+    stroke: var(--error);
+    stroke-width: 2px;
+}
+
+.auth-form__input-wrapper:focus-within .auth-form__input-error-icon {
+    stroke: var(--black);
 }
 
 .auth-form__error {

@@ -30,8 +30,6 @@
     
     --container-width: 1440px;
     --container-padding-x: 15px;
-
-    --transition-duration: 0.2s;
 }
 
 .auth-body {
@@ -40,7 +38,7 @@
     font-size: 16px;
     color: var(--black);
     background-color: var(--white);
-
+    background: url(Authorization.png) no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,6 +50,7 @@
     box-shadow: 0 0px 15px 0px var(--black);
     border-radius: 20px;
     overflow: hidden;
+    background-color: var(--white);
 }
 
 .auth-form {
@@ -62,14 +61,13 @@
     margin: 0 10% 20% 10%;
 }
 
-.auth-form__input-box {
+.auth-form__input {
     border: none;
     background: none;
     box-sizing: border-box;
     width: 100%;
     height: 50px;
     padding: 10px 15px 10px 15px;
-    margin-bottom: 15px;
     background: var(--bg);
     color: var(--black);
     font-size: 16px;
@@ -77,17 +75,29 @@
 }
 
 
-.auth-form__input-box::placeholder {
+.auth-form__input::placeholder {
     color: var(--black);
     font-size: 16px;
 }
-.auth-form__input-box:focus {
+
+.auth-form__input:invalid {
+    padding: 10px 45px 10px 15px;
+    border: 2px solid var(--error);
+    background-color: var(--white);
+}
+.auth-form__input:invalid::placeholder {
+    color: var(--error);
+}
+.auth-form__input:focus {
     border: 2px solid var(--black); 
     background-color: var(--active);
     outline: none;
 }
+.auth-form__input:focus::placeholder {
+    color: var(--black);
+}
 
-.auth-form__button-primary {
+.auth-form__button {
     border: none;
     background: none;
     height: 50px;
@@ -101,6 +111,7 @@
     font-size: 16px;
     border-radius: 12px;
     align-self: center;
+    cursor: pointer;
 }
 
 .logo {
@@ -110,6 +121,8 @@
     margin: 5%;
     font-family: var(--second-family);
     font-size: 44px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .register-link--link {
@@ -124,17 +137,24 @@
     margin: 5%;
 }
 
-.auth-body__background {
-    font-family: var(--second-family);
-    color: var(--bg);
-    font-size: 256px;
+.auth-form__input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.auth-form__input-error-icon {
     position: absolute;
-    top: 50%; 
-    left: 5%;
-    bottom: auto; 
-    right: 5%;
-    z-index: -1;
-    transform: translateY(-120%); 
-    white-space: nowrap;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
     pointer-events: none;
+}
+
+.auth-form__error {
+    margin-bottom: 15px;
+    align-self: center;
+    color: var(--error);
 }

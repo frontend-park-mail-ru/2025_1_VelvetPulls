@@ -7,21 +7,23 @@
   <title>Login</title>
 </head>
 <body class="auth-body">
-  <!-- <div class="auth-body__background">
-    Keftegr@m
-  </div> -->
   <div class="container">
     <div class="logo">
       ./Keftegr@m
     </div>
     <form method="post" class="auth-form">
-        <input class="auth-form__input-box" type="text" id="username" name="username" required placeholder="Имя пользователя/Телефон/Почта">
-        <input class="auth-form__input-box" type="password" id="password" name="password" required placeholder="Пароль">
-        <button type="submit" class="auth-form__button-primary">Войти</button>
+      <div class="auth-form__input-wrapper">
+        <input class="auth-form__input" type="text" id="username" name="username" placeholder="Имя пользователя/Телефон/Почта">
+      </div>
+      <div class="auth-form__input-wrapper">
+        <input class="auth-form__input" type="password" id="password" name="password" placeholder="Пароль">
+      </div>
+      <button type="submit" class="auth-form__button">Войти</button>
     </form>
     <div class="register-link">
-      Нет аккаунта?
+      <span>Нет аккаунта?
       <a class ="register-link--link" href="">Создать</a>
+      </span>
     </div>
   </div>
 </body>

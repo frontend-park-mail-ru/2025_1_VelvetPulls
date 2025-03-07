@@ -1,44 +1,10 @@
-@font-face {
-    font-family: 'Racing Sans One';
-    src: url('fonts/RacingSansOne-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('fonts/Inter-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-
-:root {
-	--white: #fff;
-	--black: #000;
-	--gray: #a1a1a1;
-	--bg: #eee;
-	--active: #f6f6f6;
-	--error: #ca4f4f;
-	--main: #34ab45;
-	--dark-main: #298f38;
-
-    --font-family: "Inter", sans-serif;
-    --second-family: "Racing Sans One", sans-serif;
-    
-    --container-width: 1440px;
-    --container-padding-x: 15px;
-}
-
 #auth-body {
     font-family: var(--font-family);
     font-weight: normal;
     font-size: 16px;
     color: var(--black);
     background-color: var(--white);
-    background: url(Authorization.png) no-repeat;
+    background: url(../img/Authorization.png) no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -5,21 +5,53 @@ import { renderSignup } from "../pages/signup/signup.js";
 const authData = {
     fields: [
         {
-            type: "email",
-            id: "email",
-            name: "email",
-            placeholder: "Введите email"
+            type: "text",
+            id: "username",
+            name: "username",
+            placeholder: "Имя пользователя/Телефон/Почта"
         },
         {
             type: "password",
             id: "password",
             name: "password",
-            placeholder: "Введите пароль"
+            placeholder: "Пароль"
         }
     ],
     buttonText: "Войти",
-    redirectText: "Нет аккаунта? Зарегистрируйтесь"
+    redirectText: "Создать"
 };
+const registerData = {
+fields: [
+    {
+        type: "text",
+        id: "username",
+        name: "username",
+        placeholder: "Имя пользователя"
+    },
+    {
+        type: "tel",
+        id: "phone",
+        name: "phone",
+        placeholder: "Телефон (123-456-67-89)"
+    },
+    {
+        type: "password",
+        id: "password",
+        name: "password",
+        placeholder: "Пароль"
+    },
+    {
+        type: "password",
+        id: "confirm-password",
+        name: "confirm-password",
+        placeholder: "Подтвердите пароль"
+    }
+],
+buttonText: "Зарегистрироваться",
+redirectText: "Войдите"
+};
+
+renderAuthForm(registerData);
 
 export const config = {
     'signup': {
@@ -35,6 +67,6 @@ export const config = {
     'chats': {
         href: '/chats',
         title: 'Keftegram',
-        render: renderChats,
+        render: renderChats(registerData),
     },
 }

@@ -1,29 +1,19 @@
+import { renderLogin } from "../pages/login/login.js";
+import { renderChats } from "../pages/chats/chats.js";
 export const config = {
     'signup': {
         href: '/signup',
         title: 'Регистрация',
-        render: () => {
-            const div = document.createElement("div");
-            div.textContent = "Это страница регистрации!";
-            return div;
-        },
+        render: renderLogin,
     },
     'login': {
         href: '/login',
         title: 'Авторизация',
-        render: () => {
-            const div = document.createElement("div");
-            div.textContent = "Это страница авторизации!";
-            return div;
-        },
+        render: renderLogin,
     },
     'chats': {
         href: '/chats',
         title: 'Keftegram',
-        render: () => {
-            const div = document.createElement("div");
-            div.textContent = "Это главная страница с чатами!";
-            return div;
-        },
+        render: renderChats,
     },
 }

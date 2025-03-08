@@ -1,6 +1,6 @@
 import { API } from "./api.js"
 
-export class Auth {
+class auth {
     constructor() {
         this.API = API;
     }
@@ -37,4 +37,7 @@ export class Auth {
     logout() {
         localStorage.removeItem('token');
     }
+
 }
+
+export const Auth = new auth();

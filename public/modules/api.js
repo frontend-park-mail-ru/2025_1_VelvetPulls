@@ -1,6 +1,6 @@
 import {API_URI} from "../config/const.js";
 
-class API {
+class api {
     #api;
 
     constructor() {
@@ -41,4 +41,4 @@ class API {
     }
 }
 
-export const API = new API();
+export const API = new api();

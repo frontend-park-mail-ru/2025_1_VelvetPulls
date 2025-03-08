@@ -4,18 +4,18 @@ export class Chats {
     constructor() {
         this.API = API;
     }
+
     async getChats() {
         try {
             const response = await this.API.get('/chats');
             if (response.success) {
-                localStorage.setItem('token', response.token);
-                return true;
+                return response.data;
             } else {
-                throw new Error(response.message || ' failed');
+                throw new Error(response.message || 'Failed to fetch chats');
             }
         } catch (error) {
-            console.error('Login error:', error);
-            return false;
+            console.error('Error fetching chats:', error);
+            return null;
         }
     }
 }

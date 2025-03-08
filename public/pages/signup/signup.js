@@ -1,1 +1,3 @@
-// TODO: обработчик шаблонов
+export const renderSignup = () => {
+
+}

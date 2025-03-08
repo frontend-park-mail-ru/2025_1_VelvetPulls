@@ -1,15 +1,20 @@
-import { loginPage } from '../pages/login/login';
-import { signupPage } from '../pages/signup/signup';
-
 export const config = {
     'signup': {
         href: '/signup',
         title: 'Регистрация',
-        render: loginPage
+        render: () => {
+            const div = document.createElement("div");
+            div.textContent = "Это страница регистрации!";
+            return div;
+        },
     },
     'login': {
         href: '/login',
         title: 'Авторизация',
-        render: signupPage
+        render: () => {
+            const div = document.createElement("div");
+            div.textContent = "Это страница авторизации!";
+            return div;
+        },
     },
 }

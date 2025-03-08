@@ -1,4 +1,4 @@
-import { API } from "./api"
+import { API } from "./api.js"
 
 export class Auth {
     constructor() {
@@ -36,9 +36,5 @@ export class Auth {
 
     logout() {
         localStorage.removeItem('token');
-    }
-
-    getToken() {
-        return localStorage.getItem('token');
     }
 }

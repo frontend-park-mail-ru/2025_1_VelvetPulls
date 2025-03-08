@@ -1,4 +1,4 @@
-import {API_URI} from "../config/const";
+import {API_URI} from "../config/const.js";
 
 class API {
     #api;

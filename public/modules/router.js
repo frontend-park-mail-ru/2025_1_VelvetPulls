@@ -1,5 +1,5 @@
-import { root } from '../app/main';
-import { config } from './config/router';
+import { root } from '../app/main.js';
+import { config } from '../config/routes.js';
 
 const appState = {
     activePageLink: null,
@@ -10,10 +10,10 @@ export const goToPage = (page) => {
 
     appState.activePageLink = page;
 
-    const element = config.menu[page].render();
+    const element = config[page].render();
 
-    history.pushState(config.menu[page].href, '', config.menu[page].href);
-    document.title = config.menu[page].title;
+    history.pushState(config[page].href, '', config[page].href);
+    document.title = config[page].title;
 
     root.appendChild(element);
 };

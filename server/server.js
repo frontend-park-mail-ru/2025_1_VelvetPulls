@@ -7,10 +7,10 @@ const port = 8081;
 const hostname = 'localhost';
 
 app.use(morgan("dev"));
-app.use(express.static("static"));
+app.use(express.static("public"));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve("static", "html", "index.html"));
+  res.sendFile(path.resolve("public", "index.html"));
 });
 
 app.listen(port, hostname, () => {

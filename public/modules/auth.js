@@ -1,6 +1,6 @@
 import { API } from "./api.js"
 
-class auth {
+export class auth {
     constructor() {
         this.API = API;
     }

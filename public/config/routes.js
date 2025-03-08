@@ -62,11 +62,11 @@ export const config = {
     'login': {
         href: '/login',
         title: 'Авторизация',
-        render: renderLogin(authData),
+        render: renderLogin,
     },
     'chats': {
         href: '/chats',
         title: 'Keftegram',
-        render: renderChats(registerData),
+        render: renderChats,
     },
 }

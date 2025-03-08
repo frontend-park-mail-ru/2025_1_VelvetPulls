@@ -1,1 +1,2 @@
-// TODO: обработчик шаблонов
+export const renderLogin = () => {
+}

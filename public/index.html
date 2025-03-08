@@ -1,69 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keftegram</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+
+    <script type="module" src="index.js" defer></script>
 </head>
-
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <button class="menu-btn">☰</button>
-                <input type="text" class="search" placeholder="Example">
-            </div>
-            <div class="chat-list">
-                <div class="chat-item active">
-                    <img src="avatar.jpg" alt="Аватар">
-                    <div class="chat-info">
-                        <h4>Ольга Тинькова</h4>
-                        <p>Я дам вам 100.000$ если вы ...</p>
-                    </div>
-                    <span class="chat-time">12:00</span>
-                </div>
-                <div class="chat-item">
-                    <img src="avatar.jpg" alt="Аватар">
-                    <div class="chat-info">
-                        <h4>Ольга Тинькова</h4>
-                        <p>Я дам вам 100.000$ если вы ...</p>
-                    </div>
-                    <span class="chat-time">12:00</span>
-                </div>
-                <div class="chat-item unread">
-                    <img src="avatar.jpg" alt="Аватар">
-                    <div class="chat-info">
-                        <h4>Ольга Тинькова</h4>
-                        <p>Я дам вам 100.000$ если вы ...</p>
-                    </div>
-                    <span class="chat-time">12:00</span>
-                    <span class="unread-count">70</span>
-                </div>
-            </div>
-            <button class="new-chat">+</button>
-        </aside>
-
-        <main class="chat-window">
-            <header class="chat-header">
-                <img src="avatar.jpg" alt="Аватар">
-                <div class="chat-header-info">
-                    <h4>Ольга Тинькова</h4>
-                    <p>был(а) в сети недавно</p>
-                </div>
-                <button class="options">⋮</button>
-            </header>
-            <div class="chat-messages"></div>
-            <footer class="chat-footer">
-                <button class="attach">📎</button>
-                <input type="text" class="message-input" placeholder="Я отошел покушать...">
-                <button class="emoji">😊</button>
-                <button class="send">📤</button>
-            </footer>
-        </main>
-    </div>
+    <div id="root"></div>
+    <noscript>
+        Пожалуйста, включите JavaScript, чтобы использовать это приложение.
+    </noscript>
 </body>
-
 </html>

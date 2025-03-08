@@ -8,14 +8,9 @@ const hostname = 'localhost';
 
 app.use(morgan("dev"));
 app.use(express.static("public"));
-app.use(express.static("images"));
 
-app.post('/login', (req, res) => {
-    res.send('Hello World')
-});
-  
-app.post('/signup', (req, res) => {
-  res.send('Hello World!!!')
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("public", "index.html"));
 });
 
 app.listen(port, hostname, () => {

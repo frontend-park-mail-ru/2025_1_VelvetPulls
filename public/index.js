@@ -1,5 +1,3 @@
-import { initApp } from 'scripts/main.js';
+import { appInit } from './app/main.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    initApp();
-});
+appInit();

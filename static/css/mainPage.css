@@ -1,37 +1,3 @@
-@font-face {
-    font-family: 'Racing Sans One';
-    src: url('fonts/RacingSansOne-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('fonts/Inter-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-:root {
-    --white: #fff;
-    --black: #000;
-    --black_divide: rgba(0, 0, 0, 0.24);
-    --gray: #a1a1a1;
-    --bg: #eee;
-    --active: #f6f6f6;
-    --error: #ca4f4f;
-    --main: #34ab45;
-    --dark-main: #298f38;
-    --font-family: "Inter", sans-serif;
-    --second-family: "Racing Sans One", sans-serif;
-    --third-family: "Roboto", sans-serif;
-    --container-width: 1440px;
-    --container-padding-x: 15px;
-    --transition-duration: 0.2s;
-}
-
 html,
 body {
     margin: 0;

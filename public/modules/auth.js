@@ -4,7 +4,12 @@ export class auth {
     constructor() {
         this.API = API;
     }
-
+    /**
+	 * Авторизация пользователя
+	 * @param {string} username
+	 * @param {string} password
+	 * @returns {json} Ответ от сервера
+	 */
     async login(username, password) {
         try {
             const response = await this.API.post('/login/', { username, password });
@@ -19,7 +24,14 @@ export class auth {
             return false;
         }
     }
-
+    /**
+	 * Регистрация пользователя
+	 * @param {string} username
+     * @param {string} phone
+     * @param {string} password
+     * @param {string} repeatPassword
+	 * @returns {json} Ответ от сервера
+	 */
     async register(username, phone, password, confirm_password) {
         try {
             const response = await this.API.post('/register/', { username, phone, password, confirm_password});

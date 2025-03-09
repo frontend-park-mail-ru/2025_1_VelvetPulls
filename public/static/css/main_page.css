@@ -1,3 +1,5 @@
+@import url(common.css);
+
 html,
 body {
     margin: 0;
@@ -27,7 +29,7 @@ body {
     align-items: center;
     justify-content: start;
     max-width: 500px;
-    height: 1024px;
+    height: 100vh;
 }
 
 .sidebar__header {
@@ -89,6 +91,7 @@ body {
     background-color: var(--bg);
     align-self: stretch;
     display: flex;
+    height: 100vh;
     width: auto;
     padding: 10px;
     overflow-y: auto;
@@ -227,7 +230,7 @@ body {
     align-self: stretch;
     display: flex;
     width: auto;
-    height: auto;
+    height: 100vh;
     gap: 10px;
     min-width: 240px;
     margin: auto 0;
@@ -236,7 +239,7 @@ body {
     overflow: hidden;
     align-items: stretch;
     justify-content: start;
-    max-width: 935px;
+    /* max-width: 935px; */
 }
 
 .main-chat__header {
@@ -310,7 +313,7 @@ body {
     background-color: var(--white);
     display: flex;
     min-height: 505px;
-    height: auto;
+    height: -webkit-fill-available;
     width: auto;
     padding: 10px 7px 10px 8px;
     align-items: center;
@@ -341,7 +344,7 @@ body {
 }
 
 .main-chat__empty {
-    align-self: stretch;
+    align-self: center;
     margin: 0;
 }
 

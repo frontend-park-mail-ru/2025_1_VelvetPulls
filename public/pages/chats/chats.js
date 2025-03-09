@@ -1,8 +1,8 @@
-import { root } from "../../app/main";
-// import chatsTemplate from "./chats.precompiled";
-
 export const renderChats = (data) => {
-    const html = chatsTemplate(data);
-    root.innerHTML = html;
+    console.log("render chats");
+
+    const template = Handlebars.templates["chats.hbs"];
+    return template({...data});
 }
+
 //todo подумать над правильными рендером прекомпилированных хбс

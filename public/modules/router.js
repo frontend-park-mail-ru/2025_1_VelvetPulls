@@ -14,11 +14,4 @@ export const goToPage = (page) => {
 
     const element = config[page].render;
     root.innerHTML = element;
-
-    // const element = document.createElement("div");
-
-    // history.pushState(config[page].href, '', config[page].href);
-    // document.title = config[page].title;
-
-    // root.appendChild(element);
 };

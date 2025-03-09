@@ -56,6 +56,6 @@ templates['chats.hbs'] = template({"1":function(container,depth0,helpers,partial
     + alias4(((helper = (helper = lookupProperty(helpers,"emojiIcon") || (depth0 != null ? lookupProperty(depth0,"emojiIcon") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"emojiIcon","hash":{},"data":data,"loc":{"start":{"line":73,"column":34},"end":{"line":73,"column":47}}}) : helper)))
     + "\"\r\n                            alt=\"Emoji\" class=\"main-chat__emoji-icon\" />\r\n                    </div>\r\n                </div>\r\n                <button class=\"main-chat__send-button\">\r\n                    <img src=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"sendIcon") || (depth0 != null ? lookupProperty(depth0,"sendIcon") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"sendIcon","hash":{},"data":data,"loc":{"start":{"line":78,"column":30},"end":{"line":78,"column":42}}}) : helper)))
-    + "\"\r\n                        alt=\"Send message\" class=\"main-chat__send-icon\" />\r\n                </button>\r\n            </footer>\r\n        </section>\r\n    </main>\r\n</div>";
+    + "\"\r\n                        alt=\"Send message\" class=\"main-chat__send-icon\" />\r\n                </button>\r\n            </footer>\r\n        </section>\r\n    </main>\r\n</div>\r\n";
 },"useData":true});
 })();

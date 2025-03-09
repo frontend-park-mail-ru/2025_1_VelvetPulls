@@ -5,5 +5,5 @@ console.log("app/main.js");
 export const root = document.getElementById("root");
 
 export const appInit = () => {
-    goToPage('login');
+    goToPage('chats');
 };

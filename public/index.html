@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keftegram</title>
     
-    <link rel="stylesheet" href="./app/common.css" type="text/css">
     <link rel="stylesheet" href="./static/css/auth.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/mainPage.css" type="text/css">
-    <link rel="stylesheet" href="./app/fonts.css">
-    
+    <link rel="stylesheet" href="./static/css/common.css" type="text/css">
+    <link rel="stylesheet" href="./static/css/fonts.css" type="text/css">
+    <link rel="stylesheet" href="./static/css/main_page.css" type="text/css">
+
+    <script defer src="handlebars.runtime.js"></script>
+    <script defer src="./pages/login/login.precompiled.js"></script>
+    <script defer src="./pages/signup/signup.precompiled.js"></script>
+    <script defer src="./pages/chats/chats.precompiled.js"></script>
+    <script defer type="module" src="index.js"></script>
 </head>
 <body>
     <div id="root"></div>
-    <script src="handlebars.runtime.js"></script>
-    <script src="./pages/login/login.precompiled.js"></script>
-    <script type="module" src="index.js"></script>
     <noscript>
         Пожалуйста, включите JavaScript, чтобы использовать это приложение.
     </noscript>

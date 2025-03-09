@@ -50,6 +50,26 @@ fields: [
 buttonText: "Зарегистрироваться",
 redirectText: "Войдите"
 };
+const chatsData = {
+    chats: [
+        {
+            avatar: "https://example.com/avatar1.jpg",
+            name: "Floyd Miles",
+            preview: "Then make a deal",
+            time: "12:00",
+            unreadCount: 0,
+            active: false
+        },
+        {
+            avatar: "https://example.com/avatar2.jpg",
+            name: "Albert Flores",
+            preview: "Okay...Do we have a deal?",
+            time: "12:00",
+            unreadCount: 70,
+            active: true
+        },
+    ]
+};
 
 renderAuthForm(registerData);
 
@@ -67,6 +87,6 @@ export const config = {
     'chats': {
         href: '/chats',
         title: 'Keftegram',
-        render: renderChats,
+        render: renderChats(chatsData),
     },
 }

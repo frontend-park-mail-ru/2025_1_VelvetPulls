@@ -5,9 +5,7 @@
   "type": "module",
   "main": "./server/server.js",
   "scripts": {
-    "prestart": "npm run compile:templates",
-    "start": "DEBUG=* && node ./server/server.js",
-    "compile:templates": "./compile-templates.sh"
+    "start": "DEBUG=* && node ./server/server.js"
   },
   "dependencies": {
     "express": "^4.21.2",

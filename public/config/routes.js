@@ -71,8 +71,6 @@ const chatsData = {
     ]
 };
 
-renderAuthForm(registerData);
-
 export const config = {
     'signup': {
         href: '/signup',

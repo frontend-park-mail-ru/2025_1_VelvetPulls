@@ -5,9 +5,9 @@ export class auth {
         this.API = API;
     }
 
-    async login(email, password) {
+    async login(username, password) {
         try {
-            const response = await this.API.post('/login/', { email, password });
+            const response = await this.API.post('/login/', { username, password });
             if (response.success) {
                 localStorage.setItem('token', response.token);
                 return true;
@@ -20,9 +20,9 @@ export class auth {
         }
     }
 
-    async register(email, password) {
+    async register(username, password, repeatPassword) {
         try {
-            const response = await this.API.post('/register/', { email, password });
+            const response = await this.API.post('/register/', { username, phone, password, repeatPassword});
             if (response.success) {
                 return true;
             } else {

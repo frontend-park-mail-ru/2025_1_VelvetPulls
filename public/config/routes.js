@@ -75,12 +75,18 @@ export const config = {
     'signup': {
         href: '/signup',
         title: 'Регистрация',
-        render: renderSignup(registerData),
+        render: {
+            func: renderSignup, 
+            data: registerData,
+        },
     },
     'login': {
         href: '/login',
         title: 'Авторизация',
-        render: renderLogin(authData),
+        render: {
+            func: renderLogin, 
+            data: authData,
+        },
     },
     'chats': {
         href: '/chats',

@@ -10,10 +10,15 @@ export const goToPage = (page) => {
 
     appState.activePageLink = page;
 
-    const element = config[page].render();
+    const element = config[page].render;
+    const renderFunc = element.func;
+    const rendered = renderFunc(element.data); 
+
+    root.innerHTML = rendered.html;
+    rendered.addListeners();
 
     history.pushState(config[page].href, '', config[page].href);
     document.title = config[page].title;
 
-    root.appendChild(element);
+    //root.appendChild(element);
 };

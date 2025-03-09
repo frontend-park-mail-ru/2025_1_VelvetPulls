@@ -7,7 +7,7 @@ export class auth {
 
     async login(email, password) {
         try {
-            const response = await this.API.post('/login', { email, password });
+            const response = await this.API.post('/login/', { email, password });
             if (response.success) {
                 localStorage.setItem('token', response.token);
                 return true;
@@ -22,7 +22,7 @@ export class auth {
 
     async register(email, password) {
         try {
-            const response = await this.API.post('/register', { email, password });
+            const response = await this.API.post('/register/', { email, password });
             if (response.success) {
                 return true;
             } else {

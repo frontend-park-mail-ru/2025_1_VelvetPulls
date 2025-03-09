@@ -1,6 +1,7 @@
-//import { root } from '../../app/main.js';
-export const renderAuth = (/*data*/) => {
-    /*const compiledTemplate = signupTemplate(data);
-    root.innerHTML = compiledTemplate;*/
+import { root } from '../../app/main.js';
+import loginTemplate from './login.precompiled.js';
+export const renderLogin = (data) => {
+    const html = loginTemplate(data);
+    root.innerHTML = html;
 }
 //todo подумать над правильными рендером прекомпилированных хбс

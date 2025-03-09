@@ -57,12 +57,12 @@ export const config = {
     'signup': {
         href: '/signup',
         title: 'Регистрация',
-        render: renderSignup,
+        render: renderSignup(registerData),
     },
     'login': {
         href: '/login',
         title: 'Авторизация',
-        render: renderLogin,
+        render: renderLogin(authData),
     },
     'chats': {
         href: '/chats',

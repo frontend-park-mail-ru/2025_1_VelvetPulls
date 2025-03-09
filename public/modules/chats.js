@@ -7,7 +7,7 @@ export class chats {
 
     async getChats() {
         try {
-            const response = await this.API.get('/chats');
+            const response = await this.API.get('/chats/');
             if (response.success) {
                 return response.data;
             } else {

@@ -1,8 +1,8 @@
 import { renderLogin } from "../pages/login/login.js";
-import { renderChats } from "../pages/chats/chats.js";
-import { renderSignup } from "../pages/signup/signup.js";
+// import { renderChats } from "../pages/chats/chats.js";
+// import { renderSignup } from "../pages/signup/signup.js";
 
-const authData = {
+export const authData = {
     fields: [
         {
             type: "text",
@@ -71,22 +71,26 @@ const chatsData = {
     ]
 };
 
-renderAuthForm(registerData);
+// renderAuthForm(registerData);
 
 export const config = {
     'signup': {
         href: '/signup',
         title: 'Регистрация',
-        render: renderSignup(registerData),
+        // render: renderSignup(registerData),
+        renderFunction: function(){ return document.createElement("div"); }
     },
     'login': {
         href: '/login',
         title: 'Авторизация',
         render: renderLogin(authData),
+        // renderFunction: function(){ return document.createElement("div"); }
+        // renderFunction: renderLogin
     },
     'chats': {
         href: '/chats',
         title: 'Keftegram',
-        render: renderChats(chatsData),
+        // render: renderChats(chatsData),
+        renderFunction: function(){ return document.createElement("div"); }
     },
 }

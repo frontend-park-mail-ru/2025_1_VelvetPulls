@@ -6,14 +6,19 @@ const appState = {
 };
 
 export const goToPage = (page) => {
+    console.log("go to page", page);
+
     root.innerHTML = '';
 
     appState.activePageLink = page;
 
-    const element = config[page].render();
+    const element = config[page].render;
+    root.innerHTML = element;
 
-    history.pushState(config[page].href, '', config[page].href);
-    document.title = config[page].title;
+    // const element = document.createElement("div");
 
-    root.appendChild(element);
+    // history.pushState(config[page].href, '', config[page].href);
+    // document.title = config[page].title;
+
+    // root.appendChild(element);
 };

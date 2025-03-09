@@ -1,0 +1,17 @@
+:root {
+	--white: #fff;
+	--black_divide: rgba(0, 0, 0, 0.24);
+	--black: #000;
+	--gray: #a1a1a1;
+	--bg: #eee;
+	--active: #f6f6f6;
+	--error: #ca4f4f;
+	--main: #34ab45;
+	--dark-main: #298f38;
+
+    --font-family: "Inter", sans-serif;
+    --second-family: "Racing Sans One", sans-serif;
+    
+    --container-width: 1440px;
+    --container-padding-x: 15px;
+}

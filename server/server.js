@@ -24,7 +24,7 @@ app.use(express.static(publicPath));
 app.use(morgan("dev"));
 
 // Роутинг
-app.get("/", (req, res) => {
+app.get("/chat", (req, res) => {
   res.sendFile(path.join(publicPath, "main_page.html"));
 });
 

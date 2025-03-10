@@ -1,5 +1,5 @@
 import { Auth } from "../modules/auth.js";
-import { goToPage } from '../modules/router.js';
+import { goToPage } from "../modules/router.js";
 
 export const authHandler = {
     /**
@@ -16,9 +16,9 @@ export const authHandler = {
     handleLogin: async (username, password) => {
         const isLoggedIn = await Auth.login(username, password);
         if (isLoggedIn) {
-            goToPage('chats');
+            goToPage("chats");
         } else {
-            alert('Ошибка авторизации. Проверьте email и пароль.');
+            alert("Ошибка авторизации. Проверьте email и пароль.");
         }
     },
     /**
@@ -35,26 +35,29 @@ export const authHandler = {
      *
      */
     handleRegister: async (username, phone, password, repeatPassword) => {
-        const isRegistered = await Auth.register(username, phone, password, repeatPassword);
+        const isRegistered = await Auth.register(
+            username,
+            phone,
+            password,
+            repeatPassword,
+        );
         if (isRegistered) {
-            goToPage('chats');
+            goToPage("chats");
         } else {
-            alert('Ошибка регистрации. Возможно, пользователь уже существует.');
+            alert("Ошибка регистрации. Возможно, пользователь уже существует.");
         }
     },
 
     handleLogout: () => {
         Auth.logout();
-        goToPage('login');
+        goToPage("login");
     },
-
 
     redirectToLogin: () => {
-        goToPage('login');
+        goToPage("login");
     },
 
-
     redirectToSignup: () => {
-        goToPage('signup');
-    }
+        goToPage("signup");
+    },
 };

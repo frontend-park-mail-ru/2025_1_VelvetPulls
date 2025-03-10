@@ -73,27 +73,6 @@ const chatsData = {
     ],
 };
 
-// export const config = {
-//     'signup': {
-//         href: '/signup',
-//         title: 'Регистрация',
-//         render: renderSignup(registerData),
-//         // render: document.createElement("div"),
-//     },
-//     'login': {
-//         href: '/login',
-//         title: 'Авторизация',
-//         render: renderLogin(authData),
-//         // render: document.createElement("div"),
-//     },
-//     'chats': {
-//         href: '/chats',
-//         title: 'Keftegram',
-//         render: renderChats(chatsData),
-//         // render: document.createElement("div"),
-//     },
-// }
-
 export const config = {
     signup: {
         href: "/signup",

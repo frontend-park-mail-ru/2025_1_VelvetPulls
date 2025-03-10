@@ -14,6 +14,8 @@ export const authHandler = {
      *
      */
     handleLogin: async (username, password) => {
+        console.log("handle login");
+
         const isLoggedIn = await Auth.login(username, password);
         if (isLoggedIn) {
             goToPage("chats");

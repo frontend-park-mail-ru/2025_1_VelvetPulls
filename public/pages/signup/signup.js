@@ -1,4 +1,6 @@
 import { authHandler } from "../../handlers/authHandler.js";
+import { validateForm } from "../forms_validation.js";
+
 export const renderSignup = (data) => {
     const signupTemplate = Handlebars.templates["signup.hbs"];
     const { fields, buttonText, redirectText } = data;
@@ -14,17 +16,29 @@ export const renderSignup = (data) => {
             ) {
                 signupForm.addEventListener("submit", async (e) => {
                     e.preventDefault();
-                    const username = document.getElementById("username").value;
-                    const phone = document.getElementById("phone").value;
-                    const password = document.getElementById("password").value;
-                    const repeatPassword =
-                        document.getElementById("confirm-password").value;
-                    await authHandler.handleRegister(
-                        username,
-                        phone,
-                        password,
-                        repeatPassword,
-                    );
+
+                    var form = signupForm.getElementsByTagName("form")[0];
+                    const formIsValid = validateForm(form);
+
+                    if (formIsValid) {
+                        console.log("sign up form is not valid");
+
+                        const username =
+                            document.getElementById("username").value;
+                        const phone = document.getElementById("phone").value;
+                        const password =
+                            document.getElementById("password").value;
+                        const repeatPassword =
+                            document.getElementById("confirm-password").value;
+                        await authHandler.handleRegister(
+                            username,
+                            phone,
+                            password,
+                            repeatPassword,
+                        );
+                    } else {
+                        console.log("sign up form is valid");
+                    }
                 });
             }
 

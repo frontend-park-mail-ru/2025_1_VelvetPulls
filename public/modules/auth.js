@@ -8,7 +8,7 @@ export class auth {
      * Авторизация пользователя
      * @param {string} username
      * @param {string} password
-     * @returns {json} Ответ от сервера
+     * @returns {boolean} Получение ответа от сервера
      */
     async login(username, password) {
         try {
@@ -16,6 +16,7 @@ export class auth {
                 username,
                 password,
             });
+            console.log(response);
             if (response.status === 200) {
                 localStorage.setItem("token", response.token);
                 return true;
@@ -25,7 +26,7 @@ export class auth {
         } catch (error) {
             console.error("Login error:", error);
             return false;
-        }
+        }   
     }
     /**
      * Регистрация пользователя
@@ -33,7 +34,7 @@ export class auth {
      * @param {string} phone
      * @param {string} password
      * @param {string} repeatPassword
-     * @returns {json} Ответ от сервера
+     * @returns {boolean} Получение ответа от сервера
      */
     async register(username, phone, password, confirm_password) {
         try {
@@ -43,6 +44,7 @@ export class auth {
                 password,
                 confirm_password,
             });
+            console.log(response);
             if (response.status === 201) {
                 return true;
             } else {

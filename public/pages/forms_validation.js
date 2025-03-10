@@ -41,8 +41,9 @@ function createError(input, text) {
  * @returns {boolean} - Возвращает true, если пароль содержит не менее 8 символов, и false иначе
  *
  */
-function checkPasswordLength(input) {
-    return input.value.length >= 8;
+function checkPassword(input) {
+    const patt = /^[a-zA-Z0-9!@#$%^&*()_\-+=]{8,32}$/;
+    return input.value.length >= 8 && patt.test(input.value);
 }
 
 /**
@@ -68,7 +69,12 @@ function checkPasswords(form) {
  *
  */
 function checkPhone(input) {
-    const patt = /^\+?[1-9]\d{1,14}$/;
+    const patt = /^\+7\d{10}|\+1\d{10}|\+44\d{10}|\+49\d{10}$/;
+    return patt.test(input.value);
+}
+
+function checkUsername(input){
+    const patt = /^[a-zA-Z0-9_]{3,20}$/;
     return patt.test(input.value);
 }
 
@@ -95,10 +101,10 @@ export function validateSignupForm(form) {
             isValid = false;
         } else {
             if (input.name === "password") {
-                if (!checkPasswordLength(input)) {
+                if (!checkPassword(input)) {
                     createError(
                         input,
-                        "Пароль должен содержать не меньше 8 символов",
+                        "Пароль от 8 до 32 символов, без пробелов и запрещённых символов",
                     );
                     isValid = false;
                 }
@@ -115,6 +121,14 @@ export function validateSignupForm(form) {
                 if (!checkPhone(input)) {
                     removeError(input);
                     createError(input, "Неверный формат номера телефона");
+                    isValid = false;
+                }
+            }
+
+            if (input.name === "username") {
+                if (!checkUsername(input)) {
+                    removeError(input);
+                    createError(input, "Длина от 3 до 20 символов. Разрешены только латинские буквы, цифры и _");
                     isValid = false;
                 }
             }

@@ -1,0 +1,84 @@
+<div class="container">
+    <nav class="sidebar">
+        <header class="sidebar__header">
+            <img src="../../static/img/menuIcon.svg" alt="Menu" class="sidebar__icon" />
+            <div class="sidebar__search">
+                <img src="../../static/img/searchIcon.svg" alt="Search" class="sidebar__icon" />
+                <p class="sidebar__placeholder">Поиск чата</p>
+            </div>
+        </header>
+        <div class="sidebar__divider"></div>
+        <section class="sidebar__chat-list">
+            {{#each chats}}
+            <div class="chat-item {{#if active}}chat-item--active{{/if}}">
+                <img src="{{avatar}}" alt="User avatar" class="chat-item__avatar" />
+                <div class="chat-item__info">
+                    <h3 class="chat-item__name">{{title}}</h3>
+                    <p class="chat-item__preview">{{description}}</p>
+                </div>
+                <div class="chat-item__meta">
+                    <time class="chat-item__time">{{time}}11:00</time>
+                    {{#if unreadCount}}
+                    <div class="chat-item__flag">
+                        <span class="chat-item__unread-count">{{unreadCount}}</span>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+            <div class="sidebar__spacer"></div>
+            <footer class="sidebar__footer">
+                <button class="sidebar__button">
+                    <img src="../../static/img/addIcon.svg"
+                        alt="New chat" class="sidebar__icon" />
+                </button>
+            </footer>
+        </section>
+    </nav>
+    <div class="container__divider"></div>
+    <main class="main-chat">
+        <header class="main-chat__header">
+            <img src="keftegramIcon.png"
+                alt="Current user avatar" class="main-chat__avatar" />
+            <div class="main-chat__user-info">
+                <h2 class="main-chat__name">./Keftegr@m</h2>
+                <p class="main-chat__status">был(а) в сети недавно</p>
+            </div>
+            <div class="main-chat__spacer"></div>
+            <button class="main-chat__action">
+                <img src="../../static/img/flagIcon.svg"
+                    alt="Action 1" class="main-chat__icon" />
+            </button>
+            <button class="main-chat__action">
+                <img src="../../static/img/optionsIcon.svg"
+                    alt="Action 2" class="main-chat__icon" />
+            </button>
+        </header>
+
+        <section class="main-chat__container">
+            <div class="main-chat__messages">
+                <p class="main-chat__empty">
+                    Пока нет сообщений... Отправьте Ваше первое сообщение.
+                </p>
+            </div>
+            <div class="main-chat__divider"></div>
+            <footer class="main-chat__input-container">
+                <button class="main-chat__attachment-button">
+                    <img src="../../static/img/scrapperIcon.svg"
+                        alt="Add attachment" class="main-chat__icon" />
+                </button>
+                <div class="main-chat__input-wrapper">
+                    <div class="main-chat__input-field">
+                        <p class="main-chat__placeholder">Написать</p>
+                        <img src="../../static/img/emojiIcon.svg"
+                            alt="Emoji" class="main-chat__emoji-icon" />
+                    </div>
+                </div>
+                <button class="main-chat__send-button">
+                    <img src="../../static/img/senIcon.png"
+                        alt="Send message" class="main-chat__send-icon" />
+                </button>
+            </footer>
+        </section>
+    </main>
+</div>

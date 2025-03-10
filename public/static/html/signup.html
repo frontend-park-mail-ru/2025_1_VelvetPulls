@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <title>Signup</title>
+</head>
+<body id="auth-body">
+    <div id="main-auth">
+      <div class="main-auth__logo">
+        ./Keftegr@m
+      </div>
+      <form method="post" class="auth-form">
+        <div class="auth-form__input-wrapper">
+          <input class="auth-form__input" type="text" id="username" name="username" placeholder="Имя пользователя">
+        </div>
+        <div class="auth-form__input-wrapper">
+          <input class="auth-form__input" type="tel" id="phone" name="phone" placeholder="Телефон (123-456-67-89)">
+        </div>
+        <div class="auth-form__input-wrapper">
+          <input class="auth-form__input" type="password" id="password" name="password" placeholder="Пароль">
+        </div>
+        <div class="auth-form__input-wrapper">
+          <input class="auth-form__input" type="password" id="confirm-password" name="confirm-password" placeholder="Подтвердите пароль">
+        </div>
+        <button type="submit" class="auth-form__button">Зарегистрироваться</button>
+      </form>
+      <div class="register-link">
+        <span>Уже есть аккаунт?
+        <a class ="register-link__link" href="">Войдите</a>
+        </span>
+      </div>
+    </div>
+  </body>
+</html>

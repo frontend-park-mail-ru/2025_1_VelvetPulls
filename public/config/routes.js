@@ -1,5 +1,5 @@
 import { renderLogin } from "../pages/login/login.js";
-import { renderChats } from "../pages/chats/chats.js";
+import { handleChats } from "../handlers/chatsHandler.js";
 import { renderSignup } from "../pages/signup/signup.js";
 
 export const authData = {
@@ -115,7 +115,7 @@ export const config = {
         href: "/chats",
         title: "Keftegram",
         render: {
-            func: renderChats,
+            func: handleChats,
             data: chatsData,
         },
     },

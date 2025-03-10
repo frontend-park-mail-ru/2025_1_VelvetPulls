@@ -1,7 +1,7 @@
 <div class="container">
     <nav class="sidebar">
         <header class="sidebar__header">
-            <img src="menuIcon.svg" alt="Menu" class="sidebar__icon" />
+            <img src="../../static/img/menuIcon.svg" alt="Menu" class="sidebar__icon" />
             <div class="sidebar__search">
                 <img src="searchIcon.svg" alt="Search" class="sidebar__icon" />
                 <p class="sidebar__placeholder">Поиск чата</p>
@@ -13,8 +13,8 @@
             <div class="chat-item {{#if active}}chat-item--active{{/if}}">
                 <img src="{{avatar}}" alt="User avatar" class="chat-item__avatar" />
                 <div class="chat-item__info">
-                    <h3 class="chat-item__name">{{name}}</h3>
-                    <p class="chat-item__preview">{{preview}}</p>
+                    <h3 class="chat-item__name">{{owner_username}}</h3>
+                    <p class="chat-item__preview">{{description}}</p>
                 </div>
                 <div class="chat-item__meta">
                     <time class="chat-item__time">{{time}}</time>
@@ -38,7 +38,7 @@
     <div class="container__divider"></div>
     <main class="main-chat">
         <header class="main-chat__header">
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/336e7ec7722af96aa6f68e6147e1aa31fb5e806c7a844019f57b339d350ac07a?placeholderIfAbsent=true&apiKey=c6af73f4f8d84b399e6c18554da63ac7"
+            <img src="keftegramIcon.png"
                 alt="Current user avatar" class="main-chat__avatar" />
             <div class="main-chat__user-info">
                 <h2 class="main-chat__name">./Keftegr@m</h2>

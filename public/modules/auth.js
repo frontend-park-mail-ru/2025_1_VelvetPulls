@@ -16,8 +16,8 @@ export class auth {
                 username,
                 password,
             });
-            console.log(response);
-            if (response.status === 200) {
+            //console.log(response.status);
+            if (response.status === true) {
                 localStorage.setItem("token", response.token);
                 return true;
             } else {
@@ -45,7 +45,7 @@ export class auth {
                 confirm_password,
             });
             console.log(response);
-            if (response.status === 201) {
+            if (response.status === true) {
                 return true;
             } else {
                 throw new Error(response.message || "Registration failed");

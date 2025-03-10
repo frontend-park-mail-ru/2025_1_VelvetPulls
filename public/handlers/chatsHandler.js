@@ -1,5 +1,4 @@
 import { chats } from "../modules/chats.js";
-import { renderChats } from '../pages/chats/chats.js';
 
 /**
  * Обработчик для получения данных чатов и рендеринга страницы 'chats'.
@@ -19,17 +18,18 @@ export const handleChats = async (data) => {
     const chatsInstance = new chats();
 
     try {
-        const chatsData = await chatsInstance.getChats();
-
+        const chatsData = {chats: await chatsInstance.getChats()};
+        console.log(`то что передадим в render ${chatsData}`);
         if (chatsData) {
-            return renderChats(chatsData);
+            return chatsData;
+                
         } else {
             alert('Не удалось загрузить чаты. Пожалуйста, попробуйте позже.');
-            return renderChats(data); 
+            return data; 
         }
     } catch (error) {
         console.error('Ошибка при загрузке чатов:', error);
         alert('Произошла ошибка при загрузке чатов.');
-        return renderChats(data); 
+        return data; 
     }
 };

@@ -15,7 +15,7 @@ export const authHandler = {
      */
     handleLogin: async (username, password) => {
         const isLoggedIn = await Auth.login(username, password);
-        console.log(isLoggedIn);
+        //console.log(isLoggedIn);
         if (isLoggedIn) {
             goToPage("chats");
         } else {
@@ -42,7 +42,7 @@ export const authHandler = {
             password,
             repeatPassword,
         );
-        console.log(isRegistered)
+        //console.log(isRegistered)
         if (isRegistered) {
             goToPage("chats");
         } else {

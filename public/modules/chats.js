@@ -8,7 +8,8 @@ export class chats {
     async getChats() {
         try {
             const response = await this.API.get("/chats/");
-            if (response.success) {
+            console.log(`ответ от бэка ${response}`);
+            if (response.status) {
                 return response.data;
             } else {
                 throw new Error(response.message || "Failed to fetch chats");

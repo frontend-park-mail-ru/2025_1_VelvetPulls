@@ -11,7 +11,9 @@ export const goToPage = (page) => {
     appState.activePageLink = page;
 
     const element = config[page].render;
+    console.log(element);
     const renderFunc = element.func;
+    console.log(`funcToRender${renderFunc}`);
     const rendered = renderFunc(element.data);
 
     root.innerHTML = rendered.html;

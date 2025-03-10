@@ -1,6 +1,9 @@
+import { handleChats } from "../../handlers/chatsHandler.js";
 export const renderChats = (data) => {
     const chatsTemplate = Handlebars.templates['chats.hbs'];
-    const html = chatsTemplate(data);
+    const actualData = handleChats(data);
+    console.log(`то что получил ${actualData}`);
+    const html = chatsTemplate(actualData);
 
     return {
         html,

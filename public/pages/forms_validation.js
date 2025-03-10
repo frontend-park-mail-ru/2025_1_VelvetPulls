@@ -1,3 +1,10 @@
+/**
+ * Удаляет пояснительную ошибку рядом с полем ввода, если она там была
+ *
+ * @function createError
+ * @param {input} input - Поле ввода
+ *
+ */
 function removeError(input) {
     const parent = input.parentNode;
 
@@ -7,6 +14,14 @@ function removeError(input) {
     }
 }
 
+/**
+ * Добавляет пояснительную ошибку рядом с полем ввода
+ *
+ * @function createError
+ * @param {input} input - Поле ввода
+ * @param {string} text - Сообщение об ошибке
+ *
+ */
 function createError(input, text) {
     const parent = input.parentNode;
     parent.classList.add("auth-form__error");
@@ -18,21 +33,53 @@ function createError(input, text) {
     parent.append(errorLabel);
 }
 
+/**
+ * Сверяет введённые пароли
+ *
+ * @function checkPasswordLength
+ * @param {input} input - Поле ввода для пароля
+ * @returns {boolean} - Возвращает true, если пароль содержит не менее 8 символов, и false иначе
+ *
+ */
 function checkPasswordLength(input) {
     return input.value.length >= 8;
 }
 
+/**
+ * Сверяет введённые пароли
+ *
+ * @function checkPasswords
+ * @param {input} input - Поле ввода для пароля
+ * @returns {boolean} - Возвращает true, если пароль содержит не менее 8 символов, и false иначе
+ *
+ */
 function checkPasswords(form) {
     const password = form.querySelector("#password");
     const confirmPassword = form.querySelector("#confirm-password");
     return password.value === confirmPassword.value;
 }
 
+/**
+ * Проверяет корректность введённого номера телефона
+ *
+ * @function checkPhone
+ * @param {input} input - Поле ввода для номера телефона
+ * @returns {boolean} - Возвращает true, если номер корректер, и false иначе
+ *
+ */
 function checkPhone(input) {
     const patt = /^(\+?\d{1,3}[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
     return patt.test(input.value);
 }
 
+/**
+ * Проверяет форму на корректность введённых данных.
+ *
+ * @function validateForm
+ * @param {form} form - Форма (авторизация или регистрация)
+ * @returns {boolean} - Возвращает true, если форма валидна, и false, если невалидна.
+ *
+ */
 export function validateForm(form) {
     var isValid = true;
 
@@ -44,7 +91,6 @@ export function validateForm(form) {
         console.log(`input: ${input.name}, value: ${input.value}`);
 
         if (input.value === "") {
-            // console.log("Ошибка поля");
             createError(input, "Поле не заполнено");
             isValid = false;
         } else {

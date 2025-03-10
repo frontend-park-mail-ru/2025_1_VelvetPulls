@@ -1,5 +1,5 @@
 import { authHandler } from "../../handlers/authHandler.js";
-import { validateForm } from "../forms_validation.js";
+import { validateSignupForm } from "../forms_validation.js";
 export const renderSignup = (data) => {
     const signupTemplate = Handlebars.templates["signup.hbs"];
     const { fields, buttonText, redirectText } = data;
@@ -17,7 +17,7 @@ export const renderSignup = (data) => {
                     e.preventDefault();
 
                     var form = signupForm.getElementsByTagName("form")[0];
-                    const formIsValid = validateForm(form);
+                    const formIsValid = validateSignupForm(form);
 
                     if (formIsValid) {
                         console.log("sign up form is not valid");

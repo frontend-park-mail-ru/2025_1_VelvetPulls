@@ -1,5 +1,5 @@
 import { authHandler } from "../../handlers/authHandler.js";
-import { validateForm } from "../forms_validation.js";
+import { validateLoginForm } from "../forms_validation.js";
 
 export const renderLogin = (data) => {
     const loginTemplate = Handlebars.templates["login.hbs"];
@@ -17,7 +17,7 @@ export const renderLogin = (data) => {
                     console.log("form submit");
 
                     var form = loginForm.getElementsByTagName("form")[0];
-                    const formIsValid = validateForm(form);
+                    const formIsValid = validateLoginForm(form);
 
                     if (formIsValid) {
                         console.log("form is valid, handle login");

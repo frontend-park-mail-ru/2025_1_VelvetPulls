@@ -48,7 +48,7 @@ const registerData = {
             placeholder: "Подтвердите пароль",
         },
     ],
-    buttonText: "Зарегистрироваться",
+    buttonText: "Создать аккаунт",
     redirectText: "Войдите",
 };
 

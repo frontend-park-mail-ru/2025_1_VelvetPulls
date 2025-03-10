@@ -3,7 +3,7 @@
         <header class="sidebar__header">
             <img src="../../static/img/menuIcon.svg" alt="Menu" class="sidebar__icon" />
             <div class="sidebar__search">
-                <img src="searchIcon.svg" alt="Search" class="sidebar__icon" />
+                <img src="../../static/img/searchIcon.svg" alt="Search" class="sidebar__icon" />
                 <p class="sidebar__placeholder">Поиск чата</p>
             </div>
         </header>
@@ -13,11 +13,11 @@
             <div class="chat-item {{#if active}}chat-item--active{{/if}}">
                 <img src="{{avatar}}" alt="User avatar" class="chat-item__avatar" />
                 <div class="chat-item__info">
-                    <h3 class="chat-item__name">{{owner_username}}</h3>
+                    <h3 class="chat-item__name">{{Title}}</h3>
                     <p class="chat-item__preview">{{description}}</p>
                 </div>
                 <div class="chat-item__meta">
-                    <time class="chat-item__time">{{time}}</time>
+                    <time class="chat-item__time">{{time}}11:00</time>
                     {{#if unreadCount}}
                     <div class="chat-item__flag">
                         <span class="chat-item__unread-count">{{unreadCount}}</span>
@@ -29,7 +29,7 @@
             <div class="sidebar__spacer"></div>
             <footer class="sidebar__footer">
                 <button class="sidebar__button">
-                    <img src="{{addIcon}}"
+                    <img src="../../static/img/addIcon.svg"
                         alt="New chat" class="sidebar__icon" />
                 </button>
             </footer>
@@ -46,11 +46,11 @@
             </div>
             <div class="main-chat__spacer"></div>
             <button class="main-chat__action">
-                <img src="{{flagIcon}}"
+                <img src="../../static/img/flagIcon.svg"
                     alt="Action 1" class="main-chat__icon" />
             </button>
             <button class="main-chat__action">
-                <img src="{{optionsIcon}}"
+                <img src="../../static/img/optionsIcon.svg"
                     alt="Action 2" class="main-chat__icon" />
             </button>
         </header>
@@ -64,18 +64,18 @@
             <div class="main-chat__divider"></div>
             <footer class="main-chat__input-container">
                 <button class="main-chat__attachment-button">
-                    <img src="{{scrapperIcon}}"
+                    <img src="../../static/img/scrapperIcon.svg"
                         alt="Add attachment" class="main-chat__icon" />
                 </button>
                 <div class="main-chat__input-wrapper">
                     <div class="main-chat__input-field">
                         <p class="main-chat__placeholder">Написать</p>
-                        <img src="{{emojiIcon}}"
+                        <img src="../../static/img/emojiIcon.svg"
                             alt="Emoji" class="main-chat__emoji-icon" />
                     </div>
                 </div>
                 <button class="main-chat__send-button">
-                    <img src="{{sendIcon}}"
+                    <img src="../../static/img/senIcon.png"
                         alt="Send message" class="main-chat__send-icon" />
                 </button>
             </footer>

@@ -197,7 +197,8 @@ body {
 .sidebar__spacer {
     align-self: center;
     display: flex;
-    min-height: 332px;
+    flex-grow: 1;
+    max-height: 650px;
     margin-top: 10px;
     width: 20px;
 }
@@ -229,6 +230,7 @@ body {
     display: flex;
     width: auto;
     height: 100vh;
+    max-height: 1000px;
     flex-grow: 2;
     gap: 10px;
     min-width: 240px;
@@ -238,7 +240,6 @@ body {
     overflow: hidden;
     align-items: stretch;
     justify-content: start;
-    max-width: 935px;
 }
 
 .main-chat__header {
@@ -324,6 +325,7 @@ body {
     justify-content: start;
     flex-wrap: wrap;
     flex-direction: column;
+    flex-grow: 1;
 }
 
 .main-chat__messages {

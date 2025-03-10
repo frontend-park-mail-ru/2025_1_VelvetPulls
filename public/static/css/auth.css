@@ -73,7 +73,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px 30px 10px 30px;
-    width: 40%;
+    width: 50%;
     background-color: var(--black);
     color: var(--white);
     font-size: 16px;
@@ -96,6 +96,7 @@
 .register-link__link {
     color: var(--main);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .register-link {

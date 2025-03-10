@@ -68,7 +68,7 @@ function checkPasswords(form) {
  *
  */
 function checkPhone(input) {
-    const patt = /^(\+?\d{1,3}[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
+    const patt = /^\+?[1-9]\d{1,14}$/;
     return patt.test(input.value);
 }
 
@@ -80,7 +80,7 @@ function checkPhone(input) {
  * @returns {boolean} - Возвращает true, если форма валидна, и false, если невалидна.
  *
  */
-export function validateForm(form) {
+export function validateSignupForm(form) {
     var isValid = true;
 
     const allInputs = form.getElementsByTagName("input");
@@ -119,6 +119,25 @@ export function validateForm(form) {
                 }
             }
         }
+    }
+
+    return isValid;
+}
+
+export function validateLoginForm(form) {
+    var isValid = true;
+
+    const allInputs = form.getElementsByTagName("input");
+
+    for (const input of allInputs) {
+        removeError(input);
+
+        console.log(`input: ${input.name}, value: ${input.value}`);
+
+        if (input.value === "") {
+            createError(input, "Поле не заполнено");
+            isValid = false;
+        } 
     }
 
     return isValid;

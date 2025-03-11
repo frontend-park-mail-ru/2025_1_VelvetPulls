@@ -20,7 +20,7 @@ export const handleChats = async (data) => {
     try {
         const chatsData = {chats: await chatsInstance.getChats()};
         console.log(`то что передадим в render ${chatsData}`);
-        if (chatsData && length(chatsData.chats) != 0) {
+        if (chatsData && lchatsData.chats.length != 0) {
             return chatsData;
                 
         } else {

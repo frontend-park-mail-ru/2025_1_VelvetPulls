@@ -18,7 +18,7 @@ export const handleChats = async (data) => {
     if (!localStorage.getItem("token")) {
             alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
             goToPage("login");
-            return;
+            return data;
     }
     const chatsInstance = new chats();
 

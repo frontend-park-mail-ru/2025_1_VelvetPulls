@@ -20,7 +20,7 @@ export const renderSignup = (data) => {
                     const formIsValid = validateSignupForm(form);
 
                     if (formIsValid) {
-                        console.log("sign up form is not valid");
+                        console.log("sign up form is valid");
 
                         const username =
                             document.getElementById("username").value;
@@ -36,7 +36,7 @@ export const renderSignup = (data) => {
                             repeatPassword,
                         );
                     } else {
-                        console.log("sign up form is valid");
+                        console.log("sign up form is not valid");
                     }
                 });
             }

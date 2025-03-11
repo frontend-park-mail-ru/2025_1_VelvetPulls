@@ -133,3 +133,7 @@
     align-self: center;
     color: var(--error);
 }
+
+.error-label{
+    min-width: 500px;
+}

@@ -47,7 +47,7 @@ export const authHandler = {
         if (isRegistered) {
             goToPage("chats");
         } else {
-            createError(document.getElementById("confirm-password", "Ошибка регистрации. Возможно пользователь уже существует."));
+            createError(document.getElementById("main-auth", "Ошибка регистрации. Возможно пользователь уже существует."));
         }
     },
 

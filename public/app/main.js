@@ -16,10 +16,10 @@ export const appInit = () => {
 
     window.addEventListener("popstate", (event) => {
         const path = window.location.pathname;
-        console.log(window.location);
+        //console.log(window.location);
         const page = Object.keys(config).find((key) => config[key].href === path);
-        console.log(savedPage, " ", page, " ", path);
-        if (page && savedPage != 'chats') {
+        //console.log(savedPage, " ", page, " ", path);
+        if (page && appState.activePageLink !== 'chats') {
             goToPage(page);
         }
     });

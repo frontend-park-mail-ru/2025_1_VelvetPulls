@@ -4,7 +4,7 @@
     font-size: 16px;
     color: var(--black);
     background-color: var(--white);
-    background: url(../img/Authorization.png) no-repeat;
+    background: url(../img/Authorization.png) no-repeat center;
     display: flex;
     justify-content: center;
     align-items: center;

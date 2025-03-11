@@ -17,6 +17,7 @@ import { chats } from "../modules/chats.js";
 export const handleChats = async (data) => {
     if (!localStorage.getItem("token")) {
             alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
+            localStorage.removeItem('activePageLink');
             goToPage("login");
             return data;
     }

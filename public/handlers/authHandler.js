@@ -43,7 +43,7 @@ export const authHandler = {
             password,
             repeatPassword,
         );
-        //console.log(isRegistered)
+        console.log(isRegistered)
         if (isRegistered) {
             goToPage("chats");
         } else {

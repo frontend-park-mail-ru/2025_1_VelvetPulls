@@ -17,6 +17,7 @@ export const authHandler = {
         const isLoggedIn = await Auth.login(username, password);
         //console.log(isLoggedIn);
         if (isLoggedIn) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
             goToPage("chats");
         } else {
             alert("Ошибка авторизации. Проверьте email и пароль.");
@@ -44,6 +45,7 @@ export const authHandler = {
         );
         //console.log(isRegistered)
         if (isRegistered) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
             goToPage("chats");
         } else {
             alert("Ошибка регистрации. Возможно, пользователь уже существует.");

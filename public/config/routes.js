@@ -33,7 +33,7 @@ const registerData = {
             type: "tel",
             id: "phone",
             name: "phone",
-            placeholder: "Телефон (123-456-67-89)",
+            placeholder: "Телефон",
         },
         {
             type: "password",

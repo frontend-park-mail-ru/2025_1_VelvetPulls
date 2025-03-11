@@ -6,6 +6,12 @@ export const appState = {
 };
 
 export const goToPage = async (page) => {
+
+    if (page === "chats" && !localStorage.getItem("token")) {
+        alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
+        page = "login"; 
+    }
+    
     root.innerHTML = "";
 
     appState.activePageLink = page;

@@ -20,11 +20,11 @@ export const handleChats = async (data) => {
     try {
         const chatsData = {chats: await chatsInstance.getChats()};
         console.log(`то что передадим в render ${chatsData}`);
-        if (chatsData) {
+        if (chatsData && length(chatsData.chats) != 0) {
             return chatsData;
                 
         } else {
-            alert('Не удалось загрузить чаты. Пожалуйста, попробуйте позже.');
+            alert('Не удалось загрузить чаты. Создайте один или попробуйте позже.');
             return data; 
         }
     } catch (error) {

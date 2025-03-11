@@ -1,12 +1,11 @@
 import { appState, goToPage } from "../modules/router.js";
 import { config } from "../config/routes.js";
-import { getCookie } from "../modules/cookie.js";
 
 export const root = document.getElementById("root");
 
 export const appInit = () => {
     const savedPage = localStorage.getItem("activePageLink");
-    if (savedPage === "chats" && !getCookie("token")) {
+    if (savedPage === "chats" && !localStorage.getItem("token")) {
         alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
         goToPage("login");
         return;

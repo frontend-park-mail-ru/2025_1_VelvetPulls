@@ -22,7 +22,7 @@ function removeError(input) {
  * @param {string} text - Сообщение об ошибке
  *
  */
-function createError(input, text) {
+export function createError(input, text) {
     const parent = input.parentNode;
     parent.classList.add("auth-form__error");
 

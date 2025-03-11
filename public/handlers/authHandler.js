@@ -1,5 +1,6 @@
 import { Auth } from "../modules/auth.js";
 import { goToPage } from "../modules/router.js";
+import { createError } from "../pages/forms_validation.js";
 
 export const authHandler = {
     /**
@@ -19,7 +20,7 @@ export const authHandler = {
         if (isLoggedIn) {
             goToPage("chats");
         } else {
-            alert("Ошибка авторизации. Проверьте email и пароль.");
+            createError(document.getElementById("button-login"), "Ошибка авторизации. Проверьте логин и пароль.");
         }
     },
     /**
@@ -46,7 +47,7 @@ export const authHandler = {
         if (isRegistered) {
             goToPage("chats");
         } else {
-            alert("Ошибка регистрации. Возможно, пользователь уже существует.");
+            createError(document.getElementById("button-signup", "Ошибка регистрации. Возможно пользователь уже существует."));
         }
     },
 

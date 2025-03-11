@@ -1,17 +1,18 @@
 import { root } from "../app/main.js";
 import { config } from "../config/routes.js";
-
+import { getCookie } from "./cookie.js";
 export const appState = {
     activePageLink: null,
 };
 
 export const goToPage = async (page) => {
 
-    if (page === "chats" && !localStorage.getItem("token")) {
+    if (page === "chats" && !getCookie("token")) {
         alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
-        page = "login"; 
+        page = "login";
     }
-    
+
+
     root.innerHTML = "";
 
     appState.activePageLink = page;

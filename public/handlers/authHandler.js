@@ -20,7 +20,7 @@ export const authHandler = {
         if (isLoggedIn) {
             goToPage("chats");
         } else {
-            createError(document.getElementById("button-login"), "Ошибка авторизации. Проверьте логин и пароль.");
+            createError(document.getElementById("password"), "Ошибка авторизации. Проверьте логин и пароль.");
         }
     },
     /**
@@ -47,7 +47,7 @@ export const authHandler = {
         if (isRegistered) {
             goToPage("chats");
         } else {
-            createError(document.getElementById("button-signup", "Ошибка регистрации. Возможно пользователь уже существует."));
+            createError(document.getElementById("confirm-password", "Ошибка регистрации. Возможно пользователь уже существует."));
         }
     },
 

@@ -16,6 +16,7 @@ export const appInit = () => {
 
     window.addEventListener("popstate", (event) => {
         const path = window.location.pathname;
+        console.log(path);
         const page = Object.keys(config).find((key) => config[key].href === path);
         if (page && path != '/chats') {
             goToPage(page);

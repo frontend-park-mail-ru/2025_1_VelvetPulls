@@ -15,6 +15,11 @@ import { chats } from "../modules/chats.js";
  * rendered.addListeners();
  */
 export const handleChats = async (data) => {
+    if (!localStorage.getItem("token")) {
+            alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
+            goToPage("login");
+            return;
+    }
     const chatsInstance = new chats();
 
     try {
@@ -23,9 +28,11 @@ export const handleChats = async (data) => {
         if (chatsData && chatsData.chats.length != 0) {
             return chatsData;
                 
-        } else {
+        } else if(!chatsData){
             alert('Не удалось загрузить чаты. Создайте один или попробуйте позже.');
             return data; 
+        } else{
+            return data;
         }
     } catch (error) {
         console.error('Ошибка при загрузке чатов:', error);

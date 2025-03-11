@@ -5,13 +5,8 @@ export const root = document.getElementById("root");
 
 export const appInit = () => {
     const savedPage = localStorage.getItem("activePageLink");
-    if (savedPage === "chats" && !localStorage.getItem("token")) {
-        alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
-        goToPage("login");
-        return;
-    }
 
-    
+
     if (savedPage) {
         appState.activePageLink = savedPage;
         goToPage(savedPage);

@@ -5,12 +5,6 @@ export const appState = {
 };
 
 export const goToPage = async (page) => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    if (page === "chats" && !localStorage.getItem("token")) {
-        alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
-        page = "login";
-    }
-
 
     root.innerHTML = "";
 

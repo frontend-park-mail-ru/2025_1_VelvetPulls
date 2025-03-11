@@ -15,12 +15,6 @@ import { chats } from "../modules/chats.js";
  * rendered.addListeners();
  */
 export const handleChats = async (data) => {
-    if (!localStorage.getItem("token")) {
-            alert("Доступ запрещен. Пожалуйста, авторизуйтесь.");
-            localStorage.removeItem('activePageLink');
-            goToPage("login");
-            return data;
-    }
     const chatsInstance = new chats();
 
     try {
@@ -37,6 +31,8 @@ export const handleChats = async (data) => {
         }
     } catch (error) {
         console.error('Ошибка при загрузке чатов:', error);
+        localStorage.removeItem('activePageLink');
+        goToPage("login");
         alert('Произошла ошибка при загрузке чатов.');
         return data; 
     }

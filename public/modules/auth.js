@@ -18,7 +18,6 @@ export class auth {
             });
             //console.log(response.status);
             if (response.status === true) {
-                localStorage.setItem("token", response.token);
                 return true;
             } else {
                 throw new Error(response.message || "Login failed");
@@ -46,7 +45,6 @@ export class auth {
             });
             console.log(response);
             if (response.status === true) {
-                localStorage.setItem("token", response.token);
                 return true;
             } else {
                 throw new Error(response.message || "Registration failed");

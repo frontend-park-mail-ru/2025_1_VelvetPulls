@@ -6,8 +6,10 @@
         <form method="post" class="auth-form">
             {{#each fields}}
             <div class="auth-form__input-wrapper">
-                <input class="auth-form__input" type="{{this.type}}" id="{{this.id}}" name="{{this.name}}"
-                    placeholder="{{this.placeholder}}">
+                <input class="auth-form__input" type="{{this.type}}" id="{{this.id}}" name="{{this.name}}" placeholder="{{this.placeholder}}">
+                {{#if (eq this.name "password")}}
+                        <button class="auth-form__toggle-password">👁️</button>
+                {{/if}}
             </div>
             {{/each}}
             <button type="submit" class="auth-form__button">{{buttonText}}</button>

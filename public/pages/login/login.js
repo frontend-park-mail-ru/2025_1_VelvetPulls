@@ -43,6 +43,31 @@ export const renderLogin = (data) => {
                     authHandler.redirectToSignup();
                 });
             }
+
+            const togglers = document.getElementsByClassName(
+                "auth-form__toggle-password",
+            );
+            for (const toggler of togglers) {
+                toggler.addEventListener("click", (event) => {
+                    event.preventDefault();
+
+                    // console.log("toggler", toggler);
+
+                    const parent = toggler.parentElement;
+                    // console.log("parent", parent);
+
+                    const input = parent.getElementsByTagName("input")[0];
+                    // console.log("input", input);
+
+                    if (input.type === "password") {
+                        input.type = "text";
+                        toggler.textContent = "🙈";
+                    } else {
+                        input.type = "password";
+                        toggler.textContent = "👁️";
+                    }
+                });
+            }
         },
     };
 };

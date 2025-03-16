@@ -34,15 +34,16 @@ function createError(input, text) {
 }
 
 /**
- * Сверяет введённые пароли
+ * Валидирует пароль
  *
- * @function checkPasswordLength
+ * @function checkPassword
  * @param {input} input - Поле ввода для пароля
- * @returns {boolean} - Возвращает true, если пароль содержит не менее 8 символов, и false иначе
+ * @returns {boolean} - Возвращает true, если пароль корректен, и false иначе
  *
  */
-function checkPasswordLength(input) {
-    return input.value.length >= 8;
+function checkPassword(input) {
+    const patt = /^[a-zA-Z0-9!@#$%^&*()_\-+=]{8,32}$/;
+    return patt.test(input.value);
 }
 
 /**
@@ -50,21 +51,21 @@ function checkPasswordLength(input) {
  *
  * @function checkPasswords
  * @param {input} input - Поле ввода для пароля
- * @returns {boolean} - Возвращает true, если пароль содержит не менее 8 символов, и false иначе
+ * @returns {boolean} - Возвращает true, если пароли совпадают, и false иначе
  *
  */
-function checkPasswords(form) {
+function isEqualPasswords(form) {
     const password = form.querySelector("#password");
     const confirmPassword = form.querySelector("#confirm-password");
     return password.value === confirmPassword.value;
 }
 
 /**
- * Проверяет корректность введённого номера телефона
+ * Валидирует введённый номера телефона
  *
  * @function checkPhone
  * @param {input} input - Поле ввода для номера телефона
- * @returns {boolean} - Возвращает true, если номер корректер, и false иначе
+ * @returns {boolean} - Возвращает true, если номер корректен, и false иначе
  *
  */
 function checkPhone(input) {
@@ -73,7 +74,20 @@ function checkPhone(input) {
 }
 
 /**
- * Проверяет форму на корректность введённых данных.
+ * Валидирует имя пользователя
+ *
+ * @function checkUsername
+ * @param {input} input - Поле ввода для имени пользователя
+ * @returns {boolean} - Возвращает true, если имя пользователя корректно, и false иначе
+ *
+ */
+function checkUsername(input) {
+    const patt = /^[a-zA-Z0-9_]{3,20}$/;
+    return patt.test(input.value);
+}
+
+/**
+ * Валидирует форму
  *
  * @function validateForm
  * @param {form} form - Форма (авторизация или регистрация)
@@ -95,17 +109,17 @@ export function validateSignupForm(form) {
             isValid = false;
         } else {
             if (input.name === "password") {
-                if (!checkPasswordLength(input)) {
+                if (!checkPassword(input)) {
                     createError(
                         input,
-                        "Пароль должен содержать не меньше 8 символов",
+                        "Введите от 8 до 32 символов, включая латинские буквы, цифры и нижнее подчёркивание",
                     );
                     isValid = false;
                 }
             }
 
             if (input.name === "confirm-password") {
-                if (!checkPasswords(form)) {
+                if (!isEqualPasswords(form)) {
                     createError(input, "Пароли должны совпадать");
                     isValid = false;
                 }
@@ -115,6 +129,17 @@ export function validateSignupForm(form) {
                 if (!checkPhone(input)) {
                     removeError(input);
                     createError(input, "Неверный формат номера телефона");
+                    isValid = false;
+                }
+            }
+
+            if (input.name === "username") {
+                if (!checkUsername(input)) {
+                    removeError(input);
+                    createError(
+                        input,
+                        "Введите от 3 до 20 символов, включая латинские буквы, цифры и нижнее подчёркивание",
+                    );
                     isValid = false;
                 }
             }
@@ -137,7 +162,7 @@ export function validateLoginForm(form) {
         if (input.value === "") {
             createError(input, "Поле не заполнено");
             isValid = false;
-        } 
+        }
     }
 
     return isValid;

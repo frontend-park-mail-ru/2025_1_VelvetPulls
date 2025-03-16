@@ -133,3 +133,9 @@
     align-self: center;
     color: var(--error);
 }
+
+.auth-form__toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}

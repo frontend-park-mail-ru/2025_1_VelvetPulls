@@ -64,7 +64,6 @@ body {
     display: flex;
     width: auto;
     margin: auto 0;
-    min-height: 44px;
     padding: 10px 15px;
     align-items: center;
     gap: 10px;
@@ -412,24 +411,24 @@ body {
 
 .main-chat__placeholder {
     margin: auto 0;
+    margin-right: auto;
 }
 
 .main-chat__emoji-icon {
-    aspect-ratio: 1;
+    /* aspect-ratio: 1;
     object-fit: contain;
-    object-position: center;
+    object-position: center; */
     width: 24px;
-    position: absolute;
+    /* position: absolute;
     right: 11px;
-    bottom: 7px;
+    bottom: 7px; */
     height: 24px;
 }
 
 .main-chat__send-icon {
-    aspect-ratio: 1;
+    /* aspect-ratio: 1;
     object-fit: contain;
     object-position: center;
-    width: 20px;
-    align-self: stretch;
+    align-self: stretch; */
     margin: auto;
 }

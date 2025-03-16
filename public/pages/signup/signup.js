@@ -1,6 +1,14 @@
 import { authHandler } from "../../handlers/authHandler.js";
 import { validateSignupForm } from "../forms_validation.js";
+
 export const renderSignup = (data) => {
+    console.log("data");
+    console.log(data);
+
+    Handlebars.registerHelper("eq", function (a, b) {
+        return a === b;
+    });
+
     const signupTemplate = Handlebars.templates["signup.hbs"];
     const { fields, buttonText, redirectText } = data;
     const html = signupTemplate({ fields, buttonText, redirectText });
@@ -46,6 +54,31 @@ export const renderSignup = (data) => {
                 loginLink.addEventListener("click", (e) => {
                     e.preventDefault();
                     authHandler.redirectToLogin();
+                });
+            }
+
+            const togglers = document.getElementsByClassName(
+                "auth-form__toggle-password",
+            );
+            for (const toggler of togglers) {
+                toggler.addEventListener("click", (event) => {
+                    event.preventDefault();
+
+                    // console.log("toggler", toggler);
+
+                    const parent = toggler.parentElement;
+                    // console.log("parent", parent);
+
+                    const input = parent.getElementsByTagName("input")[0];
+                    // console.log("input", input);
+
+                    if (input.type === "password") {
+                        input.type = "text";
+                        toggler.textContent = "🙈";
+                    } else {
+                        input.type = "password";
+                        toggler.textContent = "👁️";
+                    }
                 });
             }
         },

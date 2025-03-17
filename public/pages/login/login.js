@@ -2,6 +2,10 @@ import { authHandler } from "../../handlers/authHandler.js";
 import { validateLoginForm } from "../forms_validation.js";
 
 export const renderLogin = (data) => {
+    Handlebars.registerHelper("eq", function (a, b) {
+        return a === b;
+    });
+
     const loginTemplate = Handlebars.templates["login.hbs"];
     const { fields, buttonText, redirectText } = data;
     const html = loginTemplate({ fields, buttonText, redirectText });
@@ -71,4 +75,3 @@ export const renderLogin = (data) => {
         },
     };
 };
-//todo подумать над правильными рендером прекомпилированных хбс

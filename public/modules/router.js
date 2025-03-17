@@ -11,6 +11,8 @@ export const goToPage = async (page) => {
     appState.activePageLink = page;
     localStorage.setItem("activePageLink", page);
 
+    console.log("here");
+
     const element = config[page].render;
     const renderFunc = element.func;
 

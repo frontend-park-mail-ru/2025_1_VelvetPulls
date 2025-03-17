@@ -4,6 +4,7 @@ export class auth {
     constructor() {
         this.API = API;
     }
+
     /**
      * Авторизация пользователя
      * @param {string} username
@@ -18,7 +19,7 @@ export class auth {
             });
             //console.log(response.status);
             if (response.status === true) {
-                localStorage.setItem("token", response.token);
+                // localStorage.setItem("token", response.token);
                 return true;
             } else {
                 throw new Error(response.message || "Login failed");
@@ -26,8 +27,9 @@ export class auth {
         } catch (error) {
             console.error("Login error:", error);
             return false;
-        }   
+        }
     }
+
     /**
      * Регистрация пользователя
      * @param {string} username
@@ -57,7 +59,7 @@ export class auth {
     }
 
     logout() {
-        localStorage.removeItem("token");
+        // localStorage.removeItem("token");
     }
 }
 

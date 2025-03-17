@@ -15,7 +15,9 @@ export const appInit = () => {
 
     window.addEventListener("popstate", () => {
         const path = window.location.pathname;
-        const page = Object.keys(config).find((key) => config[key].href === path);
+        const page = Object.keys(config).find(
+            (key) => config[key].href === path,
+        );
         if (page) {
             goToPage(page);
         }

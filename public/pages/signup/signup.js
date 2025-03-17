@@ -2,9 +2,6 @@ import { authHandler } from "../../handlers/authHandler.js";
 import { validateSignupForm } from "../forms_validation.js";
 
 export const renderSignup = (data) => {
-    console.log("data");
-    console.log(data);
-
     Handlebars.registerHelper("eq", function (a, b) {
         return a === b;
     });

@@ -1,0 +1,17 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    /* min-width: 400px; */
+    /* max-width: 500px; */
+}
+
+.sidebar__icon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 24px;
+    align-self: stretch;
+    margin: auto 0;
+    flex-shrink: 0;
+}

@@ -1,0 +1,18 @@
+.main-chat__chat-container {
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 7px 10px 8px;
+    gap: 10px;
+    font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    color: var(--black);
+    flex-grow: 1;
+}
+
+.main-chat__divider {
+    background-color: var(--gray);
+    width: 100%;
+    height: 1px;
+    margin: 0;
+}

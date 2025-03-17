@@ -1,0 +1,15 @@
+.main-chat__messages {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    color: var(--gray);
+    justify-content: center;
+    flex: 1;
+}
+
+.main-chat__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

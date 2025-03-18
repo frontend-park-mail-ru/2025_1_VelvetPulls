@@ -1,4 +1,4 @@
-import { Auth } from "../modules/auth.js";
+import { auth } from "../modules/auth.js";
 import { goToPage } from "../modules/router.js";
 
 export const authHandler = {
@@ -14,7 +14,7 @@ export const authHandler = {
      *
      */
     handleLogin: async (username, password) => {
-        const isLoggedIn = await Auth.login(username, password);
+        const isLoggedIn = await auth.login(username, password);
         //console.log(isLoggedIn);
         if (isLoggedIn) {
             goToPage("chats");
@@ -36,7 +36,7 @@ export const authHandler = {
      *
      */
     handleRegister: async (username, phone, password, repeatPassword) => {
-        const isRegistered = await Auth.register(
+        const isRegistered = await auth.register(
             username,
             phone,
             password,
@@ -51,7 +51,7 @@ export const authHandler = {
     },
 
     handleLogout: () => {
-        Auth.logout();
+        auth.logout();
         goToPage("login");
     },
 

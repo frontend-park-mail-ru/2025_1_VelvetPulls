@@ -1,8 +1,8 @@
-import { API } from "./api.js";
+import { api } from "./api.js";
 
-export class auth {
+export class Auth {
     constructor() {
-        this.API = API;
+        this.api = api;
     }
 
     /**
@@ -13,7 +13,7 @@ export class auth {
      */
     async login(username, password) {
         try {
-            const response = await this.API.post("/login/", {
+            const response = await this.api.post("/login/", {
                 username,
                 password,
             });
@@ -40,7 +40,7 @@ export class auth {
      */
     async register(username, phone, password, confirm_password) {
         try {
-            const response = await this.API.post("/register/", {
+            const response = await this.api.post("/register/", {
                 username,
                 phone,
                 password,
@@ -63,4 +63,4 @@ export class auth {
     }
 }
 
-export const Auth = new auth();
+export const auth = new Auth();

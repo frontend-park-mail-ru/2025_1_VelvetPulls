@@ -3,8 +3,6 @@ import { validateSignupForm } from "../forms_validation.js";
 
 class SignupPage {
     constructor() {
-        console.log("LoginPage constructor");
-
         this.fields = [
             {
                 type: "text",

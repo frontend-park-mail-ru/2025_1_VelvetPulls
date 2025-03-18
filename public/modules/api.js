@@ -1,6 +1,6 @@
 const API_URI = "http://localhost:8080/api";
 
-class api {
+class API {
     #api;
 
     constructor() {
@@ -53,4 +53,4 @@ class api {
     }
 }
 
-export const API = new api();
+export const api = new API();

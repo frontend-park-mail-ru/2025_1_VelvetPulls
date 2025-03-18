@@ -30,16 +30,20 @@ export const goToPage = async (page) => {
     root.innerHTML = "";
 
     appState.activePageLink = page;
-    // localStorage.setItem("activePageLink", page);
+    localStorage.setItem("activePageLink", page);
 
     console.log(`go to page "${page}"`);
 
-    const response = config[page].page.render();
+    const response = await config[page].page.render();
+    console.log(response);
 
     if (!response.ok) {
         console.error(response.error);
+        if (response.error === "invalid session token") {
+            goToPage("login");
+        }
     }
 
-    // history.pushState(config[page].href, "", config[page].href);
-    // document.title = config[page].title;
+    window.history.pushState(config[page].href, "", config[page].href);
+    document.title = config[page].title;
 };

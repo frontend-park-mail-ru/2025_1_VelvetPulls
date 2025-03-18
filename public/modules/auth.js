@@ -17,7 +17,7 @@ export class Auth {
                 username,
                 password,
             });
-            //console.log(response.status);
+            console.log(response);
             if (response.status === true) {
                 // localStorage.setItem("token", response.token);
                 return true;

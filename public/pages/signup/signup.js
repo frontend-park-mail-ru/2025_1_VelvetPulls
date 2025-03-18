@@ -1,4 +1,5 @@
-import { authHandler } from "../../handlers/authHandler.js";
+import { Auth } from "../../modules/auth.js";
+import { goToPage } from "../../modules/router.js";
 import { validateSignupForm } from "../forms_validation.js";
 
 class SignupPage {
@@ -52,12 +53,15 @@ class SignupPage {
                     const password = document.getElementById("password").value;
                     const repeatPassword =
                         document.getElementById("confirm-password").value;
-                    await authHandler.handleRegister(
+
+                    const auth = new Auth();
+                    await auth.register(
                         username,
                         phone,
                         password,
                         repeatPassword,
                     );
+                    goToPage("chats");
                 } else {
                     console.log("sign up form is valid");
                 }
@@ -68,7 +72,7 @@ class SignupPage {
         if (loginLink && typeof loginLink.addEventListener === "function") {
             loginLink.addEventListener("click", (e) => {
                 e.preventDefault();
-                authHandler.redirectToLogin();
+                goToPage("login");
             });
         }
 

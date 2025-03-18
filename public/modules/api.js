@@ -1,4 +1,4 @@
-import { API_URI } from "../config/const.js";
+const API_URI = "http://localhost:8080/api";
 
 class api {
     #api;

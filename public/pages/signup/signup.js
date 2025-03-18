@@ -1,83 +1,128 @@
 import { authHandler } from "../../handlers/authHandler.js";
 import { validateSignupForm } from "../forms_validation.js";
 
-export const renderSignup = (data) => {
-    Handlebars.registerHelper("eq", function (a, b) {
-        return a === b;
-    });
+class SignupPage {
+    constructor() {
+        console.log("LoginPage constructor");
 
-    const signupTemplate = Handlebars.templates["signup.hbs"];
-    const { fields, buttonText, redirectText } = data;
-    const html = signupTemplate({ fields, buttonText, redirectText });
+        this.fields = [
+            {
+                type: "text",
+                id: "username",
+                name: "username",
+                placeholder: "Имя пользователя",
+            },
+            {
+                type: "tel",
+                id: "phone",
+                name: "phone",
+                placeholder: "Телефон (123-456-67-89)",
+            },
+            {
+                type: "password",
+                id: "password",
+                name: "password",
+                placeholder: "Пароль",
+            },
+            {
+                type: "password",
+                id: "confirm-password",
+                name: "confirm-password",
+                placeholder: "Подтвердите пароль",
+            },
+        ];
+        this.buttonText = "Создать аккаунт";
+        this.redirectText = "Войдите";
+    }
 
-    return {
-        html,
-        addListeners: () => {
-            const signupForm = document.querySelector(".signupForm");
-            if (
-                signupForm &&
-                typeof signupForm.addEventListener === "function"
-            ) {
-                signupForm.addEventListener("submit", async (e) => {
-                    e.preventDefault();
+    addListeners() {
+        console.log("add listeners");
 
-                    var form = signupForm.getElementsByTagName("form")[0];
-                    const formIsValid = validateSignupForm(form);
+        const signupForm = document.querySelector(".signupForm");
+        if (signupForm && typeof signupForm.addEventListener === "function") {
+            signupForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
 
-                    if (formIsValid) {
-                        console.log("sign up form is not valid");
+                var form = signupForm.getElementsByTagName("form")[0];
+                const formIsValid = validateSignupForm(form);
 
-                        const username =
-                            document.getElementById("username").value;
-                        const phone = document.getElementById("phone").value;
-                        const password =
-                            document.getElementById("password").value;
-                        const repeatPassword =
-                            document.getElementById("confirm-password").value;
-                        await authHandler.handleRegister(
-                            username,
-                            phone,
-                            password,
-                            repeatPassword,
-                        );
-                    } else {
-                        console.log("sign up form is valid");
-                    }
-                });
-            }
+                if (formIsValid) {
+                    console.log("sign up form is not valid");
 
-            const loginLink = document.getElementById("loginLink");
-            if (loginLink && typeof loginLink.addEventListener === "function") {
-                loginLink.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    authHandler.redirectToLogin();
-                });
-            }
+                    const username = document.getElementById("username").value;
+                    const phone = document.getElementById("phone").value;
+                    const password = document.getElementById("password").value;
+                    const repeatPassword =
+                        document.getElementById("confirm-password").value;
+                    await authHandler.handleRegister(
+                        username,
+                        phone,
+                        password,
+                        repeatPassword,
+                    );
+                } else {
+                    console.log("sign up form is valid");
+                }
+            });
+        }
 
-            const togglers = document.getElementsByClassName(
-                "auth-form__toggle-password",
-            );
-            for (const toggler of togglers) {
-                toggler.addEventListener("click", (event) => {
-                    event.preventDefault();
+        const loginLink = document.getElementById("loginLink");
+        if (loginLink && typeof loginLink.addEventListener === "function") {
+            loginLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                authHandler.redirectToLogin();
+            });
+        }
 
-                    // console.log("toggler", toggler);
+        const togglers = document.getElementsByClassName(
+            "auth-form__toggle-password",
+        );
+        for (const toggler of togglers) {
+            toggler.addEventListener("click", (event) => {
+                event.preventDefault();
 
-                    const parent = toggler.parentElement;
-                    // console.log("parent", parent);
+                // console.log("toggler", toggler);
 
-                    const input = parent.getElementsByTagName("input")[0];
-                    // console.log("input", input);
+                const parent = toggler.parentElement;
+                // console.log("parent", parent);
 
-                    if (input.type === "password") {
-                        input.type = "text";
-                        toggler.textContent = "🙈";
-                    } else {
-                        input.type = "password";
-                        toggler.textContent = "👁️";
-                    }
-                });
-            }
-        },
-    };
-};
+                const input = parent.getElementsByTagName("input")[0];
+                // console.log("input", input);
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    toggler.textContent = "🙈";
+                } else {
+                    input.type = "password";
+                    toggler.textContent = "👁️";
+                }
+            });
+        }
+    }
+
+    render() {
+        Handlebars.registerHelper("eq", function (a, b) {
+            return a === b;
+        });
+
+        const loginTemplate = Handlebars.templates["signup.hbs"];
+        console.log("render signup");
+
+        const fields = this.fields;
+        const buttonText = this.buttonText;
+        const redirectText = this.redirectText;
+
+        const html = loginTemplate({ fields, buttonText, redirectText });
+        const root = document.getElementById("root");
+        root.innerHTML = html;
+        this.addListeners();
+
+        return {
+            ok: true,
+            error: "s",
+        };
+    }
+}
+
+const signupPage = new SignupPage();
+export default signupPage;

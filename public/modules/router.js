@@ -1,37 +1,45 @@
 import { root } from "../app/main.js";
-import { config } from "../config/routes.js";
+
+import loginPage from "../pages/login/login.js";
+import signupPage from "../pages/signup/signup.js";
+import chatsPage from "../pages/chats/chats.js";
 
 export const appState = {
     activePageLink: null,
+};
+
+const config = {
+    login: {
+        href: "/login",
+        title: "Авторизация",
+        page: loginPage,
+    },
+    signup: {
+        href: "/signup",
+        title: "Регистрация",
+        page: signupPage,
+    },
+    chats: {
+        href: "/chats",
+        title: "Keftegram",
+        page: chatsPage,
+    },
 };
 
 export const goToPage = async (page) => {
     root.innerHTML = "";
 
     appState.activePageLink = page;
-    localStorage.setItem("activePageLink", page);
+    // localStorage.setItem("activePageLink", page);
 
-    console.log("here");
+    console.log(`go to page "${page}"`);
 
-    const element = config[page].render;
-    const renderFunc = element.func;
+    const response = config[page].page.render();
 
-    try {
-        const rendered = await (async () => {
-            const result = renderFunc(element.data);
-            if (result instanceof Promise) {
-                return await result;
-            }
-            return result;
-        })();
-
-        root.innerHTML = rendered.html;
-        rendered.addListeners();
-    } catch (error) {
-        console.error("Ошибка при рендеринге страницы:", error);
-        root.innerHTML = "<p>Произошла ошибка при загрузке страницы.</p>";
+    if (!response.ok) {
+        console.error(response.error);
     }
 
-    history.pushState(config[page].href, "", config[page].href);
-    document.title = config[page].title;
+    // history.pushState(config[page].href, "", config[page].href);
+    // document.title = config[page].title;
 };

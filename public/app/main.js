@@ -1,5 +1,4 @@
 import { appState, goToPage } from "../modules/router.js";
-import { config } from "../config/routes.js";
 
 export const root = document.getElementById("root");
 
@@ -13,13 +12,13 @@ export const appInit = () => {
         goToPage("login");
     }
 
-    window.addEventListener("popstate", () => {
-        const path = window.location.pathname;
-        const page = Object.keys(config).find(
-            (key) => config[key].href === path,
-        );
-        if (page) {
-            goToPage(page);
-        }
-    });
+    // window.addEventListener("popstate", () => {
+    //     const path = window.location.pathname;
+    //     const page = Object.keys(config).find(
+    //         (key) => config[key].href === path,
+    //     );
+    //     if (page) {
+    //         goToPage(page);
+    //     }
+    // });
 };

@@ -1,7 +1,10 @@
 import { Chats } from "../../modules/chats.js";
+import { Auth } from "../../modules/auth.js";
 
 class ChatsPage {
-    constructor() {}
+    constructor() {
+        this.popupState = false;
+    }
 
     async render() {
         const chatsInstance = new Chats();
@@ -21,10 +24,49 @@ class ChatsPage {
         const root = document.getElementById("root");
         root.innerHTML = html;
 
+        this.addListeners();
+
         return {
             ok: true,
-            error: "This is my error",
+            error: "",
         };
+    }
+
+    addListeners() {
+        const menu = document.getElementsByClassName("sidebar__menu")[0];
+        console.log("menu", menu);
+
+        menu.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            if (this.popupState === false) {
+                const menuList = document.createElement("div");
+                menuList.classList.add("menu__list");
+                menu.append(menuList);
+
+                const menuItem = document.createElement("div");
+                menuItem.setAttribute("name", "logout");
+                menuItem.classList.add("menu__item");
+                menuItem.innerHTML = "Выйти";
+                menuList.append(menuItem);
+
+                menuItem.addEventListener("click", (event) => {
+                    event.preventDefault();
+
+                    const session = new Auth();
+                    session.logout();
+
+                    console.log("log out");
+
+                    window.location.reload();
+                });
+
+                this.popupState = true;
+            } else {
+                menu.removeChild(menu.lastChild);
+                this.popupState = false;
+            }
+        });
     }
 }
 

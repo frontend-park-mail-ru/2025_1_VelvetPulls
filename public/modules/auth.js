@@ -58,8 +58,8 @@ export class Auth {
         }
     }
 
-    logout() {
-        // localStorage.removeItem("token");
+    async logout() {
+        return await this.api.delete("/logout/");
     }
 }
 

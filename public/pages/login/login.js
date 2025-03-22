@@ -23,7 +23,6 @@ class LoginPage {
     }
 
     addListeners() {
-        console.log("add listeners");
 
         const loginForm = document.querySelector(".loginForm");
         if (loginForm && typeof loginForm.addEventListener === "function") {

@@ -69,8 +69,10 @@ function isEqualPasswords(form) {
  *
  */
 function checkPhone(input) {
+    const cleanedValue = input.value.replace(/[^+\d]/g, '');
     const patt = /^\+?[1-9]\d{1,14}$/;
-    return patt.test(input.value);
+    console.log(cleanedValue, patt.test(cleanedValue));
+    return patt.test(cleanedValue);
 }
 
 /**

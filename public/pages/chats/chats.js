@@ -1,6 +1,5 @@
-import Handlebars from 'handlebars';
-import chatsTemplate from './chats.hbs';
-import '../../static/css/mainPage.css';
 export const renderChats = (data) => {
-
-}
+    const chatsTemplate = Handlebars.templates["chats.hbs"];
+    return chatsTemplate({ data });
+};
+//todo подумать над правильными рендером прекомпилированных хбс

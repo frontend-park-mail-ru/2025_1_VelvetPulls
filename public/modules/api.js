@@ -24,7 +24,7 @@ class API {
 
         try {
             const url = this.#api + path;
-            const state = {
+            const request = {
                 method: method,
                 headers: headers,
                 mode: "cors",
@@ -32,12 +32,13 @@ class API {
                 body: body ? JSON.stringify(body) : null,
             };
 
-            response = await fetch(url, state);
+            response = await fetch(url, request);
         } catch (error) {
             throw new Error("Could not fetch: " + error.message);
         }
 
-        return await response.json();
+        const responseJSON = await response.json();
+        return responseJSON;
     }
 
     async get(url) {

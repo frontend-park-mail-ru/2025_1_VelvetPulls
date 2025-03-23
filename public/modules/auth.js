@@ -46,7 +46,6 @@ export class Auth {
                 password,
                 confirm_password,
             });
-            console.log(response);
             if (response.status === true) {
                 return true;
             } else {

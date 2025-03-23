@@ -20,7 +20,7 @@ export default [
             semi: ["error", "always"], // Требовать точку с запятой
             quotes: ["error", "double"], // Использовать двойные кавычки
             indent: ["error", 4], // Отступы в 4 пробела
-            // "no-console": "warn", // Предупреждать об использовании console.log
+            "no-console": "warn", // Предупреждать об использовании console.log
         },
     },
     pluginJs.configs.recommended,

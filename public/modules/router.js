@@ -35,10 +35,8 @@ export const goToPage = async (page) => {
     console.log(`go to page "${page}"`);
 
     const response = await config[page].page.render();
-    console.log(response);
 
     if (!response.ok) {
-        console.error(response.error);
         if (response.error === "invalid session token") {
             goToPage("login");
         }

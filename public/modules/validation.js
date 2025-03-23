@@ -69,8 +69,10 @@ function isEqualPasswords(form) {
  *
  */
 function checkPhone(input) {
-    const patt = /^\+?[1-9]\d{1,14}$/;
-    return patt.test(input.value);
+    const cleanedValue = input.value.replace(/[^+\d]/g, "");
+    const patt = /^\+7\d{10}|\+1\d{10}|\+44\d{10}|\+49\d{10}$/;
+    console.log(cleanedValue, patt.test(cleanedValue));
+    return patt.test(cleanedValue);
 }
 
 /**
@@ -95,7 +97,7 @@ function checkUsername(input) {
  *
  */
 export function validateSignupForm(form) {
-    var isValid = true;
+    let isValid = true;
 
     const allInputs = form.getElementsByTagName("input");
 
@@ -150,7 +152,7 @@ export function validateSignupForm(form) {
 }
 
 export function validateLoginForm(form) {
-    var isValid = true;
+    let isValid = true;
 
     const allInputs = form.getElementsByTagName("input");
 

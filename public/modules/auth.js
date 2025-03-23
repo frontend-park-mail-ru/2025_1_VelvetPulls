@@ -59,7 +59,7 @@ export class Auth {
     }
 
     async logout() {
-        return await this.api.delete("/logout/");
+        return this.api.delete("/logout/");
     }
 }
 

@@ -1,6 +1,6 @@
 import { Auth } from "../../modules/auth.js";
 import { goToPage } from "../../modules/router.js";
-import { validateLoginForm } from "../forms_validation.js";
+import { validateLoginForm } from "../../modules/validation.js";
 
 class LoginPage {
     constructor() {
@@ -23,7 +23,6 @@ class LoginPage {
     }
 
     addListeners() {
-
         const loginForm = document.querySelector(".loginForm");
         if (loginForm && typeof loginForm.addEventListener === "function") {
             loginForm.addEventListener("submit", async (event) => {
@@ -31,7 +30,7 @@ class LoginPage {
 
                 console.log("form submit");
 
-                var form = loginForm.getElementsByTagName("form")[0];
+                let form = loginForm.getElementsByTagName("form")[0];
                 const formIsValid = validateLoginForm(form);
 
                 if (formIsValid) {

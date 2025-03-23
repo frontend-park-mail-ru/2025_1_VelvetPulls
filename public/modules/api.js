@@ -20,6 +20,8 @@ class API {
      *
      */
     async request(method, path, headers, body = null) {
+        let response = null;
+
         try {
             const url = this.#api + path;
             const state = {
@@ -30,11 +32,12 @@ class API {
                 body: body ? JSON.stringify(body) : null,
             };
 
-            const response = await fetch(url, state);
-            return await response.json();
+            response = await fetch(url, state);
         } catch (error) {
             throw new Error("Could not fetch: " + error.message);
         }
+
+        return await response.json();
     }
 
     async get(url) {

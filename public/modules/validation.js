@@ -95,6 +95,7 @@ export function usernameInputValidate(input){
         );
         return false;
     }
+    removeError(input);
     return true;
 }
 
@@ -104,6 +105,7 @@ export function cleanedPhoneInputValidate(input){
         createError(input, "Неверный формат номера телефона");
         return false;
     }
+    removeError(input);
     return true;
 }
 
@@ -116,6 +118,7 @@ export function passwordInputValidate(input){
         );
         return false;
     }
+    removeError(input);
     return true;
 }
 
@@ -125,6 +128,7 @@ export function repeatPasswordInputValidate(input, form){
         createError(input, "Пароли должны совпадать");
         return false;
     }
+    removeError(input);
     return true;
 }
 /**

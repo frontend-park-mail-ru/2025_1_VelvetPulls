@@ -1,19 +1,11 @@
 <div id="auth-body" class="loginForm">
     <div id="main-auth">
-        <div class="main-auth__logo">
+        <div class="main-auth__logo" id="main-auth__logo">
             ./Keftegr@m
         </div>
-        <form method="post" class="auth-form">
-            {{#each fields}}
-            <div class="auth-form__input-wrapper">
-                <input class="auth-form__input" type="{{this.type}}" id="{{this.id}}" name="{{this.name}}" placeholder="{{this.placeholder}}">
-                {{#if (eq this.name "password")}}
-                        <button class="auth-form__toggle-password">👁️</button>
-                {{/if}}
-            </div>
-            {{/each}}
-            <button type="submit" class="auth-form__button">{{buttonText}}</button>
-        </form>
+
+        {{> loginForm }}
+
         <div class="register-link">
             <span>Нет аккаунта?
                 <a class="register-link__link" id="signupLink">{{redirectText}}</a>

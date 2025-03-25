@@ -2,7 +2,8 @@ import {
     loginFormSubmit,
     signupLinkListener,
     togglePasswordListener,
-} from "../../modules/event_listeners.js";
+} from "../../modules/eventListeners.js";
+import { AuthForm } from "../../components/AuthForm/AuthForm.js";
 
 class LoginPage {
     constructor() {
@@ -20,7 +21,7 @@ class LoginPage {
                 placeholder: "Пароль",
             },
         ];
-        this.buttonText = "Войти";
+        this.submitButtonText = "Войти";
         this.redirectText = "Создать";
     }
 
@@ -42,19 +43,21 @@ class LoginPage {
     }
 
     render() {
-        Handlebars.registerHelper("eq", function (a, b) {
-            return a === b;
-        });
-
         const loginTemplate = Handlebars.templates["login.hbs"];
 
         const fields = this.fields;
-        const buttonText = this.buttonText;
-        const redirectText = this.redirectText;
+        const submitButtonText = this.submitButtonText;
 
-        const html = loginTemplate({ fields, buttonText, redirectText });
+        const loginForm = new AuthForm(fields, submitButtonText);
+        const loginFormHTML = loginForm.getHTML();
+        Handlebars.registerPartial("loginForm", loginFormHTML);
+
+        const redirectText = this.redirectText;
+        const html = loginTemplate({ redirectText });
+
         const root = document.getElementById("root");
         root.innerHTML = html;
+
         this.addListeners();
 
         return {

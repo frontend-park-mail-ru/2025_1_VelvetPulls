@@ -1,6 +1,7 @@
 import { Chats } from "../../modules/chats.js";
 import { auth } from "../../modules/auth.js";
 import { goToPage } from "../../modules/router.js";
+import { PopOver } from "../../components/PopOver/PopOver.js";
 
 class ChatsPage {
     constructor() {
@@ -39,17 +40,26 @@ class ChatsPage {
             event.preventDefault();
 
             if (this.popupState === false) {
-                const menuList = document.createElement("div");
-                menuList.classList.add("menu__list");
-                menu.append(menuList);
+                const menuPopOver = new PopOver([
+                    {
+                        name: "profile",
+                        content: "Профиль",
+                    },
+                    {
+                        name: "contacts",
+                        content: "Контакты",
+                    },
+                    {
+                        name: "logout",
+                        content: "Выйти",
+                    },
+                ]);
+                const menuListPopOver = menuPopOver.getHTML();
+                console.log("menu popover", menuListPopOver);
+                menu.append(menuListPopOver);
 
-                const menuItem = document.createElement("div");
-                menuItem.setAttribute("name", "logout");
-                menuItem.classList.add("menu__item");
-                menuItem.innerHTML = "Выйти";
-                menuList.append(menuItem);
-
-                menuItem.addEventListener("click", (event) => {
+                const logout = document.getElementsByName("logout")[0];
+                logout.addEventListener("click", (event) => {
                     event.preventDefault();
 
                     auth.logout();

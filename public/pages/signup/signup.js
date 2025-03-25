@@ -3,7 +3,8 @@ import {
     loginLinkListener,
     signupFormSubmitListener,
     togglePasswordListener,
-} from "../../modules/event_listeners.js";
+} from "../../modules/eventListeners.js";
+import { AuthForm } from "../../components/AuthForm/AuthForm.js";
 
 class SignupPage {
     constructor() {
@@ -33,7 +34,7 @@ class SignupPage {
                 placeholder: "Подтвердите пароль",
             },
         ];
-        this.buttonText = "Создать аккаунт";
+        this.submitButtonText = "Создать аккаунт";
         this.redirectText = "Войдите";
     }
 
@@ -58,24 +59,25 @@ class SignupPage {
     }
 
     render() {
-        Handlebars.registerHelper("eq", function (a, b) {
-            return a === b;
-        });
+        const fields = this.fields;
+        const submitButtonText = this.submitButtonText;
+
+        const signupForm = new AuthForm(fields, submitButtonText);
+        const signupFormHTML = signupForm.getHTML();
+        Handlebars.registerPartial("signupForm", signupFormHTML);
 
         const loginTemplate = Handlebars.templates["signup.hbs"];
 
-        const fields = this.fields;
-        const buttonText = this.buttonText;
         const redirectText = this.redirectText;
 
-        const html = loginTemplate({ fields, buttonText, redirectText });
+        const html = loginTemplate({ redirectText });
         const root = document.getElementById("root");
         root.innerHTML = html;
         this.addListeners();
 
         return {
             ok: true,
-            error: "s",
+            error: "",
         };
     }
 }

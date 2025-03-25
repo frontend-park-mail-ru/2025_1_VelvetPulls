@@ -1,3 +1,5 @@
+@import url("../../../../components/PopOver/PopOver.css");
+
 .sidebar__header {
     display: flex;
     padding: 18px 10px;
@@ -54,23 +56,4 @@
     height: 1px;
     width: 100%;
     background-color: var(--black_divide);
-}
-
-.menu__list {
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: var(--bg);
-    border: solid;
-    border-color: var(--black);
-    border-radius: 12px;
-    border-width: 2px;
-}
-
-.menu__item {
-    font-size: 16px;
-    padding: 10px 5px;
-    color: var(--red);
 }

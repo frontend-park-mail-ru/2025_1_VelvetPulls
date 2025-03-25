@@ -2,7 +2,7 @@ import { root } from "../app/main.js";
 
 import loginPage from "../pages/login/login.js";
 import signupPage from "../pages/signup/signup.js";
-import chatsPage from "../pages/chats/chats.js";
+import mainPage from "../pages/mainPage/mainPage.js";
 
 export const appState = {
     activePageLink: null,
@@ -19,10 +19,10 @@ const config = {
         title: "Регистрация",
         page: signupPage,
     },
-    chats: {
-        href: "/chats",
+    main: {
+        href: "/main",
         title: "Keftegram",
-        page: chatsPage,
+        page: mainPage,
     },
 };
 

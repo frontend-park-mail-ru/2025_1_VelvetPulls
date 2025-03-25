@@ -24,7 +24,7 @@ export const signupFormSubmitListener = async (event) => {
             repeatPassword,
         );
         if (response.status === true) {
-            goToPage("chats");
+            goToPage("main");
         } else {
             alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
         }
@@ -91,7 +91,7 @@ export const loginFormSubmit = async (event) => {
 
         const response = await auth.login(username, password);
         if (response.status === true) {
-            goToPage("chats");
+            goToPage("main");
         } else {
             alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
         }

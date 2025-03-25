@@ -3,6 +3,9 @@ import {
     loginLinkListener,
     signupFormSubmitListener,
     togglePasswordListener,
+    usernameInputListener,
+    passwordInputListener,
+    repeatPasswordInputListener
 } from "../../modules/event_listeners.js";
 
 class SignupPage {
@@ -40,6 +43,15 @@ class SignupPage {
     addListeners() {
         const phoneInput = document.getElementById("phone");
         phoneInput.addEventListener("input", phoneInputListener);
+
+        const username = document.getElementById("username");
+        username.addEventListener("input", usernameInputListener);
+
+        const password = document.getElementById("password");
+        password.addEventListener("input", passwordInputListener);
+
+        const repeatPassword = document.getElementById("confirm-password");
+        repeatPassword.addEventListener("input", repeatPasswordInputListener);
 
         const signupForm = document.querySelector(".signupForm");
         signupForm.addEventListener("submit", signupFormSubmitListener);

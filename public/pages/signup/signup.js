@@ -1,7 +1,7 @@
 import {
     phoneInputListener,
-    logInLinkListener,
-    signUpFormSubmitListener,
+    loginLinkListener,
+    signupFormSubmitListener,
     togglePasswordListener,
 } from "../../modules/event_listeners.js";
 
@@ -42,10 +42,10 @@ class SignupPage {
         phoneInput.addEventListener("input", phoneInputListener);
 
         const signupForm = document.querySelector(".signupForm");
-        signupForm.addEventListener("submit", signUpFormSubmitListener);
+        signupForm.addEventListener("submit", signupFormSubmitListener);
 
         const loginLink = document.getElementById("loginLink");
-        loginLink.addEventListener("click", logInLinkListener);
+        loginLink.addEventListener("click", loginLinkListener);
 
         const togglers = document.getElementsByClassName(
             "auth-form__toggle-password",

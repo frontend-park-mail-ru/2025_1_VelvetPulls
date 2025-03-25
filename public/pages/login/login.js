@@ -1,6 +1,6 @@
 import {
-    logInFormSubmit,
-    signUpLinkListener,
+    loginFormSubmit,
+    signupLinkListener,
     togglePasswordListener,
 } from "../../modules/event_listeners.js";
 
@@ -26,10 +26,10 @@ class LoginPage {
 
     addListeners() {
         const loginForm = document.querySelector(".loginForm");
-        loginForm.addEventListener("submit", logInFormSubmit);
+        loginForm.addEventListener("submit", loginFormSubmit);
 
         const signupLink = document.getElementById("signupLink");
-        signupLink.addEventListener("click", signUpLinkListener);
+        signupLink.addEventListener("click", signupLinkListener);
 
         const togglers = document.getElementsByClassName(
             "auth-form__toggle-password",

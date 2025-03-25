@@ -1,5 +1,6 @@
 import { Chats } from "../../modules/chats.js";
-import { Auth } from "../../modules/auth.js";
+import { auth } from "../../modules/auth.js";
+import { goToPage } from "../../modules/router.js";
 
 class ChatsPage {
     constructor() {
@@ -9,7 +10,6 @@ class ChatsPage {
     async render() {
         const chatsInstance = new Chats();
         const response = await chatsInstance.getChats();
-        console.log("response", response);
 
         if (response.status === false) {
             return {
@@ -34,7 +34,6 @@ class ChatsPage {
 
     addListeners() {
         const menu = document.getElementsByClassName("sidebar__menu")[0];
-        console.log("menu", menu);
 
         menu.addEventListener("click", (event) => {
             event.preventDefault();
@@ -53,12 +52,9 @@ class ChatsPage {
                 menuItem.addEventListener("click", (event) => {
                     event.preventDefault();
 
-                    const session = new Auth();
-                    session.logout();
+                    auth.logout();
 
-                    console.log("log out");
-
-                    window.location.reload();
+                    goToPage("login");
                 });
 
                 this.popupState = true;

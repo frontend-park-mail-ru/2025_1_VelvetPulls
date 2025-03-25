@@ -71,7 +71,6 @@ function isEqualPasswords(form) {
 function checkPhone(input) {
     const cleanedValue = input.value.replace(/[^+\d]/g, "");
     const patt = /^\+7\d{10}|\+1\d{10}|\+44\d{10}|\+49\d{10}$/;
-    console.log(cleanedValue, patt.test(cleanedValue));
     return patt.test(cleanedValue);
 }
 
@@ -103,8 +102,6 @@ export function validateSignupForm(form) {
 
     for (const input of allInputs) {
         removeError(input);
-
-        console.log(`input: ${input.name}, value: ${input.value}`);
 
         if (input.value === "") {
             createError(input, "Поле не заполнено");
@@ -158,8 +155,6 @@ export function validateLoginForm(form) {
 
     for (const input of allInputs) {
         removeError(input);
-
-        console.log(`input: ${input.name}, value: ${input.value}`);
 
         if (input.value === "") {
             createError(input, "Поле не заполнено");

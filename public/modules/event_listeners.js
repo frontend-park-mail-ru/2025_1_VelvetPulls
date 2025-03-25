@@ -1,9 +1,9 @@
 import { goToPage } from "./router.js";
 import { validateSignupForm } from "./validation.js";
 import { validateLoginForm } from "./validation.js";
-import { Auth } from "./auth.js";
+import { auth } from "./auth.js";
 
-export const signUpFormSubmitListener = async (event) => {
+export const signupFormSubmitListener = async (event) => {
     event.preventDefault();
 
     let form = document.getElementsByTagName("form")[0];
@@ -17,9 +17,17 @@ export const signUpFormSubmitListener = async (event) => {
         const repeatPassword =
             document.getElementById("confirm-password").value;
 
-        const auth = new Auth();
-        await auth.register(username, cleanedPhone, password, repeatPassword);
-        goToPage("chats");
+        const response = await auth.register(
+            username,
+            cleanedPhone,
+            password,
+            repeatPassword,
+        );
+        if (response.status === true) {
+            goToPage("chats");
+        } else {
+            alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
+        }
     }
 };
 
@@ -51,7 +59,7 @@ export const phoneInputListener = (event) => {
     event.target.value = formattedValue;
 };
 
-export const logInLinkListener = (event) => {
+export const loginLinkListener = (event) => {
     event.preventDefault();
     goToPage("login");
 };
@@ -71,7 +79,7 @@ export const togglePasswordListener = (event, toggler) => {
     }
 };
 
-export const logInFormSubmit = async (event) => {
+export const loginFormSubmit = async (event) => {
     event.preventDefault();
 
     let form = document.getElementsByTagName("form")[0];
@@ -81,13 +89,16 @@ export const logInFormSubmit = async (event) => {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        const auth = new Auth();
-        await auth.login(username, password);
-        goToPage("chats");
+        const response = await auth.login(username, password);
+        if (response.status === true) {
+            goToPage("chats");
+        } else {
+            alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
+        }
     }
 };
 
-export const signUpLinkListener = (event) => {
+export const signupLinkListener = (event) => {
     event.preventDefault();
     goToPage("signup");
 };

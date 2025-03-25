@@ -37,7 +37,9 @@ class API {
             throw new Error("Could not fetch: " + error.message);
         }
 
+        console.log("response", response);
         const responseJSON = await response.json();
+        console.log("response json", responseJSON);
         return responseJSON;
     }
 

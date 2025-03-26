@@ -86,7 +86,51 @@ function checkUsername(input) {
     const patt = /^[a-zA-Z0-9_]{3,20}$/;
     return patt.test(input.value);
 }
+export function usernameInputValidate(input){
+    if (!checkUsername(input)) {
+        removeError(input);
+        createError(
+            input,
+            "Введите от 3 до 20 символов, включая латинские буквы, цифры и нижнее подчёркивание",
+        );
+        return false;
+    }
+    removeError(input);
+    return true;
+}
 
+export function cleanedPhoneInputValidate(input){
+    if (!checkPhone(input)) {
+        removeError(input);
+        createError(input, "Неверный формат номера телефона");
+        return false;
+    }
+    removeError(input);
+    return true;
+}
+
+export function passwordInputValidate(input){
+    if (!checkPassword(input)) {
+        removeError(input);
+        createError(
+            input,
+            "Введите от 8 до 32 символов, включая латинские буквы, цифры и нижнее подчёркивание",
+        );
+        return false;
+    }
+    removeError(input);
+    return true;
+}
+
+export function repeatPasswordInputValidate(input, form){
+    if (!isEqualPasswords(form)) {
+        removeError(input);
+        createError(input, "Пароли должны совпадать");
+        return false;
+    }
+    removeError(input);
+    return true;
+}
 /**
  * Валидирует форму
  *
@@ -108,39 +152,19 @@ export function validateSignupForm(form) {
             isValid = false;
         } else {
             if (input.name === "password") {
-                if (!checkPassword(input)) {
-                    createError(
-                        input,
-                        "Введите от 8 до 32 символов, включая латинские буквы, цифры и нижнее подчёркивание",
-                    );
-                    isValid = false;
-                }
+                isValid = passwordInputValidate(input);
             }
 
             if (input.name === "confirm-password") {
-                if (!isEqualPasswords(form)) {
-                    createError(input, "Пароли должны совпадать");
-                    isValid = false;
-                }
+                isValid = repeatPasswordInputValidate(input, form);
             }
 
             if (input.name === "phone") {
-                if (!checkPhone(input)) {
-                    removeError(input);
-                    createError(input, "Неверный формат номера телефона");
-                    isValid = false;
-                }
+                isValid = cleanedPhoneInputValidate(input);
             }
 
             if (input.name === "username") {
-                if (!checkUsername(input)) {
-                    removeError(input);
-                    createError(
-                        input,
-                        "Введите от 3 до 20 символов, включая латинские буквы, цифры и нижнее подчёркивание",
-                    );
-                    isValid = false;
-                }
+                isValid = usernameInputValidate(input);
             }
         }
     }

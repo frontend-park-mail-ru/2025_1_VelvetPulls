@@ -1,6 +1,12 @@
 import { goToPage } from "./router.js";
-import { validateSignupForm } from "./validation.js";
-import { validateLoginForm } from "./validation.js";
+import { 
+    validateSignupForm, 
+    validateLoginForm,  
+    usernameInputValidate, 
+    repeatPasswordInputValidate, 
+    cleanedPhoneInputValidate,
+    passwordInputValidate
+} from "./validation.js";
 import { auth } from "./auth.js";
 
 export const signupFormSubmitListener = async (event) => {
@@ -30,6 +36,21 @@ export const signupFormSubmitListener = async (event) => {
         }
     }
 };
+export const usernameInputListener = (event) =>{
+    let input = event.target;
+    usernameInputValidate(input);
+}
+
+export const passwordInputListener = (event) =>{
+    let input = event.target;
+    passwordInputValidate(input);
+}
+
+export const repeatPasswordInputListener = (event) =>{
+    let input = event.target;
+    let form = document.getElementsByTagName("form")[0];
+    repeatPasswordInputValidate(input, form);
+}
 
 export const phoneInputListener = (event) => {
     let value = event.target.value.replace(/\D/g, "");

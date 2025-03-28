@@ -1,5 +1,8 @@
-<div class="popover__list">
+<nav class="popover">
     {{#each items}}
-        <div name="{{this.name}}" class="popover__item">{{this.content}}</div>
+        <button class="popover__item">
+            <img src="{{svg}}" alt="?" class="popover__item__icon"></img>
+            <span name="{{name}}" class="popover__item__text">{{content}}</span>
+        </button>
     {{/each}}
-</div>
+</nav>

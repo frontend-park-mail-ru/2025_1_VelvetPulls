@@ -47,14 +47,17 @@ export class ListOfChats {
                 const menuPopOver = new PopOver([
                     {
                         name: "profile",
+                        svg: "../../static/img/profile_icon.svg",
                         content: "Профиль",
                     },
                     {
                         name: "contacts",
+                        svg: "../../static/img/contacts_icon.svg",
                         content: "Контакты",
                     },
                     {
                         name: "logout",
+                        svg: "../../static/img/logout_icon.svg",
                         content: "Выйти",
                     },
                 ]);

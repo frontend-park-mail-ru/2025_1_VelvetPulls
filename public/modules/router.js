@@ -51,9 +51,10 @@ export const goToPage = async (page, pushState = true) => {
     appState.activePageLink = page;
     localStorage.setItem("activePageLink", page);
 
-    console.log(`go to page "${page}"`);
+    //console.log(`go to page "${page}"`);
 
     try {
+        console.log('!');
         const response = await config[page].page.render();
 
         if (!response.ok) {

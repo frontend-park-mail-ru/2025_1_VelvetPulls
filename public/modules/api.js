@@ -31,7 +31,7 @@ class API {
                 credentials: "include",
                 body: body ? JSON.stringify(body) : null,
             };
-
+            console.log('!');
             response = await fetch(url, request);
         } catch (error) {
             throw new Error("Could not fetch: " + error.message);

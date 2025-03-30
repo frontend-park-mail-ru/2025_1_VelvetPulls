@@ -6,6 +6,6 @@ export class ProfileApi{
     }
 
     async getProfile() {
-        return await this.api.get("/profile/");
+        return await this.api.get("/profile");
     }
 }

@@ -6,6 +6,6 @@ export class ChatsApi {
     }
 
     async getChats() {
-        return await this.api.get("/chats/");
+        return await this.api.get("/chats");
     }
 }

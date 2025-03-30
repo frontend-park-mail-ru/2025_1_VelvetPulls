@@ -1,0 +1,46 @@
+@import url("../../components/AuthForm/AuthForm.css");
+
+#auth-body {
+    font-family: var(--font-family);
+    font-weight: normal;
+    font-size: 16px;
+    color: var(--black);
+    background-color: var(--white);
+    background: url(../img/Authorization.png) no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-auth {
+    width: 35%;
+    box-shadow: 0 0px 15px 0px var(--black);
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--white);
+}
+
+.main-auth__logo {
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    margin: 5%;
+    font-family: var(--second-family);
+    font-size: 44px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.register-link__link {
+    color: var(--main);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.register-link {
+    display: flex;
+    justify-content: center;
+    align-items: bottom;
+    margin: 5%;
+}

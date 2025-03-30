@@ -1,6 +1,6 @@
 <header class="header">
   <nav class="header__nav">
-    <button class="header__back-btn" aria-label="Go back">
+    <button class="header__back-btn" aria-label="Go back" name="back">
       <img alt="?"></img>
     </button>
     <h1 class="header__title">Профиль</h1>
@@ -18,9 +18,9 @@
 <hr class="divider">
 
 <main class="profile">
-  <section class="profile__hero">
+  <section class="profile__hero" style="background-image: url({{avatar_path}})">
     <div class="profile__info">
-      <h2 class="profile__name">Ruslan Novikov</h2>
+      <h2 class="profile__name">{{first_name}} {{last_name}}</h2>
       <p class="profile__status">В сети</p>
     </div>
   </section>
@@ -29,7 +29,7 @@
     <article class="contact-item">
       <img alt="?"></img>
       <div class="contact-item__content">
-        <p class="contact-item__value">+7 777 777-77-77</p>
+        <p class="contact-item__value">+{{phone}}</p>
         <p class="contact-item__label">Телефон</p>
       </div>
     </article>
@@ -39,7 +39,7 @@
     <article class="contact-item">
       <img alt="?"></img>
       <div class="contact-item__content">
-        <p class="contact-item__value">@spider_man</p>
+        <p class="contact-item__value">@{{username}}</p>
         <p class="contact-item__label">Имя пользователя</p>
       </div>
     </article>
@@ -49,7 +49,7 @@
     <article class="contact-item">
       <img alt="?"></img>
       <div class="contact-item__content">
-        <p class="contact-item__value">12 июня 2002 (22 года)</p>
+        <p class="contact-item__value">{{birthday}}</p>
         <p class="contact-item__label">День рождения</p>
       </div>
     </article>

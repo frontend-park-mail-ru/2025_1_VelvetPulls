@@ -1,7 +1,23 @@
 import { ListOfChats } from "../ListOfChats/ListOfChats.js";
+import { ProfileApi } from "../../modules/profile.js";
 
 export class Profile {
-    getData() {
+    constructor() {
+        this.popupState = false;
+    }
+    async getData() {
+        const profileInstance = new ProfileApi();
+        const response = await profileInstance.getProfile();
+    
+        if (response.status === false) {
+            return {
+                ok: false,
+                error: response.error,
+            };
+        }
+    
+        this.profile = response.data;
+    
         return {
             ok: true,
             error: "",
@@ -10,7 +26,8 @@ export class Profile {
 
     getHTML() {
         const template = Handlebars.templates["Profile.hbs"];
-        return template();
+        const profile = this.profile;
+        return template({ profile });
     }
 
     addListeners(mainPage) {

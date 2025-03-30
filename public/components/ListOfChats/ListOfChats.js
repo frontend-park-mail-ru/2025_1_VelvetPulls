@@ -1,4 +1,4 @@
-import { Chats } from "../../modules/chats.js";
+import { ChatsApi } from "../../modules/chats.js";
 import { PopOver } from "../PopOver/PopOver.js";
 import { auth } from "../../modules/auth.js";
 import { Profile } from "../Profile/Profile.js";
@@ -11,7 +11,7 @@ export class ListOfChats {
     }
 
     async getData() {
-        const chatsInstance = new Chats();
+        const chatsInstance = new ChatsApi();
         const response = await chatsInstance.getChats();
 
         if (response.status === false) {

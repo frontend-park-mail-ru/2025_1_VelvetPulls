@@ -1,6 +1,6 @@
 import { api } from "./api.js";
 
-export class Chats {
+export class ChatsApi {
     constructor() {
         this.api = api;
     }

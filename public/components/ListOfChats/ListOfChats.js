@@ -35,7 +35,7 @@ export class ListOfChats {
             const response = await chatsInstance.getChats();
             
             if (response && response.status !== false) {
-                this.chats = response.data;
+                this.data = response.data;
                 return {
                     ok: true,
                     error: "",
@@ -44,7 +44,7 @@ export class ListOfChats {
             }
             
             console.warn("Using mock chat data:", response?.error || "Backend unavailable");
-            this.chats = this.defaultChats;
+            this.data = this.defaultChats;
             return {
                 ok: false,
                 error: response?.error || "Backend unavailable",
@@ -125,11 +125,27 @@ export class ListOfChats {
         const popoverElement = this.popover.getHTML();
         document.body.appendChild(popoverElement);
         
-        // Позиционируем popover рядом с кнопкой меню
-        this.positionPopover(menuButton, popoverElement);
+        popoverElement.style.position = 'fixed';
+        popoverElement.style.top = '0';
+        popoverElement.style.left = '0';
+        popoverElement.style.width = '0';
+        popoverElement.style.height = '0';
+        popoverElement.style.overflow = 'visible';
         
-        // Добавляем обработчики
+        this.positionPopover(menuButton, popoverElement);
         this.setupPopoverListeners(mainPage, popoverElement);
+    }
+    
+    positionPopover(menuButton, popoverElement) {
+        const buttonRect = menuButton.getBoundingClientRect();
+        const popoverContent = popoverElement.querySelector('.popover');
+        
+        if (popoverContent) {
+            popoverContent.style.position = 'absolute';
+            popoverContent.style.top = `${buttonRect.bottom}px`;
+            popoverContent.style.left = `${buttonRect.left}px`;
+            popoverContent.style.zIndex = '1000';
+        }
     }
     
     closePopover() {

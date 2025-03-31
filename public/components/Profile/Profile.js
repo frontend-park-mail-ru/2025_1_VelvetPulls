@@ -16,7 +16,7 @@ export class Profile {
             };
         }
     
-        this.profile = response.data;
+        this.data = response.data;
     
         return {
             ok: true,
@@ -26,7 +26,7 @@ export class Profile {
 
     getHTML() {
         const template = Handlebars.templates["Profile.hbs"];
-        const profile = this.profile;
+        const profile = this.data;
         return template({ profile });
     }
 

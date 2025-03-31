@@ -18,7 +18,7 @@ class MainPage {
         const mainPageTemplate = Handlebars.templates["mainPage.hbs"];
         //TODO исправить на универсальный ренедер хтмл
         const html = mainPageTemplate({ 
-            chats: this.sidebar.chats.chats,
+            ...this.sidebar.data,
             isMockData: response.isMockData 
         });
 

@@ -18,7 +18,7 @@ export const signupFormSubmitListener = async (event) => {
     if (formIsValid) {
         const username = document.getElementById("username").value;
         const phone = document.getElementById("phone").value;
-        const cleanedPhone = phone.replace(/[^+\d]/g, "");
+        const cleanedPhone = phone.replace(/[^\d]/g, "");
         const password = document.getElementById("password").value;
         const repeatPassword =
             document.getElementById("confirm-password").value;

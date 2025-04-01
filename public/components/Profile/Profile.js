@@ -27,7 +27,8 @@ export class Profile {
     getHTML() {
         const template = Handlebars.templates["Profile.hbs"];
         const profile = this.data;
-        return template({ profile });
+        console.log(profile);
+        return template({ ...profile });
     }
 
     addListeners(mainPage) {

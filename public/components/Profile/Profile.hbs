@@ -18,9 +18,9 @@
 <hr class="divider">
 
 <main class="profile">
-  <section class="profile__hero" style="background-image: url({{avatar_path}})">
+  <section class="profile__hero" style="background-image: url({{this.avatar_path}})">
     <div class="profile__info">
-      <h2 class="profile__name">{{first_name}} {{last_name}}</h2>
+      <h2 class="profile__name">{{this.first_name}} {{this.last_name}}</h2>
       <p class="profile__status">В сети</p>
     </div>
   </section>
@@ -29,7 +29,7 @@
     <article class="contact-item">
       <img alt="?"></img>
       <div class="contact-item__content">
-        <p class="contact-item__value">+{{phone}}</p>
+        <p class="contact-item__value">+{{this.phone}}</p>
         <p class="contact-item__label">Телефон</p>
       </div>
     </article>
@@ -39,7 +39,7 @@
     <article class="contact-item">
       <img alt="?"></img>
       <div class="contact-item__content">
-        <p class="contact-item__value">@{{username}}</p>
+        <p class="contact-item__value">@{{this.username}}</p>
         <p class="contact-item__label">Имя пользователя</p>
       </div>
     </article>
@@ -49,7 +49,7 @@
     <article class="contact-item">
       <img alt="?"></img>
       <div class="contact-item__content">
-        <p class="contact-item__value">{{birthday}}</p>
+        <p class="contact-item__value">{{this.birthday}}</p>
         <p class="contact-item__label">День рождения</p>
       </div>
     </article>

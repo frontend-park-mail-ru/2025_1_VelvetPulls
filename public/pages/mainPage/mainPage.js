@@ -17,7 +17,6 @@ class MainPage {
 
         const mainPageTemplate = Handlebars.templates["mainPage.hbs"];
         console.log(this.sidebar.data, response);
-        //TODO исправить на универсальный ренедер хтмл
         const html = mainPageTemplate({ 
             ...this.sidebar.data,
             isMockData: response.isMockData 

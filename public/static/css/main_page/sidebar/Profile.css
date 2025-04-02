@@ -172,3 +172,79 @@
       margin: 0 auto;
     }
   }
+
+  /* Profile Edit Form */
+.profile-edit {
+  display: flex;
+  font-family: var(--font-family);
+  flex-direction: column;
+}
+
+.avatar-upload {
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar-upload__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  color: var(--black);
+  text-align: center;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.avatar-upload:hover .avatar-upload__overlay {
+  opacity: 1;
+}
+
+.profile__edit-fields {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--white);
+  border-radius: 4px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--main);
+  color: var(--white);
+  border: none;
+}
+
+.btn-secondary {
+  background-color: var(--gray);
+  color: var(--white);
+  border: none;
+}

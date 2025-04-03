@@ -1,12 +1,15 @@
 import { ListOfChats } from "../ListOfChats/ListOfChats.js";
 import { ProfileApi } from "../../modules/profile.js";
 import { goToPage } from "../../modules/router.js";
+import { API_URI } from "../../modules/api.js";
 
 export class Profile {
     constructor() {
         this.popupState = false;
         this.isEditMode = false;
         this.profileApi = new ProfileApi();
+        this.data = {};
+        this.original_avatar_url = null;
     }
 
     async getData() {
@@ -21,6 +24,10 @@ export class Profile {
             }
         
             this.data = response.data;
+            if (this.data.avatar_path) {
+                this.data.avatar_url = this.getFullAvatarUrl(this.data.avatar_path);
+            }
+            
             return {
                 ok: true,
                 error: "",
@@ -33,6 +40,11 @@ export class Profile {
                 error: "Ошибка загрузки профиля",
             };
         }
+    }
+    
+    getFullAvatarUrl(relativePath) {
+        const cleanPath = relativePath.startsWith('.') ? relativePath.substring(1) : relativePath;
+        return `${API_URI}${cleanPath}`;
     }
 
     getHTML() {
@@ -73,50 +85,68 @@ export class Profile {
     }
 
     async saveProfile(mainPage) {
-        const formData = {
+        const profileData = {
             first_name: document.getElementById("firstName").value,
             last_name: document.getElementById("lastName").value,
             phone: document.getElementById("phone").value,
             username: document.getElementById("username").value,
-            //birthday: document.getElementById("birthday").value
+            email: document.getElementById("email").value
         };
-
+    
+        const avatarInput = document.getElementById("avatarUpload");
+        const avatarFile = avatarInput.files.length > 0 ? avatarInput.files[0] : null;
+    
         try {
-            const response = await this.profileApi.updateProfile(formData);
+            document.body.classList.add('uploading');
+            
+            const response = await this.profileApi.updateProfile(profileData, avatarFile);
             
             if (response.status === false) {
-                alert("Ошибка обновления: " + response.error);
-                return;
+                throw new Error(response.error || "Unknown error");
             }
-
+    
             this.data = response.data;
             this.isEditMode = false;
             mainPage.render();
             
         } catch (error) {
             console.error("Profile update error:", error);
-            alert("Ошибка при сохранении профиля");
+            alert(`Ошибка при сохранении профиля: ${error.message}`);
+        } finally {
+            document.body.classList.remove('uploading');
         }
     }
 
     async handleAvatarUpload(event, mainPage) {
         const file = event.target.files[0];
         if (!file) return;
-
+    
+        const previewUrl = URL.createObjectURL(file);
+        this.data.avatar_url= previewUrl;
+        mainPage.render();
+    
         try {
-            const response = await this.profileApi.uploadAvatar(file);
+            const response = await this.profileApi.updateProfile(null, file);
             
             if (response.status === false) {
-                alert("Ошибка загрузки аватара: " + response.error);
-                return;
+                throw new Error(response.error || "Ошибка обновления аватара");
             }
 
-            this.data.avatar_path = response.data.avatar_path;
+            if (response.data.avatar_path) {
+                this.data.avatar_url = this.getFullAvatarUrl(response.data.avatar_path);
+            }
+
             mainPage.render();
             
         } catch (error) {
             console.error("Avatar upload error:", error);
-            alert("Ошибка при загрузке аватара");
+            alert(error.message);
+            if (this.data.original_avatar_url) {
+                this.data.avatar_url = this.data.original_avatar_url;
+            }
+            mainPage.render();
+        } finally {
+            URL.revokeObjectURL(previewUrl);
         }
     }
 
@@ -146,7 +176,6 @@ export class Profile {
     }
 
     addEditFormListeners(mainPage) {
-        // Сохранение формы
         document.getElementById("profileForm")?.addEventListener("submit", (e) => {
             e.preventDefault();
             this.saveProfile(mainPage);

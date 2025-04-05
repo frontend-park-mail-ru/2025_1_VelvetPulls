@@ -1,0 +1,8 @@
+@import url("shared/static/css/auth.css");
+@import url("shared/static/css/common.css");
+@import url("shared/static/css/fonts.css");
+
+@import url("widgets/Contacts/Contacts.css");
+@import url("widgets/PopOver/PopOver.css");
+
+@import url("pages/MainPage/css/index.css");

@@ -51,9 +51,10 @@ export const goToPage = async (page, pushState = true) => {
     appState.activePageLink = page;
     localStorage.setItem("activePageLink", page);
 
-    console.log(`go to page "${page}"`);
+    //console.log(`go to page "${page}"`);
 
     try {
+        console.log('!');
         const response = await config[page].page.render();
 
         if (!response.ok) {
@@ -71,4 +72,14 @@ export const goToPage = async (page, pushState = true) => {
         console.error(`Error rendering page "${page}":`, error);
         goToPage("login");
     }
+    /*const response = await config[page].page.render();
+
+    if (!response.ok) {
+        if (response.error === "invalid session token") {
+            goToPage("login");
+        }
+    }
+    
+    window.history.pushState(config[page].href, "", config[page].href);
+    document.title = config[page].title;*/
 };

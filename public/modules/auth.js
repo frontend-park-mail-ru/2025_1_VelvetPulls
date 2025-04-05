@@ -12,7 +12,7 @@ export class Auth {
      * @returns {boolean} Получение ответа от сервера
      */
     async login(username, password) {
-        return this.api.post("/login/", {
+        return this.api.post("/login", {
             username,
             password,
         });
@@ -27,7 +27,7 @@ export class Auth {
      * @returns {boolean} Получение ответа от сервера
      */
     async register(username, phone, password, confirm_password) {
-        return this.api.post("/register/", {
+        return this.api.post("/register", {
             username,
             phone,
             password,
@@ -36,7 +36,7 @@ export class Auth {
     }
 
     async logout() {
-        return this.api.delete("/logout/");
+        return this.api.delete("/logout");
     }
 }
 

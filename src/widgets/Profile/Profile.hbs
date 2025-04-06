@@ -1,136 +1,136 @@
 <header class="header">
-  <nav class="header__nav">
-    <button class="header__back-btn" aria-label="Go back" name="back">
-      <img alt="?"></img>
-    </button>
-    <h1 class="header__title">Профиль</h1>
-  </nav>
-  <div class="header__actions">
-    {{#unless isEditMode}}
-      <button class="header__action-btn" aria-label="Edit">
-        <img alt="?"></img>
-      </button>
-    {{/unless}}
-    <button class="header__action-btn" aria-label="Options">
-      <img alt="?"></img>
-    </button>
-  </div>
+    <nav class="header__nav">
+        <button class="header__back-btn" aria-label="Go back" name="back">
+            <img alt="?"></img>
+        </button>
+        <h1 class="header__title">Профиль</h1>
+    </nav>
+    <div class="header__actions">
+        {{#unless isEditMode}}
+            <button class="header__action-btn" aria-label="Edit">
+                <img alt="?"></img>
+            </button>
+        {{/unless}}
+        <button class="header__action-btn" aria-label="Options">
+            <img alt="?"></img>
+        </button>
+    </div>
 </header>
 
 <hr class="divider">
 
 {{#if isEditMode}}
-  <!-- Форма редактирования -->
-  <form id="profileForm" class="profile-edit" enctype="multipart/form-data">
-    <section class="profile__hero" style="background-image: url({{this.avatar_url}})">
-      <label class="avatar-upload">
-        <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
-        <div class="avatar-upload__overlay">Изменить фото</div>
-      </label>
-    </section>
+    <!-- Форма редактирования -->
+    <form id="profileForm" class="profile-edit" enctype="multipart/form-data">
+        <section class="profile__hero" style="background-image: url({{this.avatar_url}})">
+            <label class="avatar-upload">
+                <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                <div class="avatar-upload__overlay">Изменить фото</div>
+            </label>
+        </section>
 
-    <section class="profile__edit-fields">
-      <div class="form-group">
-        <label for="firstName">Имя</label>
-        <input type="text" id="firstName" value="{{this.first_name}}" required>
-      </div>
+        <section class="profile__edit-fields">
+            <div class="form-group">
+                <label for="firstName">Имя</label>
+                <input type="text" id="firstName" value="{{this.first_name}}" required>
+            </div>
 
-      <div class="form-group">
-        <label for="lastName">Фамилия</label>
-        <input type="text" id="lastName" value="{{this.last_name}}" required>
-      </div>
+            <div class="form-group">
+                <label for="lastName">Фамилия</label>
+                <input type="text" id="lastName" value="{{this.last_name}}" required>
+            </div>
 
-      <div class="form-group">
-        <label for="phone">Телефон</label>
-        <input type="tel" id="phone" value="{{this.phone}}" required>
-      </div>
+            <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" value="{{this.phone}}" required>
+            </div>
 
-      <div class="form-group">
-        <label for="username">Имя пользователя</label>
-        <input type="text" id="username" value="{{this.username}}" required>
-      </div>
+            <div class="form-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" value="{{this.username}}" required>
+            </div>
 
-      <div class="form-group">
-        <label for="birthday">Электронная почта</label>
-        <input type="text" id="email" value="{{this.email}}">
-      </div>
+            <div class="form-group">
+                <label for="birthday">Электронная почта</label>
+                <input type="text" id="email" value="{{this.email}}">
+            </div>
 
-      <div class="form-actions">
-        <button type="button" id="cancelEdit" class="btn btn-secondary">Отмена</button>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-      </div>
-    </section>
-  </form>
+            <div class="form-actions">
+                <button type="button" id="cancelEdit" class="btn btn-secondary">Отмена</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </section>
+    </form>
 {{else}}
-  <!-- Просмотр профиля -->
-  <main class="profile">
-    <section class="profile__hero" style="background-image: url({{this.avatar_url}})">
-      <div class="profile__info">
-        <h2 class="profile__name">{{this.first_name}} {{this.last_name}}</h2>
-        <p class="profile__status">В сети</p>
-      </div>
-    </section>
+    <!-- Просмотр профиля -->
+    <main class="profile">
+        <section class="profile__hero" style="background-image: url({{this.avatar_url}})">
+            <div class="profile__info">
+                <h2 class="profile__name">{{this.first_name}} {{this.last_name}}</h2>
+                <p class="profile__status">В сети</p>
+            </div>
+        </section>
 
-    <section class="profile__details">
-      <article class="contact-item">
-        <img alt="?"></img>
-        <div class="contact-item__content">
-          <p class="contact-item__value">+{{this.phone}}</p>
-          <p class="contact-item__label">Телефон</p>
-        </div>
-      </article>
+        <section class="profile__details">
+            <article class="contact-item">
+                <img alt="?"></img>
+                <div class="contact-item__content">
+                    <p class="contact-item__value">+{{this.phone}}</p>
+                    <p class="contact-item__label">Телефон</p>
+                </div>
+            </article>
 
-      <hr class="divider">
+            <hr class="divider">
 
-      <article class="contact-item">
-        <img alt="?"></img>
-        <div class="contact-item__content">
-          <p class="contact-item__value">@{{this.username}}</p>
-          <p class="contact-item__label">Имя пользователя</p>
-        </div>
-      </article>
+            <article class="contact-item">
+                <img alt="?"></img>
+                <div class="contact-item__content">
+                    <p class="contact-item__value">@{{this.username}}</p>
+                    <p class="contact-item__label">Имя пользователя</p>
+                </div>
+            </article>
 
-      <hr class="divider">
+            <hr class="divider">
 
-      <article class="contact-item">
-        <img alt="?"></img>
-        <div class="contact-item__content">
-          <p class="contact-item__value">{{this.email}}</p>
-          <p class="contact-item__label">Электронная почта</p>
-        </div>
-      </article>
-    </section>
+            <article class="contact-item">
+                <img alt="?"></img>
+                <div class="contact-item__content">
+                    <p class="contact-item__value">{{this.email}}</p>
+                    <p class="contact-item__label">Электронная почта</p>
+                </div>
+            </article>
+        </section>
 
-    <div class="spacer"></div>
-    
-    <section class="settings">
-    <nav class="settings__nav">
-      <a href="#" class="settings-item">
-        <img alt="?"></img>
-        <span class="settings-item__text">Общие настройки</span>
-      </a>
+        <div class="spacer"></div>
 
-      <hr class="divider">
+        <section class="settings">
+            <nav class="settings__nav">
+                <a href="#" class="settings-item">
+                    <img alt="?"></img>
+                    <span class="settings-item__text">Общие настройки</span>
+                </a>
 
-      <a href="#" class="settings-item">
-        <img alt="?"></img>
-        <span class="settings-item__text">Анимации и скорость</span>
-      </a>
+                <hr class="divider">
 
-      <hr class="divider">
+                <a href="#" class="settings-item">
+                    <img alt="?"></img>
+                    <span class="settings-item__text">Анимации и скорость</span>
+                </a>
 
-      <a href="#" class="settings-item">
-         <img alt="?"></img>
-        <span class="settings-item__text">Уведомления</span>
-      </a>
+                <hr class="divider">
 
-      <hr class="divider">
+                <a href="#" class="settings-item">
+                    <img alt="?"></img>
+                    <span class="settings-item__text">Уведомления</span>
+                </a>
 
-      <a href="#" class="settings-item">
-        <img alt="?"></img>
-        <span class="settings-item__text">Данные и память</span>
-      </a>
-    </nav>
-  </section>
-  </main>
+                <hr class="divider">
+
+                <a href="#" class="settings-item">
+                    <img alt="?"></img>
+                    <span class="settings-item__text">Данные и память</span>
+                </a>
+            </nav>
+        </section>
+    </main>
 {{/if}}

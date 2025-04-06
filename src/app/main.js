@@ -1,4 +1,5 @@
-import { appState, goToPage, initRouter, config } from "./router.js";
+import { appState, initRouter, config } from "./router.js";
+import { goToPage } from "../shared/helpers/goToPage.js";
 
 export const appInit = () => {
     initRouter();

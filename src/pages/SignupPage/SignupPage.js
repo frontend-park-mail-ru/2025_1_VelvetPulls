@@ -1,12 +1,13 @@
 import {
     phoneInputListener,
-    loginLinkListener,
     signupFormSubmitListener,
     togglePasswordListener,
     usernameInputListener,
     passwordInputListener,
     repeatPasswordInputListener,
 } from "../../shared/helpers/eventListeners.js";
+import { toLogin } from "./eventListeners.js";
+import { RenderResult } from "../../shared/modules/RenderResponse.js";
 import { AuthForm } from "../../widgets/AuthForm/AuthForm.js";
 
 class SignupPage {
@@ -38,29 +39,26 @@ class SignupPage {
             },
         ];
         this.submitButtonText = "Создать аккаунт";
-        this.redirectText = "Войдите";
     }
 
     addListeners() {
-        const phoneInput = document.getElementById("phone");
+        const phoneInput = this.container.querySelector("#phone");
         phoneInput.addEventListener("input", phoneInputListener);
 
-        const username = document.getElementById("username");
+        const username = this.container.querySelector("#username");
         username.addEventListener("input", usernameInputListener);
 
-        const password = document.getElementById("password");
+        const password = this.container.querySelector("#password");
         password.addEventListener("input", passwordInputListener);
 
-        const repeatPassword = document.getElementById("confirm-password");
+        const repeatPassword =
+            this.container.querySelector("#confirm-password");
         repeatPassword.addEventListener("input", repeatPasswordInputListener);
 
-        const signupForm = document.querySelector(".signupForm");
+        const signupForm = this.container.querySelector(".auth-form");
         signupForm.addEventListener("submit", signupFormSubmitListener);
 
-        const loginLink = document.getElementById("loginLink");
-        loginLink.addEventListener("click", loginLinkListener);
-
-        const togglers = document.getElementsByClassName(
+        const togglers = this.container.querySelectorAll(
             "auth-form__toggle-password",
         );
         for (const toggler of togglers) {
@@ -68,29 +66,40 @@ class SignupPage {
                 togglePasswordListener(event, toggler);
             });
         }
+
+        // ------------------
+
+        const loginLink = this.container.querySelector("#loginLink");
+        console.log("link", loginLink);
+        loginLink.addEventListener("click", toLogin);
     }
 
     render() {
+        const signupPageTemplate = Handlebars.templates["SignupPage.hbs"];
+        const html = signupPageTemplate({});
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const container = doc.body.firstChild;
+        this.container = container;
+
         const fields = this.fields;
         const submitButtonText = this.submitButtonText;
 
         const signupForm = new AuthForm(fields, submitButtonText);
-        const signupFormHTML = signupForm.getHTML();
-        Handlebars.registerPartial("signupForm", signupFormHTML);
+        const signupFormDomElement = signupForm.render();
 
-        const loginTemplate = Handlebars.templates["SignupPage.hbs"];
+        console.log("signup form", signupFormDomElement);
+        console.log("container", container);
 
-        const redirectText = this.redirectText;
+        const logo = container.querySelector("#main-auth__logo");
+        logo.after(signupFormDomElement);
 
-        const html = loginTemplate({ redirectText });
-        const root = document.getElementById("root");
-        root.innerHTML = html;
         this.addListeners();
 
-        return {
-            ok: true,
-            error: "",
-        };
+        return new RenderResult({
+            domElement: container,
+        });
     }
 }
 

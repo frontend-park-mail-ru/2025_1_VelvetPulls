@@ -1,6 +1,6 @@
 import { ListOfChats } from "../ListOfChats/ListOfChats.js";
 import { ProfileApi } from "./api/profile.js";
-import { goToPage } from "../../app/router.js";
+import { goToPage } from "../../shared/helpers/goToPage.js";
 import { API_URI } from "../../shared/api/api.js";
 import { auth } from "../../shared/api/auth.js";
 

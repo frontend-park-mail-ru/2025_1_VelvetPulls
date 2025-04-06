@@ -1,36 +1,38 @@
-<header class="sidebar__header">
-    <button class="sidebar__menu">
-        <img src="/widgets/ListOfChats/assets/MenuIcon.svg" alt="Menu" class="sidebar__icon" />
-    </button>
-    
-    <div class="sidebar__search-wrapper">
-        <img src="/widgets/ListOfChats/assets/SearchIcon.svg" alt="Search" class="sidebar__icon" />
-        <input type="text" class="sidebar__search" placeholder="Поиск чата">
-    </div>
-</header>
-
-<div class="sidebar__divider"></div>
-
-<section class="sidebar__chat-list">
-    {{#each chats}}
-    <div class="chat-item {{#if this.active}}chat-item--active{{/if}}">
-        <img src="{{this.avatarUrl}}" alt="User avatar" class="chat-item__avatar" />
-        <div class="chat-item__info">
-            <h3 class="chat-item__name">{{this.title}}</h3>
-            <p class="chat-item__preview">{{this.description}}</p>
+<div class="sidebar">
+    <header class="sidebar__header">
+        <button class="sidebar__menu">
+            <img src="/widgets/ListOfChats/assets/MenuIcon.svg" alt="Menu" class="sidebar__icon" />
+        </button>
+        
+        <div class="sidebar__search-wrapper">
+            <img src="/widgets/ListOfChats/assets/SearchIcon.svg" alt="Search" class="sidebar__icon" />
+            <input type="text" class="sidebar__search" placeholder="Поиск чата">
         </div>
-        <div class="chat-item__meta">
-            <time class="chat-item__time">{{this.time}}11:00</time>
-            {{#if this.unreadCount}}
-            <div class="chat-item__flag">
-                <span class="chat-item__unread-count">{{this.unreadCount}}</span>
+    </header>
+
+    <div class="sidebar__divider"></div>
+
+    <section class="sidebar__chat-list">
+        {{#each chats}}
+        <div class="chat-item {{#if this.active}}chat-item--active{{/if}}">
+            <img src="{{this.avatarUrl}}" alt="User avatar" class="chat-item__avatar" />
+            <div class="chat-item__info">
+                <h3 class="chat-item__name">{{this.title}}</h3>
+                <p class="chat-item__preview">{{this.description}}</p>
             </div>
-            {{/if}}
+            <div class="chat-item__meta">
+                <time class="chat-item__time">{{this.time}}11:00</time>
+                {{#if this.unreadCount}}
+                <div class="chat-item__flag">
+                    <span class="chat-item__unread-count">{{this.unreadCount}}</span>
+                </div>
+                {{/if}}
+            </div>
         </div>
-    </div>
-    {{/each}}
-    <button class="sidebar__new-chat-button">
-        <img src="/widgets/ListOfChats/assets/AddIcon.svg"
-            alt="New chat" class="sidebar__new-chat-icon" />
-    </button>
-</section>
+        {{/each}}
+        <button class="sidebar__new-chat-button">
+            <img src="/widgets/ListOfChats/assets/AddIcon.svg"
+                alt="New chat" class="sidebar__new-chat-icon" />
+        </button>
+    </section>
+</div>

@@ -1,4 +1,7 @@
+import { RenderResult } from "../../shared/modules/RenderResponse.js";
 import { ListOfChats } from "../../widgets/ListOfChats/ListOfChats.js";
+// import { Contacts } from "../../widgets/Contacts/Contacts.js";
+// import { goToPage } from "../../shared/helpers/goToPage.js";
 
 class MainPage {
     constructor() {
@@ -6,31 +9,25 @@ class MainPage {
     }
 
     async render() {
-        console.log(this.sidebar);
-
-        const response = await this.sidebar.getData();
-        if (!response.ok && !response.isMockData) {
-            return response;
-        }
-        const sidebarHTML = this.sidebar.getHTML();
-        Handlebars.registerPartial("sidebar", sidebarHTML);
-
         const mainPageTemplate = Handlebars.templates["MainPage.hbs"];
-        console.log(this.sidebar.data, response);
-        const html = mainPageTemplate({
-            ...this.sidebar.data,
-            isMockData: response.isMockData,
-        });
+        const html = mainPageTemplate({});
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const container = doc.body.firstChild;
+
+        const sidebar = this.sidebar.render();
+        console.log(sidebar);
+        container.insertBefore(sidebar, container.firstChild);
+        console.log(container);
 
         const root = document.getElementById("root");
-        root.innerHTML = html;
+        root.appendChild(container);
 
-        this.sidebar.addListeners(this);
-
-        return {
-            ok: true,
-            error: "",
-        };
+        return new RenderResult({
+            domElement: container,
+        });
     }
 }
 

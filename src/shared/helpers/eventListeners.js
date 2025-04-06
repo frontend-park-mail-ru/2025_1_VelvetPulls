@@ -1,4 +1,4 @@
-import { goToPage } from "../../app/router.js";
+import { goToPage } from "./goToPage.js";
 import {
     validateSignupForm,
     validateLoginForm,
@@ -79,11 +79,6 @@ export const phoneInputListener = (event) => {
     event.target.value = formattedValue;
 };
 
-export const loginLinkListener = (event) => {
-    event.preventDefault();
-    goToPage("login");
-};
-
 export const togglePasswordListener = (event, toggler) => {
     event.preventDefault();
 
@@ -116,9 +111,4 @@ export const loginFormSubmit = async (event) => {
             alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
         }
     }
-};
-
-export const signupLinkListener = (event) => {
-    event.preventDefault();
-    goToPage("signup");
 };

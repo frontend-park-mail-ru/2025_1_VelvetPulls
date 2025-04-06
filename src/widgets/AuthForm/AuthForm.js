@@ -4,7 +4,7 @@ export class AuthForm {
         this.submitButtonText = submitButtonText;
     }
 
-    getHTML() {
+    render() {
         Handlebars.registerHelper("eq", function (a, b) {
             return a === b;
         });
@@ -14,9 +14,14 @@ export class AuthForm {
         const fields = this.fields;
         const submitButtonText = this.submitButtonText;
 
-        return template({
-            fields,
-            submitButtonText,
-        });
+        const html = template({ fields, submitButtonText });
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const domElement = doc.body.firstChild;
+        console.log("form", domElement);
+
+        return domElement;
     }
 }

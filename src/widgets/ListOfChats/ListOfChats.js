@@ -1,12 +1,14 @@
 import { auth } from "../../shared/api/auth.js";
-import { ChatsApi } from "../../shared/api/chats.js";
-import { PopOver } from "../PopOver/PopOver.js";
+import { PopOver } from "../../features/PopOver/PopOver.js";
 import { Profile } from "../Profile/Profile.js";
-import { goToPage } from "../../app/router.js";
+import { goToPage } from "../../shared/helpers/goToPage.js";
 import { Contacts } from "../Contacts/Contacts.js";
+
+import { mainPage } from "../../pages/MainPage/MainPage.js";
 
 export class ListOfChats {
     constructor() {
+        this.sidebar = null;
         this.popover = null;
         this.defaultChats = {
             chats: [
@@ -32,52 +34,36 @@ export class ListOfChats {
         };
     }
 
-    async getData() {
-        try {
-            const chatsInstance = new ChatsApi();
-            const response = await chatsInstance.getChats();
-
-            if (response && response.status !== false) {
-                this.data = response.data;
-                return {
-                    ok: true,
-                    error: "",
-                    isMockData: false,
-                };
-            }
-
-            // console.warn(
-            //     "Using mock chat data:",
-            //     response?.error || "Backend unavailable",
-            // );
-            this.data = this.defaultChats;
-            return {
-                ok: false,
-                error: response?.error || "Backend unavailable",
-                isMockData: true,
-            };
-        } catch (error) {
-            // console.error("Chats API error:", error);
-            this.chats = this.defaultChats;
-            return {
-                ok: false,
-                error: error.message,
-                isMockData: true,
-            };
-        }
+    getData() {
+        this.chats = this.defaultChats;
     }
 
-    getHTML() {
+    render() {
+        this.getData();
+
         const template = Handlebars.templates["ListOfChats.hbs"];
         const context = {
             chats: this.chats.chats,
             isMockData: this.chats === this.defaultChats,
         };
-        return template(context);
+
+        const html = template(context);
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const sidebar = doc.body.firstChild;
+        this.sidebar = sidebar;
+
+        this.addListeners();
+
+        return sidebar;
     }
 
-    addListeners(mainPage) {
-        const menuButton = document.querySelector(".sidebar__menu");
+    addListeners() {
+        console.log("list of chats add listeners");
+
+        const menuButton = this.sidebar.querySelector(".sidebar__menu");
 
         if (!menuButton) return;
 
@@ -87,40 +73,40 @@ export class ListOfChats {
             event.stopPropagation();
 
             if (this.popover) {
-                this.closePopover();
+                this.closeMenu();
             } else {
-                this.openPopover(menuButton, mainPage);
+                this.openMenu();
             }
         });
 
         // Закрытие при клике вне popover
-        document.addEventListener("click", (event) => {
-            if (this.popover && !event.target.closest(".sidebar__menu")) {
-                this.closePopover();
-            }
-        });
+        // document.addEventListener("click", (event) => {
+        //     if (this.popover && !event.target.closest(".sidebar__menu")) {
+        //         this.closeMenu();
+        //     }
+        // });
     }
 
-    openPopover(menuButton, mainPage) {
+    openMenu() {
         // Закрываем предыдущий popover, если есть
         if (this.popover) {
-            this.closePopover();
+            this.closeMenu();
         }
 
         // Создаем новый popover
         this.popover = new PopOver([
             {
-                name: "profile",
+                id: "profile",
                 svgPath: "/widgets/ListOfChats/assets/ProfileIcon.svg",
                 content: "Профиль",
             },
             {
-                name: "contacts",
+                id: "contacts",
                 svgPath: "/widgets/ListOfChats/assets/ContactsIcon.svg",
                 content: "Контакты",
             },
             {
-                name: "logout",
+                id: "logout",
                 svgPath: "/widgets/ListOfChats/assets/LogoutIcon.svg",
                 content: "Выйти",
             },
@@ -137,11 +123,12 @@ export class ListOfChats {
         popoverElement.style.height = "0";
         popoverElement.style.overflow = "visible";
 
-        this.positionPopover(menuButton, popoverElement);
-        this.setupPopoverListeners(mainPage, popoverElement);
+        this.positionPopover(popoverElement);
+        this.setupMenuListeners(popoverElement);
     }
 
-    positionPopover(menuButton, popoverElement) {
+    positionPopover(popoverElement) {
+        const menuButton = this.sidebar.querySelector(".sidebar__menu");
         const buttonRect = menuButton.getBoundingClientRect();
         const popoverContent = popoverElement.querySelector(".popover");
 
@@ -153,7 +140,7 @@ export class ListOfChats {
         }
     }
 
-    closePopover() {
+    closeMenu() {
         if (this.popover) {
             const popoverElement = document.querySelector(".popover-container");
             if (popoverElement) {
@@ -163,32 +150,31 @@ export class ListOfChats {
         }
     }
 
-    setupPopoverListeners(mainPage, popoverElement) {
-        popoverElement
-            .querySelector('[name="logout"]')
-            ?.addEventListener("click", (event) => {
-                event.preventDefault();
-                this.closePopover();
-                auth.logout();
-                goToPage("login");
-            });
+    setupMenuListeners(menuElement) {
+        const logout = menuElement.querySelector("#logout");
+        logout.addEventListener("click", (event) => {
+            event.preventDefault();
+            this.closeMenu();
+            auth.logout();
+            goToPage("login");
+        });
 
-        popoverElement
-            .querySelector('[name="profile"]')
-            ?.addEventListener("click", (event) => {
-                event.preventDefault();
-                this.closePopover();
-                mainPage.sidebar = new Profile();
-                mainPage.render();
-            });
+        const profile = menuElement.querySelector("#profile");
+        profile.addEventListener("click", (event) => {
+            event.preventDefault();
+            this.closeMenu();
+            this.parentPage.sidebar = new Profile(this.parentPage);
+            this.parent.render();
+        });
 
-        popoverElement
-            .querySelector('[name="contacts"]')
-            ?.addEventListener("click", (event) => {
-                event.preventDefault();
-                this.closePopover();
-                mainPage.sidebar = new Contacts();
-                mainPage.render();
-            });
+        const contacts = menuElement.querySelector("#contacts");
+        contacts.addEventListener("click", (event) => {
+            console.log("click on contacts");
+            event.preventDefault();
+            this.closeMenu();
+
+            mainPage.sidebar = new Contacts();
+            goToPage("main");
+        });
     }
 }

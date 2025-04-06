@@ -1,8 +1,10 @@
 import {
     loginFormSubmit,
-    signupLinkListener,
     togglePasswordListener,
 } from "../../shared/helpers/eventListeners.js";
+
+import { toSignup } from "./eventListeners.js";
+import { RenderResult } from "../../shared/modules/RenderResponse.js";
 import { AuthForm } from "../../widgets/AuthForm/AuthForm.js";
 
 class LoginPage {
@@ -22,17 +24,13 @@ class LoginPage {
             },
         ];
         this.submitButtonText = "Войти";
-        this.redirectText = "Создать";
     }
 
     addListeners() {
-        const loginForm = document.querySelector(".loginForm");
+        const loginForm = this.container.querySelector(".auth-form");
         loginForm.addEventListener("submit", loginFormSubmit);
 
-        const signupLink = document.getElementById("signupLink");
-        signupLink.addEventListener("click", signupLinkListener);
-
-        const togglers = document.getElementsByClassName(
+        const togglers = this.container.querySelectorAll(
             "auth-form__toggle-password",
         );
         for (const toggler of togglers) {
@@ -40,30 +38,39 @@ class LoginPage {
                 togglePasswordListener(event, toggler);
             });
         }
+
+        // -------------------------
+
+        const signupLink = this.container.querySelector(".register-link");
+        console.log("link", signupLink);
+        signupLink.addEventListener("click", toSignup);
     }
 
     render() {
-        const loginTemplate = Handlebars.templates["LoginPage.hbs"];
+        const loginPageTemplate = Handlebars.templates["LoginPage.hbs"];
+        const html = loginPageTemplate({});
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const container = doc.body.firstChild;
+        this.container = container;
 
         const fields = this.fields;
         const submitButtonText = this.submitButtonText;
 
         const loginForm = new AuthForm(fields, submitButtonText);
-        const loginFormHTML = loginForm.getHTML();
-        Handlebars.registerPartial("loginForm", loginFormHTML);
+        const loginFormDomElement = loginForm.render();
 
-        const redirectText = this.redirectText;
-        const html = loginTemplate({ redirectText });
+        const logo = container.querySelector("#main-auth__logo");
+        logo.after(loginFormDomElement);
 
-        const root = document.getElementById("root");
-        root.innerHTML = html;
+        console.log(this.container);
 
         this.addListeners();
 
-        return {
-            ok: true,
-            error: "",
-        };
+        return new RenderResult({
+            domElement: container,
+        });
     }
 }
 

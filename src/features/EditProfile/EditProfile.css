@@ -1,0 +1,66 @@
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+#edit-profile-content {
+    overflow: auto;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+}
+
+#avatar-container {
+      width: 30%;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#add-avatar-icon {
+    position: absolute;
+    --size: 50%;
+    --half-size: 25%;
+    width: var(--size);
+    height: var(--size);
+    top: var(--half-size);
+    left: var(--half-size);
+    filter: invert(100%) sepia(1%) saturate(7422%) hue-rotate(210deg) brightness(105%) contrast(117%);
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.mandatory-input,
+.optional-input {
+    height: 30px;
+    border-radius: 10px;
+    border-color: var(--gray);
+    outline-color: var(--main);
+    padding-inline: 10px;
+}
+
+.input-description {
+    color: var(--gray);
+}
+
+.divider {
+    min-height: 10px;
+    background-color: var(--bg);
+}

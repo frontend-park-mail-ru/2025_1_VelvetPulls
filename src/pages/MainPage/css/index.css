@@ -1,10 +1,5 @@
 @import url("common.css");
 
-@import url("sidebar/chat-list.css");
-@import url("sidebar/common.css");
-@import url("sidebar/header.css");
-@import url("sidebar/Profile.css");
-
 @import url("main_chat/chat_container/common.css");
 @import url("main_chat/chat_container/input.css");
 @import url("main_chat/chat_container/messages.css");

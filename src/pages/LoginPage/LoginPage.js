@@ -4,7 +4,7 @@ import {
 } from "../../shared/helpers/eventListeners.js";
 
 import { toSignup } from "./eventListeners.js";
-import { RenderResult } from "../../shared/modules/RenderResponse.js";
+import { RenderResult } from "../../entities/RenderResponse.js";
 import { AuthForm } from "../../widgets/AuthForm/AuthForm.js";
 
 class LoginPage {
@@ -68,9 +68,11 @@ class LoginPage {
 
         this.addListeners();
 
-        return new RenderResult({
-            domElement: container,
-        });
+        const root = document.getElementById("root");
+        root.innerHTML = "";
+        root.appendChild(container);
+
+        return new RenderResult({});
     }
 }
 

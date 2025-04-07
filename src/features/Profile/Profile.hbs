@@ -1,0 +1,60 @@
+<div class="sidebar">
+    <header class="profile__header">
+        <div class="profile__button" id="button-back">
+            <img class="icon" src="icons/Back.svg" alt="Back"></img>
+        </div>
+        <div class="profile__header-title">Профиль</div>
+        <div class="profile__button" id="button-edit">
+            <img class="icon" src="icons/Edit.svg" alt="Edit"></img>
+        </div>
+    </header>
+
+    <div class="profile__divider"></div>
+
+    <!-- Просмотр профиля -->
+    <div class="profile__content">
+        <section class="profile__avatar_container">
+            <div class="profile__info">
+                <div class="profile__full-name">{{firstName}} {{lastName}}</div>
+                <div class="profile__online-status">{{onlineStatus}}</div>
+            </div>
+
+            <div class="square-image-container">
+                <img class="profile__avatar_image" src="{{avatarUrl}}" alt="Avatar">
+            </div>
+        </section>
+
+        <section class="details">
+            <div class="detail-item">
+                <img class="icon" src="icons/Phone.svg" alt="Phone"></img>
+                <div class="detail-item__content">
+                    <div class="detail-item__value">{{phone}}</div>
+                    <div class="detail-item__label">Телефон</div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <img class="icon" src="icons/At.svg" alt="At"></img>
+                <div class="detail-item__content">
+                    <div class="detail-item__value">@{{username}}</div>
+                    <div class="detail-item__label">Имя пользователя</div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <img class="icon" src="icons/info.svg" alt="Bio"></img>
+                <div class="detail-item__content">
+                    <div class="detail-item__value">{{bio}}</div>
+                    <div class="detail-item__label">Bio</div>
+                </div>
+            </div>
+
+            <div class="detail-item" id="button-logout">
+                <img class="icon" src="icons/Logout.svg" alt="Logout">
+                <div class="detail-item__content">
+                    <div id="logout-label">Выйти</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,9 +1,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 35%;
-    /* min-width: 400px; */
-    /* max-width: 500px; */
+    width: 25%;
 }
 
 .sidebar__icon {

@@ -1,47 +1,57 @@
-import { ListOfChats } from "../ListOfChats/ListOfChats.js";
 import { ProfileApi } from "./api/profile.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 import { API_URI } from "../../shared/api/api.js";
 import { auth } from "../../shared/api/auth.js";
 
 export class Profile {
-    constructor() {
+    constructor(parentWidget) {
+        this.parentWidget = parentWidget;
         this.popupState = false;
-        this.isEditMode = false;
+        // this.isEditMode = false;
         this.profileApi = new ProfileApi();
         this.data = {};
         this.original_avatar_url = null;
     }
 
-    async getData() {
-        try {
-            const response = await this.profileApi.getProfile();
+    getData() {
+        // try {
+        //     const response = await this.profileApi.getProfile();
 
-            if (response.status === false) {
-                return {
-                    ok: false,
-                    error: response.error,
-                };
-            }
+        //     if (response.status === false) {
+        //         return {
+        //             ok: false,
+        //             error: response.error,
+        //         };
+        //     }
 
-            this.data = response.data;
-            if (this.data.avatar_path) {
-                this.data.avatar_url = this.getFullAvatarUrl(
-                    this.data.avatar_path,
-                );
-            }
+        //     this.data = response.data;
+        //     if (this.data.avatar_path) {
+        //         this.data.avatar_url = this.getFullAvatarUrl(
+        //             this.data.avatar_path,
+        //         );
+        //     }
 
-            return {
-                ok: true,
-                error: "",
-            };
-        } catch (error) {
-            console.error("Profile loading error:", error);
-            return {
-                ok: false,
-                error: "Ошибка загрузки профиля",
-            };
-        }
+        //     return {
+        //         ok: true,
+        //         error: "",
+        //     };
+        // } catch (error) {
+        //     console.error("Profile loading error:", error);
+        //     return {
+        //         ok: false,
+        //         error: "Ошибка загрузки профиля",
+        //     };
+        // }
+
+        this.data = {
+            firstName: "Михал",
+            lastName: "Палыч",
+            onlineStatus: "В сети",
+            avatarUrl: "img/Avatar.png",
+            phone: "+7 777 777-77-77",
+            username: "moneyman",
+            bio: "23 года, дизайнер из Санкт-Петербурга",
+        };
     }
 
     getFullAvatarUrl(relativePath) {
@@ -52,41 +62,60 @@ export class Profile {
     }
 
     getHTML() {
-        const template = Handlebars.templates["Profile.hbs"];
-        return template({
-            ...this.data,
-            isEditMode: this.isEditMode,
-        });
+        this.getData();
+
+        const profileTemplate = Handlebars.templates["Profile.hbs"];
+        const html = profileTemplate({ ...this.data });
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const container = doc.body.firstChild;
+        this.container = container;
+
+        this.container = container;
+        this.addListeners();
+
+        return container;
     }
 
-    addListeners(mainPage) {
-        // Кнопка назад
-        document
-            .getElementsByName("back")[0]
-            ?.addEventListener("click", (event) => {
-                event.preventDefault();
-                mainPage.sidebar = new ListOfChats();
-                mainPage.render();
-            });
+    addListeners() {
+        // Назад (к чатам)
+        const backButton = this.container.querySelector("#button-back");
+        backButton.addEventListener("click", (event) => {
+            event.preventDefault();
 
-        // Кнопка редактирования
-        document
-            .querySelector(".header__action-btn[aria-label='Edit']")
-            ?.addEventListener("click", () => {
-                this.toggleEditMode(mainPage);
-            });
+            this.parentWidget.goTo("chats");
+        });
+
+        // Изменить профиль
+        const editButton = this.container.querySelector("#button-edit");
+        editButton.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            this.parentWidget.goTo("edit-profile");
+        });
+
+        // Выйти из аккаунта
+        const logoutButton = this.container.querySelector("#button-logout");
+        logoutButton.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            auth.logout();
+            goToPage("login");
+        });
 
         // Кнопка удаления профиля
-        document
-            .querySelector(".header__action-btn[aria-label='Options']")
-            ?.addEventListener("click", () => {
-                this.showDeleteConfirmation(mainPage);
-            });
+        // document
+        //     .querySelector(".header__action-btn[aria-label='Options']")
+        //     ?.addEventListener("click", () => {
+        //         this.showDeleteConfirmation(mainPage);
+        //     });
 
         // Если в режиме редактирования - добавляем обработчики формы
-        if (this.isEditMode) {
-            this.addEditFormListeners(mainPage);
-        }
+        // if (this.isEditMode) {
+        //     this.addEditFormListeners(mainPage);
+        // }
     }
 
     toggleEditMode(mainPage) {

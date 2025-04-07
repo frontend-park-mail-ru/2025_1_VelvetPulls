@@ -1,9 +1,14 @@
+@import url("pages/MainPage/css/index.css");
+
+@import url("widgets/Sidebar/index.css");
+
+@import url("features/Chats/Chats.css");
+@import url("features/Contacts/Contacts.css");
+@import url("features/Profile/Profile.css");
+@import url("features/EditProfile/EditProfile.css");
+@import url("features/CreateGroup/CreateGroup.css");
+
 @import url("shared/static/css/auth.css");
 @import url("shared/static/css/common.css");
 @import url("shared/static/css/fonts.css");
-
-@import url("features/PopOver/PopOver.css");
-
-@import url("widgets/Contacts/Contacts.css");
-
-@import url("pages/MainPage/css/index.css");
+@import url("shared/modules/PopOver/PopOver.css");

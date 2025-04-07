@@ -1,0 +1,59 @@
+<div class="sidebar">
+    <header class="profile__header">
+        <div class="profile__button" id="button-back">
+            <img class="icon" src="icons/Back.svg" alt="Back"></img>
+        </div>
+        <div class="profile__header-title">Изменить профиль</div>
+        <div class="profile__button" id="button-save">
+            <img class="icon" src="icons/Ok.svg" alt="Save"></img>
+        </div>
+    </header>
+
+    <div class="profile__divider"></div>
+
+    <!-- Изменение профиля -->
+    <section id="edit-profile-content">
+        <section class="fields-container">
+                <div id="avatar-container">
+                    <img id="avatar-image" src="img/Avatar.png" alt="Avatar">
+                    <img id="add-avatar-icon" src="icons/addPhoto.svg" alt="Add photo">
+                </div>
+
+                <div class="input-container">
+                    <div class="input-label">Имя (обязательно)</div>
+                    <input class="mandatory-input" type="text" placeholder="Имя" value="{{firstName}}">
+                </div>
+
+                <div class="input-container">
+                    <div class="input-label">Фамилия (обязательно)</div>
+                    <input class="optional-input" type="text" placeholder="Фамилия" value="{{lastName}}">
+                </div>
+
+                <div class="input-container">
+                    <input class="optional-input" type="text" placeholder="О себе" value="{{bio}}">
+                    <div class="input-description">
+                        <div>Любые подробности, например: возраст, род занятий или город.</div>
+                        <div>Пример: 23 года, дизайнер из Санкт-Петербурга.</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section class="fields-container">
+                <div class="input-container">
+                    <div class="input-label">Имя пользователя</div>
+                    <input class="mandatory-input" type="text" placeholder="Имя пользователя" value="{{username}}">
+                    <div class="input-description">
+                        <div>
+                            Вы можете выбрать публичное имя пользователя в <b>Keftegram</b>.
+                            В этом случае другие люди смогут найти Вас по такому имени и связаться, не зная Вашего телефона.<br>
+                            <br>
+                            Вы можете использовать символы <b>a-z</b>, <b>0-9</b> и подчёркивания.
+                            Минимальная длина - <b>8</b> символов.
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </section>
+</div>

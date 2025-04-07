@@ -1,10 +1,7 @@
-import { goToPage } from "../../shared/helpers/goToPage.js";
-import { ListOfChats } from "../ListOfChats/ListOfChats.js";
-import { mainPage } from "../../pages/MainPage/MainPage.js";
-
 export class Contacts {
-    constructor() {
-        this.sidebar = null;
+    constructor(parentWidget) {
+        this.parentWidget = parentWidget;
+        this.container = null;
     }
 
     getData() {
@@ -12,23 +9,23 @@ export class Contacts {
         this.data = [
             {
                 name: "Cameron Williamson",
-                photoURL: "/widgets/Contacts/assets/Avatar.png",
+                photoURL: "img/Avatar.png",
                 onlineStatus: "В сети",
             },
             {
                 name: "Cameron Williamson",
-                photoURL: "/widgets/Contacts/assets/Avatar.png",
+                photoURL: "img/Avatar.png",
                 onlineStatus: "В сети",
             },
             {
                 name: "Cameron Williamson",
-                photoURL: "/widgets/Contacts/assets/Avatar.png",
+                photoURL: "img/Avatar.png",
                 onlineStatus: "В сети",
             },
         ];
     }
 
-    render() {
+    getHTML() {
         this.getData();
 
         const template = Handlebars.templates["Contacts.hbs"];
@@ -40,7 +37,7 @@ export class Contacts {
 
         const domElement = doc.body.firstChild;
 
-        this.sidebar = domElement;
+        this.container = domElement;
 
         this.addListeners();
 
@@ -48,13 +45,12 @@ export class Contacts {
     }
 
     addListeners() {
-        const back = this.sidebar.querySelector("#button-back");
+        const back = this.container.querySelector("#button-back");
 
         back.addEventListener("click", (event) => {
             event.preventDefault();
 
-            mainPage.sidebar = new ListOfChats();
-            goToPage("main");
+            this.parentWidget.goTo("chats");
         });
     }
 }

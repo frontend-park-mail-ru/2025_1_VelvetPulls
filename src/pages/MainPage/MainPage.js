@@ -1,11 +1,10 @@
-import { RenderResult } from "../../shared/modules/RenderResponse.js";
-import { ListOfChats } from "../../widgets/ListOfChats/ListOfChats.js";
-// import { Contacts } from "../../widgets/Contacts/Contacts.js";
-// import { goToPage } from "../../shared/helpers/goToPage.js";
+import { RenderResult } from "../../entities/RenderResponse.js";
+// import { Chats } from "../../features/Chats/Chats.js";
+import { Sidebar } from "../../widgets/Sidebar/Sidebar.js";
 
 class MainPage {
     constructor() {
-        this.sidebar = new ListOfChats();
+        this.sidebar = new Sidebar();
     }
 
     async render() {
@@ -17,17 +16,14 @@ class MainPage {
 
         const container = doc.body.firstChild;
 
-        const sidebar = this.sidebar.render();
-        console.log(sidebar);
+        const sidebar = this.sidebar.getHTML();
         container.insertBefore(sidebar, container.firstChild);
-        console.log(container);
 
         const root = document.getElementById("root");
+        root.innerHTML = "";
         root.appendChild(container);
 
-        return new RenderResult({
-            domElement: container,
-        });
+        return new RenderResult({});
     }
 }
 

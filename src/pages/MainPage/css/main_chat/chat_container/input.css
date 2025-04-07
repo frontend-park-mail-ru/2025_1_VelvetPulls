@@ -56,5 +56,6 @@
 }
 
 .main-chat__send-icon {
-    margin: auto;
+    width: 35px;
+    height: 34px;
 }

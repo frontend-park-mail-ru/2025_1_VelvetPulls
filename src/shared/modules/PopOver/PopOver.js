@@ -1,8 +1,10 @@
 export class PopOver {
-    constructor({ items, position }) {
+    constructor({ parentElement, items, position }) {
+        this.parentElement = parentElement;
         this.items = items;
         this.position = position;
         this.container = null;
+        this.status = false;
     }
 
     getHTML() {
@@ -27,6 +29,42 @@ export class PopOver {
             this.container.style.bottom = this.position.bottom;
         }
 
+        this.addListeners();
+
+        console.log("change status on true");
+        this.status = true;
+
         return container;
+    }
+
+    addListeners() {
+        console.log("popver addListeners");
+        console.log(this.status);
+
+        // Закрытие при клике вне popover
+        document.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            console.log(this);
+
+            if (this.status) {
+                event.preventDefault();
+
+                console.log("click outside from popover");
+                console.log(event.target);
+
+                // if (this.menu && !event.target.closest(".sidebar__menu")) {
+                //     this.closeMenu();
+                // }
+
+                this.close();
+            }
+        });
+    }
+
+    close() {
+        this.parentElement.removeChild(this.container);
+        this.status = false;
     }
 }

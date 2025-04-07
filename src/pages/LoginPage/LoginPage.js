@@ -27,11 +27,13 @@ class LoginPage {
     }
 
     addListeners() {
+        // Отправить форму
         const loginForm = this.container.querySelector(".auth-form");
         loginForm.addEventListener("submit", loginFormSubmit);
 
+        // Переключить видимость пароля
         const togglers = this.container.querySelectorAll(
-            "auth-form__toggle-password",
+            ".auth-form__toggle-password",
         );
         for (const toggler of togglers) {
             toggler.addEventListener("click", (event) => {
@@ -39,10 +41,8 @@ class LoginPage {
             });
         }
 
-        // -------------------------
-
+        // Перейти на страницу регистрации
         const signupLink = this.container.querySelector(".register-link");
-        console.log("link", signupLink);
         signupLink.addEventListener("click", toSignup);
     }
 
@@ -63,8 +63,6 @@ class LoginPage {
 
         const logo = container.querySelector("#main-auth__logo");
         logo.after(loginFormDomElement);
-
-        console.log(this.container);
 
         this.addListeners();
 

@@ -11,22 +11,31 @@
     font-weight: 400;
 }
 
-.sidebar__icon {
-    aspect-ratio: 1;
-    object-fit: contain;
-    object-position: center;
+.icon {
+    vertical-align: bottom;
     width: 24px;
-    align-self: stretch;
-    margin: auto 0;
-    flex-shrink: 0;
+    aspect-ratio: 1;
 }
 
-.sidebar__menu {
+#sidebar__menu {
     background: none;
     border: none;
     padding: 0;
+}
+
+#sidebar__menu:hover {
     cursor: pointer;
-    position: relative;
+
+    /* border-style: solid;
+    border-width: 2px;
+    border-radius: 5px; */
+}
+
+#sidebar__menu_popover{
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    display: none;
 }
 
 .sidebar__search-wrapper {
@@ -62,6 +71,8 @@
 
 .sidebar__chat-list {
     position: relative;
+    overflow-y: scroll;
+    scrollbar-width: thin;
     background-color: var(--bg);
     display: flex;
     height: 100%;
@@ -171,19 +182,32 @@
     justify-content: end;
 }
 
-#button-create {
-    position: absolute;
-    z-index: 1;
-    bottom: 5%;
-    right: 5%;
-
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+#button-new-chat {
+    --size: 40px;
+    width: var(--size);
+    height: var(--size);
 }
 
-.sidebar__new-chat-icon {
-    width: 40px;
-    margin: 0;
+#button-new-chat:hover {
+    cursor: pointer;
+
+    /* border-style: solid;
+    border-radius: 100%;
+    border-width: 2px;
+    border-color: var(--black); */
+}
+
+#new-chat-container {
+    position: fixed;
+    
+    right: 77%;
+    bottom: 10%;
+}
+
+#sidebar__new-chat_popover {
+    position: absolute;
+    left: -120px;
+    top: -90px;
+    
+    display: none;
 }

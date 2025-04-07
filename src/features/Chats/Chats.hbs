@@ -1,17 +1,30 @@
 <div class="sidebar">
+    {{!-- Header --}}
     <header class="sidebar__header">
-        <button class="sidebar__menu">
-            <img src="icons/Menu.svg" alt="Menu" class="sidebar__icon" />
-        </button>
+        <div id="sidebar__menu">
+            <img src="icons/Menu.svg" alt="Menu" class="icon" />
+        </div>
         
         <div class="sidebar__search-wrapper">
-            <img src="icons/Search.svg" alt="Search" class="sidebar__icon" />
+            <img src="icons/Search.svg" alt="Search" class="icon" />
             <input type="text" class="sidebar__search" placeholder="Поиск чата">
         </div>
     </header>
-
+    
+    <div id="sidebar__menu_popover" class="popover">
+        <button class="popover__item" id="profile">
+            <img src="icons/Profile.svg" alt="?" class="icon">
+            <span class="popover__item_text">Профиль</span>
+        </button>
+        <button class="popover__item" id="contacts">
+            <img src="icons/Contacts.svg" alt="?" class="icon">
+            <span class="popover__item_text">Контакты</span>
+        </button>
+    </div>
+    
     <div class="sidebar__divider"></div>
 
+    {{!-- Chats --}}
     <section class="sidebar__chat-list">
         {{#each chats}}
         <div class="chat-item {{#if this.active}}chat-item--active{{/if}}">
@@ -30,9 +43,20 @@
             </div>
         </div>
         {{/each}}
-        <button id="button-create">
-            <img src="icons/Add.svg"
-                alt="New chat" class="sidebar__new-chat-icon" />
-        </button>
+
+
+        <div id="new-chat-container">
+            <div id="sidebar__new-chat_popover" class="popover">
+                <button class="popover__item" id="new-group">
+                    <img src="icons/group.svg" alt="New group" class="icon">
+                    <span class="popover__item_text">Создать группу</span>
+                </button>
+                <button class="popover__item" id="new-channel">
+                    <img src="icons/plus.svg" alt="New channel" class="icon">
+                    <span class="popover__item_text">Создать канал</span>
+                </button>
+            </div>
+            <img src="icons/Add.svg" alt="New chat" id="button-new-chat" class="icon" />
+        </div>
     </section>
 </div>

@@ -43,11 +43,6 @@
     background-color: var(--gray);
 }
 
-.icon {
-    width: 24px;
-    height: 24px;
-}
-
 .popover__item__text {
     color: var(--black);
     font-family: var(--font-family);

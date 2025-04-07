@@ -1,8 +1,3 @@
-.icon {
-    width: 24px;
-    height: 24px;
-}
-
 /* Header */
 
 .profile__header {
@@ -31,7 +26,7 @@
 
 /* Divider */
 
-.profile__divider {
+.header__divider {
     height: 1px;
     background-color: var(--black);
 }

@@ -1,5 +1,7 @@
+import { AddMembers } from "../../features/AddMembers/AddMembers.js";
 import { Chats } from "../../features/Chats/Chats.js";
 import { Contacts } from "../../features/Contacts/Contacts.js";
+import { CreateGroup } from "../../features/CreateGroup/CreateGroup.js";
 import { EditProfile } from "../../features/EditProfile/EditProfile.js";
 import { Profile } from "../../features/Profile/Profile.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
@@ -25,6 +27,14 @@ export class Sidebar {
 
             case "edit-profile":
                 this.content = new EditProfile(this);
+                break;
+
+            case "create-group":
+                this.content = new CreateGroup(this);
+                break;
+
+            case "add-members":
+                this.content = new AddMembers(this);
                 break;
 
             default:

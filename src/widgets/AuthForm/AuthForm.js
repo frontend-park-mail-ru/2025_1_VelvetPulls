@@ -20,7 +20,6 @@ export class AuthForm {
         const doc = parser.parseFromString(html, "text/html");
 
         const domElement = doc.body.firstChild;
-        console.log("form", domElement);
 
         return domElement;
     }

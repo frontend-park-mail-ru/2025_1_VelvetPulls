@@ -4,11 +4,83 @@ export class Chats {
     constructor(parentWidget) {
         this.parentWidget = parentWidget;
         this.container = null;
-        this.popover = null;
+        this.menu = null;
     }
 
     getData() {
         this.chats = [
+            {
+                title: "Keftegr@m",
+                description: "чат с Keftegram",
+                unreadCount: 1,
+                avatarUrl: "img/Keftegram.png",
+            },
+            {
+                title: "Поддержка",
+                description: "Чат с поддержкой",
+                unreadCount: 0,
+                avatarUrl: "img/Avatar1.png",
+            },
+            {
+                title: "Общий чат",
+                description: "Обсуждение новостей",
+                unreadCount: 3,
+                avatarUrl: "img/Avatar2.png",
+            },
+            {
+                title: "Keftegr@m",
+                description: "чат с Keftegram",
+                unreadCount: 1,
+                avatarUrl: "img/Keftegram.png",
+            },
+            {
+                title: "Поддержка",
+                description: "Чат с поддержкой",
+                unreadCount: 0,
+                avatarUrl: "img/Avatar1.png",
+            },
+            {
+                title: "Общий чат",
+                description: "Обсуждение новостей",
+                unreadCount: 3,
+                avatarUrl: "img/Avatar2.png",
+            },
+            {
+                title: "Keftegr@m",
+                description: "чат с Keftegram",
+                unreadCount: 1,
+                avatarUrl: "img/Keftegram.png",
+            },
+            {
+                title: "Поддержка",
+                description: "Чат с поддержкой",
+                unreadCount: 0,
+                avatarUrl: "img/Avatar1.png",
+            },
+            {
+                title: "Общий чат",
+                description: "Обсуждение новостей",
+                unreadCount: 3,
+                avatarUrl: "img/Avatar2.png",
+            },
+            {
+                title: "Keftegr@m",
+                description: "чат с Keftegram",
+                unreadCount: 1,
+                avatarUrl: "img/Keftegram.png",
+            },
+            {
+                title: "Поддержка",
+                description: "Чат с поддержкой",
+                unreadCount: 0,
+                avatarUrl: "img/Avatar1.png",
+            },
+            {
+                title: "Общий чат",
+                description: "Обсуждение новостей",
+                unreadCount: 3,
+                avatarUrl: "img/Avatar2.png",
+            },
             {
                 title: "Keftegr@m",
                 description: "чат с Keftegram",
@@ -52,44 +124,66 @@ export class Chats {
     }
 
     addListeners() {
-        const menuButton = this.container.querySelector(".sidebar__menu");
-
-        if (!menuButton) return;
-
         // Обработчик клика по кнопке меню
+        const menuButton = this.container.querySelector("#sidebar__menu");
         menuButton.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
 
-            if (this.popover) {
-                this.closeMenu();
+            const menuPopover = this.container.querySelector(
+                "#sidebar__menu_popover",
+            );
+
+            if (this.menuIsOpen) {
+                menuPopover.style.display = "none";
+                this.menuIsOpen = false;
             } else {
-                this.openMenu();
+                menuPopover.style.display = "flex";
+                this.menuIsOpen = true;
             }
         });
+
+        this.setupMenuListeners();
+
+        const newChatButton = this.container.querySelector("#button-new-chat");
+        newChatButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const menuPopover = this.container.querySelector(
+                "#sidebar__new-chat_popover",
+            );
+
+            if (this.newChatIsOpen) {
+                menuPopover.style.display = "none";
+                this.newChatIsOpen = false;
+            } else {
+                menuPopover.style.display = "flex";
+                this.newChatIsOpen = true;
+            }
+        });
+
+        this.setupNewChatListeners();
 
         // Закрытие при клике вне popover
-        document.addEventListener("click", (event) => {
-            if (this.popover && !event.target.closest(".sidebar__menu")) {
-                this.closeMenu();
-            }
-        });
 
-        const createButton = this.container.querySelector("#button-create");
-        createButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            console.log("button create click");
-        });
+        // const createButton = this.container.querySelector("#button-create");
+        // createButton.addEventListener("click", (event) => {
+        //     event.preventDefault();
+        //     console.log("button create click");
+
+        //     this.parentWidget.goTo("create-group");
+        // });
     }
 
     openMenu() {
-        // Закрываем предыдущий popover, если есть
-        if (this.popover) {
-            this.closeMenu();
-        }
+        console.log("this in openMenu:", this);
+
+        const menuButton = this.container.querySelector("#sidebar__menu");
 
         // Создаем новый popover
-        this.popover = new PopOver({
+        this.menu = new PopOver({
+            parentElement: menuButton,
             items: [
                 {
                     id: "profile",
@@ -108,39 +202,63 @@ export class Chats {
             },
         });
 
-        const popoverElement = this.popover.getHTML();
+        const popoverElement = this.menu.getHTML();
         this.setupMenuListeners(popoverElement);
 
         // Добавляем popover в DOM
-        const menuButton = this.container.querySelector(".sidebar__menu");
         menuButton.appendChild(popoverElement);
     }
 
-    closeMenu() {
-        if (this.popover) {
-            const popoverElement = document.querySelector(".popover");
-            if (popoverElement) {
-                popoverElement.parentElement.removeChild(popoverElement);
-            }
-            this.popover = null;
-        }
-    }
+    // closeMenu() {
+    //     if (this.menu) {
+    //         const popoverElement = document.querySelector(".popover");
+    //         if (popoverElement) {
+    //             popoverElement.parentElement.removeChild(popoverElement);
+    //         }
+    //         this.menu = null;
+    //     }
+    // }
 
-    setupMenuListeners(menuElement) {
-        const profile = menuElement.querySelector("#profile");
+    setupMenuListeners() {
+        const menuPopoverElement = this.container.querySelector(
+            "#sidebar__menu_popover",
+        );
+
+        const profile = menuPopoverElement.querySelector("#profile");
         profile.addEventListener("click", (event) => {
             event.preventDefault();
-            this.closeMenu();
+            // this.closeMenu();
 
             this.parentWidget.goTo("profile");
         });
 
-        const contacts = menuElement.querySelector("#contacts");
+        const contacts = menuPopoverElement.querySelector("#contacts");
         contacts.addEventListener("click", (event) => {
             event.preventDefault();
-            this.closeMenu();
+            // this.closeMenu();
 
             this.parentWidget.goTo("contacts");
+        });
+    }
+
+    setupNewChatListeners() {
+        const newChatPopoverElement = this.container.querySelector(
+            "#sidebar__new-chat_popover",
+        );
+
+        const newGroup = newChatPopoverElement.querySelector("#new-group");
+        console.log("new group", newGroup);
+        newGroup.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            this.parentWidget.goTo("create-group");
+        });
+
+        const newChannel = newChatPopoverElement.querySelector("#new-channel");
+        newChannel.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            alert("Создание канала ещё не готово - это требование РК 3");
         });
     }
 }

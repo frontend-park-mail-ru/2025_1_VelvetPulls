@@ -42,6 +42,7 @@ class SignupPage {
     }
 
     addListeners() {
+        // Валидация полей формы
         const phoneInput = this.container.querySelector("#phone");
         phoneInput.addEventListener("input", phoneInputListener);
 
@@ -55,11 +56,13 @@ class SignupPage {
             this.container.querySelector("#confirm-password");
         repeatPassword.addEventListener("input", repeatPasswordInputListener);
 
+        // Отправить форму
         const signupForm = this.container.querySelector(".auth-form");
         signupForm.addEventListener("submit", signupFormSubmitListener);
 
+        // Переключить видимость пароля
         const togglers = this.container.querySelectorAll(
-            "auth-form__toggle-password",
+            ".auth-form__toggle-password",
         );
         for (const toggler of togglers) {
             toggler.addEventListener("click", (event) => {
@@ -67,10 +70,8 @@ class SignupPage {
             });
         }
 
-        // ------------------
-
+        // Перейти на страницу авторизации
         const loginLink = this.container.querySelector("#loginLink");
-        console.log("link", loginLink);
         loginLink.addEventListener("click", toLogin);
     }
 
@@ -88,9 +89,6 @@ class SignupPage {
 
         const signupForm = new AuthForm(fields, submitButtonText);
         const signupFormDomElement = signupForm.render();
-
-        console.log("signup form", signupFormDomElement);
-        console.log("container", container);
 
         const logo = container.querySelector("#main-auth__logo");
         logo.after(signupFormDomElement);

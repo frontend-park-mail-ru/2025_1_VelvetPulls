@@ -111,11 +111,6 @@ export class Profile {
         //     ?.addEventListener("click", () => {
         //         this.showDeleteConfirmation(mainPage);
         //     });
-
-        // Если в режиме редактирования - добавляем обработчики формы
-        // if (this.isEditMode) {
-        //     this.addEditFormListeners(mainPage);
-        // }
     }
 
     toggleEditMode(mainPage) {

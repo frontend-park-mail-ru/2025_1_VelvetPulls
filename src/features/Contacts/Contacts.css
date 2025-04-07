@@ -68,6 +68,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    width: 100%;
 }
 
 .contacts__contact-item__content-online-status {

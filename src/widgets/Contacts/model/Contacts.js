@@ -108,6 +108,16 @@ class Contacts {
             event.preventDefault();
             eventBus.emit("contacts -> chats");
         });
+
+        const contacts = this.container.querySelectorAll(".sidebar-list-item");
+        for (const contact of contacts) {
+            const deleteButton = contact.querySelector(".button");
+            deleteButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                alert("Контакт будет удалён (см. console.log)");
+                console.log("Контакт будет удалён:\n", contact);
+            });
+        }
     }
 }
 

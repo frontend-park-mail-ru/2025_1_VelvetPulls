@@ -6,6 +6,7 @@ import { addMembers } from "../../widgets/AddMembers/index.js";
 import { chats } from "../../widgets/Chats/index.js";
 import { contacts } from "../../widgets/Contacts/index.js";
 import { createGroup } from "../../widgets/CreateGroup/index.js";
+import { createContact } from "../../widgets/CreateContact/index.js";
 
 import { profile } from "../../widgets/Profile/index.js";
 import { editProfile } from "../../widgets/EditProfile/index.js";
@@ -40,6 +41,11 @@ class MainPage {
 
         eventBus.on("chats -> new group", () => {
             this.sidebar = createGroup;
+            this.render();
+        });
+
+        eventBus.on("chats -> new contact", () => {
+            this.sidebar = createContact;
             this.render();
         });
 
@@ -104,6 +110,13 @@ class MainPage {
         });
 
         eventBus.on("add members -> next", () => {
+            this.sidebar = chats;
+            this.render();
+        });
+
+        // ------------------- new contact ----------------------
+
+        eventBus.on("new contact -> chats", () => {
             this.sidebar = chats;
             this.render();
         });

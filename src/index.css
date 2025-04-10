@@ -8,6 +8,7 @@
 @import url("widgets/Chats/ui/Chats.css");
 @import url("widgets/Contacts/ui/Contacts.css");
 @import url("widgets/CreateGroup/ui/CreateGroup.css");
+@import url("widgets/CreateContact/ui/CreateContact.css");
 
 @import url("widgets/Profile/ui/Profile.css");
 @import url("widgets/EditProfile/ui/EditProfile.css");

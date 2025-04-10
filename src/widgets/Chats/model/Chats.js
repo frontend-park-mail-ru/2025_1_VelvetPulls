@@ -138,6 +138,7 @@ class Chats {
         const newDialog = newChatPopoverElement.querySelector("#new-dialog");
         newDialog.addEventListener("click", (event) => {
             event.preventDefault();
+            // this.newChatIsOpen = false;
             // eventBus.emit("chats -> new dialog");
             alert("Нужно реализовать создание нового диалога");
         });
@@ -154,8 +155,17 @@ class Chats {
         const newChannel = newChatPopoverElement.querySelector("#new-channel");
         newChannel.addEventListener("click", (event) => {
             event.preventDefault();
+            // this.newChatIsOpen = false;
             // eventBus.emit("chats -> new channel");
             alert("Создание канала ещё не готово - это требование РК 3");
+        });
+
+        // Новый канал
+        const newContact = newChatPopoverElement.querySelector("#new-contact");
+        newContact.addEventListener("click", (event) => {
+            event.preventDefault();
+            this.newChatIsOpen = false;
+            eventBus.emit("chats -> new contact");
         });
     }
 }

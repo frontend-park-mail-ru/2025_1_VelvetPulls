@@ -1,0 +1,26 @@
+@import url("pages/MainPage/css/index.css");
+
+/* --------------- */
+
+@import url("widgets/AuthForm/ui/AuthForm.css");
+
+@import url("widgets/AddMembers/ui/AddMembers.css");
+@import url("widgets/Chats/ui/Chats.css");
+@import url("widgets/Contacts/ui/Contacts.css");
+@import url("widgets/CreateGroup/ui/CreateGroup.css");
+
+@import url("widgets/Profile/ui/Profile.css");
+@import url("widgets/EditProfile/ui/EditProfile.css");
+
+@import url("widgets/Dialog/ui/Dialog.css");
+@import url("widgets/DialogInfo/ui/DialogInfo.css");
+@import url("widgets/Group/iu/Group.css");
+@import url("widgets/GroupInfo/ui/GroupInfo.css");
+@import url("widgets/NoChat/ui/NoChat.css");
+
+/* --------------- */
+
+@import url("shared/static/css/auth.css");
+@import url("shared/static/css/common.css");
+@import url("shared/static/css/fonts.css");
+@import url("shared/modules/PopOver/PopOver.css");

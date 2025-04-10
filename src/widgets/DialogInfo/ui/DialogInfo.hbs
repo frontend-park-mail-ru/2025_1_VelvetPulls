@@ -1,0 +1,66 @@
+<div class="sidebar">
+    {{!-- Заголовок --}}
+    <header class="sidebar-header">
+        <div id="close-chat-info" class="button">
+            <img src="icons/close.svg" alt="Back" class="icon"></img>
+        </div>
+        
+        <div class="sidebar-header__title">Информация</div>
+    </header>
+
+    <div class="horizontal-divider"></div>
+
+    <!-- Просмотр профиля -->
+    <main class="profile">
+        {{!-- Аватар --}}
+        <section class="avatar-container">
+            <div class="avatar-container__user-info">
+                <div class="user-info__full-name">{{firstName}} {{lastName}}</div>
+                <div class="user-info__online-status">{{onlineStatus}}</div>
+            </div>
+
+            <div class="avatar-container__square-image">
+                <img class="avatar-container__image" src="{{avatarUrl}}" alt="Avatar">
+            </div>
+        </section>
+
+        {{!-- Детали профиля --}}
+        <section class="sidebar-list">
+            {{!-- Телефон --}}
+            <div class="detail-item">
+                <img src="icons/Phone.svg" alt="Phone" class="icon"></img>
+                <div class="sidebar-list__item-info">
+                    <div class="detail-item__value">{{phone}}</div>
+                    <div class="detail-item__label">Телефон</div>
+                </div>
+            </div>
+
+            {{!-- Имя пользователя --}}
+            <div class="detail-item">
+                <img src="icons/At.svg" alt="At" class="icon"></img>
+                <div class="sidebar-list__item-info">
+                    <div class="detail-item__value">@{{username}}</div>
+                    <div class="detail-item__label">Имя пользователя</div>
+                </div>
+            </div>
+
+            {{!-- День рождения --}}
+            <div class="detail-item">
+                <img src="icons/calendar.svg" alt="Calendar" class="icon">
+                <div class="sidebar-list__item-info">
+                    <div class="detail-item__value">{{birthday}}</div>
+                    <div class="detail-item__label">День рождения</div>
+                </div>
+            </div>
+
+            {{!-- О себе --}}
+            <div class="detail-item">
+                <img src="icons/info.svg" alt="Bio" class="icon"></img>
+                <div class="sidebar-list__item-info">
+                    <div class="detail-item__value">{{bio}}</div>
+                    <div class="detail-item__label">Bio</div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

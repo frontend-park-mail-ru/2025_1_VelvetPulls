@@ -1,0 +1,30 @@
+<div class="sidebar">
+    {{!-- Header --}}
+    <div class="sidebar-header">
+        <button id="button-back" class="button">
+            <img src="icons/Back.svg" alt="Back" class="icon">
+        </button>
+
+        <div class="sidebar-header__search">
+            <img src="icons/Search.svg" alt="Search" class="icon">
+            <input type="text" class="sidebar-header__search-input" placeholder="Поиск контактов">
+        </div>
+    </div>
+
+    <div class="horizontal-divider"></div>
+
+    {{!-- Contacts --}}
+    <section class="contacts">
+        <div class="sidebar-list scrollable">
+            {{#each contacts}}
+            <div class="sidebar-list__item sidebar-list-item">
+                <img src="{{this.photoURL}}" alt="User avatar" class="avatar">
+                <div class="sidebar-list-item__info">
+                    <div class="sidebar-list-item__full-name">{{this.name}}</div>
+                    <div class="sidebar-list-item__online-status">{{this.onlineStatus}}</div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </section>
+</div>

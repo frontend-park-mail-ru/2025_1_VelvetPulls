@@ -1,0 +1,38 @@
+<div class="sidebar">
+    <div class="sidebar-header">
+        <div id="button-back" class="button">
+            <img src="icons/Back.svg" alt="Back" class="icon">
+        </div>
+        <div class="sidebar-header__search">
+            <img src="icons/Search.svg" alt="Search" class="icon">
+            <input type="text" class="sidebar-header__search-input" placeholder="Кого бы Вы хотели пригласить?">
+        </div>
+    </div>
+
+    <div class="horizontal-divider"></div>
+
+    <main class="add-members-container">
+        <div class="sidebar-list scrollable">
+            {{#each contacts}}
+            <div class="sidebar-list__item sidebar-list-item">
+                <img src="{{this.photoURL}}" alt="User avatar" class="avatar">
+                
+                <div class="sidebar-list-item__info">
+                    <div class="sidebar-list-item__full-name">{{this.fullname}}</div>
+                    <div class="sidebar-list-item__online-status">{{this.onlineStatus}}</div>
+                </div>
+
+                <div class="sidebar-list-item__meta">
+                    <input type="checkbox" class="add-member__checkbox" id="{{this.name}}-checkbox">
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+        <div class="sidebar__fixed-button-container">
+            <button class="sidebar__fixed-button">
+                <img src="icons/next.svg" alt="New chat" class="sidebar__fixed-button-icon">
+            </button>
+        </div>
+    </main>
+</div>

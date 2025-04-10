@@ -7,8 +7,8 @@ import {
     repeatPasswordInputListener,
 } from "../../shared/helpers/eventListeners.js";
 import { toLogin } from "./eventListeners.js";
-import { RenderResult } from "../../entities/RenderResponse.js";
-import { AuthForm } from "../../widgets/AuthForm/AuthForm.js";
+import { RenderResult } from "../../shared/helpers/RenderResponse.js";
+import { AuthForm } from "../../widgets/AuthForm/index.js";
 
 class SignupPage {
     constructor() {

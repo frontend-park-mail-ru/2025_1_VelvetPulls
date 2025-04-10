@@ -21,7 +21,7 @@ class API {
      */
     async request(method, path, headers, body = null) {
         let response = null;
-    
+
         try {
             const url = this.#api + path;
             const request = {
@@ -30,21 +30,22 @@ class API {
                 mode: "cors",
                 credentials: "include",
             };
-    
+
             if (body) {
                 if (body instanceof FormData) {
                     request.body = body;
                 } else {
-                    request.headers['Content-Type'] = 'application/json;charset=utf-8';
+                    request.headers["Content-Type"] =
+                        "application/json;charset=utf-8";
                     request.body = JSON.stringify(body);
                 }
             }
-    
+
             response = await fetch(url, request);
         } catch (error) {
             throw new Error("Could not fetch: " + error.message);
         }
-    
+
         const responseJSON = await response.json();
         return responseJSON;
     }

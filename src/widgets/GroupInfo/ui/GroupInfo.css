@@ -1,0 +1,18 @@
+.horizontal-list {
+    display: flex;
+}
+
+.horizontal-list__item {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.horizontal-list__item:hover {
+    background-color: var(--bg);
+    cursor: pointer;
+}
+
+.horizontal-list__item_active {
+    color: var(--main);
+}

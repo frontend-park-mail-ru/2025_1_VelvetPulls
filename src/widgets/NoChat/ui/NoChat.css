@@ -8,5 +8,6 @@
 }
 
 .no-chat-stub {
+    font-family: var(--second-family);
     font-size: 50px;
 }

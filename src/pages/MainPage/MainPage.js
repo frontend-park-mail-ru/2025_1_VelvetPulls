@@ -7,7 +7,7 @@ import { chats } from "../../widgets/Chats/index.js";
 import { contacts } from "../../widgets/Contacts/index.js";
 import { createGroup } from "../../widgets/CreateGroup/index.js";
 import { createContact } from "../../widgets/CreateContact/index.js";
-
+import { chatsapi } from "../../shared/api/chats.js";
 import { profile } from "../../widgets/Profile/index.js";
 import { editProfile } from "../../widgets/EditProfile/index.js";
 
@@ -95,6 +95,12 @@ class MainPage {
 
         eventBus.on("contacts -> chats", () => {
             this.sidebar = chats;
+            this.render();
+        });
+
+        eventBus.on("contacts -> contacts", () => {
+            chatsapi.getContacts()
+            this.sidebar = contacts;
             this.render();
         });
 

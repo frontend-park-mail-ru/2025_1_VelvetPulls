@@ -1,4 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
+import { chatsapi } from "../../../shared/api/chats.js";
 
 class CreateContact {
     getHTML() {
@@ -27,16 +28,22 @@ class CreateContact {
 
         // Далее (создать контакт)
         const nextButton = this.container.querySelector(
-            ".sidebar__fixed-button",
+            ".contact_form",
         );
-        nextButton.addEventListener("click", (event) => {
+        const inVal = this.container.querySelector(
+            ".sidebar-list__input",
+        );
+        if (nextButton!=null) {
+        nextButton.addEventListener("submit", (event) => {
             event.preventDefault();
-            alert(
-                "Здесь будет выполняться сохранение контакта (со всеми необходимыми проверками)",
-            );
-            // eventBus.emit("new contact -> save");
+            chatsapi.addcon(inVal.value)
+            chatsapi.getContacts()
+            // alert(
+            //     "Здесь будет выполняться сохранение контакта (со всеми необходимыми проверками)",
+            // );
+            eventBus.emit("new contact -> save");
             eventBus.emit("new contact -> chats");
-        });
+        });}
     }
 }
 

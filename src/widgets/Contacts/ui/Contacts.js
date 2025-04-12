@@ -1,89 +1,14 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
+import { chatsapi } from "../../../shared/api/chats.js";
 
 class Contacts {
     constructor(parentWidget) {
         this.parentWidget = parentWidget;
         this.container = null;
     }
-
-    getData() {
-        // Моковый запрос в БД положит данные в this.data
-        this.data = [
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-        ];
-    }
-
     getHTML() {
-        this.getData();
+        chatsapi.getContacts()
+        this.data=chatsapi.getCon
 
         const template = Handlebars.templates["Contacts.hbs"];
         const contacts = this.data;
@@ -114,8 +39,8 @@ class Contacts {
             const deleteButton = contact.querySelector(".button");
             deleteButton.addEventListener("click", (event) => {
                 event.preventDefault();
-                alert("Контакт будет удалён (см. console.log)");
-                console.log("Контакт будет удалён:\n", contact);
+                let r=contact.querySelector(".sidebar-list-item__full-name").innerHTML
+                chatsapi.deleteAjax(r)
             });
         }
     }

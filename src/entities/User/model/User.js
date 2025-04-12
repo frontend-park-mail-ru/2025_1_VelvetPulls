@@ -13,24 +13,30 @@ export class User {
     #phone;
     #avatarPath;
 
-    constructor(username) {
-        this.init(username);
+    constructor() {
+        // this.init(username);
     }
 
     async init(username) {
+        console.log("init user:", username);
         const data = await getUserData(username);
+
+        console.log("user data:", data);
 
         this.#username = data["username"];
         this.#firstName = data["first_name"];
         this.#lastName = data["last_name"];
         this.#phone = data["phone"];
         this.#avatarPath = data["avatar_path"];
-        console.log("avatar path:", this.#avatarPath);
 
-        const path = this.#avatarPath.replace(".", "");
-        this.avatarSrc = await getAvatar(path);
+        console.log("user with filled data:", this);
 
-        console.log(this);
+        if (this.#avatarPath !== null) {
+            const path = this.#avatarPath.replace(".", "");
+            this.avatarSrc = await getAvatar(path);
+        }
+
+        console.log("user after init", this);
     }
 
     async update(data) {
@@ -94,3 +100,4 @@ export class User {
 }
 
 export const currentUser = new User();
+currentUser.init(null);

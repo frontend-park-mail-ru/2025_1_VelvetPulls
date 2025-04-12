@@ -31,11 +31,8 @@ class API {
                 credentials: "include",
             };
 
-            // request.headers["Content-Type"] = "application/json";
-
             if (body) {
                 if (body instanceof FormData) {
-                    console.log("here");
                     request.body = body;
                     // request.headers["Content-Type"] = "multipart/form-data";
                 } else {
@@ -44,16 +41,15 @@ class API {
                 }
             }
 
-            // if (request.method === "PUT") {
-            //     request.headers["Content-Type"] = "multipart/form-data";
-            //     console.log("here");
-            // }
-
-            // console.log("request", request);
-
             response = await fetch(url, request);
         } catch (error) {
             throw new Error("Could not fetch: " + error.message);
+        }
+
+        console.log("api response:", response);
+
+        if (response.statusText === "No Content") {
+            return null;
         }
 
         const responseJSON = await response.json();

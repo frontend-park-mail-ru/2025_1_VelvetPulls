@@ -1,6 +1,7 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { User } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
+import { deleteChat } from "../../../entities/Chat/api/api.js";
 
 class Chats {
     constructor() {
@@ -8,9 +9,11 @@ class Chats {
         this.menu = null;
         this.menuIsOpen = false;
         this.newChatIsOpen = false;
+
+        this.getData();
     }
 
-    getData() {
+    async getData() {
         // this.chats = [
         //     {
         //         title: "Keftegr@m",
@@ -32,11 +35,17 @@ class Chats {
         //     },
         // ];
 
-        this.chats = api.get("/chats");
+        const responseBody = await api.get("/chats");
+        console.log("get chats:", responseBody);
+
+        this.chats = responseBody.data;
+        console.log("ChatsInstance:", this);
+
+        // eventBus.emit("chats loaded");
     }
 
-    getHTML() {
-        this.getData();
+    async getHTML() {
+        await this.getData();
 
         const template = Handlebars.templates["Chats.hbs"];
         const context = {
@@ -59,10 +68,29 @@ class Chats {
     addListeners() {
         // Клик по чату
         const chats = this.container.querySelectorAll(".sidebar-list-item");
-        for (const chat of chats) {
+        for (let chatNumber = 0; chatNumber < chats.length; chatNumber++) {
+            const chat = chats[chatNumber];
+
+            // Открыть чат (ещё не сделано)
             chat.addEventListener("click", (event) => {
                 event.preventDefault();
-                eventBus.emit("chats: click on chat", "ла-ла-ла");
+
+                console.log("click on chat:", this.chats[chatNumber]);
+                eventBus.emit("chats: click on chat", chatNumber);
+            });
+
+            // Удалить чат
+            const deleteChatButton = chat.querySelector(".button");
+            deleteChatButton.addEventListener("click", async (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const responseBody = await deleteChat(
+                    this.chats[chatNumber].id,
+                );
+                console.log("delete chat:", responseBody);
+                // await this.getData();
+                eventBus.emit("chat is deleted");
             });
         }
 
@@ -148,16 +176,18 @@ class Chats {
                 "Введите username пользователя, которому Вы хотите написать",
             );
             console.log("username:", username);
-            alert("Здесь будет открываться чат с пользователем");
+            // alert("Здесь будет открываться чат с пользователем");
 
-            // try {
-            //     const user = new User();
-            //     await user.init(username);
-            //     console.log("user:", user);
-            //     eventBus.emit("new dialog", user);
-            // } catch (error) {
-            //     console.log("user is not found:", error);
-            // }
+            try {
+                const user = new User();
+                console.log("user empty:", user);
+                await user.init(username);
+                console.log("user ready:", user);
+                eventBus.emit("new dialog", user);
+            } catch (error) {
+                alert("user is not found:", username);
+                console.log("error:", error);
+            }
         });
 
         // Новая группа

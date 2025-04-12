@@ -2,6 +2,9 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 
 class Dialog {
+    constructor() {
+        this.user = null;
+    }
     getHTML() {
         console.log("dialog user:", this.user);
 
@@ -22,7 +25,8 @@ class Dialog {
         // const dialogInfoContainer = dialogInfo.getHTML();
         // const divider = container.querySelector(".vertical-divider");
         // divider.after(dialogInfoContainer);
-
+        this.container = container;
+        
         return container;
     }
 

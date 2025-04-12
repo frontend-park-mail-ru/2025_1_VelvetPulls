@@ -31,8 +31,7 @@ class Group {
 
             if (!this.infoIsOpen) {
                 const groupInfoContainer = groupInfo.getHTML();
-                const divider =
-                    this.container.querySelector(".vertical-divider");
+                const divider = this.container.querySelector(".vertical-divider");
                 divider.after(groupInfoContainer);
                 this.infoIsOpen = true;
             }

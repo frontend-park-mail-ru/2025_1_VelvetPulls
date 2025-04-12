@@ -1,1 +1,1 @@
-export { noChat } from "./model/NoChat.js";
+export { noChat } from "./ui/NoChat.js";

@@ -42,6 +42,11 @@
                     <div class="sidebar-list-item__unread-count">{{this.unreadCount}}</div>
                     {{/if}}
                 </div>
+
+                {{!-- Удалить контакт --}}
+                <button class="button">
+                    <img src="icons/delete.svg" alt="Delete" class="icon">
+                </button>
             </div>
             {{/each}}
         </div>
@@ -62,6 +67,11 @@
                     <button id="new-channel" class="popover__item">
                         <img src="icons/plus.svg" alt="New channel" class="icon">
                         <span class="popover__item_text">Создать канал</span>
+                    </button>
+
+                    <button id="new-contact" class="popover__item">
+                        <img src="icons/Profile.svg" alt="New contact" class="icon">
+                        <span class="popover__item_text">Создать контакт</span>
                     </button>
                 </div>
             </div>

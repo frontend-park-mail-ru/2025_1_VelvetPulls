@@ -6,6 +6,7 @@ import { addMembers } from "../../widgets/AddMembers/index.js";
 import { chats } from "../../widgets/Chats/index.js";
 import { contacts } from "../../widgets/Contacts/index.js";
 import { createGroup } from "../../widgets/CreateGroup/index.js";
+import { createContact } from "../../widgets/CreateContact/index.js";
 
 import { profile } from "../../widgets/Profile/index.js";
 import { editProfile } from "../../widgets/EditProfile/index.js";
@@ -16,6 +17,7 @@ import { group } from "../../widgets/Group/index.js";
 
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
+import { dialog } from "../../widgets/Dialog/ui/Dialog.js";
 
 class MainPage {
     constructor() {
@@ -43,8 +45,20 @@ class MainPage {
             this.render();
         });
 
+        eventBus.on("chats -> new contact", () => {
+            this.sidebar = createContact;
+            this.render();
+        });
+
         eventBus.on("chats: click on chat", () => {
             this.chat = group;
+            this.render();
+        });
+
+        eventBus.on("new dialog", (user) => {
+            console.log("catch new dialog", user);
+            dialog.setUser(user);
+            this.chat = dialog;
             this.render();
         });
 
@@ -107,29 +121,42 @@ class MainPage {
             this.sidebar = chats;
             this.render();
         });
-    }
 
-    updateListeners() {
-        const callback = () => {
-            group.infoIsOpen = false;
+        // ------------------- new contact ----------------------
+
+        eventBus.on("new contact -> chats", () => {
+            this.sidebar = chats;
+            this.render();
+        });
+
+        // ------------------- dialog -----------------------
+        eventBus.on("close dialog", () => {
             this.chat = noChat;
             this.render();
-        };
-
-        const goToNoChat = function (event) {
-            event.preventDefault();
-
-            if (event.key === "Escape") {
-                callback();
-            }
-
-            document.removeEventListener("keydown", goToNoChat);
-        };
-
-        if (this.chat !== noChat) {
-            document.addEventListener("keydown", goToNoChat);
-        }
+        });
     }
+
+    // updateListeners() {
+    //     const callback = () => {
+    //         group.infoIsOpen = false;
+    //         this.chat = noChat;
+    //         this.render();
+    //     };
+
+    //     const goToNoChat = function (event) {
+    //         event.preventDefault();
+
+    //         if (event.key === "Escape") {
+    //             callback();
+    //         }
+
+    //         document.removeEventListener("keydown", goToNoChat);
+    //     };
+
+    //     if (this.chat !== noChat) {
+    //         document.addEventListener("keydown", goToNoChat);
+    //     }
+    // }
 
     async render() {
         const mainPageTemplate = Handlebars.templates["MainPage.hbs"];
@@ -151,7 +178,7 @@ class MainPage {
         root.innerHTML = "";
         root.appendChild(container);
 
-        this.updateListeners();
+        // this.updateListeners();
 
         return new RenderResult({});
     }

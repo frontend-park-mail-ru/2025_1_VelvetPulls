@@ -1,1 +1,1 @@
-export { group } from "./model/Group.js";
+export { group } from "./ui/Group.js";

@@ -1,1 +1,1 @@
-export { profile } from "./model/Profile.js";
+export { profile } from "./ui/Profile.js";

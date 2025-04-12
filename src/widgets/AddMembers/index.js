@@ -1,1 +1,1 @@
-export { addMembers } from "./model/AddMembers.js";
+export { addMembers } from "./ui/AddMembers.js";

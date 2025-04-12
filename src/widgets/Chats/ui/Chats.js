@@ -1,4 +1,6 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
+import { User } from "../../../entities/User/model/User.js";
+import { api } from "../../../shared/api/api.js";
 
 class Chats {
     constructor() {
@@ -9,26 +11,28 @@ class Chats {
     }
 
     getData() {
-        this.chats = [
-            {
-                title: "Keftegr@m",
-                description: "чат с Keftegram",
-                unreadCount: 1,
-                avatarUrl: "img/Keftegram.png",
-            },
-            {
-                title: "Поддержка",
-                description: "Чат с поддержкой",
-                unreadCount: 0,
-                avatarUrl: "img/Avatar1.png",
-            },
-            {
-                title: "Общий чат",
-                description: "Обсуждение новостей",
-                unreadCount: 3,
-                avatarUrl: "img/Avatar2.png",
-            },
-        ];
+        // this.chats = [
+        //     {
+        //         title: "Keftegr@m",
+        //         description: "чат с Keftegram",
+        //         unreadCount: 1,
+        //         avatarUrl: "img/Keftegram.png",
+        //     },
+        //     {
+        //         title: "Поддержка",
+        //         description: "Чат с поддержкой",
+        //         unreadCount: 0,
+        //         avatarUrl: "img/Avatar1.png",
+        //     },
+        //     {
+        //         title: "Общий чат",
+        //         description: "Обсуждение новостей",
+        //         unreadCount: 3,
+        //         avatarUrl: "img/Avatar2.png",
+        //     },
+        // ];
+
+        this.chats = api.get("/chats");
     }
 
     getHTML() {
@@ -136,10 +140,24 @@ class Chats {
 
         // Новый диалог
         const newDialog = newChatPopoverElement.querySelector("#new-dialog");
-        newDialog.addEventListener("click", (event) => {
+        newDialog.addEventListener("click", async (event) => {
             event.preventDefault();
+            // this.newChatIsOpen = false;
             // eventBus.emit("chats -> new dialog");
-            alert("Нужно реализовать создание нового диалога");
+            const username = prompt(
+                "Введите username пользователя, которому Вы хотите написать",
+            );
+            console.log("username:", username);
+            alert("Здесь будет открываться чат с пользователем");
+
+            // try {
+            //     const user = new User();
+            //     await user.init(username);
+            //     console.log("user:", user);
+            //     eventBus.emit("new dialog", user);
+            // } catch (error) {
+            //     console.log("user is not found:", error);
+            // }
         });
 
         // Новая группа
@@ -154,8 +172,17 @@ class Chats {
         const newChannel = newChatPopoverElement.querySelector("#new-channel");
         newChannel.addEventListener("click", (event) => {
             event.preventDefault();
+            // this.newChatIsOpen = false;
             // eventBus.emit("chats -> new channel");
             alert("Создание канала ещё не готово - это требование РК 3");
+        });
+
+        // Новый канал
+        const newContact = newChatPopoverElement.querySelector("#new-contact");
+        newContact.addEventListener("click", (event) => {
+            event.preventDefault();
+            this.newChatIsOpen = false;
+            eventBus.emit("chats -> new contact");
         });
     }
 }

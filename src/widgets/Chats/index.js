@@ -1,1 +1,1 @@
-export { chats } from "./model/Chats.js";
+export { chats } from "./ui/Chats.js";

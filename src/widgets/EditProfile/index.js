@@ -1,1 +1,1 @@
-export { editProfile } from "./model/EditProfile.js";
+export { editProfile } from "./ui/EditProfile.js";

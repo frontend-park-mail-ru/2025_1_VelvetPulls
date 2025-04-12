@@ -1,1 +1,1 @@
-export { contacts } from "./model/Contacts.js";
+export { contacts } from "./ui/Contacts.js";

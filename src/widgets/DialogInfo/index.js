@@ -1,1 +1,1 @@
-export { dialogInfo } from "./model/DialogInfo.js";
+export { dialogInfo } from "./ui/DialogInfo.js";

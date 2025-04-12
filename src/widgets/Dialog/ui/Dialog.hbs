@@ -4,12 +4,17 @@
         <div>
             {{!-- Заголовок --}}
             <header class="chat-header">
+                {{!-- Закрыть чат --}}
+                <div id="close-chat" class="button">
+                    <img src="icons/close.svg" alt="Back" class="icon"></img>
+                </div>
+
                 {{!-- Аватар --}}
-                <img src="img/Keftegram.png" alt="Avatar" class="chat-header__avatar">
+                <img src="{{avatarSrc}}" alt="Avatar" class="chat-header__avatar">
                 
                 {{!-- Информация о чате --}}
                 <div class="chat-header__info">
-                    <div class="chat-header__full-name">./Keftegr@m</div>
+                    <div class="chat-header__full-name">{{fullName}}</div>
                     <div class="chat-header__online-status">был(а) в сети недавно</div>
                 </div>
                 

@@ -17,28 +17,39 @@
     <!-- Изменение профиля -->
     <main class="edit-profile">
         <section class="sidebar-list">
-            <div class="edit-profile__avatar-container">
+            {{!-- Аватар --}}
+            {{!-- <div class="edit-profile__avatar-container">
                 <img src="img/Avatar.png" alt="Avatar" class="edit-profile__avatar-image" >
                 <img src="icons/addPhoto.svg" alt="Add photo" class="edit-profile__add-avatar-icon">
+
+            </div> --}}
+
+            {{!-- Аватар --}}
+            <div class="sidebar-list__input-container">
+                <input type="file" id="avatar-input">
             </div>
 
+            {{!-- Имя --}}
             <div class="sidebar-list__input-container">
                 <div class="sidebar-list__input-label">Имя (обязательно)</div>
-                <input class="sidebar-list__input" type="text" placeholder="Имя" value="{{firstName}}">
+                <input type="text" placeholder="Имя" value="{{firstName}}"
+                        id="first-name-input" class="sidebar-list__input">
             </div>
 
+            {{!-- Фамилия --}}
             <div class="sidebar-list__input-container">
-                <div class="sidebar-list__input-label">Фамилия (обязательно)</div>
-                <input class="sidebar-list__input" type="text" placeholder="Фамилия" value="{{lastName}}">
+                <div class="sidebar-list__input-label">Фамилия</div>
+                <input type="text" placeholder="Фамилия" value="{{lastName}}"
+                        id="last-name-input" class="sidebar-list__input">
             </div>
 
-            <div class="sidebar-list__input-container">
+            {{!-- <div class="sidebar-list__input-container">
                 <input class="sidebar-list__input" type="text" placeholder="О себе" value="{{bio}}">
                 <div class="sidebar-list__input-description">
                     <div>Любые подробности, например: возраст, род занятий или город.</div>
                     <div>Пример: 23 года, дизайнер из Санкт-Петербурга.</div>
                 </div>
-            </div>
+            </div> --}}
         </section>
 
         <div class="edit-profile__divider"></div>
@@ -46,7 +57,8 @@
         <section class="sidebar-list">
             <div class="sidebar-list__input-container">
                 <div class="sidebar-list__input-label">Имя пользователя</div>
-                <input class="sidebar-list__input" type="text" placeholder="Имя пользователя" value="{{username}}">
+                <input type="text" placeholder="Имя пользователя" value="{{username}}"
+                        id="username-input" class="sidebar-list__input">
                 <div class="sidebar-list__input-description">
                     <div>
                         Вы можете выбрать публичное имя пользователя в <b>Keftegram</b>.

@@ -19,27 +19,37 @@ class API {
      * @throws {Error} - Если запрос не удался, выбрасывает ошибку с сообщением.
      *
      */
-    async request(method, path, headers, body = null) {
+    async request(method, path, body = null) {
         let response = null;
 
         try {
             const url = this.#api + path;
             const request = {
                 method: method,
-                headers: headers,
+                headers: {},
                 mode: "cors",
                 credentials: "include",
             };
 
+            // request.headers["Content-Type"] = "application/json";
+
             if (body) {
                 if (body instanceof FormData) {
+                    console.log("here");
                     request.body = body;
+                    // request.headers["Content-Type"] = "multipart/form-data";
                 } else {
-                    request.headers["Content-Type"] =
-                        "application/json;charset=utf-8";
                     request.body = JSON.stringify(body);
+                    request.headers["Content-Type"] = "application/json";
                 }
             }
+
+            // if (request.method === "PUT") {
+            //     request.headers["Content-Type"] = "multipart/form-data";
+            //     console.log("here");
+            // }
+
+            // console.log("request", request);
 
             response = await fetch(url, request);
         } catch (error) {
@@ -51,18 +61,19 @@ class API {
     }
 
     async get(url) {
-        return this.request("GET", url, {});
+        return this.request("GET", url);
     }
 
     async post(url, body = null) {
-        const headers = {
-            "Content-Type": "application/json;charset=utf-8",
-        };
-        return this.request("POST", url, headers, body);
+        return this.request("POST", url, body);
+    }
+
+    async put(url, body = null) {
+        return this.request("PUT", url, body);
     }
 
     async delete(url) {
-        return this.request("DELETE", url, {});
+        return this.request("DELETE", url);
     }
 }
 

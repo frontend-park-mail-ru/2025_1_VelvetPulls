@@ -1,1 +1,1 @@
-export { AuthForm } from "./model/AuthForm.js";
+export { AuthForm } from "./ui/AuthForm.js";

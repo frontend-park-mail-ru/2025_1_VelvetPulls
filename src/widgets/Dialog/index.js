@@ -1,1 +1,1 @@
-export { dialog } from "./model/Dialog.js";
+export { dialog } from "./ui/Dialog.js";

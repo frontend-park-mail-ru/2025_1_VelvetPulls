@@ -2,6 +2,7 @@
 
 .avatar-container {
     position: relative;
+    background-color: var(--black);
 }
 
 .avatar-container__user-info {
@@ -12,8 +13,8 @@
 
 .user-info__full-name {
     font: bold;
-    font-size: 24px;
-    color: var(--white);
+    font-size: 50px;
+    color: var(--main);
 }
 
 .user-info__online-status {

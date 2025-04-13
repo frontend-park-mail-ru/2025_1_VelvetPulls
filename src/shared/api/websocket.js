@@ -1,5 +1,5 @@
 import { eventBus } from "../modules/EventBus/EventBus.js";
-
+import { Message } from "../../entities/Message/index.js";
 class ChatWebSocket {
     constructor() {
         this.socket = null;
@@ -8,6 +8,7 @@ class ChatWebSocket {
     }
 
     connect() {
+
         this.socket = new WebSocket(this.baseUrl);
 
         this.socket.onopen = () => {
@@ -19,7 +20,10 @@ class ChatWebSocket {
         this.socket.onmessage = (event) => {
             try {
                 const message = JSON.parse(event.data);
-                eventBus.emit(`ws:${message.type}`, message.data);
+                if (message.action === 'newMessage') {
+                    const msg = Message.fromApi(message.payload, currentUserId);
+                    eventBus.emit('ws:newMessage', msg);
+                }
             } catch (error) {
                 console.error("WebSocket message error:", error);
             }

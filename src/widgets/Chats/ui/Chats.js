@@ -1,6 +1,7 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { User } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
+import { chatsapi } from "../../../shared/api/chats.js";
 
 class Chats {
     constructor() {
@@ -36,8 +37,36 @@ class Chats {
     }
 
     getHTML() {
+        chatsapi.getChats()
         this.getData();
-
+        this.chats=[]
+        console.log(chatsapi.chats)
+        if (chatsapi.chats!==undefined){
+            chatsapi.chats.forEach(element => {
+                if (element!==undefined){
+                    this.chats.push({
+                        title:element.title,
+                        description:"gtred",
+                        unreadCount: 0,
+                        avatarUrl:element.avatart_path
+                       })
+                }
+                // this.chatsapi.push({
+                //  title:element.title,
+                //  description:"gtred",
+                //  unreadCount: 0,
+                //  avatarUrl:element.avatart_path
+                // }) 
+             });    
+        }
+        // chatsapi.chats.forEach(element => {
+        //    this.chatsapi.push({
+        //     title:element.title,
+        //     description:"gtred",
+        //     unreadCount: 0,
+        //     avatarUrl:element.avatart_path
+        //    }) 
+        // });
         const template = Handlebars.templates["Chats.hbs"];
         const context = {
             chats: this.chats,

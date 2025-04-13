@@ -4,28 +4,30 @@ class GroupInfo {
     constructor() {}
 
     getHTML() {
-        const members = [
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-        ];
+        chatsapi.getContacts()
+        const members=chatsapi.getCon
+        // const members = [
+        //     {
+        //         name: "Cameron Williamson",
+        //         photoURL: "img/Avatar.png",
+        //         onlineStatus: "В сети",
+        //     },
+        //     {
+        //         name: "Cameron Williamson",
+        //         photoURL: "img/Avatar.png",
+        //         onlineStatus: "В сети",
+        //     },
+        //     {
+        //         name: "Cameron Williamson",
+        //         photoURL: "img/Avatar.png",
+        //         onlineStatus: "В сети",
+        //     },
+        //     {
+        //         name: "Cameron Williamson",
+        //         photoURL: "img/Avatar.png",
+        //         onlineStatus: "В сети",
+        //     },
+        // ];
 
         const data = {
             groupPhotoUrl: "img/Keftegram.png",

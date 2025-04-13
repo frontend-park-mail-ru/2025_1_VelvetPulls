@@ -7,6 +7,7 @@ export const getUserData = async (username = null) => {
     } else {
         response = await api.get(`/profile/${username}`);
     }
+    console.log("get user data:", response);
     const data = response.data;
     return data;
 };

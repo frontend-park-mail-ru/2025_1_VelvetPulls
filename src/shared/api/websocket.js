@@ -4,7 +4,7 @@ class ChatWebSocket {
     constructor() {
         this.socket = null;
         this.connected = false;
-        this.baseUrl = 'ws://localhost:8080/ws';
+        this.baseUrl = "ws://localhost:8080/ws";
     }
 
     connect() {
@@ -12,7 +12,8 @@ class ChatWebSocket {
 
         this.socket.onopen = () => {
             this.connected = true;
-            eventBus.emit('ws:connected');
+            eventBus.emit("ws:connected");
+            console.log("WS is connected");
         };
 
         this.socket.onmessage = (event) => {
@@ -20,7 +21,7 @@ class ChatWebSocket {
                 const message = JSON.parse(event.data);
                 eventBus.emit(`ws:${message.type}`, message.data);
             } catch (error) {
-                console.error('WebSocket message error:', error);
+                console.error("WebSocket message error:", error);
             }
         };
 
@@ -30,7 +31,7 @@ class ChatWebSocket {
         };
 
         this.socket.onerror = (error) => {
-            console.error('WebSocket error:', error);
+            console.error("WebSocket error:", error);
         };
     }
 
@@ -38,9 +39,9 @@ class ChatWebSocket {
         if (this.connected) {
             this.socket.send(JSON.stringify(message));
         } else {
-            console.warn('WebSocket not connected');
+            console.warn("WebSocket not connected");
         }
     }
 }
 
-export const chatWebSocket = new ChatWebSocket();
+// export const chatWebSocket = new ChatWebSocket();

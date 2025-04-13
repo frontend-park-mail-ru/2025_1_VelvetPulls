@@ -1,39 +1,63 @@
-import { getMessageHistory, sendMessage } from "../api/api";
+// import e from "express";
+// import { getMessageHistory, sendMessage } from "../api/api";
 
-export class Message{
-    #ParentMessageID; 
-	#ChatID;          
-	#UserID;          
-	#Body;           
-	#SentAt;          
-	#IsRedacted;     
-	#AvatarPath;
-	#Username;
+export class Message {
+    // #ChatID;
+    // #UserID;
+    // #Body;
+    // #SentAt;
+    // #IsRedacted;
+    // #AvatarPath;
+    // #Username;
 
-    constructor(data){
-        this.init(data);
+    constructor(data) {
+        console.log("message data:", data);
+
+        this.body = data["body"];
+        this.sentAt = data["sentAt"];
     }
 
-    async init(data){
-        this.#ParentMessageID; 
-        this.#ChatID = data["ChatID"];          
-        this.#UserID = data["UserID"];          
-        this.#Body = data["Body"];           
-        this.#SentAt = data["SentAt"];          
-        this.#IsRedacted = data["IsRedacted"];     
-        this.#AvatarPath = data["AvatarPath"];
-        this.#Username = data["Username"];
-    }
+    // async MessageHistory() {
+    //     const data = await getMessageHistory(this.#ChatID);
+    //     return data;
+    // }
 
-    async MessageHistory(){
-        const data = await getMessageHistory(this.#ChatID);
-        return data;
-    }
+    // async SendThisMessage(message) {
+    //     const res = await sendMessage(this.#ChatID, message);
+    //     return res;
+    // }
 
-    async SendThisMessage(message){
-        const res = await sendMessage(this.#ChatID, message);
-        return res;
+    getElement(mode) {
+        const data = {
+            body: this.body,
+            sentAt: this.sentAt,
+        };
+
+        let template = null;
+        switch (mode) {
+            case "my":
+                template = Handlebars.templates["MyMessage.hbs"];
+                break;
+
+            case "dialog":
+                template = Handlebars.templates["DialogMessage.hbs"];
+                break;
+
+            default:
+                throw Error("Задан некорректный тип сообщения");
+        }
+
+        const html = template({ ...data });
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const element = doc.body.firstChild;
+
+        this.element = element;
+        console.log("message element:", element);
+
+        return element;
     }
 }
 
-export const MessageApi = new Message();
+// export const MessageApi = new Message();

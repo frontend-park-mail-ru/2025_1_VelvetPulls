@@ -5,27 +5,27 @@ export const getMessageHistory = async (chatId) => {
         const response = await api.get(`/chat/${chatId}/messages`);
         return {
             ok: true,
-            data: response
+            data: response,
         };
     } catch (error) {
         return {
             ok: false,
-            error: error.message
+            error: error.message,
         };
     }
-}
+};
 
 export const sendMessage = async (chatId, message) => {
     try {
         const response = await api.post(`/chat/${chatId}/messages`, message);
         return {
             ok: true,
-            data: response
+            data: response,
         };
     } catch (error) {
         return {
             ok: false,
-            error: error.message
+            error: error.message,
         };
     }
-}
+};

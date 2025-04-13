@@ -1,6 +1,6 @@
 import { dialogInfo } from "../../DialogInfo/index.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { createChat } from "../../../entities/Chat/api/api.js";
+import { Message } from "../../../entities/Message/model/Message.js";
 
 class Dialog {
     constructor() {
@@ -8,13 +8,12 @@ class Dialog {
         this.chatId = null;
         this.messages = [];
         this.container = null;
-      
+
         this.infoIsOpen = false;
 
         eventBus.on("close dialog info", () => {
             this.infoIsOpen = false;
         });
-
     }
 
     setUser(user) {
@@ -26,7 +25,7 @@ class Dialog {
         const data = {
             fullName: this.user.getFullName(),
             avatarSrc: this.user.avatarSrc,
-            messages: this.messages
+            messages: this.messages,
         };
 
         const dialogTemplate = Handlebars.templates["Dialog.hbs"];
@@ -88,8 +87,6 @@ class Dialog {
         event.preventDefault();
 
         console.log("send message button click");
-        console.log("onClickSendMessage: this:", this);
-        console.log("onClickSendMessage: this container:", this.container);
 
         const messageInput = this.container.querySelector(
             ".chat-input-container__input",
@@ -99,25 +96,19 @@ class Dialog {
         if (messageInput.value === "") {
             alert("Сообщение не может быть пустым");
         } else {
-            console.log("TODO: create chat");
-            const chatData = {
-                type: "dialog",
-                dialog_user: this.user.getUsername(),
-                title: "1",
-            };
-            await createChat(chatData);
+            console.log("send message:", messageInput.value);
 
-            eventBus.emit("new chat is created");
-            // console.log("TODO: send message");
+            const messageData = {
+                body: messageInput.value,
+                sentAt: "12:00",
+            };
+            const message = new Message(messageData);
+
+            const messages = this.container.querySelector("#messages");
+            messages.appendChild(message.getElement("my"));
+            messages.appendChild(message.getElement("dialog"));
         }
     }
-
-    // onClickDeleteChat(event) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-
-    //     console.log("TODO: delete chat if exists");
-    // }
 }
 
-export const dialogViewInstace = new DialogView();
+export const dialogInstace = new Dialog();

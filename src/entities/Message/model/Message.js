@@ -1,39 +1,66 @@
-import { getMessageHistory, sendMessage } from "../api/api";
-
-export class Message{
-    #ParentMessageID; 
-	#ChatID;          
-	#UserID;          
-	#Body;           
-	#SentAt;          
-	#IsRedacted;     
-	#AvatarPath;
-	#Username;
-
-    constructor(data){
-        this.init(data);
+export class Message {
+    constructor({
+        id,
+        chat_id,
+        user_id,
+        body,
+        sent_at,
+        is_redacted = false,
+        avatar_path = null,
+        isMine = false
+    }) {
+        this.id = id;
+        this.chatId = chat_id;
+        this.userId = user_id;
+        this.body = body;
+        this.sentAt = new Date(sent_at);
+        this.isRedacted = is_redacted;
+        this.avatarPath = avatar_path;
+        this.isMine = isMine; // Флаг, указывающий, принадлежит ли сообщение текущему пользователю
     }
 
-    async init(data){
-        this.#ParentMessageID; 
-        this.#ChatID = data["ChatID"];          
-        this.#UserID = data["UserID"];          
-        this.#Body = data["Body"];           
-        this.#SentAt = data["SentAt"];          
-        this.#IsRedacted = data["IsRedacted"];     
-        this.#AvatarPath = data["AvatarPath"];
-        this.#Username = data["Username"];
+    // Форматирование времени для отображения
+    getTime() {
+        return this.sentAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    async MessageHistory(){
-        const data = await getMessageHistory(this.#ChatID);
-        return data;
+    // Форматирование даты для отображения (если нужно)
+    getDate() {
+        return this.sentAt.toLocaleDateString();
     }
 
-    async SendThisMessage(message){
-        const res = await sendMessage(this.#ChatID, message);
-        return res;
+    // Проверка, является ли сообщение "моим"
+    setIsMine(currentUserId) {
+        this.isMine = this.userId === currentUserId;
+        return this;
+    }
+
+    // Обновление содержимого сообщения (например, при редактировании)
+    updateBody(newBody) {
+        this.body = newBody;
+        this.isRedacted = true;
+        return this;
+    }
+
+    // Преобразование в объект для API (если нужно отправить на сервер)
+    toApiFormat() {
+        return {
+            id: this.id,
+            chat_id: this.chatId,
+            user_id: this.userId,
+            body: this.body,
+            sent_at: this.sentAt.toISOString(),
+            is_redacted: this.isRedacted,
+            avatar_path: this.avatarPath
+        };
+    }
+
+    // Статический метод для создания экземпляра из данных API
+    static fromApi(data, currentUserId = null) {
+        const message = new Message(data);
+        if (currentUserId) {
+            message.setIsMine(currentUserId);
+        }
+        return message;
     }
 }
-
-export const MessageApi = new Message();

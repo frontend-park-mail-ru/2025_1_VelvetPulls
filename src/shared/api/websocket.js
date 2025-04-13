@@ -1,14 +1,28 @@
 import { eventBus } from "../modules/EventBus/EventBus.js";
-
+import { Message } from "../../entities/Message/index.js";
 class ChatWebSocket {
     constructor() {
         this.socket = null;
         this.connected = false;
         this.baseUrl = 'ws://localhost:8080/ws';
     }
-
+    getToken() {
+        return localStorage.getItem('token'); // Или sessionStorage
+    }
     connect() {
-        this.socket = new WebSocket(this.baseUrl);
+        const token = auth.getToken();
+        if (!token) {
+            console.error('WebSocket: No auth token available');
+            eventBus.emit('ws:error', 'Not authenticated');
+            return;
+        }
+
+        // Закрываем предыдущее соединение, если есть
+        if (this.socket) {
+            this.socket.close();
+        }
+
+        this.socket = new WebSocket(`${this.baseUrl}?token=${encodeURIComponent(token)}`);
 
         this.socket.onopen = () => {
             this.connected = true;
@@ -18,7 +32,10 @@ class ChatWebSocket {
         this.socket.onmessage = (event) => {
             try {
                 const message = JSON.parse(event.data);
-                eventBus.emit(`ws:${message.type}`, message.data);
+                if (message.action === 'newMessage') {
+                    const msg = Message.fromApi(message.payload, currentUserId);
+                    eventBus.emit('ws:newMessage', msg);
+                }
             } catch (error) {
                 console.error('WebSocket message error:', error);
             }

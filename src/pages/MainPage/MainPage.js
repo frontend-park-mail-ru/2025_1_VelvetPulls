@@ -12,12 +12,11 @@ import { profile } from "../../widgets/Profile/index.js";
 import { editProfile } from "../../widgets/EditProfile/index.js";
 
 import { noChat } from "../../widgets/NoChat/index.js";
-// import { dialog } from "../../widgets/Dialog/index.js";
+import { dialogViewInstace } from "../../widgets/Dialog/index.js";
 import { group } from "../../widgets/Group/index.js";
 
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
-import { dialog } from "../../widgets/Dialog/ui/Dialog.js";
 
 import { chatWebSocket } from "../../shared/api/websocket.js";
 
@@ -53,6 +52,25 @@ class MainPage {
             this.render();
         });
 
+        eventBus.on("chat is deleted", () => {
+            console.log("catch chat is deleted");
+            this.render();
+        });
+
+        eventBus.on("new chat is created", () => {
+            console.log("catch new chat is created");
+            this.render();
+        });
+
+        eventBus.on("open dialog", (user) => {
+            // TODO - будет принимать user, нужно будет сделать dialogViewInstance.setUser(user)
+            console.log("catch open dialog:", user);
+
+            dialogViewInstace.setUser(user);
+            this.chat = dialogViewInstace;
+            this.render();
+        });
+
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
             this.render();
@@ -84,6 +102,13 @@ class MainPage {
         //     this.chat = dialog;
         //     this.render();
         // });
+      
+        eventBus.on("new dialog", (user) => {
+            console.log("catch new dialog", user);
+            dialogViewInstace.setUser(user);
+            this.chat = dialogViewInstace;
+            this.render();
+        });
 
         // --------------- profile -----------------------
 
@@ -154,7 +179,7 @@ class MainPage {
 
         // ------------------- dialog -----------------------
         eventBus.on("close dialog", () => {
-            dialog.cleanup();
+            console.log("close dialog");
             this.chat = noChat;
             this.currentChatType = null;
             this.render();
@@ -210,7 +235,7 @@ class MainPage {
 
         const container = doc.body.firstChild;
 
-        const sidebar = this.sidebar.getHTML();
+        const sidebar = await this.sidebar.getHTML();
         container.insertBefore(sidebar, container.firstChild);
 
         const divider = container.querySelector(".container__divider");

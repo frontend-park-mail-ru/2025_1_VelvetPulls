@@ -1,22 +1,22 @@
 .members-container {
-    position: relative;
-    height: 100%;
-    padding: 10px;
-    /* background-color: var(--bg); */
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    overflow-y: auto;
-    scrollbar-width: thin;
+  position: relative;
+  height: 100%;
+  padding: 10px;
+  /* background-color: var(--bg); */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .add-member__checkbox {
-    transform: scale(1.5);
-    accent-color: var(--main);
+  transform: scale(1.5);
+  accent-color: var(--main);
 }
 
-.add-member__checkbox:hover{
-    cursor: pointer;
+.add-member__checkbox:hover {
+  cursor: pointer;
 }
+
+/*# sourceMappingURL=AddMembers.css.map */

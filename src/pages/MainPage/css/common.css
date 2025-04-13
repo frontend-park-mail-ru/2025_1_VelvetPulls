@@ -1,66 +1,65 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .container__divider {
-    width: 1px;
-    height: 100%;
-    background-color: var(--black_divide);
+  width: 1px;
+  height: 100%;
+  background-color: var(--black_divide);
 }
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    
-    --width: 430px;
-    min-width: var(--width);
-    max-width: var(--width);
+  display: flex;
+  flex-direction: column;
+  --width: 430px;
+  min-width: var(--width);
+  max-width: var(--width);
 }
 
 .avatar {
-    width: 60px;
-    aspect-ratio: 1;
-    border-radius: 100%;
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 100%;
 }
 
 .icon {
-    display: block;
-    width: 24px;
-    aspect-ratio: 1;
-    background: none;
+  display: block;
+  width: 24px;
+  aspect-ratio: 1;
+  background: none;
 }
 
 /* button */
-
 .button {
-    background: none;
-    border-radius: 10px;
-    border-width: 0px;
+  background: none;
+  border-radius: 10px;
+  border-width: 0px;
 }
 
 .button:hover {
-    cursor: pointer;
-    background-color: var(--bg);
+  cursor: pointer;
+  background-color: var(--bg);
 }
 
 /* divider */
-
 .horizontal-divider {
-    width: 100%;
-    min-height: 1px;
-    background-color: var(--black_divide);
+  width: 100%;
+  min-height: 1px;
+  background-color: var(--black_divide);
 }
 
 .vertical-divider {
-    height: 100%;
-    min-width: 1px;
-    background-color: var(--black_divide);
+  height: 100%;
+  min-width: 1px;
+  background-color: var(--black_divide);
 }
+
+/*# sourceMappingURL=common.css.map */

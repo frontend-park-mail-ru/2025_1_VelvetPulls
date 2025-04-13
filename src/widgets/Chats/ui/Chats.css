@@ -1,32 +1,29 @@
 /* Header */
-
-#chats-menu-popover{
-    position: absolute;
-    top: 60px;
-    left: 10px;
-    display: none;
+#chats-menu-popover {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  display: none;
 }
 
 /* Body */
-
 /* chats */
-
 .chats {
-    position: relative;
-    height: 100%;
-    background-color: var(--bg);
+  position: relative;
+  height: 100%;
+  background-color: var(--bg);
 }
 
 /* new-chat__popover */
-
 .new-chat__popover-container {
-    position: relative;
+  position: relative;
 }
 
 #new-chat__popover {
-    position: absolute;
-    left: -130px;
-    top: -160px;
-    
-    display: none;
+  position: absolute;
+  left: -130px;
+  top: -160px;
+  display: none;
 }
+
+/*# sourceMappingURL=Chats.css.map */

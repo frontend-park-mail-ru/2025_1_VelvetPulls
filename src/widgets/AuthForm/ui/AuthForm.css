@@ -1,96 +1,98 @@
 .auth-form {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    box-sizing: border-box;
-    margin: 0 10% 20% 10%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0 10% 20% 10%;
 }
 
 .auth-form__input {
-    border: none;
-    background: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 50px;
-    padding: 10px 15px 10px 15px;
-    background: var(--bg);
-    color: var(--black);
-    font-size: 16px;
-    border-radius: 12px;
+  border: none;
+  background: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  padding: 10px 15px 10px 15px;
+  background: var(--bg);
+  color: var(--black);
+  font-size: 16px;
+  border-radius: 12px;
 }
 
-
 .auth-form__input::placeholder {
-    color: var(--black);
-    font-size: 16px;
+  color: var(--black);
+  font-size: 16px;
 }
 
 .auth-form__input:invalid {
-    padding: 10px 45px 10px 15px;
-    border: 2px solid var(--error);
-    background-color: var(--white);
+  padding: 10px 45px 10px 15px;
+  border: 2px solid var(--error);
+  background-color: var(--white);
 }
 
 .auth-form__input:invalid::placeholder {
-    color: var(--error);
+  color: var(--error);
 }
 
 .auth-form__input:focus {
-    border: 2px solid var(--black); 
-    background-color: var(--active);
-    outline: none;
+  border: 2px solid var(--black);
+  background-color: var(--active);
+  outline: none;
 }
+
 .auth-form__input:focus::placeholder {
-    color: var(--black);
+  color: var(--black);
 }
 
 .auth-form__button {
-    border: none;
-    background: none;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 30px 10px 30px;
-    width: 50%;
-    background-color: var(--black);
-    color: var(--white);
-    font-size: 16px;
-    border-radius: 12px;
-    align-self: center;
-    cursor: pointer;
+  border: none;
+  background: none;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px 10px 30px;
+  width: 50%;
+  background-color: var(--black);
+  color: var(--white);
+  font-size: 16px;
+  border-radius: 12px;
+  align-self: center;
+  cursor: pointer;
 }
 
 .auth-form__input-wrapper {
-    position: relative;
-    width: 100%;
-    margin-bottom: 15px;
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .auth-form__input-error-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
-    stroke: var(--error);
-    stroke-width: 2px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  stroke: var(--error);
+  stroke-width: 2px;
 }
 
 .auth-form__input-wrapper:focus-within .auth-form__input-error-icon {
-    stroke: var(--black);
+  stroke: var(--black);
 }
 
 .auth-form__error {
-    margin-bottom: 15px;
-    align-self: center;
-    color: var(--error);
+  margin-bottom: 15px;
+  align-self: center;
+  color: var(--error);
 }
 
 .auth-form__toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 15px;
+  position: absolute;
+  right: 10px;
+  top: 15px;
 }
+
+/*# sourceMappingURL=AuthForm.css.map */

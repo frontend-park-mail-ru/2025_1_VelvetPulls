@@ -1,24 +1,26 @@
 .create-group {
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
 }
 
 .create-group__photo-container {
-    width: 30%;
-    aspect-ratio: 1 / 1;
-    border-radius: 100%;
-    overflow: hidden;
-    position: relative;
-    background-color: var(--main);
+  width: 30%;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--main);
 }
 
 .create-group__add-avatar-icon {
-    position: absolute;
-    --size: 50%;
-    --half-size: 25%;
-    width: var(--size);
-    height: var(--size);
-    top: var(--half-size);
-    left: var(--half-size);
-    filter: invert(100%) sepia(1%) saturate(7422%) hue-rotate(210deg) brightness(105%) contrast(117%);
+  position: absolute;
+  --size: 50%;
+  --half-size: 25%;
+  width: var(--size);
+  height: var(--size);
+  top: var(--half-size);
+  left: var(--half-size);
+  filter: invert(100%) sepia(1%) saturate(7422%) hue-rotate(210deg) brightness(105%) contrast(117%);
 }
+
+/*# sourceMappingURL=CreateGroup.css.map */

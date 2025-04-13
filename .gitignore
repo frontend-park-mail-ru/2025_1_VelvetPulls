@@ -401,3 +401,4 @@ FodyWeavers.xsd
 
 # Handlebars precompiled files
 *.precompiled.js
+*.css

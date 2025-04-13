@@ -1,0 +1,24 @@
+cd src
+sass index.scss index.css
+sass pages/MainPage/css/index.scss pages/MainPage/css/index.css
+sass widgets/AuthForm/ui/AuthForm.scss widgets/AuthForm/ui/AuthForm.css
+sass widgets/AddMembers/ui/AddMembers.scss widgets/AddMembers/ui/AddMembers.css
+sass widgets/Chats/ui/Chats.scss widgets/Chats/ui/Chats.css
+sass widgets/Contacts/ui/Contacts.scss widgets/Contacts/ui/Contacts.css
+sass widgets/CreateGroup/ui/CreateGroup.scss widgets/CreateGroup/ui/CreateGroup.css
+sass widgets/CreateContact/ui/CreateContact.scss widgets/CreateContact/ui/CreateContact.css
+sass widgets/Profile/ui/Profile.scss widgets/Profile/ui/Profile.css
+sass widgets/EditProfile/ui/EditProfile.scss widgets/EditProfile/ui/EditProfile.css
+sass widgets/Dialog/ui/Dialog.scss widgets/Dialog/ui/Dialog.css
+sass widgets/DialogInfo/ui/DialogInfo.scss widgets/DialogInfo/ui/DialogInfo.css
+sass widgets/Group/ui/Group.scss widgets/Group/ui/Group.css
+sass widgets/GroupInfo/ui/GroupInfo.scss widgets/GroupInfo/ui/GroupInfo.css
+sass widgets/NoChat/ui/NoChat.scss widgets/NoChat/ui/NoChat.css
+sass shared/static/css/auth.scss shared/static/css/auth.css
+sass shared/static/css/common.scss shared/static/css/common.css
+sass shared/static/css/fonts.scss shared/static/css/fonts.css
+sass shared/modules/PopOver/PopOver.scss shared/modules/PopOver/PopOver.css
+sass pages/MainPage/css/chat.scss pages/MainPage/css/chat.css
+sass pages/MainPage/css/common.scss pages/MainPage/css/common.css
+sass pages/MainPage/css/index.scss pages/MainPage/css/index.css
+sass pages/MainPage/css/sidebar.scss pages/MainPage/css/sidebar.css

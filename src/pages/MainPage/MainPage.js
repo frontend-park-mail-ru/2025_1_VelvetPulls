@@ -18,7 +18,7 @@ import { group } from "../../widgets/Group/index.js";
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 
-// import { chatWebSocket } from "../../shared/api/websocket.js";
+import { chatWebSocket } from "../../shared/api/websocket.js";
 
 class MainPage {
     constructor() {
@@ -28,7 +28,7 @@ class MainPage {
         this.currentChatType = null;
 
         // Инициализация WebSocket
-        // chatWebSocket.connect();
+        chatWebSocket.connect();
         this.addListeners();
     }
 
@@ -62,11 +62,10 @@ class MainPage {
             this.render();
         });
 
-        eventBus.on("open dialog", (user) => {
-            // TODO - будет принимать user, нужно будет сделать dialogInstance.setUser(user)
-            console.log("catch open dialog:", user);
+        eventBus.on("open dialog", async ({ user, chatId }) => {
+            console.log("catch open dialog:", user, chatId);
 
-            dialogInstace.setUser(user);
+            await dialogInstace.init({ user, chatId });
             this.chat = dialogInstace;
             this.render();
         });

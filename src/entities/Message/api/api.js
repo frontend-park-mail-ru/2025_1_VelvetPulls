@@ -4,10 +4,11 @@ import { Message } from "../model/Message.js";
 export const getMessageHistory = async (chatId, currentUserId) => {
     try {
         const response = await api.get(`/chat/${chatId}/messages`);
-        const messages = response.data.map(msg => Message.fromApi(msg, currentUserId));
+        // const messages = response.data.map(msg => Message.fromApi(msg, currentUserId));
         return {
             ok: true,
-            data: messages
+            // data: messages
+            data: response.data,
         };
     } catch (error) {
         return {
@@ -17,12 +18,16 @@ export const getMessageHistory = async (chatId, currentUserId) => {
     }
 };
 
-export const sendMessage = async (chatId, message) => {
+export const sendMessage = async (chatId, inputMessageValue) => {
     try {
-        const response = await api.post(`/chat/${chatId}/messages`, message.toApiFormat());
+        const response = await api.post(
+            `/chat/${chatId}/messages`,
+            { message: inputMessageValue },
+            // message.toApiFormat(),
+        );
         return {
             ok: true,
-            data: Message.fromApi(response.data)
+            data: Message.fromApi(response.data),
         };
     } catch (error) {
         return {

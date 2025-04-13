@@ -7,7 +7,7 @@ export class Message {
         sent_at,
         is_redacted = false,
         avatar_path = null,
-        isMine = false
+        isMine = false,
     }) {
         this.id = id;
         this.chatId = chat_id;
@@ -21,7 +21,10 @@ export class Message {
 
     // Форматирование времени для отображения
     getTime() {
-        return this.sentAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return this.sentAt.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
     }
 
     // Форматирование даты для отображения (если нужно)
@@ -51,10 +54,11 @@ export class Message {
             body: this.body,
             sent_at: this.sentAt.toISOString(),
             is_redacted: this.isRedacted,
-            avatar_path: this.avatarPath
+            avatar_path: this.avatarPath,
         };
-    
-     getElement(mode) {
+    }
+
+    getElement(mode) {
         const data = {
             body: this.body,
             sentAt: this.sentAt,
@@ -81,7 +85,7 @@ export class Message {
         const element = doc.body.firstChild;
 
         this.element = element;
-        console.log("message element:", element);
+        // console.log("message element:", element);
 
         return element;
     }

@@ -8,21 +8,20 @@ class ChatWebSocket {
     }
 
     connect() {
-
         this.socket = new WebSocket(this.baseUrl);
 
         this.socket.onopen = () => {
             this.connected = true;
-            eventBus.emit("ws:connected");
             console.log("WS is connected");
+            eventBus.emit("ws:connected");
         };
 
         this.socket.onmessage = (event) => {
             try {
                 const message = JSON.parse(event.data);
-                if (message.action === 'newMessage') {
+                if (message.action === "newMessage") {
                     const msg = Message.fromApi(message.payload, currentUserId);
-                    eventBus.emit('ws:newMessage', msg);
+                    eventBus.emit("ws:newMessage", msg);
                 }
             } catch (error) {
                 console.error("WebSocket message error:", error);
@@ -48,4 +47,4 @@ class ChatWebSocket {
     }
 }
 
-// export const chatWebSocket = new ChatWebSocket();
+export const chatWebSocket = new ChatWebSocket();

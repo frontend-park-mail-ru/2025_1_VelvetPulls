@@ -83,10 +83,9 @@ class Chats {
 
                 const user = new User();
                 await user.init(username);
+                const chatId = this.chats[chatNumber].id;
 
-                console.log("user:", user);
-
-                eventBus.emit("open dialog", user);
+                eventBus.emit("open dialog", { user, chatId });
             });
 
             // Удалить чат

@@ -1,6 +1,11 @@
 import { dialogInfo } from "../../DialogInfo/index.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { Message } from "../../../entities/Message/model/Message.js";
+import {
+    getMessageHistory,
+    sendMessage,
+} from "../../../entities/Message/index.js";
+import { currentUser } from "../../../entities/User/model/User.js";
 
 class Dialog {
     constructor() {
@@ -16,9 +21,13 @@ class Dialog {
         });
     }
 
-    setUser(user) {
+    async init({ user, chatId }) {
+        this.chatId = chatId;
         this.user = user;
         dialogInfo.setUser(user);
+        this.messages = (await getMessageHistory(chatId)).data;
+
+        // console.log("messages:", this.messages);
     }
 
     getHTML() {
@@ -36,9 +45,25 @@ class Dialog {
         const container = doc.body.firstChild;
         this.container = container;
 
-        // const dialogInfoContainer = dialogInfo.getHTML();
-        // const divider = container.querySelector(".vertical-divider");
-        // divider.after(dialogInfoContainer);
+        const messages = this.container.querySelector("#messages");
+        console.log("this messages:", this.messages);
+        if (this.messages !== null) {
+            for (const messageItem of this.messages) {
+                console.log("messageItem:", messageItem);
+
+                const message = new Message(messageItem);
+                console.log("message:", message);
+                console.log("current user:", currentUser);
+
+                if (messageItem.user === currentUser.getUsername()) {
+                    messages.appendChild(message.getElement("my"));
+                } else {
+                    messages.appendChild(message.getElement("dialog"));
+                }
+
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
 
         this.bindListeners();
 
@@ -98,15 +123,21 @@ class Dialog {
         } else {
             console.log("send message:", messageInput.value);
 
+            const response = await sendMessage(this.chatId, messageInput.value);
+
+            console.log("chatId:", this.chatId);
+            console.log("send message:", response);
+
             const messageData = {
                 body: messageInput.value,
-                sentAt: "12:00",
+                sentAt: new Date().getTime(),
             };
             const message = new Message(messageData);
-
             const messages = this.container.querySelector("#messages");
             messages.appendChild(message.getElement("my"));
-            messages.appendChild(message.getElement("dialog"));
+            // messages.appendChild(message.getElement("dialog"));
+
+            messages.scrollTop = messages.scrollHeight;
         }
     }
 }

@@ -37,6 +37,7 @@ class API {
                     // request.headers["Content-Type"] = "multipart/form-data";
                 } else {
                     request.body = JSON.stringify(body);
+                    console.log("request body:", request.body);
                     request.headers["Content-Type"] = "application/json";
                 }
             }

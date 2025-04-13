@@ -1,1 +1,1 @@
-export { dialogViewInstace } from "./ui/Dialog.js";
+export { dialogInstace } from "./ui/Dialog.js";

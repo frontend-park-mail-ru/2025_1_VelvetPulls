@@ -12,13 +12,13 @@ import { profile } from "../../widgets/Profile/index.js";
 import { editProfile } from "../../widgets/EditProfile/index.js";
 
 import { noChat } from "../../widgets/NoChat/index.js";
-import { dialogViewInstace } from "../../widgets/Dialog/index.js";
+import { dialogInstace } from "../../widgets/Dialog/index.js";
 import { group } from "../../widgets/Group/index.js";
 
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 
-import { chatWebSocket } from "../../shared/api/websocket.js";
+// import { chatWebSocket } from "../../shared/api/websocket.js";
 
 class MainPage {
     constructor() {
@@ -28,27 +28,27 @@ class MainPage {
         this.currentChatType = null;
 
         // Инициализация WebSocket
-        chatWebSocket.connect();
+        // chatWebSocket.connect();
         this.addListeners();
     }
 
     addListeners() {
         // --------------- chats ----------------------
-        eventBus.on('ws:NEW_MESSAGE', (message) => {
+        eventBus.on("ws:NEW_MESSAGE", (message) => {
             if (message.chatId === this.currentChatId) {
                 this.handleNewMessage(message);
             }
         });
 
-        eventBus.on('chats: click on chat', (chatId) => {
+        eventBus.on("chats: click on chat", (chatId) => {
             this.currentChatId = chatId;
             this.loadChatHistory(chatId);
         });
 
         eventBus.on("new dialog", (user) => {
-            dialog.setUser(user);
-            this.chat = dialog;
-            this.currentChatType = 'dialog';
+            dialogInstace.setUser(user);
+            this.chat = dialogInstace;
+            this.currentChatType = "dialog";
             this.render();
         });
 
@@ -63,11 +63,11 @@ class MainPage {
         });
 
         eventBus.on("open dialog", (user) => {
-            // TODO - будет принимать user, нужно будет сделать dialogViewInstance.setUser(user)
+            // TODO - будет принимать user, нужно будет сделать dialogInstance.setUser(user)
             console.log("catch open dialog:", user);
 
-            dialogViewInstace.setUser(user);
-            this.chat = dialogViewInstace;
+            dialogInstace.setUser(user);
+            this.chat = dialogInstace;
             this.render();
         });
 
@@ -102,11 +102,11 @@ class MainPage {
         //     this.chat = dialog;
         //     this.render();
         // });
-      
+
         eventBus.on("new dialog", (user) => {
             console.log("catch new dialog", user);
-            dialogViewInstace.setUser(user);
-            this.chat = dialogViewInstace;
+            dialogInstace.setUser(user);
+            this.chat = dialogInstace;
             this.render();
         });
 
@@ -187,17 +187,18 @@ class MainPage {
     }
 
     async loadChatHistory(chatId) {
-        try {
-            const response = await api.get(`/chat/${chatId}/messages`);
-            // Обработка истории сообщений
-            this.renderMessages(response.data);
-        } catch (error) {
-            console.error('Failed to load chat history:', error);
-        }
+        // try {
+        //     const response = await api.get(`/chat/${chatId}/messages`);
+        //     // Обработка истории сообщений
+        //     this.renderMessages(response.data);
+        // } catch (error) {
+        //     console.error("Failed to load chat history:", error);
+        // }
+        console.log("load chat histori for chatId:", chatId);
     }
 
     handleNewMessage(message) {
-        const messagesContainer = document.querySelector('.messages-container');
+        const messagesContainer = document.querySelector(".messages-container");
         if (messagesContainer) {
             const messageElement = this.createMessageElement(message);
             messagesContainer.appendChild(messageElement);

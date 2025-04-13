@@ -2,6 +2,7 @@ import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { User } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
 import { deleteChat } from "../../../entities/Chat/api/api.js";
+import { createChat } from "../../../entities/Chat/api/api.js";
 
 class Chats {
     constructor() {
@@ -179,20 +180,20 @@ class Chats {
         const newDialog = newChatPopoverElement.querySelector("#new-dialog");
         newDialog.addEventListener("click", async (event) => {
             event.preventDefault();
-            // this.newChatIsOpen = false;
-            // eventBus.emit("chats -> new dialog");
             const username = prompt(
                 "Введите username пользователя, которому Вы хотите написать",
             );
             console.log("username:", username);
-            // alert("Здесь будет открываться чат с пользователем");
 
             try {
-                const user = new User();
-                console.log("user empty:", user);
-                await user.init(username);
-                console.log("user ready:", user);
-                eventBus.emit("new dialog", user);
+                const chatData = {
+                    type: "dialog",
+                    dialog_user: username,
+                    title: "1",
+                };
+                await createChat(chatData);
+
+                eventBus.emit("new chat is created");
             } catch (error) {
                 alert("user is not found:", username);
                 console.log("error:", error);

@@ -12,10 +12,10 @@ export const getMessageHistory = async (chatId, currentUserId) => {
     } catch (error) {
         return {
             ok: false,
-            error: error.message
+            error: error.message,
         };
     }
-}
+};
 
 export const sendMessage = async (chatId, message) => {
     try {
@@ -27,7 +27,7 @@ export const sendMessage = async (chatId, message) => {
     } catch (error) {
         return {
             ok: false,
-            error: error.message
+            error: error.message,
         };
     }
-}
+};

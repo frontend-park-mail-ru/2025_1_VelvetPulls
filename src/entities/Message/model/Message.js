@@ -53,6 +53,37 @@ export class Message {
             is_redacted: this.isRedacted,
             avatar_path: this.avatarPath
         };
+    
+     getElement(mode) {
+        const data = {
+            body: this.body,
+            sentAt: this.sentAt,
+        };
+
+        let template = null;
+        switch (mode) {
+            case "my":
+                template = Handlebars.templates["MyMessage.hbs"];
+                break;
+
+            case "dialog":
+                template = Handlebars.templates["DialogMessage.hbs"];
+                break;
+
+            default:
+                throw Error("Задан некорректный тип сообщения");
+        }
+
+        const html = template({ ...data });
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const element = doc.body.firstChild;
+
+        this.element = element;
+        console.log("message element:", element);
+
+        return element;
     }
 
     // Статический метод для создания экземпляра из данных API

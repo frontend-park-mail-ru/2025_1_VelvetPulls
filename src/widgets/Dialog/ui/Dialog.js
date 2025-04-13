@@ -120,4 +120,4 @@ class Dialog {
     // }
 }
 
-export const dialogViewInstace = new DialogView();
+export const dialogViewInstace = new Dialog();

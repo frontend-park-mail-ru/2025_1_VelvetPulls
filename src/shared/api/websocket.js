@@ -6,23 +6,10 @@ class ChatWebSocket {
         this.connected = false;
         this.baseUrl = 'ws://localhost:8080/ws';
     }
-    getToken() {
-        return localStorage.getItem('token'); // Или sessionStorage
-    }
+
     connect() {
-        const token = auth.getToken();
-        if (!token) {
-            console.error('WebSocket: No auth token available');
-            eventBus.emit('ws:error', 'Not authenticated');
-            return;
-        }
 
-        // Закрываем предыдущее соединение, если есть
-        if (this.socket) {
-            this.socket.close();
-        }
-
-        this.socket = new WebSocket(`${this.baseUrl}?token=${encodeURIComponent(token)}`);
+        this.socket = new WebSocket(this.baseUrl);
 
         this.socket.onopen = () => {
             this.connected = true;

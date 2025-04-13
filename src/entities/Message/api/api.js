@@ -1,5 +1,5 @@
 import { api } from "../../../shared/api/api.js";
-import { Message } from "../Message/Message.js";
+import { Message } from "../model/Message.js";
 
 export const getMessageHistory = async (chatId, currentUserId) => {
     try {

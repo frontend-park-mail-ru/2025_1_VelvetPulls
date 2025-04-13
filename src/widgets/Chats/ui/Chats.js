@@ -78,8 +78,8 @@ class Chats {
 
                 console.log("click on chat:", this.chats[chatNumber]);
                 console.log("chat title:", this.chats[chatNumber].title);
-
-                const username = this.chats[chatNumber].title;
+                if (this.chats[chatNumber].type==="dialog"){
+                    const username = this.chats[chatNumber].title;
 
                 const user = new User();
                 await user.init(username);
@@ -87,6 +87,9 @@ class Chats {
                 console.log("user:", user);
 
                 eventBus.emit("open dialog", user);
+                } else {
+                    eventBus.emit("open group", this.chats[chatNumber].id);
+                }
             });
 
             // Удалить чат

@@ -71,6 +71,16 @@ class MainPage {
             this.render();
         });
 
+        eventBus.on("open group", (user) => {
+            // TODO - будет принимать user, нужно будет сделать dialogInstance.setUser(user)
+            console.log("catch open dialog:", user);
+
+            group.setID(user);
+            group.getData()
+            this.chat = group;
+            this.render();
+        });
+
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
             this.render();

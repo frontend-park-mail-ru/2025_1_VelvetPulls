@@ -3,7 +3,7 @@ import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 class GroupInfo {
     constructor() {}
 
-    getHTML() {
+    getHTML(inData) {
         const members = [
             {
                 name: "Cameron Williamson",
@@ -29,10 +29,10 @@ class GroupInfo {
 
         const data = {
             groupPhotoUrl: "img/Keftegram.png",
-            title: "Михал",
-            description: "Палыч",
-            members: members,
-            membersCount: members.length,
+            title: inData.title,
+            description: "extra",
+            members: inData.users,
+            membersCount: inData.count_users,
         };
 
         const groupInfoTemplate = Handlebars.templates["GroupInfo.hbs"];

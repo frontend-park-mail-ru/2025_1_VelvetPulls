@@ -57,13 +57,13 @@ class DialogView {
             this.onClickSendMessage.bind(this),
         );
 
-        const deleteChatButton = this.container.querySelector(
-            "#delete-chat-button",
-        );
-        deleteChatButton.addEventListener(
-            "click",
-            this.onClickDeleteChat.bind(this),
-        );
+        // const deleteChatButton = this.container.querySelector(
+        //     "#delete-chat-button",
+        // );
+        // deleteChatButton.addEventListener(
+        //     "click",
+        //     this.onClickDeleteChat.bind(this),
+        // );
     }
 
     onClickButtonClose(event) {
@@ -113,12 +113,12 @@ class DialogView {
         }
     }
 
-    onClickDeleteChat(event) {
-        event.preventDefault();
-        event.stopPropagation();
+    // onClickDeleteChat(event) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
 
-        console.log("TODO: delete chat if exists");
-    }
+    //     console.log("TODO: delete chat if exists");
+    // }
 }
 
 export const dialogViewInstace = new DialogView();

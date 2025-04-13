@@ -72,11 +72,20 @@ class Chats {
             const chat = chats[chatNumber];
 
             // Открыть чат (ещё не сделано)
-            chat.addEventListener("click", (event) => {
+            chat.addEventListener("click", async (event) => {
                 event.preventDefault();
 
                 console.log("click on chat:", this.chats[chatNumber]);
-                eventBus.emit("chats: click on chat", chatNumber);
+                console.log("chat title:", this.chats[chatNumber].title);
+
+                const username = this.chats[chatNumber].title;
+
+                const user = new User();
+                await user.init(username);
+
+                console.log("user:", user);
+
+                eventBus.emit("open dialog", user);
             });
 
             // Удалить чат

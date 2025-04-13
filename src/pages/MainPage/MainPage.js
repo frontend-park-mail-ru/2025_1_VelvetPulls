@@ -39,9 +39,13 @@ class MainPage {
             this.render();
         });
 
-        eventBus.on("chats: click on chat", (chatNumber) => {
+        eventBus.on("open dialog", (user) => {
             // TODO - будет принимать user, нужно будет сделать dialogViewInstance.setUser(user)
-            console.log("catch open dialog:", chatNumber);
+            console.log("catch open dialog:", user);
+
+            dialogViewInstace.setUser(user);
+            this.chat = dialogViewInstace;
+            this.render();
         });
 
         eventBus.on("chats -> profile", () => {

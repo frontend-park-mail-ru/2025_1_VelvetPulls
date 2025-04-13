@@ -8,6 +8,7 @@ class Chats {
         this.menu = null;
         this.menuIsOpen = false;
         this.newChatIsOpen = false;
+        this.handleDocumentClick = this.handleDocumentClick.bind(this);
     }
 
     getData() {
@@ -57,133 +58,144 @@ class Chats {
     }
 
     addListeners() {
-        // Клик по чату
-        const chats = this.container.querySelectorAll(".sidebar-list-item");
-        for (const chat of chats) {
-            chat.addEventListener("click", (event) => {
-                event.preventDefault();
-                eventBus.emit("chats: click on chat", "ла-ла-ла");
-            });
+        // Удаляем старые обработчики перед добавлением новых
+        document.removeEventListener('click', this.handleDocumentClick);
+        
+        // Добавляем обработчик на весь документ
+        document.addEventListener('click', this.handleDocumentClick);
+    }
+
+    handleDocumentClick(event) {
+        // Обработка клика по чату
+        const chatItem = event.target.closest(".sidebar-list-item");
+        if (chatItem) {
+            event.preventDefault();
+            eventBus.emit("chats: click on chat", "ла-ла-ла");
+            return;
         }
 
-        // Обработчик клика по кнопке меню
-        const menuButton = this.container.querySelector("#chats-menu");
-        menuButton.addEventListener("click", (event) => {
+        // Обработка клика по кнопке меню
+        const menuButton = event.target.closest("#chats-menu");
+        if (menuButton) {
             event.preventDefault();
             event.stopPropagation();
+            this.toggleMenu();
+            return;
+        }
 
-            const menuPopover = this.container.querySelector(
-                "#chats-menu-popover",
-            );
+        // Обработка клика по кнопке создания чата
+        const newChatButton = event.target.closest(".sidebar__fixed-button");
+        if (newChatButton) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.toggleNewChat();
+            return;
+        }
 
-            if (this.menuIsOpen) {
-                menuPopover.style.display = "none";
+        // Обработка кликов внутри меню
+        if (this.menuIsOpen) {
+            const menuPopover = this.container?.querySelector("#chats-menu-popover");
+            if (menuPopover && !menuPopover.contains(event.target)) {
                 this.menuIsOpen = false;
-            } else {
-                menuPopover.style.display = "flex";
-                this.menuIsOpen = true;
+                menuPopover.style.display = "none";
             }
-        });
 
-        this.setupMenuListeners();
+            const profileButton = event.target.closest("#chats-menu-profile");
+            if (profileButton) {
+                event.preventDefault();
+                this.closeMenu();
+                eventBus.emit("chats -> profile");
+                return;
+            }
 
-        // Клик по конопке создания чата
-        const newChatButton = this.container.querySelector(
-            ".sidebar__fixed-button",
-        );
-        newChatButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+            const contactsButton = event.target.closest("#chats-menu-contacts");
+            if (contactsButton) {
+                event.preventDefault();
+                this.closeMenu();
+                eventBus.emit("chats -> contacts");
+                return;
+            }
+        }
 
-            const newChatPopover =
-                this.container.querySelector("#new-chat__popover");
-
-            if (this.newChatIsOpen) {
-                newChatPopover.style.display = "none";
+        // Обработка кликов внутри popover нового чата
+        if (this.newChatIsOpen) {
+            const newChatPopover = this.container?.querySelector("#new-chat__popover");
+            if (newChatPopover && !newChatPopover.contains(event.target)) {
                 this.newChatIsOpen = false;
-            } else {
-                newChatPopover.style.display = "flex";
-                this.newChatIsOpen = true;
+                newChatPopover.style.display = "none";
             }
-        });
 
-        this.setupNewChatListeners();
+            const newDialogButton = event.target.closest("#new-dialog");
+            if (newDialogButton) {
+                event.preventDefault();
+                this.handleNewDialog();
+                return;
+            }
+
+            const newGroupButton = event.target.closest("#new-group");
+            if (newGroupButton) {
+                event.preventDefault();
+                this.closeNewChat();
+                eventBus.emit("chats -> new group");
+                return;
+            }
+
+            const newChannelButton = event.target.closest("#new-channel");
+            if (newChannelButton) {
+                event.preventDefault();
+                alert("Создание канала ещё не готово - это требование РК 3");
+                return;
+            }
+
+            const newContactButton = event.target.closest("#new-contact");
+            if (newContactButton) {
+                event.preventDefault();
+                this.closeNewChat();
+                eventBus.emit("chats -> new contact");
+                return;
+            }
+        }
     }
 
-    setupMenuListeners() {
-        const menuPopoverElement = this.container.querySelector(
-            "#chats-menu-popover",
-        );
-
-        // Профиль
-        const profile = menuPopoverElement.querySelector("#chats-menu-profile");
-        profile.addEventListener("click", (event) => {
-            event.preventDefault();
-            this.menuIsOpen = false;
-            eventBus.emit("chats -> profile");
-        });
-
-        // Контакты
-        const contacts = menuPopoverElement.querySelector(
-            "#chats-menu-contacts",
-        );
-        contacts.addEventListener("click", (event) => {
-            event.preventDefault();
-            this.menuIsOpen = false;
-            eventBus.emit("chats -> contacts");
-        });
+    toggleMenu() {
+        const menuPopover = this.container.querySelector("#chats-menu-popover");
+        this.menuIsOpen = !this.menuIsOpen;
+        menuPopover.style.display = this.menuIsOpen ? "flex" : "none";
     }
 
-    setupNewChatListeners() {
-        const newChatPopoverElement =
-            this.container.querySelector("#new-chat__popover");
+    closeMenu() {
+        this.menuIsOpen = false;
+        const menuPopover = this.container.querySelector("#chats-menu-popover");
+        if (menuPopover) menuPopover.style.display = "none";
+    }
 
-        // Новый диалог
-        const newDialog = newChatPopoverElement.querySelector("#new-dialog");
-        newDialog.addEventListener("click", async (event) => {
-            event.preventDefault();
-            // this.newChatIsOpen = false;
-            // eventBus.emit("chats -> new dialog");
-            const username = prompt(
-                "Введите username пользователя, которому Вы хотите написать",
-            );
-            console.log("username:", username);
-            alert("Здесь будет открываться чат с пользователем");
+    toggleNewChat() {
+        const newChatPopover = this.container.querySelector("#new-chat__popover");
+        this.newChatIsOpen = !this.newChatIsOpen;
+        newChatPopover.style.display = this.newChatIsOpen ? "flex" : "none";
+    }
 
-            // try {
-            //     const user = new User();
-            //     await user.init(username);
-            //     console.log("user:", user);
-            //     eventBus.emit("new dialog", user);
-            // } catch (error) {
-            //     console.log("user is not found:", error);
-            // }
-        });
+    closeNewChat() {
+        this.newChatIsOpen = false;
+        const newChatPopover = this.container.querySelector("#new-chat__popover");
+        if (newChatPopover) newChatPopover.style.display = "none";
+    }
 
-        // Новая группа
-        const newGroup = newChatPopoverElement.querySelector("#new-group");
-        newGroup.addEventListener("click", (event) => {
-            event.preventDefault();
-            this.newChatIsOpen = false;
-            eventBus.emit("chats -> new group");
-        });
+    async handleNewDialog() {
+        const username = prompt(
+            "Введите username пользователя, которому Вы хотите написать"
+        );
+        console.log("username:", username);
+        alert("Здесь будет открываться чат с пользователем");
 
-        // Новый канал
-        const newChannel = newChatPopoverElement.querySelector("#new-channel");
-        newChannel.addEventListener("click", (event) => {
-            event.preventDefault();
-            // this.newChatIsOpen = false;
-            // eventBus.emit("chats -> new channel");
-            alert("Создание канала ещё не готово - это требование РК 3");
-        });
-
-        // Новый канал
-        const newContact = newChatPopoverElement.querySelector("#new-contact");
-        newContact.addEventListener("click", (event) => {
-            event.preventDefault();
-            this.newChatIsOpen = false;
-            eventBus.emit("chats -> new contact");
-        });
+        // try {
+        //     const user = new User();
+        //     await user.init(username);
+        //     console.log("user:", user);
+        //     eventBus.emit("new dialog", user);
+        // } catch (error) {
+        //     console.log("user is not found:", error);
+        // }
     }
 }
 

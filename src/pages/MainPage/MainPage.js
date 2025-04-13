@@ -28,10 +28,10 @@ class MainPage {
         this.currentChatId = null;
         this.currentChatType = null;
         this.messages = [];
-        //this.chatSocket = new ChatWebSocket('ws://localhost:8080/ws');
+        this.chatSocket = new ChatWebSocket('ws://localhost:8080/ws');
 
         this.addListeners();
-        //this.initWebSocketListeners();
+        this.initWebSocketListeners();
     }
 
     initWebSocketListeners() {
@@ -130,7 +130,114 @@ class MainPage {
     }
 
     addListeners() {
-        // --------------- chats ----------------------
+        // // --------------- chats ----------------------
+
+        // eventBus.on("chats -> profile", () => {
+        //     this.sidebar = profile;
+        //     this.render();
+        // });
+
+        // eventBus.on("chats -> contacts", () => {
+        //     this.sidebar = contacts;
+        //     this.render();
+        // });
+
+        // eventBus.on("chats -> new group", () => {
+        //     this.sidebar = createGroup;
+        //     this.render();
+        // });
+
+        // eventBus.on("chats -> new contact", () => {
+        //     this.sidebar = createContact;
+        //     this.render();
+        // });
+
+        // eventBus.on("chats: click on chat", () => {
+        //     this.chat = group;
+        //     this.render();
+        // });
+
+        // eventBus.on("new dialog", (user) => {
+        //     console.log("catch new dialog", user);
+        //     dialog.setUser(user);
+        //     this.chat = dialog;
+        //     this.render();
+        // });
+
+        // // --------------- profile -----------------------
+
+        // eventBus.on("profile -> chats", () => {
+        //     this.sidebar = chats;
+        //     this.render();
+        // });
+
+        // eventBus.on("profile -> edit profile", () => {
+        //     this.sidebar = editProfile;
+        //     this.render();
+        // });
+
+        // eventBus.on("profile -> logout", () => {
+        //     auth.logout();
+        //     goToPage("login");
+        // });
+
+        // // --------------- edit profile ----------------------
+
+        // eventBus.on("edit profile -> back", () => {
+        //     this.sidebar = profile;
+        //     this.render();
+        // });
+
+        // eventBus.on("edit profile -> save", () => {
+        //     this.sidebar = profile;
+        //     this.render();
+        // });
+
+        // // ------------------- contacts ----------------------
+
+        // eventBus.on("contacts -> chats", () => {
+        //     this.sidebar = chats;
+        //     this.render();
+        // });
+
+        // // ------------------- new group ----------------------
+
+        // eventBus.on("new group -> chats", () => {
+        //     this.sidebar = chats;
+        //     this.render();
+        // });
+
+        // eventBus.on("new group -> add members", () => {
+        //     this.sidebar = addMembers;
+        //     this.render();
+        // });
+
+        // // ----------------- add members ----------------------
+
+        // eventBus.on("add members -> new group", () => {
+        //     this.sidebar = createGroup;
+        //     this.render();
+        // });
+
+        // eventBus.on("add members -> next", () => {
+        //     this.sidebar = chats;
+        //     this.render();
+        // });
+
+        // // ------------------- new contact ----------------------
+
+        // eventBus.on("new contact -> chats", () => {
+        //     this.sidebar = chats;
+        //     this.render();
+        // });
+
+        // // ------------------- dialog -----------------------
+        // eventBus.on("close dialog", () => {
+        //     this.chat = noChat;
+        //     this.render();
+        // });
+
+        //--------------- chats ----------------------
 
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
@@ -152,15 +259,25 @@ class MainPage {
             this.render();
         });
 
-        eventBus.on("chats: click on chat", () => {
+        eventBus.on("chats: click on chat", (chatId) => {
+            this.currentChatId = chatId;
             this.chat = group;
+            this.currentChatType = 'group';
+            this.loadMessageHistory(chatId);
             this.render();
         });
 
         eventBus.on("new dialog", (user) => {
-            console.log("catch new dialog", user);
             dialog.setUser(user);
             this.chat = dialog;
+            this.currentChatId = user.id;
+            this.currentChatType = 'dialog';
+            this.loadMessageHistory(user.id);
+            this.render();
+        });
+
+        eventBus.on("send message", (text) => {
+            this.throwMessage(text);
             this.render();
         });
 
@@ -234,129 +351,11 @@ class MainPage {
         // ------------------- dialog -----------------------
         eventBus.on("close dialog", () => {
             this.chat = noChat;
+            this.currentChatId = null;
+            this.currentChatType = null;
+            this.messages = [];
             this.render();
         });
-
-        // --------------- chats ----------------------
-
-    //     eventBus.on("chats -> profile", () => {
-    //         this.sidebar = profile;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("chats -> contacts", () => {
-    //         this.sidebar = contacts;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("chats -> new group", () => {
-    //         this.sidebar = createGroup;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("chats -> new contact", () => {
-    //         this.sidebar = createContact;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("chats: click on chat", (chatId) => {
-    //         this.currentChatId = chatId;
-    //         this.chat = group;
-    //         this.currentChatType = 'group';
-    //         this.loadMessageHistory(chatId);
-    //         this.render();
-    //     });
-
-    //     eventBus.on("new dialog", (user) => {
-    //         dialog.setUser(user);
-    //         this.chat = dialog;
-    //         this.currentChatId = user.id;
-    //         this.currentChatType = 'dialog';
-    //         this.loadMessageHistory(user.id);
-    //         this.render();
-    //     });
-
-    //     eventBus.on("send message", (text) => {
-    //         this.throwMessage(text);
-    //         this.render();
-    //     });
-
-    //     // --------------- profile -----------------------
-
-    //     eventBus.on("profile -> chats", () => {
-    //         this.sidebar = chats;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("profile -> edit profile", () => {
-    //         this.sidebar = editProfile;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("profile -> logout", () => {
-    //         auth.logout();
-    //         goToPage("login");
-    //     });
-
-    //     // --------------- edit profile ----------------------
-
-    //     eventBus.on("edit profile -> back", () => {
-    //         this.sidebar = profile;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("edit profile -> save", () => {
-    //         this.sidebar = profile;
-    //         this.render();
-    //     });
-
-    //     // ------------------- contacts ----------------------
-
-    //     eventBus.on("contacts -> chats", () => {
-    //         this.sidebar = chats;
-    //         this.render();
-    //     });
-
-    //     // ------------------- new group ----------------------
-
-    //     eventBus.on("new group -> chats", () => {
-    //         this.sidebar = chats;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("new group -> add members", () => {
-    //         this.sidebar = addMembers;
-    //         this.render();
-    //     });
-
-    //     // ----------------- add members ----------------------
-
-    //     eventBus.on("add members -> new group", () => {
-    //         this.sidebar = createGroup;
-    //         this.render();
-    //     });
-
-    //     eventBus.on("add members -> next", () => {
-    //         this.sidebar = chats;
-    //         this.render();
-    //     });
-
-    //     // ------------------- new contact ----------------------
-
-    //     eventBus.on("new contact -> chats", () => {
-    //         this.sidebar = chats;
-    //         this.render();
-    //     });
-
-    //     // ------------------- dialog -----------------------
-    //     eventBus.on("close dialog", () => {
-    //         this.chat = noChat;
-    //         this.currentChatId = null;
-    //         this.currentChatType = null;
-    //         this.messages = [];
-    //         this.render();
-    //     });
-    // }
 
     // updateListeners() {
     //     const callback = () => {
@@ -381,51 +380,67 @@ class MainPage {
     }
 
     async render() {
+        // Сохраняем ссылки на текущие интерактивные элементы
+        const oldContainer = document.querySelector('.container');
+        const oldInput = oldContainer?.querySelector('.chat-input-container__input');
+        const oldSendButton = oldContainer?.querySelector('.chat-input-container__button');
+        
+        // Сохраняем значения полей ввода
+        const inputValue = oldInput?.value || '';
+
         const mainPageTemplate = Handlebars.templates["MainPage.hbs"];
         const html = mainPageTemplate({});
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        const container = doc.body.firstChild;
+        const newContainer = doc.body.firstChild;
 
         const sidebar = this.sidebar.getHTML();
-        container.insertBefore(sidebar, container.firstChild);
-
-        const divider = container.querySelector(".container__divider");
+        newContainer.insertBefore(sidebar, newContainer.firstChild);
+        const divider = newContainer.querySelector(".container__divider");
         const chat = this.chat.getHTML();
         divider.after(chat);
 
-        const root = document.getElementById("root");
-        root.innerHTML = "";
-        root.appendChild(container);
+        const newInput = newContainer.querySelector('.chat-input-container__input');
+        if (newInput) newInput.value = inputValue;
 
-        // this.updateListeners();
+        // Заменяем контейнер
+        const root = document.getElementById("root");
+        if (oldContainer) {
+            root.replaceChild(newContainer, oldContainer);
+        } else {
+            root.appendChild(newContainer);
+        }
+
+        // Добавляем обработчики
         this.sidebar.addListeners?.();
         this.chat.addListeners?.();
-
         this.addMessageInputListeners();
 
         return new RenderResult({});
     }
     addMessageInputListeners() {
-        const input = document.querySelector('.chat-input-container__input');
-        const sendButton = document.querySelector('.chat-input-container__button');
-
-        if (!input || !sendButton) return;
-
-        const sendHandler = () => {
-            const text = input.value.trim();
-            if (text) {
-                eventBus.emit("send message", text);
-                input.value = '';
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.chat-input-container__button')) {
+                const input = document.querySelector('.chat-input-container__input');
+                const text = input?.value.trim();
+                if (text) {
+                    eventBus.emit("send message", text);
+                    input.value = '';
+                }
             }
-        };
+            
+        });
 
-        sendButton.addEventListener('click', sendHandler);
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendHandler();
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && e.target.closest('.chat-input-container__input')) {
+                const input = e.target;
+                const text = input.value.trim();
+                if (text) {
+                    eventBus.emit("send message", text);
+                    input.value = '';
+                }
             }
         });
     }

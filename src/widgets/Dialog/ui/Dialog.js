@@ -2,13 +2,19 @@ import { dialogInfo } from "../../DialogInfo/index.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
 
-class DialogView {
+class Dialog {
     constructor() {
+        this.user = null;
+        this.chatId = null;
+        this.messages = [];
+        this.container = null;
+      
         this.infoIsOpen = false;
 
         eventBus.on("close dialog info", () => {
             this.infoIsOpen = false;
         });
+
     }
 
     setUser(user) {
@@ -20,6 +26,7 @@ class DialogView {
         const data = {
             fullName: this.user.getFullName(),
             avatarSrc: this.user.avatarSrc,
+            messages: this.messages
         };
 
         const dialogTemplate = Handlebars.templates["Dialog.hbs"];
@@ -56,14 +63,6 @@ class DialogView {
             "click",
             this.onClickSendMessage.bind(this),
         );
-
-        // const deleteChatButton = this.container.querySelector(
-        //     "#delete-chat-button",
-        // );
-        // deleteChatButton.addEventListener(
-        //     "click",
-        //     this.onClickDeleteChat.bind(this),
-        // );
     }
 
     onClickButtonClose(event) {

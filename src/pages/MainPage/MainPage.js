@@ -19,16 +19,39 @@ import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 import { dialog } from "../../widgets/Dialog/ui/Dialog.js";
 
+import { chatWebSocket } from "../../shared/api/websocket.js";
+
 class MainPage {
     constructor() {
         this.sidebar = chats;
         this.chat = noChat;
+        this.currentChatId = null;
+        this.currentChatType = null;
 
+        // Инициализация WebSocket
+        chatWebSocket.connect();
         this.addListeners();
     }
 
     addListeners() {
         // --------------- chats ----------------------
+        eventBus.on('ws:NEW_MESSAGE', (message) => {
+            if (message.chatId === this.currentChatId) {
+                this.handleNewMessage(message);
+            }
+        });
+
+        eventBus.on('chats: click on chat', (chatId) => {
+            this.currentChatId = chatId;
+            this.loadChatHistory(chatId);
+        });
+
+        eventBus.on("new dialog", (user) => {
+            dialog.setUser(user);
+            this.chat = dialog;
+            this.currentChatType = 'dialog';
+            this.render();
+        });
 
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
@@ -50,17 +73,17 @@ class MainPage {
             this.render();
         });
 
-        eventBus.on("chats: click on chat", () => {
-            this.chat = group;
-            this.render();
-        });
+        // eventBus.on("chats: click on chat", () => {
+        //     this.chat = group;
+        //     this.render();
+        // });
 
-        eventBus.on("new dialog", (user) => {
-            console.log("catch new dialog", user);
-            dialog.setUser(user);
-            this.chat = dialog;
-            this.render();
-        });
+        // eventBus.on("new dialog", (user) => {
+        //     console.log("catch new dialog", user);
+        //     dialog.setUser(user);
+        //     this.chat = dialog;
+        //     this.render();
+        // });
 
         // --------------- profile -----------------------
 
@@ -131,11 +154,31 @@ class MainPage {
 
         // ------------------- dialog -----------------------
         eventBus.on("close dialog", () => {
+            dialog.cleanup();
             this.chat = noChat;
+            this.currentChatType = null;
             this.render();
         });
     }
 
+    async loadChatHistory(chatId) {
+        try {
+            const response = await api.get(`/chat/${chatId}/messages`);
+            // Обработка истории сообщений
+            this.renderMessages(response.data);
+        } catch (error) {
+            console.error('Failed to load chat history:', error);
+        }
+    }
+
+    handleNewMessage(message) {
+        const messagesContainer = document.querySelector('.messages-container');
+        if (messagesContainer) {
+            const messageElement = this.createMessageElement(message);
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    }
     // updateListeners() {
     //     const callback = () => {
     //         group.infoIsOpen = false;

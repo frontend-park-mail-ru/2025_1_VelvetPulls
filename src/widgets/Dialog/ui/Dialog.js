@@ -2,6 +2,12 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 
 class Dialog {
+    constructor() {
+        this.user = null;
+        this.chatId = null;
+        this.messages = [];
+        this.container = null;
+    }
     getHTML() {
         console.log("dialog user:", this.user);
 
@@ -10,6 +16,7 @@ class Dialog {
         const data = {
             fullName: this.user.getFullName(),
             avatarSrc: this.user.avatarSrc,
+            messages: this.messages
         };
 
         const dialogTemplate = Handlebars.templates["Dialog.hbs"];
@@ -28,12 +35,13 @@ class Dialog {
 
     addListeners() {
         const closeButton = this.container.querySelector("#close-chat");
-        closeButton.AddEventListener("click", (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-
-            eventBus.emit("close dialog");
-        });
+        if (closeButton) {
+            closeButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                eventBus.emit("close dialog");
+            });
+        }
     }
 
     setUser(user) {

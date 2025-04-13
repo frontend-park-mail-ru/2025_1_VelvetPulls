@@ -58,14 +58,22 @@ class Chats {
 
     addListeners() {
         // Клик по чату
-        const chats = this.container.querySelectorAll(".sidebar-list-item");
-        for (const chat of chats) {
-            chat.addEventListener("click", (event) => {
+        // const chats = this.container.querySelectorAll(".sidebar-list-item");
+        // for (const chat of chats) {
+        //     chat.addEventListener("click", (event) => {
+        //         event.preventDefault();
+        //         eventBus.emit("chats: click on chat", "ла-ла-ла");
+        //     });
+        // }
+        document.addEventListener('click', (event) => {
+            const chatItem = event.target.closest('.sidebar-list-item');
+            if (chatItem) {
                 event.preventDefault();
-                eventBus.emit("chats: click on chat", "ла-ла-ла");
-            });
-        }
-
+                const chatId = chatItem.dataset.chatId;
+                eventBus.emit('chats: click on chat', chatId);
+            }
+            
+        });
         // Обработчик клика по кнопке меню
         const menuButton = this.container.querySelector("#chats-menu");
         menuButton.addEventListener("click", (event) => {

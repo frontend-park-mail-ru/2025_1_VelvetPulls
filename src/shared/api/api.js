@@ -69,8 +69,9 @@ class API {
         return this.request("PUT", url, body);
     }
 
-    async delete(url) {
-        return this.request("DELETE", url);
+    async delete(url, body = null) {
+        console.log("delete here");
+        return this.request("DELETE", url, body);
     }
 }
 

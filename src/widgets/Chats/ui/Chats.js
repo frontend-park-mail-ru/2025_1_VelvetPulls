@@ -216,7 +216,7 @@ class Chats {
             alert("Создание канала ещё не готово - это требование РК 3");
         });
 
-        // Новый канал
+        // Новый контакт
         const newContact = newChatPopoverElement.querySelector("#new-contact");
         newContact.addEventListener("click", (event) => {
             event.preventDefault();

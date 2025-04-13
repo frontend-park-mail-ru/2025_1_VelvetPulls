@@ -1,4 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
+import { api } from "../../../shared/api/api.js";
 
 class Contacts {
     constructor(parentWidget) {
@@ -6,7 +7,7 @@ class Contacts {
         this.container = null;
     }
 
-    getData() {
+    async getData() {
         // Моковый запрос в БД положит данные в this.data
         this.data = [
             {
@@ -24,69 +25,25 @@ class Contacts {
                 photoURL: "img/Avatar.png",
                 onlineStatus: "В сети",
             },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
         ];
+
+        const response = await api.get("/contacts");
+        console.log("contacts:", response);
+        this.data = response.data;
     }
 
-    getHTML() {
-        this.getData();
+    async getHTML() {
+        await this.getData();
 
         const template = Handlebars.templates["Contacts.hbs"];
-        const contacts = this.data;
+        const contacts = [];
+
+        for (const contact of this.data) {
+            contacts.push({
+                name: contact.username,
+            });
+        }
+
         const html = template({ contacts });
 
         const parser = new DOMParser();
@@ -110,12 +67,24 @@ class Contacts {
         });
 
         const contacts = this.container.querySelectorAll(".sidebar-list-item");
-        for (const contact of contacts) {
-            const deleteButton = contact.querySelector(".button");
-            deleteButton.addEventListener("click", (event) => {
+        for (let i = 0; i < contacts.length; ++i) {
+            const contactElement = contacts[i];
+
+            const deleteButton = contactElement.querySelector(".button");
+            deleteButton.addEventListener("click", async (event) => {
                 event.preventDefault();
-                alert("Контакт будет удалён (см. console.log)");
-                console.log("Контакт будет удалён:\n", contact);
+                event.stopPropagation();
+
+                const contactUser = this.data[i];
+
+                const responseBody = {
+                    username: contactUser.username,
+                };
+
+                const response = await api.delete("/contacts", responseBody);
+                console.log("delete contact:", response);
+
+                contactElement.parentNode.removeChild(contactElement);
             });
         }
     }

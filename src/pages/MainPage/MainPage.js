@@ -38,8 +38,8 @@ class MainPage {
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
             console.log("catch ws new message", message);
             if (
-                message.chatId === this.currentChatId &&
-                message.username !== currentUser.getUsername()
+                message.chatId === this.currentChatId
+                // message.username !== currentUser.getUsername()
             ) {
                 console.log("insert new message");
                 await this.handleNewMessage(message);
@@ -214,9 +214,14 @@ class MainPage {
         const messagesContainer = document.querySelector("#messages");
         console.log("messages containeer:", messagesContainer);
         if (messagesContainer) {
-            const messageElement = await message.getElement(
-                this.currentChatType,
-            );
+            let messageType = null;
+            console.log(message.username);
+            if (message.username === currentUser.getUsername()) {
+                messageType = "my";
+            } else {
+                messageType = this.currentChatType;
+            }
+            const messageElement = await message.getElement(messageType);
             console.log("message element:", messageElement);
             messagesContainer.appendChild(messageElement);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -242,8 +247,6 @@ class MainPage {
         const root = document.getElementById("root");
         root.innerHTML = "";
         root.appendChild(container);
-
-        // this.updateListeners();
 
         return new RenderResult({});
     }

@@ -25,10 +25,20 @@ export class User {
         console.log("user data:", data);
 
         this.#username = data["username"];
-        this.#firstName = data["first_name"];
-        this.#lastName = data["last_name"];
         this.#phone = data["phone"];
         this.#avatarPath = data["avatar_path"];
+
+        if (data["first_name"] === null || data["first_name"] === undefined) {
+            this.#firstName = "";
+        } else {
+            this.#firstName = data["first_name"];
+        }
+
+        if (data["last_name"] === null || data["last_name"] === undefined) {
+            this.#lastName = "";
+        } else {
+            this.#lastName = data["last_name"];
+        }
 
         console.log("user with filled data:", this);
 
@@ -80,24 +90,6 @@ export class User {
     getAvatarPath() {
         return this.#avatarPath;
     }
-
-    // addAvatar(avatarPath) {
-    //     this.#avatarPaths.push(avatarPath);
-    // }
-
-    // getAvatarPath(i) {
-    //     if (i >= this.#avatarPaths.length) {
-    //         throw Error(
-    //             `Выход за пределы массива: avatars.lenth=${this.#avatarPaths.length}, i=${i}`,
-    //         );
-    //     }
-
-    //     return this.#avatarPaths[i];
-    // }
-
-    // getAvatarPathAll() {
-    //     return this.#avatarPaths;
-    // }
 }
 
 export const currentUser = new User();

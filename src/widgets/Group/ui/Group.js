@@ -7,6 +7,7 @@ import {
     getMessageHistory,
 } from "../../../entities/Message/index.js";
 import { currentUser } from "../../../entities/User/model/User.js";
+import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class Group {
     constructor() {
@@ -110,30 +111,27 @@ class Group {
     async onClickSendMessage(event) {
         event.preventDefault();
 
-        console.log("send message button click");
-
         const messageInput = this.container.querySelector(
             ".chat-input-container__input",
         );
         console.log("input value:", messageInput.value);
 
         if (messageInput.value !== "") {
-            console.log("send message:", messageInput.value);
-
-            const response = await sendMessage(this.chatId, messageInput.value);
-
-            console.log("chatId:", this.chatId);
-            console.log("send message:", response);
+            await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {
                 body: messageInput.value,
-                sentAt: new Date().getTime(),
+                sent_at: new Date(),
             };
             const message = new Message(messageData);
             const messages = this.container.querySelector("#messages");
             messages.appendChild(await message.getElement("my"));
 
+            messageInput.value = "";
+
             messages.scrollTop = messages.scrollHeight;
+
+            chatWebSocket.send(message);
         }
     }
 }

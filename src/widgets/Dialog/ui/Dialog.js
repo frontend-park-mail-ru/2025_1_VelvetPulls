@@ -86,8 +86,19 @@ class Dialog {
         );
         sendMessageButton.addEventListener(
             "click",
-            this.onClickSendMessage.bind(this),
+            this.sendMessage.bind(this),
         );
+
+        // const inputField = this.container.querySelector(
+        //     ".chat-input-container__input",
+        // );
+        // inputField.addEventListener("keydown", async (event) => {
+        //     event.preventDefault();
+
+        //     if (event.key === "Enter") {
+        //         await this.sendMessage(event);
+        //     }
+        // });
     }
 
     onClickButtonClose(event) {
@@ -109,7 +120,7 @@ class Dialog {
         }
     }
 
-    async onClickSendMessage(event) {
+    async sendMessage(event) {
         event.preventDefault();
 
         console.log("send message button click");
@@ -122,20 +133,16 @@ class Dialog {
         if (messageInput.value !== "") {
             console.log("send message:", messageInput.value);
 
-            const response = await sendMessage(this.chatId, messageInput.value);
-
-            console.log("chatId:", this.chatId);
-            console.log("send message:", response);
+            await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {
                 body: messageInput.value,
-                sentAt: new Date().getTime(),
+                sent_at: new Date(),
+                user: currentUser.getUsername(),
             };
             const message = new Message(messageData);
-            const messages = this.container.querySelector("#messages");
-            messages.appendChild(await message.getElement("my"));
 
-            messages.scrollTop = messages.scrollHeight;
+            messageInput.value = "";
 
             chatWebSocket.send(message);
         }

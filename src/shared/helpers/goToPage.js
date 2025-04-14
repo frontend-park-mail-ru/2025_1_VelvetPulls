@@ -1,4 +1,5 @@
 import { config, appState } from "../../app/router.js";
+import { auth } from "../api/auth.js";
 
 export const goToPage = async (page, pushState = true) => {
     console.log("go to page:", page);
@@ -31,6 +32,7 @@ export const goToPage = async (page, pushState = true) => {
         document.title = config[page].title;
     } catch (error) {
         console.error(`Error rendering page "${page}":`, error);
-        goToPage("login");
+        // auth.logout();
+        auth.goToPage("login");
     }
 };

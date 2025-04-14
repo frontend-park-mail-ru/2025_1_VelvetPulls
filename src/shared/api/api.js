@@ -70,7 +70,6 @@ class API {
     }
 
     async delete(url, body = null) {
-        console.log("delete here");
         return this.request("DELETE", url, body);
     }
 }

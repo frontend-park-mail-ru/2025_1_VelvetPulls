@@ -10,7 +10,7 @@
 
     <div class="horizontal-divider"></div>
 
-    <!-- Просмотр профиля -->
+    <!-- Просмотр группы -->
     <main class="group-info">
         {{!-- Аватар --}}
         <section class="avatar-container">
@@ -20,11 +20,11 @@
             </div>
 
             <div class="avatar-container__square-image">
-                <img class="avatar-container__image" src="{{groupPhotoUrl}}" alt="Avatar">
+                <img class="avatar-container__image" src="{{avatarSrc}}" alt="Avatar">
             </div>
         </section>
 
-        {{!-- Детали профиля --}}
+        {{!-- Детали группы --}}
         <section class="sidebar-list">
             {{!-- Ссылка --}}
             <div class="detail-item">
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            {{!-- О себе --}}
+            {{!-- Уведомления --}}
             <div class="detail-item">
                 <img src="icons/bell.svg" alt="Bell" class="icon"></img>
                 <div class="sidebar-list__item-info">
@@ -49,6 +49,18 @@
             <div class="horizontal-list__item">Медиа</div>
             <div class="horizontal-list__item">Файлы</div>
             <div class="horizontal-list__item">Ссылки</div>
+        </div>
+
+        <div class="sidebat-list">
+            {{#each members}}
+            <div class="detail-item">
+                <span>{{this.username}}</span>
+                
+                {{#if (eq role "owner")}}
+                <span>Владелец</span>
+                {{/if}}
+            </div>
+            {{/each}}
         </div>
     </main>
 </div>

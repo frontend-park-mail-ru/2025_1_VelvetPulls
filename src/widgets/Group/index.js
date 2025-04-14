@@ -1,1 +1,1 @@
-export { group } from "./ui/Group.js";
+export { groupInstance } from "./ui/Group.js";

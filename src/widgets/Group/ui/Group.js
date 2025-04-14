@@ -1,5 +1,12 @@
+import { api } from "../../../shared/api/api.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { groupInfo } from "../../GroupInfo/index.js";
+import { Message } from "../../../entities/Message/index.js";
+import {
+    sendMessage,
+    getMessageHistory,
+} from "../../../entities/Message/index.js";
+import { currentUser } from "../../../entities/User/model/User.js";
 
 class Group {
     constructor() {
@@ -10,34 +17,132 @@ class Group {
         });
     }
 
+    async getData(chatId) {
+        this.chatId = chatId;
+
+        const responseBody = await api.get(`/chat/${chatId}`);
+        console.log("group get data:", responseBody);
+
+        const data = responseBody.data;
+        this.title = data.title;
+        this.countUsers = data.count_users;
+
+        this.messages = (await getMessageHistory(chatId)).data;
+
+        groupInfo.getData(data);
+    }
+
     getHTML() {
-        const dialogTemplate = Handlebars.templates["Group.hbs"];
-        const html = dialogTemplate();
+        const data = {
+            title: this.title,
+            countUsers: this.countUsers,
+            // avatarSrc: this.user.avatarSrc,
+            messages: this.messages,
+        };
+
+        const groupTemplate = Handlebars.templates["Group.hbs"];
+        const html = groupTemplate({ ...data });
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
         const container = doc.body.firstChild;
         this.container = container;
 
-        this.addListeners();
+        const messages = this.container.querySelector("#messages");
+        console.log("this messages:", this.messages);
+        if (this.messages !== null) {
+            for (const messageItem of this.messages) {
+                console.log("messageItem:", messageItem);
+
+                const message = new Message(messageItem);
+                console.log("message:", message);
+                console.log("current user:", currentUser);
+
+                if (messageItem.user === currentUser.getUsername()) {
+                    messages.appendChild(message.getElement("my"));
+                } else {
+                    messages.appendChild(message.getElement("group"));
+                }
+
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
+
+        this.bindListeners();
 
         return container;
     }
 
-    addListeners() {
-        const header = this.container.querySelector(".chat-header");
-        header.addEventListener("click", (event) => {
-            event.preventDefault();
+    bindListeners() {
+        const closeButton = this.container.querySelector("#close-chat");
+        closeButton.addEventListener(
+            "click",
+            this.onClickButtonClose.bind(this),
+        );
 
-            if (!this.infoIsOpen) {
-                const groupInfoContainer = groupInfo.getHTML();
-                const divider =
-                    this.container.querySelector(".vertical-divider");
-                divider.after(groupInfoContainer);
-                this.infoIsOpen = true;
-            }
-        });
+        const header = this.container.querySelector(".chat-header");
+        header.addEventListener("click", this.onClickChatHeader.bind(this));
+
+        const sendMessageButton = this.container.querySelector(
+            "#send-message-button",
+        );
+        sendMessageButton.addEventListener(
+            "click",
+            this.onClickSendMessage.bind(this),
+        );
+    }
+
+    onClickButtonClose(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this.infoIsOpen = false;
+        eventBus.emit("close dialog");
+    }
+
+    onClickChatHeader(event) {
+        event.preventDefault();
+
+        if (!this.infoIsOpen) {
+            const groupInfoContainer = groupInfo.getHTML();
+            const divider = this.container.querySelector(".vertical-divider");
+            divider.after(groupInfoContainer);
+            this.infoIsOpen = true;
+        }
+    }
+
+    async onClickSendMessage(event) {
+        event.preventDefault();
+
+        console.log("send message button click");
+
+        const messageInput = this.container.querySelector(
+            ".chat-input-container__input",
+        );
+        console.log("input value:", messageInput.value);
+
+        if (messageInput.value === "") {
+            alert("Сообщение не может быть пустым");
+        } else {
+            console.log("send message:", messageInput.value);
+
+            const response = await sendMessage(this.chatId, messageInput.value);
+
+            console.log("chatId:", this.chatId);
+            console.log("send message:", response);
+
+            const messageData = {
+                body: messageInput.value,
+                sentAt: new Date().getTime(),
+            };
+            const message = new Message(messageData);
+            const messages = this.container.querySelector("#messages");
+            messages.appendChild(message.getElement("my"));
+            // messages.appendChild(message.getElement("dialog"));
+
+            messages.scrollTop = messages.scrollHeight;
+        }
     }
 }
 
-export const group = new Group();
+export const groupInstance = new Group();

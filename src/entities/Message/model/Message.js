@@ -8,6 +8,7 @@ export class Message {
         is_redacted = false,
         avatar_path = null,
         isMine = false,
+        user = null,
     }) {
         this.id = id;
         this.chatId = chat_id;
@@ -17,6 +18,7 @@ export class Message {
         this.isRedacted = is_redacted;
         this.avatarPath = avatar_path;
         this.isMine = isMine; // Флаг, указывающий, принадлежит ли сообщение текущему пользователю
+        this.username = user;
     }
 
     // Форматирование времени для отображения
@@ -62,6 +64,7 @@ export class Message {
         const data = {
             body: this.body,
             sentAt: this.sentAt,
+            username: this.username,
         };
 
         let template = null;
@@ -72,6 +75,10 @@ export class Message {
 
             case "dialog":
                 template = Handlebars.templates["DialogMessage.hbs"];
+                break;
+
+            case "group":
+                template = Handlebars.templates["GroupMessage.hbs"];
                 break;
 
             default:

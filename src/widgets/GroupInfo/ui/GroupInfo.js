@@ -3,36 +3,22 @@ import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 class GroupInfo {
     constructor() {}
 
+    getData(data) {
+        this.chatId = data.id;
+        this.title = data.title;
+        this.countUsers = data.count_users;
+        this.users = data.users;
+        // this.avatarSrc =
+    }
+
     getHTML() {
-        const members = [
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-        ];
+        Handlebars.registerHelper("eq", (a, b) => a == b);
 
         const data = {
-            groupPhotoUrl: "img/Keftegram.png",
-            title: "Михал",
-            description: "Палыч",
-            members: members,
-            membersCount: members.length,
+            // avatarSrc: this.avatarSrc,
+            title: this.title,
+            members: this.users,
+            membersCount: this.countUsers,
         };
 
         const groupInfoTemplate = Handlebars.templates["GroupInfo.hbs"];

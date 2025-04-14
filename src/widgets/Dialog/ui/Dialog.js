@@ -24,10 +24,10 @@ class Dialog {
     async init({ user, chatId }) {
         this.chatId = chatId;
         this.user = user;
-        dialogInfo.setUser(user);
+
         this.messages = (await getMessageHistory(chatId)).data;
 
-        // console.log("messages:", this.messages);
+        dialogInfo.setUser(user);
     }
 
     getHTML() {

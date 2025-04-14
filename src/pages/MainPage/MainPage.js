@@ -13,7 +13,7 @@ import { editProfile } from "../../widgets/EditProfile/index.js";
 
 import { noChat } from "../../widgets/NoChat/index.js";
 import { dialogInstace } from "../../widgets/Dialog/index.js";
-import { group } from "../../widgets/Group/index.js";
+import { groupInstance } from "../../widgets/Group/index.js";
 
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
@@ -67,6 +67,12 @@ class MainPage {
 
             await dialogInstace.init({ user, chatId });
             this.chat = dialogInstace;
+            this.render();
+        });
+
+        eventBus.on("open group", async (chatId) => {
+            await groupInstance.getData(chatId);
+            this.chat = groupInstance;
             this.render();
         });
 

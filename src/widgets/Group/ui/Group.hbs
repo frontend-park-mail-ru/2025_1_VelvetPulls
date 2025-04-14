@@ -4,13 +4,18 @@
         <div>
             {{!-- Заголовок --}}
             <header class="chat-header">
+                {{!-- Закрыть чат --}}
+                <div id="close-chat" class="button">
+                    <img src="icons/close.svg" alt="Back" class="icon"></img>
+                </div>
+
                 {{!-- Аватар --}}
                 <img src="img/Keftegram.png" alt="Avatar" class="chat-header__avatar">
                 
                 {{!-- Информация о чате --}}
                 <div class="chat-header__info">
-                    <div class="chat-header__full-name">./Keftegr@m</div>
-                    <div class="chat-header__online-status">был(а) в сети недавно</div>
+                    <div class="chat-header__full-name">{{title}}</div>
+                    <div class="chat-header__online-status">{{countUsers}} участников</div>
                 </div>
                 
                 {{!-- Добавить в избранное --}}
@@ -29,114 +34,8 @@
         </div>
         
         {{!-- Сообщения --}}
-        <section class="sidebar-list scrollable">
-            <div class="message-container">
-                <div class="message_group">
-                    <div class="message__avatar-container">
-                        <img src="img/Keftegram.png" alt="Avatar" class="avatar">
-                    </div>
-                    <div class="message_dialog">
-                        <div class="message__author">Алексей Лупенков</div>
-                        <div class="message__content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                        </div>
-                        <div class="message__meta">
-                            <div class="message__time">12:00</div>
-                            <img src="icons/double-check.svg" alt="Read" class="message__status">
-                        </div>
-                    </div>
-                </div>
-            </div>  
-
-            <div class="message-container">
-                <div class="message_my">
-                    <div class="message__content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                    </div>
-                    <div class="message__meta">
-                        <div class="message__time">12:00</div>
-                        <img src="icons/double-check.svg" alt="Read" class="message__status">
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-container">
-                <div class="message_group">
-                    <div class="message__avatar-container">
-                        <img src="img/Keftegram.png" alt="Avatar" class="avatar">
-                    </div>
-                    <div class="message_dialog">
-                        <div class="message__author">Алексей Лупенков</div>
-                        <div class="message__content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                        </div>
-                        <div class="message__meta">
-                            <div class="message__time">12:00</div>
-                            <img src="icons/double-check.svg" alt="Read" class="message__status">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                        <div class="message-container">
-                <div class="message_my">
-                    <div class="message__content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                    </div>
-                    <div class="message__meta">
-                        <div class="message__time">12:00</div>
-                        <img src="icons/double-check.svg" alt="Read" class="message__status">
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-container">
-                <div class="message_group">
-                    <div class="message__avatar-container">
-                        <img src="img/Keftegram.png" alt="Avatar" class="avatar">
-                    </div>
-                    <div class="message_dialog">
-                        <div class="message__author">Алексей Лупенков</div>
-                        <div class="message__content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                        </div>
-                        <div class="message__meta">
-                            <div class="message__time">12:00</div>
-                            <img src="icons/double-check.svg" alt="Read" class="message__status">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                        <div class="message-container">
-                <div class="message_my">
-                    <div class="message__content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                    </div>
-                    <div class="message__meta">
-                        <div class="message__time">12:00</div>
-                        <img src="icons/double-check.svg" alt="Read" class="message__status">
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-container">
-                <div class="message_group">
-                    <div class="message__avatar-container">
-                        <img src="img/Keftegram.png" alt="Avatar" class="avatar">
-                    </div>
-                    <div class="message_dialog">
-                        <div class="message__author">Алексей Лупенков</div>
-                        <div class="message__content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officia deserunt quisquam non iusto consectetur animi saepe repudiandae, distinctio hic cupiditate laboriosam assumenda et dolor aperiam laborum explicabo ipsa. Inventore!
-                        </div>
-                        <div class="message__meta">
-                            <div class="message__time">12:00</div>
-                            <img src="icons/double-check.svg" alt="Read" class="message__status">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <section id="messages" class="sidebar-list scrollable">
+            {{!-- Здесь будут сообщения --}}
         </section>
         
         {{!-- Ввод сообщения --}}
@@ -157,7 +56,7 @@
             </div>
             
             {{!-- Отправить --}}
-            <button class="button">
+            <button id="send-message-button" class="button">
                 <img src="icons/Send.svg" alt="Send message" class="icon">
             </button>
             

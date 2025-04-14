@@ -69,34 +69,42 @@ class Chats {
     addListeners() {
         // Клик по чату
         const chats = this.container.querySelectorAll(".sidebar-list-item");
-        for (let chatNumber = 0; chatNumber < chats.length; chatNumber++) {
-            const chat = chats[chatNumber];
+        for (let i = 0; i < chats.length; ++i) {
+            const chatElement = chats[i];
+            const chatModel = this.chats[i];
 
             // Открыть чат (ещё не сделано)
-            chat.addEventListener("click", async (event) => {
+            chatElement.addEventListener("click", async (event) => {
                 event.preventDefault();
 
-                console.log("click on chat:", this.chats[chatNumber]);
-                console.log("chat title:", this.chats[chatNumber].title);
+                console.log("click on chat:", chatModel);
 
-                const username = this.chats[chatNumber].title;
+                switch (chatModel.type) {
+                    case "dialog": {
+                        const chatId = chatModel.id;
 
-                const user = new User();
-                await user.init(username);
-                const chatId = this.chats[chatNumber].id;
+                        const username = chatModel.title;
+                        const user = new User();
+                        await user.init(username);
 
-                eventBus.emit("open dialog", { user, chatId });
+                        eventBus.emit("open dialog", { user, chatId });
+                        break;
+                    }
+
+                    case "group": {
+                        eventBus.emit("open group", chatModel.id);
+                    }
+                }
+                // console.log("chat title:", this.chats[chatNumber].title);
             });
 
             // Удалить чат
-            const deleteChatButton = chat.querySelector(".button");
+            const deleteChatButton = chatElement.querySelector(".button");
             deleteChatButton.addEventListener("click", async (event) => {
                 event.preventDefault();
                 event.stopPropagation();
 
-                const responseBody = await deleteChat(
-                    this.chats[chatNumber].id,
-                );
+                const responseBody = await deleteChat(chatModel.id);
                 console.log("delete chat:", responseBody);
                 // await this.getData();
                 eventBus.emit("chat is deleted");

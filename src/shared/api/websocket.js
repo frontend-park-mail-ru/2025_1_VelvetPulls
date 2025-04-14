@@ -4,7 +4,7 @@ class ChatWebSocket {
     constructor() {
         this.socket = null;
         this.connected = false;
-        this.baseUrl = "ws://localhost:8080/ws";
+        this.baseUrl = "ws://90.156.217.108:8080/ws";
     }
 
     connect() {

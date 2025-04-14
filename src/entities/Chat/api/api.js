@@ -13,13 +13,9 @@ export const createChat = async (chatData = null, avatar = null) => {
 
     const responseBody = await api.post("/chat", formData);
 
-    console.log("create chat response:", responseBody);
-
     if (responseBody.status !== true) {
         throw Error("Возникла ошибка при создании чата:", responseBody.error);
     }
-
-    console.log("Чат успешно создан:", responseBody.data);
 
     return responseBody;
 };

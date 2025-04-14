@@ -14,15 +14,8 @@ export class User {
     #phone;
     #avatarPath;
 
-    constructor() {
-        // this.init(username);
-    }
-
     async init(username) {
-        console.log("init user:", username);
         const data = await getUserData(username);
-
-        console.log("user data:", data);
 
         this.#username = data["username"];
         this.#phone = data["phone"];
@@ -40,21 +33,14 @@ export class User {
             this.#lastName = data["last_name"];
         }
 
-        console.log("user with filled data:", this);
-
         if (this.#avatarPath !== null) {
             const path = this.#avatarPath.replace(".", "");
             this.avatarSrc = await getAvatar(path);
         }
-
-        console.log("user after init", this);
     }
 
     async update(data) {
         const updatedData = await updateUser(data);
-        console.log("update:", updatedData);
-
-        // console.log(updatedData);
 
         this.#username = updatedData["username"];
         this.#firstName = updatedData["first_name"];

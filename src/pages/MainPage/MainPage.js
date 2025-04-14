@@ -35,13 +35,9 @@ class MainPage {
 
     addListeners() {
         // --------------- chats ----------------------
+
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
-            console.log("catch ws new message", message);
-            if (
-                message.chatId === this.currentChatId
-                // message.username !== currentUser.getUsername()
-            ) {
-                console.log("insert new message");
+            if (message.chatId === this.currentChatId) {
                 await this.handleNewMessage(message);
             }
         });
@@ -54,18 +50,14 @@ class MainPage {
         });
 
         eventBus.on("chat is deleted", () => {
-            console.log("catch chat is deleted");
             goToPage("main");
         });
 
         eventBus.on("new chat is created", () => {
-            console.log("catch new chat is created");
             goToPage("main");
         });
 
         eventBus.on("open dialog", async ({ user, chatId }) => {
-            console.log("catch open dialog:", user, chatId);
-
             this.currentChatId = chatId;
             this.currentChatType = "dialog";
             await dialogInstace.init({ user, chatId });
@@ -102,20 +94,7 @@ class MainPage {
             goToPage("main");
         });
 
-        // eventBus.on("chats: click on chat", () => {
-        //     this.chat = group;
-        //     goToPage("main");
-        // });
-
-        // eventBus.on("new dialog", (user) => {
-        //     console.log("catch new dialog", user);
-        //     dialog.setUser(user);
-        //     this.chat = dialog;
-        //     goToPage("main");
-        // });
-
         eventBus.on("new dialog", (user) => {
-            console.log("catch new dialog", user);
             dialogInstace.setUser(user);
             this.chat = dialogInstace;
             goToPage("main");
@@ -190,39 +169,24 @@ class MainPage {
         });
 
         // ------------------- dialog -----------------------
+
         eventBus.on("close dialog", () => {
-            console.log("close dialog");
             this.chat = noChat;
             this.currentChatType = null;
             goToPage("main");
         });
     }
 
-    async loadChatHistory(chatId) {
-        // try {
-        //     const response = await api.get(`/chat/${chatId}/messages`);
-        //     // Обработка истории сообщений
-        //     this.renderMessages(response.data);
-        // } catch (error) {
-        //     console.error("Failed to load chat history:", error);
-        // }
-        console.log("load chat histori for chatId:", chatId);
-    }
-
     async handleNewMessage(message) {
-        console.log("inserted message:", message);
         const messagesContainer = document.querySelector("#messages");
-        console.log("messages containeer:", messagesContainer);
         if (messagesContainer) {
             let messageType = null;
-            console.log(message.username);
             if (message.username === currentUser.getUsername()) {
                 messageType = "my";
             } else {
                 messageType = this.currentChatType;
             }
             const messageElement = await message.getElement(messageType);
-            console.log("message element:", messageElement);
             messagesContainer.appendChild(messageElement);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }

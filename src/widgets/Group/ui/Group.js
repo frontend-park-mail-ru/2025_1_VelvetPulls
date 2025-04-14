@@ -1,6 +1,5 @@
 import { api } from "../../../shared/api/api.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { groupInfo } from "../../GroupInfo/index.js";
 import { Message } from "../../../entities/Message/index.js";
 import {
     sendMessage,
@@ -8,6 +7,7 @@ import {
 } from "../../../entities/Message/index.js";
 import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
+import { groupInfo } from "../../GroupInfo/index.js";
 
 class Group {
     constructor() {
@@ -22,14 +22,12 @@ class Group {
         this.chatId = chatId;
 
         const responseBody = await api.get(`/chat/${chatId}`);
-        console.log("group get data:", responseBody);
 
         const data = responseBody.data;
         this.title = data.title;
         this.countUsers = data.count_users;
 
         this.messages = (await getMessageHistory(chatId)).data;
-        console.log("messages:", this.messages);
 
         groupInfo.getData(data);
     }
@@ -50,7 +48,6 @@ class Group {
         this.container = container;
 
         const messages = this.container.querySelector("#messages");
-        console.log("this messages:", this.messages);
         if (this.messages !== null) {
             for (const messageItem of this.messages) {
                 const message = new Message(messageItem);
@@ -114,7 +111,6 @@ class Group {
         const messageInput = this.container.querySelector(
             ".chat-input-container__input",
         );
-        console.log("input value:", messageInput.value);
 
         if (messageInput.value !== "") {
             await sendMessage(this.chatId, messageInput.value);

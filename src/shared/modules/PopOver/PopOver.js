@@ -31,28 +31,19 @@ export class PopOver {
 
         this.addListeners();
 
-        console.log("change status on true");
         this.status = true;
 
         return container;
     }
 
     addListeners() {
-        console.log("popver addListeners");
-        console.log(this.status);
-
         // Закрытие при клике вне popover
         document.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
 
-            console.log(this);
-
             if (this.status) {
                 event.preventDefault();
-
-                console.log("click outside from popover");
-                console.log(event.target);
 
                 // if (this.menu && !event.target.closest(".sidebar__menu")) {
                 //     this.closeMenu();

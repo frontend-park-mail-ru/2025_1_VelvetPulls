@@ -44,10 +44,8 @@ class EditProfile {
 
     async updateUser() {
         const avatarInput = this.container.querySelector("#avatar-input");
-        console.log("avatar input:", avatarInput);
         const avatarFile =
             avatarInput.files.length > 0 ? avatarInput.files[0] : null;
-        console.log("avatar:", avatarFile);
 
         const firstNameInput =
             this.container.querySelector("#first-name-input");
@@ -65,15 +63,12 @@ class EditProfile {
             username: username,
             phone: currentUser.getPhone(),
         };
-        console.log("update to data:", profileData);
 
         const formData = new FormData();
 
         if (avatarFile !== null) {
             formData.append("avatar", avatarFile);
         }
-
-        console.log("stringify:", JSON.stringify(profileData));
 
         formData.append("profile_data", JSON.stringify(profileData));
 

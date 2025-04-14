@@ -95,7 +95,6 @@ export class Message {
         const element = doc.body.firstChild;
 
         this.element = element;
-        // console.log("message element:", element);
 
         return element;
     }

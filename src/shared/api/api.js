@@ -34,10 +34,8 @@ class API {
             if (body) {
                 if (body instanceof FormData) {
                     request.body = body;
-                    // request.headers["Content-Type"] = "multipart/form-data";
                 } else {
                     request.body = JSON.stringify(body);
-                    console.log("request body:", request.body);
                     request.headers["Content-Type"] = "application/json";
                 }
             }
@@ -46,8 +44,6 @@ class API {
         } catch (error) {
             throw new Error("Could not fetch: " + error.message);
         }
-
-        console.log("api response:", response);
 
         if (response.statusText === "No Content") {
             return null;

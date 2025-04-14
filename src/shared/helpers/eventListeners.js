@@ -31,7 +31,7 @@ export const signupFormSubmitListener = async (event) => {
         if (response.status === true) {
             goToPage("main");
         } else {
-            alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
+            alert("ПРОИЗШЛА ОШИБКА!");
         }
     }
 };
@@ -97,8 +97,6 @@ export const togglePasswordListener = (event, toggler) => {
 export const loginFormSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("here");
-
     let form = document.getElementsByTagName("form")[0];
     const formIsValid = validateLoginForm(form);
 
@@ -110,7 +108,7 @@ export const loginFormSubmit = async (event) => {
         if (response.status === true) {
             goToPage("main");
         } else {
-            alert("АХТУНГ! ПРОИЗШЛА ОШИБКА!");
+            alert("ПРОИЗШЛА ОШИБКА!");
         }
     }
 };

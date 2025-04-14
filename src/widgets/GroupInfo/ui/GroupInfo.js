@@ -50,7 +50,7 @@ class GroupInfo {
         buttonEdit.addEventListener("click", (event) => {
             event.preventDefault();
 
-            console.log("edit group");
+            console.log("go to edit group");
         });
     }
 }

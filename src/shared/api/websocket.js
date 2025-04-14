@@ -12,14 +12,11 @@ class ChatWebSocket {
 
         this.socket.onopen = () => {
             this.connected = true;
-            console.log("WS is connected");
             eventBus.emit("ws:connected");
         };
 
         this.socket.onmessage = (event) => {
-            console.log("I GOT NEW MESSAGE");
             try {
-                console.log("event data:", event.data);
                 const message = JSON.parse(event.data);
                 if (message.action === "newMessage") {
                     const msg = Message.fromApi(message.payload);
@@ -32,7 +29,7 @@ class ChatWebSocket {
 
         this.socket.onclose = () => {
             this.connected = false;
-            setTimeout(() => this.connect(), 3000);
+            // setTimeout(() => this.connect(), 3000);
         };
 
         this.socket.onerror = (error) => {

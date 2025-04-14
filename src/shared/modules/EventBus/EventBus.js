@@ -14,7 +14,6 @@ class EventBus {
             this.listeners[event].data = [];
         }
         this.listeners[event].data.push(callback);
-        // console.log("on", event);
     }
 
     // Подписаться единожды

@@ -11,10 +11,7 @@ class AddMembers {
 
     async getData() {
         const response = await api.get("/contacts");
-        console.log("contacts:", response);
         this.contacts = response.data;
-
-        console.log("contacts:", this.contacts);
     }
 
     async getHTML() {

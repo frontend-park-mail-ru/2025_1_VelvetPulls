@@ -47,14 +47,9 @@ class Dialog {
         this.container = container;
 
         const messages = this.container.querySelector("#messages");
-        console.log("this messages:", this.messages);
         if (this.messages !== null) {
             for (const messageItem of this.messages) {
-                console.log("messageItem:", messageItem);
-
                 const message = new Message(messageItem);
-                console.log("message:", message);
-                console.log("current user:", currentUser);
 
                 if (messageItem.user === currentUser.getUsername()) {
                     messages.appendChild(await message.getElement("my"));
@@ -88,17 +83,6 @@ class Dialog {
             "click",
             this.sendMessage.bind(this),
         );
-
-        // const inputField = this.container.querySelector(
-        //     ".chat-input-container__input",
-        // );
-        // inputField.addEventListener("keydown", async (event) => {
-        //     event.preventDefault();
-
-        //     if (event.key === "Enter") {
-        //         await this.sendMessage(event);
-        //     }
-        // });
     }
 
     onClickButtonClose(event) {
@@ -123,16 +107,11 @@ class Dialog {
     async sendMessage(event) {
         event.preventDefault();
 
-        console.log("send message button click");
-
         const messageInput = this.container.querySelector(
             ".chat-input-container__input",
         );
-        console.log("input value:", messageInput.value);
 
         if (messageInput.value !== "") {
-            console.log("send message:", messageInput.value);
-
             await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {

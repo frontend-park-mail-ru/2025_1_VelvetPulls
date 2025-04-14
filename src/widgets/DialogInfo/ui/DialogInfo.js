@@ -38,7 +38,6 @@ class DialogInfo {
             event.preventDefault();
 
             this.container.parentElement.removeChild(this.container);
-            console.log("here");
             eventBus.emit("close dialog info", {});
         });
     }

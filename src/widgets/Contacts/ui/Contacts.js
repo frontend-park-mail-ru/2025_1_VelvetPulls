@@ -9,7 +9,6 @@ class Contacts {
 
     async getData() {
         const response = await api.get("/contacts");
-        console.log("contacts:", response);
         this.data = response.data;
     }
 
@@ -62,8 +61,7 @@ class Contacts {
                     username: contactUser.username,
                 };
 
-                const response = await api.delete("/contacts", responseBody);
-                console.log("delete contact:", response);
+                await api.delete("/contacts", responseBody);
 
                 contactElement.parentNode.removeChild(contactElement);
             });

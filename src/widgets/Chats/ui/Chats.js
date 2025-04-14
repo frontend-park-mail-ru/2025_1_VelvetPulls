@@ -17,12 +17,8 @@ class Chats {
 
     async getData() {
         const responseBody = await api.get("/chats");
-        console.log("get chats:", responseBody);
 
         this.chats = responseBody.data;
-        console.log("ChatsInstance:", this);
-
-        // eventBus.emit("chats loaded");
     }
 
     async getHTML() {
@@ -30,8 +26,6 @@ class Chats {
 
         const template = Handlebars.templates["Chats.hbs"];
         const chats = [];
-
-        console.log("this chats:", this.chats);
 
         if (this.chats !== null && this.chats !== undefined) {
             for (const chat of this.chats) {
@@ -42,8 +36,6 @@ class Chats {
                 });
             }
         }
-
-        console.log("chats:", chats);
 
         const html = template({ chats });
 
@@ -69,8 +61,6 @@ class Chats {
             chatElement.addEventListener("click", async (event) => {
                 event.preventDefault();
 
-                console.log("click on chat:", chatModel);
-
                 switch (chatModel.type) {
                     case "dialog": {
                         const chatId = chatModel.id;
@@ -95,9 +85,7 @@ class Chats {
                 event.preventDefault();
                 event.stopPropagation();
 
-                const responseBody = await deleteChat(chatModel.id);
-                console.log("delete chat:", responseBody);
-                // await this.getData();
+                await deleteChat(chatModel.id);
                 eventBus.emit("chat is deleted");
             });
         }
@@ -181,20 +169,23 @@ class Chats {
             const username = prompt(
                 "Введите username пользователя, которому Вы хотите написать",
             );
-            console.log("username:", username);
 
-            try {
-                const chatData = {
-                    type: "dialog",
-                    dialog_user: username,
-                    title: "1",
-                };
-                await createChat(chatData);
+            console.log("prompt username:", username);
+            if (username !== null) {
+                const responseBody = await api.get(`/profile/${username}`);
 
-                eventBus.emit("new chat is created");
-            } catch (error) {
-                alert("user is not found:", username);
-                console.log("error:", error);
+                if (responseBody.status === true) {
+                    const chatData = {
+                        type: "dialog",
+                        dialog_user: username,
+                        title: "1",
+                    };
+                    await createChat(chatData);
+
+                    eventBus.emit("new chat is created");
+                } else {
+                    alert(`Пользователь с username "${username}" не найден`);
+                }
             }
         });
 

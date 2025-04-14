@@ -1,7 +1,7 @@
 import { config, appState } from "../../app/router.js";
 
 export const goToPage = async (page, pushState = true) => {
-    // console.log("go to page:", page);
+    console.log("go to page:", page);
 
     if (!config[page]) {
         console.error(`Page "${page}" not found in config`);
@@ -31,6 +31,6 @@ export const goToPage = async (page, pushState = true) => {
         document.title = config[page].title;
     } catch (error) {
         console.error(`Error rendering page "${page}":`, error);
-        // goToPage("login");
+        goToPage("login");
     }
 };

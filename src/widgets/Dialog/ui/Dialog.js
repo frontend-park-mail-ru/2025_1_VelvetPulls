@@ -30,7 +30,7 @@ class Dialog {
         dialogInfo.setUser(user);
     }
 
-    getHTML() {
+    async getHTML() {
         const data = {
             fullName: this.user.getFullName(),
             avatarSrc: this.user.avatarSrc,
@@ -56,9 +56,9 @@ class Dialog {
                 console.log("current user:", currentUser);
 
                 if (messageItem.user === currentUser.getUsername()) {
-                    messages.appendChild(message.getElement("my"));
+                    messages.appendChild(await message.getElement("my"));
                 } else {
-                    messages.appendChild(message.getElement("dialog"));
+                    messages.appendChild(await message.getElement("dialog"));
                 }
 
                 messages.scrollTop = messages.scrollHeight;
@@ -134,8 +134,7 @@ class Dialog {
             };
             const message = new Message(messageData);
             const messages = this.container.querySelector("#messages");
-            messages.appendChild(message.getElement("my"));
-            // messages.appendChild(message.getElement("dialog"));
+            messages.appendChild(await message.getElement("my"));
 
             messages.scrollTop = messages.scrollHeight;
         }

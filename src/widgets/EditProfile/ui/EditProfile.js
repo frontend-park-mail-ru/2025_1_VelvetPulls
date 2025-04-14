@@ -1,4 +1,4 @@
-import { api } from "../../../shared/api/api.js";
+// import { api } from "../../../shared/api/api.js";
 
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { currentUser } from "../../../entities/User/model/User.js";
@@ -6,8 +6,9 @@ import { currentUser } from "../../../entities/User/model/User.js";
 class EditProfile {
     getHTML() {
         const data = {
+            firstName: currentUser.getFirstName(),
+            lastName: currentUser.getLastName(),
             username: currentUser.getUsername(),
-            fullName: currentUser.getFullName(),
         };
 
         const editProfileTemplate = Handlebars.templates["EditProfile.hbs"];
@@ -76,26 +77,7 @@ class EditProfile {
 
         formData.append("profile_data", JSON.stringify(profileData));
 
-        const request = {
-            method: "PUT",
-            headers: {},
-            mode: "cors",
-            credentials: "include",
-            body: formData,
-        };
-
-        // const response = await fetch(
-        //     "http://localhost:8080/api/profile",
-        //     request,
-        // );
-
-        // const response = await api.put("/profile", formData);
-        // console.log("response:", response);
-
         currentUser.update(formData);
-
-        // const responseBody = await response.json();
-        // console.log("response body:", responseBody);
 
         eventBus.emit("edit profile -> save");
     }

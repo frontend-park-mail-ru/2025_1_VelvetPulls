@@ -20,6 +20,8 @@ export const createChat = async (chatData = null, avatar = null) => {
     }
 
     console.log("Чат успешно создан:", responseBody.data);
+
+    return responseBody;
 };
 
 export const getChatInfo = (chatId) => {

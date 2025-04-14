@@ -18,7 +18,7 @@ import { groupInstance } from "../../widgets/Group/index.js";
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 
-import { chatWebSocket } from "../../shared/api/websocket.js";
+// import { chatWebSocket } from "../../shared/api/websocket.js";
 
 class MainPage {
     constructor() {
@@ -28,7 +28,7 @@ class MainPage {
         this.currentChatType = null;
 
         // Инициализация WebSocket
-        chatWebSocket.connect();
+        // chatWebSocket.connect();
         this.addListeners();
     }
 
@@ -158,7 +158,8 @@ class MainPage {
             this.render();
         });
 
-        eventBus.on("new group -> add members", () => {
+        eventBus.on("new group -> add members", (groupInfo) => {
+            addMembers.setGroupInfo(groupInfo);
             this.sidebar = addMembers;
             this.render();
         });
@@ -210,27 +211,6 @@ class MainPage {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     }
-    // updateListeners() {
-    //     const callback = () => {
-    //         group.infoIsOpen = false;
-    //         this.chat = noChat;
-    //         this.render();
-    //     };
-
-    //     const goToNoChat = function (event) {
-    //         event.preventDefault();
-
-    //         if (event.key === "Escape") {
-    //             callback();
-    //         }
-
-    //         document.removeEventListener("keydown", goToNoChat);
-    //     };
-
-    //     if (this.chat !== noChat) {
-    //         document.addEventListener("keydown", goToNoChat);
-    //     }
-    // }
 
     async render() {
         const mainPageTemplate = Handlebars.templates["MainPage.hbs"];
@@ -245,7 +225,7 @@ class MainPage {
         container.insertBefore(sidebar, container.firstChild);
 
         const divider = container.querySelector(".container__divider");
-        const chat = this.chat.getHTML();
+        const chat = await this.chat.getHTML();
         divider.after(chat);
 
         const root = document.getElementById("root");

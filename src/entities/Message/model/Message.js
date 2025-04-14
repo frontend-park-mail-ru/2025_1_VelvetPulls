@@ -1,3 +1,5 @@
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+
 export class Message {
     constructor({
         id,
@@ -60,11 +62,12 @@ export class Message {
         };
     }
 
-    getElement(mode) {
+    async getElement(mode) {
         const data = {
             body: this.body,
-            sentAt: this.sentAt,
+            sentAt: this.getTime(),
             username: this.username,
+            avatarSrc: await getAvatar(this.avatarPath),
         };
 
         let template = null;

@@ -23,14 +23,3 @@ export const updateUser = async (formData) => {
     console.log("updated data:", updatedData);
     return updatedData;
 };
-
-export const getAvatar = async (avatarPath) => {
-    const url = `http://localhost:8080/api${avatarPath}`;
-    const response = await fetch(url);
-
-    const blob = await response.blob();
-
-    const src = URL.createObjectURL(blob);
-
-    return src;
-};

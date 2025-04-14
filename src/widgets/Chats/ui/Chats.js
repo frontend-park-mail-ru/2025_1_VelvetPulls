@@ -3,6 +3,7 @@ import { User } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
 import { deleteChat } from "../../../entities/Chat/api/api.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 class Chats {
     constructor() {
@@ -15,27 +16,6 @@ class Chats {
     }
 
     async getData() {
-        // this.chats = [
-        //     {
-        //         title: "Keftegr@m",
-        //         description: "чат с Keftegram",
-        //         unreadCount: 1,
-        //         avatarUrl: "img/Keftegram.png",
-        //     },
-        //     {
-        //         title: "Поддержка",
-        //         description: "Чат с поддержкой",
-        //         unreadCount: 0,
-        //         avatarUrl: "img/Avatar1.png",
-        //     },
-        //     {
-        //         title: "Общий чат",
-        //         description: "Обсуждение новостей",
-        //         unreadCount: 3,
-        //         avatarUrl: "img/Avatar2.png",
-        //     },
-        // ];
-
         const responseBody = await api.get("/chats");
         console.log("get chats:", responseBody);
 
@@ -49,11 +29,23 @@ class Chats {
         await this.getData();
 
         const template = Handlebars.templates["Chats.hbs"];
-        const context = {
-            chats: this.chats,
-        };
+        const chats = [];
 
-        const html = template(context);
+        console.log("this chats:", this.chats);
+
+        if (this.chats !== null && this.chats !== undefined) {
+            for (const chat of this.chats) {
+                chats.push({
+                    title: chat.title,
+                    // lastMessage:
+                    avatarSrc: await getAvatar(chat.avatar_path),
+                });
+            }
+        }
+
+        console.log("chats:", chats);
+
+        const html = template({ chats });
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
@@ -73,7 +65,7 @@ class Chats {
             const chatElement = chats[i];
             const chatModel = this.chats[i];
 
-            // Открыть чат (ещё не сделано)
+            // Открыть чат
             chatElement.addEventListener("click", async (event) => {
                 event.preventDefault();
 
@@ -95,7 +87,6 @@ class Chats {
                         eventBus.emit("open group", chatModel.id);
                     }
                 }
-                // console.log("chat title:", this.chats[chatNumber].title);
             });
 
             // Удалить чат

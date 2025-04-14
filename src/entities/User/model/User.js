@@ -1,5 +1,6 @@
 // import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { getUserData, updateUser, getAvatar } from "../api/api.js";
+import { getUserData, updateUser } from "../api/api.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 // function checkUsernameIsValid(input) {
 //     const patt = /^[a-zA-Z0-9_]{3,20}$/;

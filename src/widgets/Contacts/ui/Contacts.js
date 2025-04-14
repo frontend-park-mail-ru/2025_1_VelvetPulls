@@ -8,25 +8,6 @@ class Contacts {
     }
 
     async getData() {
-        // Моковый запрос в БД положит данные в this.data
-        this.data = [
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                name: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-        ];
-
         const response = await api.get("/contacts");
         console.log("contacts:", response);
         this.data = response.data;
@@ -36,8 +17,8 @@ class Contacts {
         await this.getData();
 
         const template = Handlebars.templates["Contacts.hbs"];
-        const contacts = [];
 
+        const contacts = [];
         for (const contact of this.data) {
             contacts.push({
                 name: contact.username,

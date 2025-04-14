@@ -29,11 +29,11 @@
         <div class="sidebar-list scrollable">
             {{#each chats}}
             <div class="sidebar-list__item sidebar-list-item">
-                <img src="{{this.avatarUrl}}" alt="User avatar" class="avatar">
+                <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
 
                 <div class="sidebar-list-item__info">
                     <div class="sidebar-list-item__full-name">{{this.title}}</div>
-                    <div class="sidebar-list-item__message-preview">{{this.description}}</div>
+                    <div class="sidebar-list-item__message-preview">{{this.lastMessage}}</div>
                 </div>
                 
                 <div class="sidebar-list-item__meta">

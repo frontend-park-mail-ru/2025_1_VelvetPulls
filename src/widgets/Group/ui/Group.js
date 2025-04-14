@@ -28,16 +28,16 @@ class Group {
         this.countUsers = data.count_users;
 
         this.messages = (await getMessageHistory(chatId)).data;
+        console.log("messages:", this.messages);
 
         groupInfo.getData(data);
     }
 
-    getHTML() {
+    async getHTML() {
         const data = {
             title: this.title,
             countUsers: this.countUsers,
             // avatarSrc: this.user.avatarSrc,
-            messages: this.messages,
         };
 
         const groupTemplate = Handlebars.templates["Group.hbs"];
@@ -52,16 +52,12 @@ class Group {
         console.log("this messages:", this.messages);
         if (this.messages !== null) {
             for (const messageItem of this.messages) {
-                console.log("messageItem:", messageItem);
-
                 const message = new Message(messageItem);
-                console.log("message:", message);
-                console.log("current user:", currentUser);
 
                 if (messageItem.user === currentUser.getUsername()) {
-                    messages.appendChild(message.getElement("my"));
+                    messages.appendChild(await message.getElement("my"));
                 } else {
-                    messages.appendChild(message.getElement("group"));
+                    messages.appendChild(await message.getElement("group"));
                 }
 
                 messages.scrollTop = messages.scrollHeight;
@@ -121,9 +117,7 @@ class Group {
         );
         console.log("input value:", messageInput.value);
 
-        if (messageInput.value === "") {
-            alert("Сообщение не может быть пустым");
-        } else {
+        if (messageInput.value !== "") {
             console.log("send message:", messageInput.value);
 
             const response = await sendMessage(this.chatId, messageInput.value);
@@ -137,8 +131,7 @@ class Group {
             };
             const message = new Message(messageData);
             const messages = this.container.querySelector("#messages");
-            messages.appendChild(message.getElement("my"));
-            // messages.appendChild(message.getElement("dialog"));
+            messages.appendChild(await message.getElement("my"));
 
             messages.scrollTop = messages.scrollHeight;
         }

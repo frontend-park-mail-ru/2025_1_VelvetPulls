@@ -1,101 +1,44 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
+import { api } from "../../../shared/api/api.js";
+import { createChat } from "../../../entities/Chat/api/api.js";
 
 class AddMembers {
-    getData() {
-        // Моковый запрос в БД положит данные в this.data
-        this.data = [
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-            {
-                username: "lolkekchebureck",
-                fullname: "Cameron Williamson",
-                photoURL: "img/Avatar.png",
-                onlineStatus: "В сети",
-            },
-        ];
+    setGroupInfo(info) {
+        this.title = info.title;
+        // this.avatarSrc =
     }
 
-    getHTML() {
-        this.getData();
+    async getData() {
+        const response = await api.get("/contacts");
+        console.log("contacts:", response);
+        this.contacts = response.data;
+
+        console.log("contacts:", this.contacts);
+    }
+
+    async getHTML() {
+        await this.getData();
 
         const template = Handlebars.templates["AddMembers.hbs"];
-        const contacts = this.data;
+
+        const contacts = [];
+        for (const contact of this.contacts) {
+            contacts.push({
+                username: contact.username,
+            });
+        }
+
         const html = template({ contacts });
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        const domElement = doc.body.firstChild;
-
-        this.container = domElement;
+        const container = doc.body.firstChild;
+        this.container = container;
 
         this.addListeners();
 
-        return domElement;
+        return container;
     }
 
     addListeners() {
@@ -122,17 +65,35 @@ class AddMembers {
         const buttonNext = this.container.querySelector(
             ".sidebar__fixed-button",
         );
-        buttonNext.addEventListener("click", (event) => {
-            event.preventDefault();
+        buttonNext.addEventListener("click", this.onClickButtonNext.bind(this));
+    }
 
-            const infoMessage = `Эта функция на этапе разработки.
+    async onClickButtonNext(event) {
+        event.preventDefault();
 
-После создания группы вы будете перенаправлены в список чатов, в котором появится созданная группа.
+        // Создать группу
+        const chatData = {
+            type: "group",
+            title: this.title,
+        };
+        const responseBody = await createChat(chatData);
+        const chatId = responseBody.data.id;
 
-Также сразу же откроется окно чата с этой группой. В чат автоматически добавится сообщение типа "event" со значением "Вы создали группу".`;
-            alert(infoMessage);
-            eventBus.emit("add members -> next");
-        });
+        // Добавить участников
+        const members = [];
+        const checkboxes = this.container.querySelectorAll(
+            ".add-member__checkbox",
+        );
+        for (let i = 0; i < this.contacts.length; ++i) {
+            const checkbox = checkboxes[i];
+            const contact = this.contacts[i];
+
+            if (checkbox.checked) {
+                members.push(contact.username);
+            }
+        }
+        await api.post(`/chat/${chatId}/users`, members);
+        eventBus.emit("add members -> next");
     }
 }
 

@@ -31,7 +31,13 @@ class CreateGroup {
         );
         nextButton.addEventListener("click", (event) => {
             event.preventDefault();
-            eventBus.emit("new group -> add members");
+
+            const input = this.container.querySelector("#group-name-input");
+            const groupInfo = {
+                title: input.value,
+            };
+
+            eventBus.emit("new group -> add members", groupInfo);
         });
     }
 }

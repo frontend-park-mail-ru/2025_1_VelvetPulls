@@ -18,7 +18,8 @@ import { groupInstance } from "../../widgets/Group/index.js";
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 
-// import { chatWebSocket } from "../../shared/api/websocket.js";
+import { chatWebSocket } from "../../shared/api/websocket.js";
+import { currentUser } from "../../entities/User/model/User.js";
 
 class MainPage {
     constructor() {
@@ -28,21 +29,21 @@ class MainPage {
         this.currentChatType = null;
 
         // Инициализация WebSocket
-        // chatWebSocket.connect();
+        chatWebSocket.connect();
         this.addListeners();
     }
 
     addListeners() {
         // --------------- chats ----------------------
-        eventBus.on("ws:NEW_MESSAGE", (message) => {
-            if (message.chatId === this.currentChatId) {
-                this.handleNewMessage(message);
+        eventBus.on("ws:NEW_MESSAGE", async (message) => {
+            console.log("catch ws new message", message);
+            if (
+                message.chatId === this.currentChatId &&
+                message.username !== currentUser.getUsername()
+            ) {
+                console.log("insert new message");
+                await this.handleNewMessage(message);
             }
-        });
-
-        eventBus.on("chats: click on chat", (chatId) => {
-            this.currentChatId = chatId;
-            this.loadChatHistory(chatId);
         });
 
         eventBus.on("new dialog", (user) => {
@@ -65,12 +66,17 @@ class MainPage {
         eventBus.on("open dialog", async ({ user, chatId }) => {
             console.log("catch open dialog:", user, chatId);
 
+            this.currentChatId = chatId;
+            this.currentChatType = "dialog";
             await dialogInstace.init({ user, chatId });
             this.chat = dialogInstace;
             this.render();
         });
 
         eventBus.on("open group", async (chatId) => {
+            this.currentChatId = chatId;
+            this.currentChatType = "group";
+
             await groupInstance.getData(chatId);
             this.chat = groupInstance;
             this.render();
@@ -203,10 +209,15 @@ class MainPage {
         console.log("load chat histori for chatId:", chatId);
     }
 
-    handleNewMessage(message) {
-        const messagesContainer = document.querySelector(".messages-container");
+    async handleNewMessage(message) {
+        console.log("inserted message:", message);
+        const messagesContainer = document.querySelector("#messages");
+        console.log("messages containeer:", messagesContainer);
         if (messagesContainer) {
-            const messageElement = this.createMessageElement(message);
+            const messageElement = await message.getElement(
+                this.currentChatType,
+            );
+            console.log("message element:", messageElement);
             messagesContainer.appendChild(messageElement);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }

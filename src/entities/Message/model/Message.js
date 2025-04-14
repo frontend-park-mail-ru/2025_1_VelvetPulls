@@ -101,11 +101,11 @@ export class Message {
     }
 
     // Статический метод для создания экземпляра из данных API
-    static fromApi(data, currentUserId = null) {
+    static fromApi(data) {
         const message = new Message(data);
-        if (currentUserId) {
-            message.setIsMine(currentUserId);
-        }
+        // if (currentUserId) {
+        //     message.setIsMine(currentUserId);
+        // }
         return message;
     }
 }

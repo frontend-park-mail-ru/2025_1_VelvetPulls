@@ -17,11 +17,13 @@ class ChatWebSocket {
         };
 
         this.socket.onmessage = (event) => {
+            console.log("I GOT NEW MESSAGE");
             try {
+                console.log("event data:", event.data);
                 const message = JSON.parse(event.data);
                 if (message.action === "newMessage") {
-                    const msg = Message.fromApi(message.payload, currentUserId);
-                    eventBus.emit("ws:newMessage", msg);
+                    const msg = Message.fromApi(message.payload);
+                    eventBus.emit("ws:NEW_MESSAGE", msg);
                 }
             } catch (error) {
                 console.error("WebSocket message error:", error);

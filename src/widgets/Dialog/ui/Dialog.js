@@ -6,6 +6,7 @@ import {
     sendMessage,
 } from "../../../entities/Message/index.js";
 import { currentUser } from "../../../entities/User/model/User.js";
+import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class Dialog {
     constructor() {
@@ -118,9 +119,7 @@ class Dialog {
         );
         console.log("input value:", messageInput.value);
 
-        if (messageInput.value === "") {
-            alert("Сообщение не может быть пустым");
-        } else {
+        if (messageInput.value !== "") {
             console.log("send message:", messageInput.value);
 
             const response = await sendMessage(this.chatId, messageInput.value);
@@ -137,6 +136,8 @@ class Dialog {
             messages.appendChild(await message.getElement("my"));
 
             messages.scrollTop = messages.scrollHeight;
+
+            chatWebSocket.send(message);
         }
     }
 }

@@ -1,6 +1,7 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { api } from "../../../shared/api/api.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 class AddMembers {
     setGroupInfo(info) {
@@ -25,6 +26,7 @@ class AddMembers {
         for (const contact of this.contacts) {
             contacts.push({
                 username: contact.username,
+                avatarSrc: await getAvatar(contact.avatar_path),
             });
         }
 

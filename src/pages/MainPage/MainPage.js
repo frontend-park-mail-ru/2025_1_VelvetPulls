@@ -50,17 +50,17 @@ class MainPage {
             dialogInstace.setUser(user);
             this.chat = dialogInstace;
             this.currentChatType = "dialog";
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("chat is deleted", () => {
             console.log("catch chat is deleted");
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("new chat is created", () => {
             console.log("catch new chat is created");
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("open dialog", async ({ user, chatId }) => {
@@ -70,7 +70,7 @@ class MainPage {
             this.currentChatType = "dialog";
             await dialogInstace.init({ user, chatId });
             this.chat = dialogInstace;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("open group", async (chatId) => {
@@ -79,58 +79,58 @@ class MainPage {
 
             await groupInstance.getData(chatId);
             this.chat = groupInstance;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("chats -> contacts", () => {
             this.sidebar = contacts;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("chats -> new group", () => {
             this.sidebar = createGroup;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("chats -> new contact", () => {
             this.sidebar = createContact;
-            this.render();
+            goToPage("main");
         });
 
         // eventBus.on("chats: click on chat", () => {
         //     this.chat = group;
-        //     this.render();
+        //     goToPage("main");
         // });
 
         // eventBus.on("new dialog", (user) => {
         //     console.log("catch new dialog", user);
         //     dialog.setUser(user);
         //     this.chat = dialog;
-        //     this.render();
+        //     goToPage("main");
         // });
 
         eventBus.on("new dialog", (user) => {
             console.log("catch new dialog", user);
             dialogInstace.setUser(user);
             this.chat = dialogInstace;
-            this.render();
+            goToPage("main");
         });
 
         // --------------- profile -----------------------
 
         eventBus.on("profile -> chats", () => {
             this.sidebar = chats;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("profile -> edit profile", () => {
             this.sidebar = editProfile;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("profile -> logout", () => {
@@ -142,51 +142,51 @@ class MainPage {
 
         eventBus.on("edit profile -> back", () => {
             this.sidebar = profile;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("edit profile -> save", () => {
             this.sidebar = profile;
-            this.render();
+            goToPage("main");
         });
 
         // ------------------- contacts ----------------------
 
         eventBus.on("contacts -> chats", () => {
             this.sidebar = chats;
-            this.render();
+            goToPage("main");
         });
 
         // ------------------- new group ----------------------
 
         eventBus.on("new group -> chats", () => {
             this.sidebar = chats;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("new group -> add members", (groupInfo) => {
             addMembers.setGroupInfo(groupInfo);
             this.sidebar = addMembers;
-            this.render();
+            goToPage("main");
         });
 
         // ----------------- add members ----------------------
 
         eventBus.on("add members -> new group", () => {
             this.sidebar = createGroup;
-            this.render();
+            goToPage("main");
         });
 
         eventBus.on("add members -> next", () => {
             this.sidebar = chats;
-            this.render();
+            goToPage("main");
         });
 
         // ------------------- new contact ----------------------
 
         eventBus.on("new contact -> chats", () => {
             this.sidebar = chats;
-            this.render();
+            goToPage("main");
         });
 
         // ------------------- dialog -----------------------
@@ -194,7 +194,7 @@ class MainPage {
             console.log("close dialog");
             this.chat = noChat;
             this.currentChatType = null;
-            this.render();
+            goToPage("main");
         });
     }
 

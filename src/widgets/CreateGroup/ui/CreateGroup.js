@@ -33,11 +33,16 @@ class CreateGroup {
             event.preventDefault();
 
             const input = this.container.querySelector("#group-name-input");
-            const groupInfo = {
-                title: input.value,
-            };
 
-            eventBus.emit("new group -> add members", groupInfo);
+            if (input.value === "") {
+                alert("Название группы не может быть пустым");
+            } else {
+                const groupInfo = {
+                    title: input.value,
+                };
+
+                eventBus.emit("new group -> add members", groupInfo);
+            }
         });
     }
 }

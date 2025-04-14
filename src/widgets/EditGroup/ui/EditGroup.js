@@ -1,7 +1,6 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { editGroup } from "../../EditGroup/index.js";
 
-class GroupInfo {
+class EditGroup {
     constructor() {}
 
     getData(data) {
@@ -10,8 +9,6 @@ class GroupInfo {
         this.countUsers = data.count_users;
         this.users = data.users;
         // this.avatarSrc =
-
-        editGroup.getData(data);
     }
 
     getHTML() {
@@ -45,14 +42,7 @@ class GroupInfo {
             this.container.parentElement.removeChild(this.container);
             eventBus.emit("group-info: close", {});
         });
-
-        const buttonEdit = this.container.querySelector("#edit-group-button");
-        buttonEdit.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            console.log("edit group");
-        });
     }
 }
 
-export const groupInfo = new GroupInfo();
+export const editGroup = new EditGroup();

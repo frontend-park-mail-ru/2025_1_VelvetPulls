@@ -1,0 +1,46 @@
+.edit-profile {
+    overflow: auto;
+}
+
+.edit-profile__fields-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.edit-profile__avatar-container {
+    width: 30%;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.edit-profile__avatar-container:hover {
+    cursor: pointer;
+}
+
+.edit-profile__avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.edit-profile__add-avatar-icon {
+    position: absolute;
+    --size: 50%;
+    --half-size: 25%;
+    width: var(--size);
+    height: var(--size);
+    top: var(--half-size);
+    left: var(--half-size);
+    filter: invert(100%) sepia(1%) saturate(7422%) hue-rotate(210deg) brightness(105%) contrast(117%);
+}
+
+.edit-profile__divider {
+    min-height: 10px;
+    background-color: var(--bg);
+}

@@ -1,0 +1,63 @@
+<div class="chat-container">
+    {{!-- Окно чата --}}
+    <section class="chat">
+        <div>
+            {{!-- Заголовок --}}
+            <header class="chat-header">
+                {{!-- Закрыть чат --}}
+                <div id="close-chat" class="button">
+                    <img src="icons/close.svg" alt="Back" class="icon"></img>
+                </div>
+
+                {{!-- Аватар --}}
+                <img src="{{avatarSrc}}" alt="Avatar" class="chat-header__avatar">
+                
+                {{!-- Информация о чате --}}
+                <div class="chat-header__info">
+                    <div class="chat-header__full-name">{{fullName}}</div>
+                    <div class="chat-header__online-status">был(а) в сети недавно</div>
+                </div>
+
+                {{!-- Удалить чат --}}
+                {{!-- <button id="delete-chat-button" class="button">
+                    <img src="icons/delete.svg" alt="Delete" class="icon">
+                </button> --}}
+            </header>
+            
+            {{!-- Горизонтальный разделитель --}}
+            <div class="horizontal-divider"></div>
+        </div>
+        
+        {{!-- Сообщения --}}
+        <section id="messages" class="sidebar-list scrollable">
+            {{!-- Здесь будут сообщения --}}
+        </section>
+        
+        {{!-- Ввод сообщения --}}
+        <div class="chat-input-container">
+            <div class="chat-input-container__input-wrapper">
+                {{!-- Вложения --}}
+                <button class="button">
+                    <img src="icons/PaperClip.svg" alt="Add attachment" class="icon">
+                </button>
+                
+                {{!-- Поле для ввода --}}
+                <input type="text" placeholder="Написать" class="chat-input-container__input">
+                
+                {{!-- Эмодзи --}}
+                <button class="button">
+                    <img src="icons/Emoji.svg" alt="Emoji" class="icon">
+                </button>
+            </div>
+            
+            {{!-- Отправить --}}
+            <button id="send-message-button" class="button">
+                <img src="icons/Send.svg" alt="Send message" class="icon">
+            </button>
+            
+        </div>
+    </section>
+    
+    {{!-- Вертикальный разделитель --}}
+    <div class="vertical-divider"></div>
+</div>

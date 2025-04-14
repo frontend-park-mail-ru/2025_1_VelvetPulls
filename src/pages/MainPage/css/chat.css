@@ -30,7 +30,8 @@
     padding: 10px;
     flex-direction: column;
     font-family: var(--font-family);
-    color: var(--gray);
+    color: var(--black);
+    background-color: var(--bg);
     justify-content: center;
     flex: 1;
 }

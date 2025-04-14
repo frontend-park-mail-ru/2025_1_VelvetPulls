@@ -105,10 +105,7 @@ export const loginFormSubmit = async (event) => {
         const password = document.getElementById("password").value;
 
         const response = await auth.login(username, password);
-        if (response.status === true) {
+        if (response.status === true) 
             goToPage("main");
-        } else {
-            alert("ПРОИЗШЛА ОШИБКА!");
-        }
     }
 };

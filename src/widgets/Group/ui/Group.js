@@ -120,12 +120,8 @@ class Group {
                 sent_at: new Date(),
             };
             const message = new Message(messageData);
-            const messages = this.container.querySelector("#messages");
-            messages.appendChild(await message.getElement("my"));
 
             messageInput.value = "";
-
-            messages.scrollTop = messages.scrollHeight;
 
             chatWebSocket.send(message);
         }

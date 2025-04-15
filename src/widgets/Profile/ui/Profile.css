@@ -46,6 +46,14 @@
 
 }
 
+.divider {
+    width: 100%;
+    min-height: 1px;
+    background-color: var(--gray);
+    border: none;
+    margin: 0;
+}
+
 .detail-item {
     display: flex;
     align-items: center;
@@ -54,10 +62,6 @@
     padding: 10px;
     width: 90%;
     font-family: var(--font-family);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--black);
-    border-radius: 10px;
 }
 
 .detail-item__label {

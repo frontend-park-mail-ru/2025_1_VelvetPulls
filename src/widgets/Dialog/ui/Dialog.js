@@ -84,12 +84,12 @@ class Dialog {
             this.sendMessage.bind(this),
         );
 
-        const inputMessageEnter = this.container.querySelector("#send-message-input");
-        inputMessageEnter.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                this.sendMessage.bind(this);
-            }
-        });
+        // const inputMessageEnter = this.container.querySelector("#send-message-input");
+        // inputMessageEnter.addEventListener('keypress', function (e) {
+        //     if (e.key === 'Enter') {
+        //         this.sendMessage.bind(this);
+        //     }
+        // });
     }
 
     onClickButtonClose(event) {

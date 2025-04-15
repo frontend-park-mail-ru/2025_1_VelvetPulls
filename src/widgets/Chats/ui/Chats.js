@@ -4,6 +4,7 @@ import { api } from "../../../shared/api/api.js";
 import { deleteChat } from "../../../entities/Chat/api/api.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class Chats {
     constructor() {
@@ -179,6 +180,8 @@ class Chats {
                         title: "1",
                     };
                     await createChat(chatData);
+
+                    chatWebSocket.reconnect();
 
                     eventBus.emit("new chat is created");
                 } else {

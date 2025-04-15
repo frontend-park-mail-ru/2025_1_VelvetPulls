@@ -37,7 +37,6 @@ class MainPage {
         // --------------- chats ----------------------
 
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
-            console.log("ws new message:", message);
             if (message.chatId === this.currentChatId) {
                 await this.handleNewMessage(message);
             }

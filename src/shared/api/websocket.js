@@ -17,8 +17,6 @@ class ChatWebSocket {
 
         this.socket.onmessage = (event) => {
             try {
-                console.log("socket onmessage:", event);
-
                 const message = JSON.parse(event.data);
                 if (message.action === "newMessage") {
                     const msg = Message.fromApi(message.payload);
@@ -39,10 +37,18 @@ class ChatWebSocket {
         };
     }
 
+    disconnect() {
+        this.socket.close();
+    }
+
+    reconnect() {
+        this.disconnect();
+        this.connect();
+    }
+
     send(message) {
         if (this.connected) {
             this.socket.send(JSON.stringify(message));
-            console.log("ws send:", message);
         } else {
             console.warn("WebSocket not connected");
         }

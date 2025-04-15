@@ -2,6 +2,7 @@ import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { api } from "../../../shared/api/api.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class AddMembers {
     setGroupInfo(info) {
@@ -78,6 +79,9 @@ class AddMembers {
             title: this.title,
         };
         const responseBody = await createChat(chatData);
+
+        chatWebSocket.reconnect();
+
         const chatId = responseBody.data.id;
 
         // Добавить участников

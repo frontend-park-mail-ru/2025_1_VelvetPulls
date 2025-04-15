@@ -10,8 +10,6 @@ class Profile {
             avatarSrc: currentUser.avatarSrc,
         };
 
-        console.log("profile data:", data);
-
         const profileTemplate = Handlebars.templates["Profile.hbs"];
         const html = profileTemplate({ ...data });
 

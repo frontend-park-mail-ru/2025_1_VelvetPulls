@@ -39,8 +39,6 @@ export class User {
         } else {
             this.avatarSrc = undefined;
         }
-
-        console.log("current user after init:", this);
     }
 
     async update(data) {

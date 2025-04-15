@@ -166,28 +166,29 @@ class Chats {
         const newDialog = newChatPopoverElement.querySelector("#new-dialog");
         newDialog.addEventListener("click", async (event) => {
             event.preventDefault();
-            const username = prompt(
-                "Введите username пользователя, которому Вы хотите написать",
-            );
+            // const username = prompt(
+            //     "Введите username пользователя, которому Вы хотите написать",
+            // );
 
-            if (username !== null) {
-                const responseBody = await api.get(`/profile/${username}`);
+            // if (username !== null) {
+            //     const responseBody = await api.get(`/profile/${username}`);
 
-                if (responseBody.status === true) {
-                    const chatData = {
-                        type: "dialog",
-                        dialog_user: username,
-                        title: "1",
-                    };
-                    await createChat(chatData);
+            //     if (responseBody.status === true) {
+            //         const chatData = {
+            //             type: "dialog",
+            //             dialog_user: username,
+            //             title: "1",
+            //         };
+            //         await createChat(chatData);
 
-                    chatWebSocket.reconnect();
+            //         chatWebSocket.reconnect();
 
-                    eventBus.emit("new chat is created");
-                } else {
-                    alert(`Пользователь с username "${username}" не найден`);
-                }
-            }
+            //         eventBus.emit("new chat is created");
+            //     } else {
+            //         alert(`Пользователь с username "${username}" не найден`);
+            //     }
+            // }
+            eventBus.emit("chats -> new dialog")
         });
 
         // Новая группа

@@ -20,6 +20,7 @@ import { goToPage } from "../../shared/helpers/goToPage.js";
 
 import { chatWebSocket } from "../../shared/api/websocket.js";
 import { currentUser } from "../../entities/User/model/User.js";
+import { createDialog } from "../../widgets/CreateDialog/index.js";
 
 class MainPage {
     constructor() {
@@ -54,6 +55,7 @@ class MainPage {
         });
 
         eventBus.on("new chat is created", () => {
+            this.sidebar=chats
             goToPage("main");
         });
 
@@ -86,6 +88,12 @@ class MainPage {
 
         eventBus.on("chats -> new group", () => {
             this.sidebar = createGroup;
+            goToPage("main");
+        });
+
+        eventBus.on("chats -> new dialog", () => {
+            this.sidebar = createDialog;
+            console.log("Fngjmklg,")
             goToPage("main");
         });
 

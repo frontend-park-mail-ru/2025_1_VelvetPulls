@@ -27,11 +27,11 @@
             {{!-- Горизонтальный разделитель --}}
             <div class="horizontal-divider"></div>
         </div>
-
+        <div class="chat-container__main">
             {{!-- Сообщения --}}
-                <section id="messages" class="sidebar-list scrollable">
-                    {{!-- Здесь будут сообщения --}}
-                </section>
+            <section id="messages" class="sidebar-list scrollable">
+                {{!-- Здесь будут сообщения --}}
+            </section>
 
             <div class="chat__divider"></div>
 
@@ -44,7 +44,7 @@
                     </button>
                     
                     {{!-- Поле для ввода --}}
-                    <input type="text" placeholder="Написать" class="chat-input-container__input">
+                    <input id="send-message-input" type="text" placeholder="Написать" class="chat-input-container__input">
                     
                     {{!-- Эмодзи --}}
                     <button class="button">
@@ -57,7 +57,7 @@
                     <img src="icons/Send.svg" alt="Send message" class="icon">
                 </button>    
             </div>
-
+        </div>
     </section>
     
     {{!-- Вертикальный разделитель --}}

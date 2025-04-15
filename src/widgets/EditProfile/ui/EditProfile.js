@@ -117,7 +117,6 @@ class EditProfile {
                 last_name: lastName,
                 email: email,
                 username: username,
-                password: newPassword,
                 phone: currentUser.getPhone(),
             };
 
@@ -126,6 +125,7 @@ class EditProfile {
             if (avatarFile !== null) {
                 formData.append("avatar", avatarFile);
             }
+
 
             formData.append("profile_data", JSON.stringify(profileData));
 

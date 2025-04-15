@@ -11,8 +11,8 @@ export const initDispatcher = () => {
     };
     eventBus.on("logout", logout);
 
-    const afterAuthIsPassed = () => {
+    const updateProfileData = () => {
         currentUser.init(null);
     };
-    eventBus.on("auth is passed", afterAuthIsPassed);
+    eventBus.on("do update profile", updateProfileData);
 };

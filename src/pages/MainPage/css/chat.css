@@ -9,7 +9,7 @@
 
 .chat__divider {
     background-color: var(--gray);
-    width: 100%;
+    width: 90%;
     height: 1px;
     margin: 0;
 }

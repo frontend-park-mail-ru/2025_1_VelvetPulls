@@ -27,6 +27,10 @@
     margin: 0;
 }
 
+#messages{
+    min-width: 90%;
+}
+
 /* Chat */
 
 .chat {

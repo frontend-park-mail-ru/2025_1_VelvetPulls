@@ -11,7 +11,7 @@ export const getAvatar = async (avatarPath) => {
 
     avatarPath = avatarPath.slice(1);
 
-    const url = `http://90.156.217.108:8080/${avatarPath}`;
+    const url = `http://localhost:8080/${avatarPath}`;
     const response = await fetch(url);
 
     const blob = await response.blob();

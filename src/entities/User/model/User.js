@@ -14,6 +14,7 @@ export class User {
     #phone;
     #avatarPath;
     #email;
+    #password;
 
     async init(username) {
         const data = await getUserData(username);
@@ -22,6 +23,7 @@ export class User {
         this.#phone = data["phone"];
         this.#avatarPath = data["avatar_path"];
         this.#email = data["email"];
+        this.#password = data["password"];
 
         if (data["first_name"] === null || data["first_name"] === undefined) {
             this.#firstName = "";

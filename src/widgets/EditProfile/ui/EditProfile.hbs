@@ -43,6 +43,12 @@
                         id="last-name-input" class="sidebar-list__input">
             </div>
 
+            {{!-- Почта --}}
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Электронная почта</div>
+                <input type="text" placeholder="Email" value="{{email}}"
+                        id="email-input" class="sidebar-list__input">
+            </div>
             {{!-- <div class="sidebar-list__input-container">
                 <input class="sidebar-list__input" type="text" placeholder="О себе" value="{{bio}}">
                 <div class="sidebar-list__input-description">
@@ -66,6 +72,26 @@
                         <br>
                         Вы можете использовать символы <b>a-z</b>, <b>0-9</b> и подчёркивания.
                         Минимальная длина - <b>8</b> символов.
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Новый пароль</div>
+                <input type="password" placeholder="Имя пользователя"
+                        id="new-password-input" class="sidebar-list__input">
+                <div class="sidebar-list__input-description">
+                    <div>
+                        Вы можете поменять свой пароль.
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Подтвердите новый пароль</div>
+                <input type="password" placeholder="Имя пользователя" 
+                        id="repeat-password-input" class="sidebar-list__input">
+                <div class="sidebar-list__input-description">
+                    <div>
+                        Подтвердите новый пароль для замены.
                     </div>
                 </div>
             </div>

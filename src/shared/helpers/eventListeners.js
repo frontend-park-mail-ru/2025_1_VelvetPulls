@@ -110,5 +110,6 @@ export const loginFormSubmit = async (event) => {
         if (response.status === true) {
             eventBus.emit("auth is passed");
             goToPage("main");
+        }
     }
 };

@@ -7,9 +7,12 @@
         
         <div class="sidebar-header__title">Информация</div>
 
-        <button id="edit-group-button" class="button">
-            <img src="icons/Edit.svg" alt="Edit" class="icon">
-        </button>
+        {{#if isOwner}}
+            <button id="edit-group-button" class="button">
+                <img src="icons/Edit.svg" alt="Edit" class="icon">
+            </button>
+        {{/if}}
+
     </header>
 
     <div class="horizontal-divider"></div>
@@ -46,6 +49,16 @@
                     <div class="detail-item__value">Уведомления</div>
                 </div>
             </div>
+
+            {{!-- Добавить участников --}}
+            {{#if isOwner}}
+                <div class="detail-item">
+                    <img src="icons/plus.svg" alt="Bell" class="icon"></img>
+                    <div class="sidebar-list__item-info">
+                        <div class="detail-item__value">Добавить участников</div>
+                    </div>
+                </div>
+            {{/if}}
         </section>
 
         <div class="horizontal-list">

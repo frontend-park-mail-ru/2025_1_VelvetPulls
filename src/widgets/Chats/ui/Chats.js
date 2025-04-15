@@ -14,6 +14,8 @@ class Chats {
         this.newChatIsOpen = false;
 
         this.getData();
+
+        eventBus.on("group is edited", this.onGroupEdit.bind(this));
     }
 
     async getData() {
@@ -33,6 +35,7 @@ class Chats {
                     title: chat.title,
                     // lastMessage:
                     avatarSrc: await getAvatar(chat.avatar_path),
+                    chatId: chat.id,
                 });
             }
         }
@@ -214,6 +217,24 @@ class Chats {
             this.newChatIsOpen = false;
             eventBus.emit("chats -> new contact");
         });
+    }
+
+    onGroupEdit(data) {
+        this.title = data.title;
+        this.avatarSrc = data.avatarSrc;
+
+        const chatContainer = this.container.querySelector(
+            `#chat-${data.chatId}`,
+        );
+        console.log("chat container:", chatContainer);
+
+        const title = chatContainer.querySelector(
+            ".sidebar-list-item__full-name",
+        );
+        title.innerHTML = this.title;
+
+        const avatar = chatContainer.querySelector(".avatar");
+        avatar.src = this.avatarSrc;
     }
 }
 

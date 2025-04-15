@@ -69,7 +69,7 @@ class MainPage {
             this.currentChatId = chatId;
             this.currentChatType = "group";
 
-            await groupInstance.getData(chatId);
+            await groupInstance.setData(chatId);
             this.chat = groupInstance;
             goToPage("main");
         });

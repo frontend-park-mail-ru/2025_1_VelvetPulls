@@ -7,6 +7,7 @@ class Profile {
             username: currentUser.getUsername(),
             fullName: currentUser.getFullName(),
             phone: currentUser.getPhone(),
+            email: currentUser.getEmail(),
             avatarPath: currentUser.avatarSrc,
         };
 

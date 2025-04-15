@@ -22,7 +22,7 @@
             </div>
 
             <div class="avatar-container__square-image">
-                <img class="avatar-container__image" src="{{avatarPath || 'icons/Profile.svg'}}" alt="Аватар">
+                <img class="avatar-container__image" src="{{avatarPath}}" alt="Аватар" onerror="this.src='icons/Profile.svg'; this.onerror=null;">
             </div>
         </section>
 

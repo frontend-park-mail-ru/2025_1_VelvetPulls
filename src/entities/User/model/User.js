@@ -49,6 +49,7 @@ export class User {
         this.#lastName = updatedData["last_name"];
         this.#avatarPath = updatedData["avatar_path"];
         this.#phone = updatedData["phone"];
+        this.#email = updatedData["email"];
     }
 
     getUsername() {

@@ -32,35 +32,36 @@
             {{!-- Горизонтальный разделитель --}}
             <div class="horizontal-divider"></div>
         </div>
-        
-        {{!-- Сообщения --}}
-        <section id="messages" class="sidebar-list scrollable">
-            {{!-- Здесь будут сообщения --}}
-        </section>
-        
-        <div class="chat__divider"></div>
-        {{!-- Ввод сообщения --}}
-        <div class="chat-input-container">
-            <div class="chat-input-container__input-wrapper">
-                {{!-- Вложения --}}
-                <button class="button">
-                    <img src="icons/PaperClip.svg" alt="Add attachment" class="icon">
+        <div class="chat-container__main">
+            {{!-- Сообщения --}}
+            <section id="messages" class="sidebar-list scrollable">
+                {{!-- Здесь будут сообщения --}}
+            </section>
+
+            <div class="chat__divider"></div>
+            {{!-- Ввод сообщения --}}
+            <div class="chat-input-container">
+                <div class="chat-input-container__input-wrapper">
+                    {{!-- Вложения --}}
+                    <button class="button">
+                        <img src="icons/PaperClip.svg" alt="Add attachment" class="icon">
+                    </button>
+                    
+                    {{!-- Поле для ввода --}}
+                    <input type="text" placeholder="Написать" class="chat-input-container__input">
+                    
+                    {{!-- Эмодзи --}}
+                    <button class="button">
+                        <img src="icons/Emoji.svg" alt="Emoji" class="icon">
+                    </button>
+                </div>
+                
+                {{!-- Отправить --}}
+                <button id="send-message-button" class="button">
+                    <img src="icons/Send.svg" alt="Send message" class="icon">
                 </button>
                 
-                {{!-- Поле для ввода --}}
-                <input type="text" placeholder="Написать" class="chat-input-container__input">
-                
-                {{!-- Эмодзи --}}
-                <button class="button">
-                    <img src="icons/Emoji.svg" alt="Emoji" class="icon">
-                </button>
             </div>
-            
-            {{!-- Отправить --}}
-            <button id="send-message-button" class="button">
-                <img src="icons/Send.svg" alt="Send message" class="icon">
-            </button>
-            
         </div>
     </section>
     

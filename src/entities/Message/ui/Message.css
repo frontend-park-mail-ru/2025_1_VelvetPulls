@@ -30,7 +30,7 @@
     justify-self: end;
     max-width: 70%;
     padding: 10px;
-
+    font-family: var(--font-family);
     background-color: var(--main);
     
     --radius: 20px;
@@ -44,7 +44,7 @@
     justify-self: start;
     max-width: 70%;
     padding: 10px;
-
+    font-family: var(--font-family);
     background-color: var(--bg);
     
     --radius: 20px;
@@ -58,6 +58,7 @@
     display: flex;
     max-width: 70%;
     gap: 10px;
+    font-family: var(--font-family);
 }
 
 .message__avatar-container {

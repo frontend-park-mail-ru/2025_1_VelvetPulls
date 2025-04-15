@@ -72,7 +72,8 @@ class EditProfile {
 
         formData.append("profile_data", JSON.stringify(profileData));
 
-        currentUser.update(formData);
+        await currentUser.update(formData);
+        await currentUser.init(null);
 
         eventBus.emit("edit profile -> save");
     }

@@ -83,6 +83,13 @@ class Dialog {
             "click",
             this.sendMessage.bind(this),
         );
+
+        const inputMessage = this.container.querySelector("#send-message-input");
+        inputMessage.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.sendMessage(e);
+            }
+        });
     }
 
     onClickButtonClose(event) {

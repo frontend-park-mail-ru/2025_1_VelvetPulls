@@ -8,6 +8,7 @@ class Profile {
             fullName: currentUser.getFullName(),
             phone: currentUser.getPhone(),
             avatarSrc: currentUser.avatarSrc,
+            email: currentUser.getEmail(),
         };
 
         const profileTemplate = Handlebars.templates["Profile.hbs"];

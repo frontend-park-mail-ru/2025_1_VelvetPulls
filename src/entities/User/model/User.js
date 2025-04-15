@@ -13,6 +13,7 @@ export class User {
     #lastName;
     #phone;
     #avatarPath;
+    #email;
 
     async init(username) {
         const data = await getUserData(username);
@@ -20,6 +21,7 @@ export class User {
         this.#username = data["username"];
         this.#phone = data["phone"];
         this.#avatarPath = data["avatar_path"];
+        this.#email = data["email"];
 
         if (data["first_name"] === null || data["first_name"] === undefined) {
             this.#firstName = "";
@@ -49,6 +51,7 @@ export class User {
         this.#lastName = updatedData["last_name"];
         this.#avatarPath = updatedData["avatar_path"];
         this.#phone = updatedData["phone"];
+        this.#email = updatedData["email"];
     }
 
     getUsername() {
@@ -77,6 +80,10 @@ export class User {
 
     getAvatarPath() {
         return this.#avatarPath;
+    }
+
+    getEmail(){
+        return this.#email;
     }
 }
 

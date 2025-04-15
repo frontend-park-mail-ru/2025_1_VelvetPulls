@@ -10,7 +10,7 @@
     height: 100%;
     padding: 10px;
     
-    font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    font-family: var(--font-family);
     color: var(--black);
 }
 
@@ -30,7 +30,7 @@
     justify-self: end;
     max-width: 70%;
     padding: 10px;
-
+    font-family: var(--font-family);
     background-color: var(--main);
     
     --radius: 20px;
@@ -44,8 +44,8 @@
     justify-self: start;
     max-width: 70%;
     padding: 10px;
-
-    background-color: var(--gray);
+    font-family: var(--font-family);
+    background-color: var(--bg);
     
     --radius: 20px;
     border-top-left-radius: var(--radius);
@@ -58,6 +58,7 @@
     display: flex;
     max-width: 70%;
     gap: 10px;
+    font-family: var(--font-family);
 }
 
 .message__avatar-container {

@@ -16,7 +16,7 @@
     padding: 10px 7px 10px 8px;
     gap: 10px;
     width: 100%;
-    height: 100%;
+    height: 70%;
     background-color: var(--white);
     flex-grow: 1;
 }

@@ -4,6 +4,7 @@ import { api } from "../../../shared/api/api.js";
 import { deleteChat } from "../../../entities/Chat/api/api.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class Chats {
     constructor() {
@@ -17,7 +18,6 @@ class Chats {
 
     async getData() {
         const responseBody = await api.get("/chats");
-
         this.chats = responseBody.data;
     }
 
@@ -170,7 +170,6 @@ class Chats {
                 "Введите username пользователя, которому Вы хотите написать",
             );
 
-            console.log("prompt username:", username);
             if (username !== null) {
                 const responseBody = await api.get(`/profile/${username}`);
 
@@ -181,6 +180,8 @@ class Chats {
                         title: "1",
                     };
                     await createChat(chatData);
+
+                    chatWebSocket.reconnect();
 
                     eventBus.emit("new chat is created");
                 } else {

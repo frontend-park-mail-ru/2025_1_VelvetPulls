@@ -1,8 +1,10 @@
 import { appState, initRouter, config } from "./router.js";
 import { goToPage } from "../shared/helpers/goToPage.js";
+import { initDispatcher } from "./dispatcher.js";
 
 export const appInit = () => {
     initRouter();
+    initDispatcher();
 
     const savedPage = localStorage.getItem("activePageLink");
 

@@ -38,6 +38,8 @@ export class User {
         if (this.#avatarPath !== null) {
             const path = this.#avatarPath.replace(".", "");
             this.avatarSrc = await getAvatar(path);
+        } else {
+            this.avatarSrc = undefined;
         }
     }
 
@@ -85,5 +87,5 @@ export class User {
     }
 }
 
-export const currentUser = new User();
+export let currentUser = new User();
 currentUser.init(null);

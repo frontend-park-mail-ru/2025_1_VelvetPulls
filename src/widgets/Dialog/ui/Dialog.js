@@ -128,9 +128,9 @@ class Dialog {
             };
             const message = new Message(messageData);
 
-            messageInput.value = "";
-
             chatWebSocket.send(message);
+
+            messageInput.value = "";
         }
     }
 }

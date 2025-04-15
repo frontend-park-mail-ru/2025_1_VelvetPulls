@@ -37,6 +37,15 @@ class ChatWebSocket {
         };
     }
 
+    disconnect() {
+        this.socket.close();
+    }
+
+    reconnect() {
+        this.disconnect();
+        this.connect();
+    }
+
     send(message) {
         if (this.connected) {
             this.socket.send(JSON.stringify(message));

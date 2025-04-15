@@ -18,10 +18,12 @@ class Contacts {
         const template = Handlebars.templates["Contacts.hbs"];
 
         const contacts = [];
-        for (const contact of this.data) {
-            contacts.push({
-                name: contact.username,
-            });
+        if (this.data !== null) {
+            for (const contact of this.data) {
+                contacts.push({
+                    name: contact.username,
+                });
+            }
         }
 
         const html = template({ contacts });

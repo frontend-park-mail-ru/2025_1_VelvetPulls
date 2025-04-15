@@ -7,6 +7,7 @@ import {
     passwordInputValidate,
 } from "./validation.js";
 import { auth } from "../api/auth.js";
+import { eventBus } from "../modules/EventBus/EventBus.js";
 
 export const signupFormSubmitListener = async (event) => {
     event.preventDefault();
@@ -29,6 +30,7 @@ export const signupFormSubmitListener = async (event) => {
             repeatPassword,
         );
         if (response.status === true) {
+            eventBus.emit("auth is passed");
             goToPage("main");
         } else {
             alert("ПРОИЗШЛА ОШИБКА!");
@@ -105,7 +107,8 @@ export const loginFormSubmit = async (event) => {
         const password = document.getElementById("password").value;
 
         const response = await auth.login(username, password);
-        if (response.status === true) 
+        if (response.status === true) {
+            eventBus.emit("auth is passed");
             goToPage("main");
     }
 };

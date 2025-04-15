@@ -115,6 +115,7 @@ class MainPage {
         eventBus.on("profile -> logout", () => {
             auth.logout();
             goToPage("login");
+            this.sidebar = chats;
         });
 
         // --------------- edit profile ----------------------
@@ -198,7 +199,6 @@ class MainPage {
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-
         const container = doc.body.firstChild;
 
         const sidebar = await this.sidebar.getHTML();

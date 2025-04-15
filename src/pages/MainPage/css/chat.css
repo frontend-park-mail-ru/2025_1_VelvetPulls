@@ -95,7 +95,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    
+    min-width: 70%;
     padding: 10px;
     margin-bottom: 20px;
     margin-inline: 20px;

@@ -18,6 +18,7 @@
     box-shadow: 0 0px 15px 0px var(--black);
     border-radius: 20px;
     overflow: hidden;
+    align-items: center;
     background-color: var(--white);
 }
 

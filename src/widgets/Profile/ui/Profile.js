@@ -7,8 +7,10 @@ class Profile {
             username: currentUser.getUsername(),
             fullName: currentUser.getFullName(),
             phone: currentUser.getPhone(),
-            avatarPath: currentUser.avatarSrc,
+            avatarSrc: currentUser.avatarSrc,
         };
+
+        console.log("profile data:", data);
 
         const profileTemplate = Handlebars.templates["Profile.hbs"];
         const html = profileTemplate({ ...data });

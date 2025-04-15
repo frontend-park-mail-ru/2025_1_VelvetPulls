@@ -17,7 +17,6 @@ class Chats {
 
     async getData() {
         const responseBody = await api.get("/chats");
-
         this.chats = responseBody.data;
     }
 
@@ -170,7 +169,6 @@ class Chats {
                 "Введите username пользователя, которому Вы хотите написать",
             );
 
-            console.log("prompt username:", username);
             if (username !== null) {
                 const responseBody = await api.get(`/profile/${username}`);
 

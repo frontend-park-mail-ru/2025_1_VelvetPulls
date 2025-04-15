@@ -112,6 +112,8 @@ class Dialog {
         );
 
         if (messageInput.value !== "") {
+            console.log("send message:", messageInput.value);
+
             await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {
@@ -121,9 +123,11 @@ class Dialog {
             };
             const message = new Message(messageData);
 
-            messageInput.value = "";
-
+            console.log("chatWebSocket:", chatWebSocket);
             chatWebSocket.send(message);
+            console.log("message is sent:", messageInput.value);
+
+            messageInput.value = "";
         }
     }
 }

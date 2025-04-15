@@ -37,6 +37,7 @@ class MainPage {
         // --------------- chats ----------------------
 
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
+            console.log("ws new message:", message);
             if (message.chatId === this.currentChatId) {
                 await this.handleNewMessage(message);
             }
@@ -115,6 +116,7 @@ class MainPage {
         eventBus.on("profile -> logout", () => {
             auth.logout();
             goToPage("login");
+            this.sidebar = chats;
         });
 
         // --------------- edit profile ----------------------
@@ -198,7 +200,6 @@ class MainPage {
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-
         const container = doc.body.firstChild;
 
         const sidebar = await this.sidebar.getHTML();

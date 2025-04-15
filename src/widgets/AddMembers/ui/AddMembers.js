@@ -20,11 +20,13 @@ class AddMembers {
         const template = Handlebars.templates["AddMembers.hbs"];
 
         const contacts = [];
-        for (const contact of this.contacts) {
-            contacts.push({
-                username: contact.username,
-                avatarSrc: await getAvatar(contact.avatar_path),
-            });
+        if (this.contacts !== null) {
+            for (const contact of this.contacts) {
+                contacts.push({
+                    username: contact.username,
+                    avatarSrc: await getAvatar(contact.avatar_path),
+                });
+            }
         }
 
         const html = template({ contacts });
@@ -83,7 +85,7 @@ class AddMembers {
         const checkboxes = this.container.querySelectorAll(
             ".add-member__checkbox",
         );
-        for (let i = 0; i < this.contacts.length; ++i) {
+        for (let i = 0; i < checkboxes.length; ++i) {
             const checkbox = checkboxes[i];
             const contact = this.contacts[i];
 

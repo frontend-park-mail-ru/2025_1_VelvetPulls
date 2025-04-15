@@ -1,15 +1,12 @@
 @import url("../../../widgets/AuthForm/ui/AuthForm.css");
 
-#root{
-    align-items: center;
-}
 #auth-body {
     font-family: var(--font-family);
     font-weight: normal;
     font-size: 16px;
     color: var(--black);
     background-color: var(--white);
-    background: url(../img/Authorization.png) no-repeat;
+    background: url(../img/Authorization.png) no-repeat center center / cover; 
     display: flex;
     justify-content: center;
     align-items: center;

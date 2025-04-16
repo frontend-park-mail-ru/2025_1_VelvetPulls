@@ -23,7 +23,9 @@
         <section class="avatar-container">
             <div class="avatar-container__user-info">
                 <div class="user-info__full-name">{{title}}</div>
-                <div class="user-info__online-status">{{membersCount}} участников</div>
+                <div class="user-info__online-status">
+                    <span id="group-info__members-count">{{membersCount}}</span> участников
+                </div>
             </div>
 
             <div class="avatar-container__square-image">
@@ -35,7 +37,7 @@
         <section class="sidebar-list">
             {{!-- Ссылка --}}
             <div class="detail-item">
-                <img src="" alt="Link" class="icon"></img>
+                <img src="icons/PaperClip.svg" alt="Link" class="icon"></img>
                 <div class="sidebar-list__item-info">
                     <div class="detail-item__value">Тут будет ссылка на чат</div>
                     <div class="detail-item__label">Ссылка</div>
@@ -52,7 +54,7 @@
 
             {{!-- Добавить участников --}}
             {{#if isOwner}}
-                <div class="detail-item">
+                <div id="add-members-button" class="detail-item">
                     <img src="icons/plus.svg" alt="Bell" class="icon"></img>
                     <div class="sidebar-list__item-info">
                         <div class="detail-item__value">Добавить участников</div>
@@ -68,13 +70,13 @@
             <div class="horizontal-list__item">Ссылки</div>
         </div>
 
-        <div class="sidebat-list">
+        <div id="members" class="sidebat-list">
             {{#each members}}
-            <div class="detail-item">
-                <span>{{this.username}}</span>
+            <div class="detail-item member">
+                <span class="detail-item__username">{{this.username}}</span>
                 
-                {{#if (eq role "owner")}}
-                <span>Владелец</span>
+                {{#if (eq this.role "owner")}}
+                    <span>Владелец</span>
                 {{/if}}
             </div>
             {{/each}}

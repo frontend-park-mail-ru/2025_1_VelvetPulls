@@ -85,8 +85,6 @@ class EditGroup {
             formData.append("chat_data", JSON.stringify(chatData));
         }
 
-        console.log("formData:", formData);
-
         if (formData.entries().next().done) {
             return;
         }

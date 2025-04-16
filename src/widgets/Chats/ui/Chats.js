@@ -226,7 +226,6 @@ class Chats {
         const chatContainer = this.container.querySelector(
             `#chat-${data.chatId}`,
         );
-        console.log("chat container:", chatContainer);
 
         const title = chatContainer.querySelector(
             ".sidebar-list-item__full-name",

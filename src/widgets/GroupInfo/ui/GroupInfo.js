@@ -1,14 +1,17 @@
 import { currentUser } from "../../../entities/User/model/User.js";
+import { api } from "../../../shared/api/api.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { editGroup } from "../../EditGroup/index.js";
+import { groupAddMembers } from "../../GroupAddMembers/ui/GroupAddMembers.js";
 
 class GroupInfo {
     constructor() {
         eventBus.on("group is edited", this.onGroupEdit.bind(this));
+        eventBus.on("group new members", this.onGroupNewMembers.bind(this));
     }
 
-    async setData(data) {
-        this.chatId = data.id;
+    setData(data) {
+        this.chatId = data.chatId;
         this.title = data.title;
         this.countUsers = data.countUsers;
         this.avatarSrc = data.avatarSrc;
@@ -25,9 +28,8 @@ class GroupInfo {
             }
         }
 
-        console.log("is owner:", this.isOwner);
-
         editGroup.setData(data);
+        groupAddMembers.setData(data);
     }
 
     render() {
@@ -60,27 +62,71 @@ class GroupInfo {
         const container = doc.body.firstChild;
         this.container = container;
 
+        if (this.isOwner) {
+            const membersElement = container.querySelectorAll(".member");
+
+            for (const memberElement of membersElement) {
+                const username = memberElement.querySelector(
+                    ".detail-item__username",
+                ).innerHTML;
+
+                if (username !== currentUser.getUsername()) {
+                    const deleteButtonElement = document.createElement("img");
+                    deleteButtonElement.src = "icons/delete.svg";
+                    deleteButtonElement.alt = "Delete";
+                    deleteButtonElement.className = "icon";
+
+                    deleteButtonElement.addEventListener(
+                        "click",
+                        async (event) => {
+                            event.preventDefault();
+                            await this.deleteMember({
+                                username,
+                                memberElement,
+                            });
+                        },
+                    );
+
+                    memberElement.appendChild(deleteButtonElement);
+                }
+            }
+        }
+
         this.addListeners();
 
         return container;
     }
 
     addListeners() {
-        const buttonClose = this.container.querySelector("#close-chat-info");
+        const container = this.container;
+
+        const buttonClose = container.querySelector("#close-chat-info");
         buttonClose.addEventListener("click", (event) => {
             event.preventDefault();
 
-            this.container.parentElement.removeChild(this.container);
+            container.parentElement.removeChild(container);
             eventBus.emit("group-info: close", {});
         });
 
-        const buttonEdit = this.container.querySelector("#edit-group-button");
-        buttonEdit.addEventListener("click", this.onClickEditGroup.bind(this));
+        if (this.isOwner) {
+            const buttonEdit = container.querySelector("#edit-group-button");
+            buttonEdit.addEventListener(
+                "click",
+                this.onClickEditGroup.bind(this),
+            );
+
+            const addMembersButton = container.querySelector(
+                "#add-members-button",
+            );
+            addMembersButton.addEventListener(
+                "click",
+                this.onAddMembersClick.bind(this),
+            );
+        }
     }
 
     onClickEditGroup(event) {
         event.preventDefault();
-
         editGroup.render();
     }
 
@@ -95,6 +141,58 @@ class GroupInfo {
 
         const avatar = container.querySelector(".avatar-container__image");
         avatar.src = this.avatarSrc;
+    }
+
+    onGroupNewMembers(newMembers) {
+        const container = this.container;
+
+        const membersCountElement = container.querySelector(
+            "#group-info__members-count",
+        );
+
+        const currentMembersCount = Number(membersCountElement.innerHTML);
+        membersCountElement.innerHTML = currentMembersCount + newMembers.length;
+
+        const members = container.querySelector("#members");
+
+        newMembers.reverse();
+
+        for (const member of newMembers) {
+            const usernameElement = document.createElement("span");
+            usernameElement.innerHTML = member;
+            usernameElement.className = "detail-item__username";
+
+            const deleteButtonElement = document.createElement("img");
+            deleteButtonElement.src = "icons/delete.svg";
+            deleteButtonElement.alt = "Delete";
+            deleteButtonElement.className = "icon";
+
+            const newMemberElement = document.createElement("div");
+            newMemberElement.classList = "detail-item";
+            newMemberElement.appendChild(usernameElement);
+            newMemberElement.appendChild(deleteButtonElement);
+
+            members.insertBefore(newMemberElement, members.firstChild);
+        }
+    }
+
+    onAddMembersClick(event) {
+        event.preventDefault();
+        groupAddMembers.render();
+    }
+
+    async deleteMember({ username, memberElement }) {
+        await api.delete(`/chat/${this.chatId}/users`, [username]);
+
+        memberElement.parentElement.removeChild(memberElement);
+
+        const countElement = this.container.querySelector(
+            "#group-info__members-count",
+        );
+        const count = Number(countElement.innerHTML) - 1;
+        countElement.innerHTML = count;
+
+        eventBus.emit("group delete member");
     }
 }
 

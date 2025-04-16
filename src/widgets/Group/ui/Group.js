@@ -19,6 +19,8 @@ class Group {
         });
 
         eventBus.on("group is edited", this.onGroupEdit.bind(this));
+        eventBus.on("group new members", this.onNewMembers.bind(this));
+        eventBus.on("group delete member", this.onDeleteMember.bind(this));
     }
 
     async setData(chatId) {
@@ -157,6 +159,24 @@ class Group {
 
         const avatar = container.querySelector(".chat-header__avatar");
         avatar.src = this.avatarSrc;
+    }
+
+    onNewMembers(newMembers) {
+        const container = this.container;
+
+        const membersCountElement = container.querySelector(
+            "#group-header__count-members",
+        );
+        const currentMembersCount = Number(membersCountElement.innerHTML);
+        membersCountElement.innerHTML = currentMembersCount + newMembers.length;
+    }
+
+    onDeleteMember() {
+        const countElement = this.container.querySelector(
+            "#group-header__count-members",
+        );
+        const count = Number(countElement.innerHTML) - 1;
+        countElement.innerHTML = count;
     }
 }
 

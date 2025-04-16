@@ -16,3 +16,7 @@
 .horizontal-list__item_active {
     color: var(--main);
 }
+
+.detail-item__username {
+    width: 100%;
+}

@@ -15,7 +15,6 @@
     margin-top: 0;
     padding: 10px 7px 10px 8px;
     gap: 10px;
-    width: 100%;
     overflow: hidden;
     background-color: var(--white);
     flex-grow: 1;
@@ -54,6 +53,7 @@
     gap: 10px;
 
     padding: 10px;
+    height: 55px;
     
     background-color: var(--white);
     

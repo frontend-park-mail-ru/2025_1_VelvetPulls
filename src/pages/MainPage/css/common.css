@@ -11,7 +11,7 @@ body {
 }
 
 .container__divider {
-    width: 1px;
+    min-width: 1px;
     height: 100%;
     background-color: var(--black_divide);
 }

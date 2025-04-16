@@ -53,6 +53,15 @@ class GroupAddMembers {
             this.onButtonSearchClick.bind(this),
         );
 
+        const inputUsername = this.container.querySelector(
+            ".sidebar-header__search-input",
+        );
+        inputUsername.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                this.onButtonSearchClick(event);
+            }
+        });
+
         const buttonAdd = container.querySelector("#button-add");
         buttonAdd.addEventListener("click", this.onButtonAddClik.bind(this));
     }

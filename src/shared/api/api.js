@@ -1,3 +1,5 @@
+// import { csrfToken } from "../../app/main.js";
+
 export const API_URI = "http://localhost:8080/api";
 
 class API {
@@ -19,14 +21,14 @@ class API {
      * @throws {Error} - Если запрос не удался, выбрасывает ошибку с сообщением.
      *
      */
-    async request(method, path, body = null) {
+    async request(method, path, headers, body = null) {
         let response = null;
 
         try {
             const url = this.#api + path;
             const request = {
                 method: method,
-                headers: {},
+                headers: headers,
                 mode: "cors",
                 credentials: "include",
             };
@@ -54,19 +56,29 @@ class API {
     }
 
     async get(url) {
-        return this.request("GET", url);
+        const headers = {};
+        return this.request("GET", url, headers);
     }
 
     async post(url, body = null) {
-        return this.request("POST", url, body);
+        const headers = {
+            // "X-CSRF-Token": csrfToken,
+        };
+        return this.request("POST", url, headers, body);
     }
 
     async put(url, body = null) {
-        return this.request("PUT", url, body);
+        const headers = {
+            // "X-CSRF-Token": csrfToken,
+        };
+        return this.request("PUT", url, headers, body);
     }
 
     async delete(url, body = null) {
-        return this.request("DELETE", url, body);
+        const headers = {
+            // "X-CSRF-Token": csrfToken,
+        };
+        return this.request("DELETE", url, headers, body);
     }
 }
 

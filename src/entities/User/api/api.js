@@ -12,6 +12,7 @@ export const getUserData = async (username = null) => {
     if (response.status === false) {
         if (response.error === "Unauthorized") {
             eventBus.emit("logout");
+            console.log("logout");
             // throw Error("Unauthorized");
         }
     }

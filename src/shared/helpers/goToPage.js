@@ -2,6 +2,7 @@ import { config, appState } from "../../app/router.js";
 import { auth } from "../api/auth.js";
 
 export const goToPage = async (page, pushState = true) => {
+    console.log("go to page:", page);
     if (!config[page]) {
         console.error(`Page "${page}" not found in config`);
         alert("Page", page, "not found in config");

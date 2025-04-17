@@ -10,6 +10,7 @@ class Profile {
             avatarSrc: currentUser.avatarSrc,
             email: currentUser.getEmail(),
         };
+        data.avatarSrc=data.avatarSrc===undefined?"img/Avatar.png":data.avatarSrc
 
         const profileTemplate = Handlebars.templates["Profile.hbs"];
         const html = profileTemplate({ ...data });

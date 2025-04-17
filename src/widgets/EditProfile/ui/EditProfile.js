@@ -18,6 +18,28 @@ class EditProfile {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
+        const fileInput1=doc.querySelector("#fileInput1")
+        const avatarContainer = doc.querySelector('.avatar-container-upload');
+    const avatarImage = doc.getElementById('avatarImage');
+
+    avatarContainer.addEventListener('click', function() {
+      fileInput1.click(); // Открываем диалог выбора файла
+    });
+
+    fileInput1.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      this.avatar=file
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          avatarImage.src = e.target.result; // Устанавливаем выбранное фото
+        }
+
+        reader.readAsDataURL(file); // Читаем файл как Data URL
+      }
+    });
+
         const container = doc.body.firstChild;
         this.container = container;
 
@@ -64,9 +86,11 @@ class EditProfile {
         }
     }
     async updateUser() {
-        const avatarInput = this.container.querySelector("#avatar-input");
-        const avatarFile =
-            avatarInput.files.length > 0 ? avatarInput.files[0] : null;
+        const avaImg=this.container.querySelector("#fileInput1")
+        // let avatarFile =
+        //     avatarInput.files.length > 0 ? avatarInput.files[0] : null;
+        const  avatarFile=avaImg.files.length > 0 ? avaImg.files[0] : null;
+        console.log(avatarFile)
 
         const firstNameInput = this.container.querySelector("#first-name-input");
         const firstName = firstNameInput.value;

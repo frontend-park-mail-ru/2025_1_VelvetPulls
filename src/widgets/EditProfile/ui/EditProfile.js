@@ -119,7 +119,7 @@ class EditProfile {
             "#repeat-password-input",
         );
         const repeatPassword = repeatPasswordInput.value;
-        if (this.isEqualPasswords(newPassword, repeatPassword)) {
+        if (this.isEqualPasswords(newPassword, repeatPassword) && newPassword != null) {
             const profileData = {
                 first_name: firstName,
                 last_name: lastName,

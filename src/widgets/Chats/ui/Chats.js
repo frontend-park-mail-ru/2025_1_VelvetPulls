@@ -202,13 +202,13 @@ class Chats {
         });
 
         // Новый канал
-        const newChannel = newChatPopoverElement.querySelector("#new-channel");
-        newChannel.addEventListener("click", (event) => {
-            event.preventDefault();
-            // this.newChatIsOpen = false;
-            // eventBus.emit("chats -> new channel");
-            alert("Создание канала ещё не готово - это требование РК 3");
-        });
+        // const newChannel = newChatPopoverElement.querySelector("#new-channel");
+        // newChannel.addEventListener("click", (event) => {
+        //     event.preventDefault();
+        //     // this.newChatIsOpen = false;
+        //     // eventBus.emit("chats -> new channel");
+        //     alert("Создание канала ещё не готово - это требование РК 3");
+        // });
 
         // Новый контакт
         const newContact = newChatPopoverElement.querySelector("#new-contact");

@@ -1,5 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { User } from "../../../entities/User/model/User.js";
+import { currentUser, User } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
 import { deleteChat } from "../../../entities/Chat/api/api.js";
 import { createChat } from "../../../entities/Chat/api/api.js";
@@ -14,6 +14,8 @@ class Chats {
         this.newChatIsOpen = false;
 
         this.getData();
+
+        eventBus.on("group is edited", this.onGroupEdit.bind(this));
     }
 
     async getData() {
@@ -29,11 +31,31 @@ class Chats {
 
         if (this.chats !== null && this.chats !== undefined) {
             for (const chat of this.chats) {
-                chats.push({
+                let isOwner = true;
+                if (chat["type"] == "group") {
+                    const responseBody = await api.get(`/chat/${chat["id"]}`);
+
+                    const users = responseBody["data"]["users"];
+
+                    const currentMember = users.find(
+                        (item) =>
+                            item["username"] === currentUser.getUsername(),
+                    );
+
+                    if (currentMember["role"] === "member") {
+                        isOwner = false;
+                    }
+                }
+
+                const chatInfo = {
                     title: chat.title,
                     // lastMessage:
                     avatarSrc: await getAvatar(chat.avatar_path),
-                });
+                    chatId: chat.id,
+                    isOwner: isOwner,
+                };
+
+                chats.push(chatInfo);
             }
         }
 
@@ -81,13 +103,15 @@ class Chats {
 
             // Удалить чат
             const deleteChatButton = chatElement.querySelector(".button");
-            deleteChatButton.addEventListener("click", async (event) => {
-                event.preventDefault();
-                event.stopPropagation();
+            if (deleteChatButton !== null) {
+                deleteChatButton.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
 
-                await deleteChat(chatModel.id);
-                eventBus.emit("chat is deleted");
-            });
+                    await deleteChat(chatModel.id);
+                    eventBus.emit("chat is deleted");
+                });
+            }
         }
 
         // Обработчик клика по кнопке меню
@@ -166,29 +190,7 @@ class Chats {
         const newDialog = newChatPopoverElement.querySelector("#new-dialog");
         newDialog.addEventListener("click", async (event) => {
             event.preventDefault();
-            // const username = prompt(
-            //     "Введите username пользователя, которому Вы хотите написать",
-            // );
-
-            // if (username !== null) {
-            //     const responseBody = await api.get(`/profile/${username}`);
-
-            //     if (responseBody.status === true) {
-            //         const chatData = {
-            //             type: "dialog",
-            //             dialog_user: username,
-            //             title: "1",
-            //         };
-            //         await createChat(chatData);
-
-            //         chatWebSocket.reconnect();
-
-            //         eventBus.emit("new chat is created");
-            //     } else {
-            //         alert(`Пользователь с username "${username}" не найден`);
-            //     }
-            // }
-            eventBus.emit("chats -> new dialog")
+            eventBus.emit("chats -> new dialog");
         });
 
         // Новая группа
@@ -215,6 +217,23 @@ class Chats {
             this.newChatIsOpen = false;
             eventBus.emit("chats -> new contact");
         });
+    }
+
+    onGroupEdit(data) {
+        this.title = data.title;
+        this.avatarSrc = data.avatarSrc;
+
+        const chatContainer = this.container.querySelector(
+            `#chat-${data.chatId}`,
+        );
+
+        const title = chatContainer.querySelector(
+            ".sidebar-list-item__full-name",
+        );
+        title.innerHTML = this.title;
+
+        const avatar = chatContainer.querySelector(".avatar");
+        avatar.src = this.avatarSrc;
     }
 }
 

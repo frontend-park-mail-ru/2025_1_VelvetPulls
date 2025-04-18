@@ -23,9 +23,14 @@ class AddMembers {
         const contacts = [];
         if (this.contacts !== null) {
             for (const contact of this.contacts) {
+                const username = contact["username"];
+
+                const avatarPath = contact["avatar_path"];
+                const avatarSrc = await getAvatar(avatarPath);
+
                 contacts.push({
-                    username: contact.username,
-                    avatarSrc: await getAvatar(contact.avatar_path),
+                    username: username,
+                    avatarSrc: avatarSrc,
                 });
             }
         }

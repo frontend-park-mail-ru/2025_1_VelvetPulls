@@ -8,6 +8,7 @@ import {
 import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { groupInfo } from "../../GroupInfo/index.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 class Group {
     constructor() {
@@ -16,27 +17,41 @@ class Group {
         eventBus.on("group-info: close", () => {
             this.infoIsOpen = false;
         });
+
+        eventBus.on("group is edited", this.onGroupEdit.bind(this));
+        eventBus.on("group new members", this.onNewMembers.bind(this));
+        eventBus.on("group delete member", this.onDeleteMember.bind(this));
     }
 
-    async getData(chatId) {
-        this.chatId = chatId;
-
+    async setData(chatId) {
         const responseBody = await api.get(`/chat/${chatId}`);
+        const responseData = responseBody["data"];
 
-        const data = responseBody.data;
-        this.title = data.title;
-        this.countUsers = data.count_users;
+        const avatarPath = responseData["avatar_path"];
+
+        this.chatId = responseData["id"];
+        this.title = responseData["title"];
+        this.countUsers = responseData["count_users"];
+        this.avatarSrc = await getAvatar(avatarPath);
 
         this.messages = (await getMessageHistory(chatId)).data;
 
-        groupInfo.getData(data);
+        const data = {
+            chatId: this.chatId,
+            title: this.title,
+            countUsers: this.countUsers,
+            avatarSrc: this.avatarSrc,
+            users: responseData["users"],
+        };
+
+        groupInfo.setData(data);
     }
 
     async getHTML() {
         const data = {
             title: this.title,
             countUsers: this.countUsers,
-            // avatarSrc: this.user.avatarSrc,
+            avatarSrc: this.avatarSrc,
         };
 
         const groupTemplate = Handlebars.templates["Group.hbs"];
@@ -84,10 +99,12 @@ class Group {
             "click",
             this.onClickSendMessage.bind(this),
         );
-        const inputMessage = this.container.querySelector("#send-message-input");
-        inputMessage.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.onClickSendMessage(e);
+        const inputMessage = this.container.querySelector(
+            "#send-message-input",
+        );
+        inputMessage.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                this.onClickSendMessage(event);
             }
         });
     }
@@ -104,9 +121,7 @@ class Group {
         event.preventDefault();
 
         if (!this.infoIsOpen) {
-            const groupInfoContainer = groupInfo.getHTML();
-            const divider = this.container.querySelector(".vertical-divider");
-            divider.after(groupInfoContainer);
+            groupInfo.render();
             this.infoIsOpen = true;
         }
     }
@@ -131,6 +146,37 @@ class Group {
 
             chatWebSocket.send(message);
         }
+    }
+
+    onGroupEdit(data) {
+        this.title = data.title;
+        this.avatarSrc = data.avatarSrc;
+
+        const container = this.container;
+
+        const title = container.querySelector(".chat-header__full-name");
+        title.innerHTML = this.title;
+
+        const avatar = container.querySelector(".chat-header__avatar");
+        avatar.src = this.avatarSrc;
+    }
+
+    onNewMembers(newMembers) {
+        const container = this.container;
+
+        const membersCountElement = container.querySelector(
+            "#group-header__count-members",
+        );
+        const currentMembersCount = Number(membersCountElement.innerHTML);
+        membersCountElement.innerHTML = currentMembersCount + newMembers.length;
+    }
+
+    onDeleteMember() {
+        const countElement = this.container.querySelector(
+            "#group-header__count-members",
+        );
+        const count = Number(countElement.innerHTML) - 1;
+        countElement.innerHTML = count;
     }
 }
 

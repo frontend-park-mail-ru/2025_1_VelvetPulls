@@ -10,23 +10,25 @@
                 </div>
 
                 {{!-- Аватар --}}
-                <img src="img/Keftegram.png" alt="Avatar" class="chat-header__avatar">
+                <img src="{{avatarSrc}}" alt="Avatar" class="chat-header__avatar">
                 
                 {{!-- Информация о чате --}}
                 <div class="chat-header__info">
                     <div class="chat-header__full-name">{{title}}</div>
-                    <div class="chat-header__online-status">{{countUsers}} участников</div>
+                    <div class="chat-header__online-status">
+                        <span id="group-header__count-members">{{countUsers}}</span> участников
+                    </div>
                 </div>
                 
                 {{!-- Добавить в избранное --}}
-                <button class="button">
+                {{!-- <button class="button">
                     <img src="icons/Flag.svg" alt="Favourite" class="icon">
-                </button>
+                </button> --}}
                 
                 {{!-- Опции --}}
-                <button class="button">
+                {{!-- <button class="button">
                     <img src="icons/Options.svg" alt="Options" class="icon">
-                </button>
+                </button> --}}
             </header>
             
             {{!-- Горизонтальный разделитель --}}

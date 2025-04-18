@@ -55,7 +55,7 @@ class MainPage {
         });
 
         eventBus.on("new chat is created", () => {
-            this.sidebar=chats
+            this.sidebar = chats;
             goToPage("main");
         });
 
@@ -71,7 +71,7 @@ class MainPage {
             this.currentChatId = chatId;
             this.currentChatType = "group";
 
-            await groupInstance.getData(chatId);
+            await groupInstance.setData(chatId);
             this.chat = groupInstance;
             goToPage("main");
         });
@@ -93,7 +93,6 @@ class MainPage {
 
         eventBus.on("chats -> new dialog", () => {
             this.sidebar = createDialog;
-            console.log("Fngjmklg,")
             goToPage("main");
         });
 

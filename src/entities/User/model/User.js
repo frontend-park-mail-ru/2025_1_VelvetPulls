@@ -41,7 +41,7 @@ export class User {
             const path = this.#avatarPath.replace(".", "");
             this.avatarSrc = await getAvatar(path);
         } else {
-            this.avatarSrc = undefined;
+            this.avatarSrc = "icons/Profile.svg";
         }
     }
 
@@ -84,7 +84,7 @@ export class User {
         return this.#avatarPath;
     }
 
-    getEmail(){
+    getEmail() {
         return this.#email;
     }
 }

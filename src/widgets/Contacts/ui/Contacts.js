@@ -1,5 +1,6 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { api } from "../../../shared/api/api.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 class Contacts {
     constructor(parentWidget) {
@@ -20,8 +21,14 @@ class Contacts {
         const contacts = [];
         if (this.data !== null) {
             for (const contact of this.data) {
+                const username = contact["username"];
+
+                const avatarPath = contact["avatar_path"];
+                const avatarSrc = await getAvatar(avatarPath);
+
                 contacts.push({
-                    name: contact.username,
+                    username: username,
+                    avatarSrc: avatarSrc,
                 });
             }
         }

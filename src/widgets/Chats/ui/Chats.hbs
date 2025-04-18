@@ -28,7 +28,7 @@
     <section class="chats">
         <div class="sidebar-list scrollable">
             {{#each chats}}
-            <div class="sidebar-list__item sidebar-list-item">
+            <div id="chat-{{chatId}}" class="sidebar-list__item sidebar-list-item">
                 <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
 
                 <div class="sidebar-list-item__info">
@@ -44,9 +44,11 @@
                 </div>
 
                 {{!-- Удалить контакт --}}
-                <button class="button">
-                    <img src="icons/delete.svg" alt="Delete" class="icon">
-                </button>
+                {{#if isOwner }}
+                    <button class="button">
+                        <img src="icons/delete.svg" alt="Delete" class="icon">
+                    </button>
+                {{/if}}
             </div>
             {{/each}}
         </div>

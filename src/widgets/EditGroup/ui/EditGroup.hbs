@@ -1,66 +1,31 @@
 <div class="sidebar">
     {{!-- Заголовок --}}
     <header class="sidebar-header">
-        <div id="close-chat-info" class="button">
-            <img src="icons/close.svg" alt="Back" class="icon"></img>
+        <div id="close-edit-group" class="button">
+            <img src="icons/Back.svg" alt="Back" class="icon"></img>
         </div>
         
-        <div class="sidebar-header__title">Информация</div>
+        <div class="sidebar-header__title">Изменить группу</div>
+
+        <div id="save-edit-group" class="button">
+            <img src="icons/Ok.svg" alt="Back" class="icon"></img>
+        </div>
     </header>
 
     <div class="horizontal-divider"></div>
 
-    <!-- Просмотр группы -->
-    <main class="group-info">
+    <!-- Тело -->
+    <main class="sidebar-list scrollable">
         {{!-- Аватар --}}
-        <section class="avatar-container">
-            <div class="avatar-container__user-info">
-                <div class="user-info__full-name">{{title}}</div>
-                <div class="user-info__online-status">{{membersCount}} участников</div>
-            </div>
-
-            <div class="avatar-container__square-image">
-                <img class="avatar-container__image" src="{{avatarSrc}}" alt="Avatar">
-            </div>
-        </section>
-
-        {{!-- Детали группы --}}
-        <section class="sidebar-list">
-            {{!-- Ссылка --}}
-            <div class="detail-item">
-                <img src="" alt="Link" class="icon"></img>
-                <div class="sidebar-list__item-info">
-                    <div class="detail-item__value">Тут будет ссылка на чат</div>
-                    <div class="detail-item__label">Ссылка</div>
-                </div>
-            </div>
-
-            {{!-- Уведомления --}}
-            <div class="detail-item">
-                <img src="icons/bell.svg" alt="Bell" class="icon"></img>
-                <div class="sidebar-list__item-info">
-                    <div class="detail-item__value">Уведомления</div>
-                </div>
-            </div>
-        </section>
-
-        <div class="horizontal-list">
-            <div class="horizontal-list__item horizontal-list__item_active">Участники</div>
-            <div class="horizontal-list__item">Медиа</div>
-            <div class="horizontal-list__item">Файлы</div>
-            <div class="horizontal-list__item">Ссылки</div>
+        <div class="sidebar-list__input-container">
+            <input type="file" id="avatar-input">
         </div>
 
-        <div class="sidebat-list">
-            {{#each members}}
-            <div class="detail-item">
-                <span>{{this.username}}</span>
-                
-                {{#if (eq role "owner")}}
-                <span>Владелец</span>
-                {{/if}}
-            </div>
-            {{/each}}
+        {{!-- Название группы --}}
+        <div class="sidebar-list__input-container">
+            <div class="sidebar-list__input-label">Название группы</div>
+            <input type="text" placeholder="Название группы" value="{{title}}"
+                    id="title-input" class="sidebar-list__input">
         </div>
     </main>
 </div>

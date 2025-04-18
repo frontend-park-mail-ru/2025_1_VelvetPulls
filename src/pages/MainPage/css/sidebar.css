@@ -181,7 +181,7 @@
 .sidebar__fixed-button-container {
     position: fixed;
     
-    right: 77%;
+    left: calc(0.8 * var(--width));
     bottom: 10%;
 }
 

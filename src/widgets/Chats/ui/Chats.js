@@ -31,21 +31,16 @@ class Chats {
 
         if (this.chats !== null && this.chats !== undefined) {
             for (const chat of this.chats) {
-                console.log("chat:", chat);
-
                 let isOwner = true;
                 if (chat["type"] == "group") {
                     const responseBody = await api.get(`/chat/${chat["id"]}`);
-                    console.log("group response:", responseBody);
 
                     const users = responseBody["data"]["users"];
-                    console.log("group users:", users);
 
                     const currentMember = users.find(
                         (item) =>
                             item["username"] === currentUser.getUsername(),
                     );
-                    console.log("current member:", currentMember);
 
                     if (currentMember["role"] === "member") {
                         isOwner = false;

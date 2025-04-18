@@ -38,33 +38,31 @@ class CreateDialog {
             const input = this.container.querySelector("#group-name-input");
 
             if (input.value === "") {
-                alert("Название группы не может быть пустым");
+                alert("username не может быть пустым");
             } else {
-                const dialogInfo = {
-                    usernamr: input.value,
-                };
-                let username=input.value
-                console.log(dialogInfo)
+                let username = input.value;
 
                 if (username !== null) {
-                                const responseBody = await api.get(`/profile/${username}`);
-                
-                                if (responseBody.status === true) {
-                                    const chatData = {
-                                        type: "dialog",
-                                        dialog_user: username,
-                                        title: "1",
-                                    };
-                                    await createChat(chatData);
-                
-                                    chatWebSocket.reconnect();
-                
-                                    eventBus.emit("new chat is created");
-                                } else {
-                                    alert(`Пользователь с username "${username}" не найден`);
-                                }
-                            }
-                            ///eventBus.emit("new dialog",username)
+                    const responseBody = await api.get(`/profile/${username}`);
+
+                    if (responseBody.status === true) {
+                        const chatData = {
+                            type: "dialog",
+                            dialog_user: username,
+                            title: "1",
+                        };
+                        await createChat(chatData);
+
+                        chatWebSocket.reconnect();
+
+                        eventBus.emit("new chat is created");
+                    } else {
+                        alert(
+                            `Пользователь с username "${username}" не найден`,
+                        );
+                    }
+                }
+                ///eventBus.emit("new dialog",username)
                 //eventBus.emit("new dialog -> chats");
             }
         });

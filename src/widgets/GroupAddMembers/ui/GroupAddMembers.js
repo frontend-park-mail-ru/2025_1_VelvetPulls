@@ -97,7 +97,6 @@ class GroupAddMembers {
         }
 
         for (const newMember of this.newMembers) {
-            console.log("check new member:", newMember);
             if (username === newMember) {
                 alert(
                     `Пользователь ${username} уже есть в списке добавляемых пользователей`,

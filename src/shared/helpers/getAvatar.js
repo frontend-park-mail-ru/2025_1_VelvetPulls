@@ -4,7 +4,7 @@ const map = new Map();
 
 export const getAvatar = async (avatarPath) => {
     if (avatarPath === null || avatarPath === undefined) {
-        return null;
+        return "icons/Profile.svg";
     }
 
     if (map.has(avatarPath)) {

@@ -1,10 +1,13 @@
+import { API_HOST, API_PORT } from "./api.js";
+
 import { eventBus } from "../modules/EventBus/EventBus.js";
 import { Message } from "../../entities/Message/index.js";
+
 class ChatWebSocket {
     constructor() {
         this.socket = null;
         this.connected = false;
-        this.baseUrl = "ws://90.156.217.108:8080/ws";
+        this.baseUrl = `ws://${API_HOST}:${API_PORT}/ws`;
     }
 
     connect() {

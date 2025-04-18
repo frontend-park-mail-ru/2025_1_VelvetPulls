@@ -12,14 +12,14 @@
 }
 
 .user-info__full-name {
-    font: bold;
+    font-weight: bold;
     font-size: 50px;
     font-family: var(--font-family);
-    color: var(--main);
+    color: var(--white);
 }
 
 .user-info__online-status {
-    color: var(--online);
+    color: var(--gray);
     font-family: var(--font-family);
 }
 

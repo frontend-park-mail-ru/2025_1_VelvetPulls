@@ -143,37 +143,11 @@ class GroupInfo {
         avatar.src = this.avatarSrc;
     }
 
-    onGroupNewMembers(newMembers) {
-        const container = this.container;
+    async onGroupNewMembers() {
+        const response = await api.get(`/chat/${this.chatId}`);
 
-        const membersCountElement = container.querySelector(
-            "#group-info__members-count",
-        );
-
-        const currentMembersCount = Number(membersCountElement.innerHTML);
-        membersCountElement.innerHTML = currentMembersCount + newMembers.length;
-
-        const members = container.querySelector("#members");
-
-        newMembers.reverse();
-
-        for (const member of newMembers) {
-            const usernameElement = document.createElement("span");
-            usernameElement.innerHTML = member;
-            usernameElement.className = "detail-item__username";
-
-            const deleteButtonElement = document.createElement("img");
-            deleteButtonElement.src = "icons/delete.svg";
-            deleteButtonElement.alt = "Delete";
-            deleteButtonElement.className = "icon";
-
-            const newMemberElement = document.createElement("div");
-            newMemberElement.classList = "detail-item";
-            newMemberElement.appendChild(usernameElement);
-            newMemberElement.appendChild(deleteButtonElement);
-
-            members.insertBefore(newMemberElement, members.firstChild);
-        }
+        this.users = response["data"]["users"];
+        this.countUsers = this.users.length;
     }
 
     onAddMembersClick(event) {
@@ -192,7 +166,10 @@ class GroupInfo {
         const count = Number(countElement.innerHTML) - 1;
         countElement.innerHTML = count;
 
-        eventBus.emit("group delete member");
+        // Удалить участника из массива
+        this.users = this.users.filter((user) => user["username"] !== username);
+
+        eventBus.emit("group delete member", username);
     }
 }
 

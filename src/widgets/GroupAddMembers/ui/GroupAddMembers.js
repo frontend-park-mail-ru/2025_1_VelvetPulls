@@ -5,6 +5,13 @@ import { groupInfo } from "../../GroupInfo/index.js";
 class GroupAddMembers {
     constructor() {
         this.newMembers = [];
+
+        eventBus.on("group delete member", this.onDeleteMember.bind(this));
+    }
+
+    onDeleteMember(username) {
+        // Удалить участника из массива
+        this.users = this.users.filter((user) => user["username"] !== username);
     }
 
     setData(data) {
@@ -83,8 +90,18 @@ class GroupAddMembers {
         searchInput.value = "";
 
         for (const user of this.users) {
-            if (username === user.username) {
+            if (username === user["username"]) {
                 alert(`Пользователь ${username} уже есть в группе`);
+                return;
+            }
+        }
+
+        for (const newMember of this.newMembers) {
+            console.log("check new member:", newMember);
+            if (username === newMember) {
+                alert(
+                    `Пользователь ${username} уже есть в списке добавляемых пользователей`,
+                );
                 return;
             }
         }
@@ -138,9 +155,13 @@ class GroupAddMembers {
 
         await api.post(`/chat/${this.chatId}/users`, this.newMembers);
 
-        groupInfo.render();
+        await groupInfo.onGroupNewMembers();
 
         eventBus.emit("group new members", this.newMembers);
+
+        groupInfo.render();
+
+        this.newMembers = [];
     }
 }
 

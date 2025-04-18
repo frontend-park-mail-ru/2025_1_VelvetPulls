@@ -14,6 +14,7 @@ export const getAvatar = async (avatarPath) => {
     avatarPath = avatarPath.slice(1);
 
     const url = `http://${API_HOST}:${API_PORT}/${avatarPath}`;
+
     const response = await fetch(url);
 
     const blob = await response.blob();

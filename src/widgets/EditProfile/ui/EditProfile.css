@@ -44,3 +44,23 @@
     min-height: 10px;
     background-color: var(--bg);
 }
+
+.avatar-container-upload {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 20px auto; /* Центрируем контейнер */
+    border: 2px solid #ccc; /* Добавим рамку для видимости */
+  }
+
+  .avatar-upload {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Обрезаем фото, чтобы заполнить круг */
+  }
+
+  #fileInput1 {
+    display: none; /* Скрываем input[type="file"] */
+  }

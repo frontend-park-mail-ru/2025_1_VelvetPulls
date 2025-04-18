@@ -44,9 +44,11 @@
                 </div>
 
                 {{!-- Удалить контакт --}}
-                <button class="button">
-                    <img src="icons/delete.svg" alt="Delete" class="icon">
-                </button>
+                {{#if isOwner }}
+                    <button class="button">
+                        <img src="icons/delete.svg" alt="Delete" class="icon">
+                    </button>
+                {{/if}}
             </div>
             {{/each}}
         </div>

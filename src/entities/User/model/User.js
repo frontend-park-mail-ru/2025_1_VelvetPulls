@@ -41,7 +41,7 @@ export class User {
             const path = this.#avatarPath.replace(".", "");
             this.avatarSrc = await getAvatar(path);
         } else {
-            this.avatarSrc = "icons/profile.svg";
+            this.avatarSrc = "icons/Profile.svg";
         }
     }
 

@@ -152,6 +152,7 @@
 
 .sidebar-list__input-label {
     font-size: 16px;
+    font-family: var(--font-family);
 }
 
 .sidebar-list__input {
@@ -166,6 +167,7 @@
 
 .sidebar-list__input-description {
     color: var(--gray);
+    font-family: var(--font-family);
 }
 
 /* divider */

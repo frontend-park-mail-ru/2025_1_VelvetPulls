@@ -26,7 +26,7 @@
 #new-chat__popover {
     position: absolute;
     left: -130px;
-    top: -160px;
+    top: -130px;
     
     display: none;
 }

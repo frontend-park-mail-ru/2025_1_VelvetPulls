@@ -3,8 +3,8 @@ import morgan from "morgan";
 import path from "path";
 
 const app = express();
-const port = 8081;
-const hostname = "localhost";
+const port = 80;
+const hostname = "90.156.217.108";
 
 app.use(morgan("dev"));
 app.use(express.static("src"));

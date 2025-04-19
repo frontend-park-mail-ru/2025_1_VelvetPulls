@@ -4,7 +4,7 @@
         <input class="auth-form__input" type="{{this.type}}" id="{{this.id}}" name="{{this.name}}" placeholder="{{this.placeholder}}" autocomplete="current-password">
         
         {{#if (eq this.name "password")}}
-                <button class="auth-form__toggle-password">👁️</button>
+            <button class="auth-form__toggle-password">👁️</button>
         {{/if}}
 
         {{#if (eq this.name "confirm-password")}}
@@ -12,5 +12,7 @@
         {{/if}}
     </div>
     {{/each}}
-    <button type="submit" class="auth-form__button">{{submitButtonText}}</button>
+    <div class="auth-form__button-wrapper">
+        <button type="submit" class="auth-form__button">{{submitButtonText}}</button>
+    </div>
 </form>

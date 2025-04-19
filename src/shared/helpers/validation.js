@@ -1,3 +1,5 @@
+import { phoneInputListener } from "./eventListeners.js";
+
 /**
  * Удаляет пояснительную ошибку рядом с полем ввода, если она там была
  *
@@ -5,7 +7,7 @@
  * @param {input} input - Поле ввода
  *
  */
-function removeError(input) {
+export function removeError(input) {
     const parent = input.parentNode;
 
     if (parent.classList.contains("auth-form__error")) {
@@ -22,7 +24,7 @@ function removeError(input) {
  * @param {string} text - Сообщение об ошибке
  *
  */
-function createError(input, text) {
+export function createError(input, text) {
     const parent = input.parentNode;
     parent.classList.add("auth-form__error");
 
@@ -86,7 +88,8 @@ function checkUsername(input) {
     const patt = /^[a-zA-Z0-9_]{3,20}$/;
     return patt.test(input.value);
 }
-export function usernameInputValidate(input){
+
+export function usernameInputValidate(input) {
     if (!checkUsername(input)) {
         removeError(input);
         createError(
@@ -99,7 +102,7 @@ export function usernameInputValidate(input){
     return true;
 }
 
-export function cleanedPhoneInputValidate(input){
+export function cleanedPhoneInputValidate(input) {
     if (!checkPhone(input)) {
         removeError(input);
         createError(input, "Неверный формат номера телефона");
@@ -109,7 +112,7 @@ export function cleanedPhoneInputValidate(input){
     return true;
 }
 
-export function passwordInputValidate(input){
+export function passwordInputValidate(input) {
     if (!checkPassword(input)) {
         removeError(input);
         createError(
@@ -122,7 +125,7 @@ export function passwordInputValidate(input){
     return true;
 }
 
-export function repeatPasswordInputValidate(input, form){
+export function repeatPasswordInputValidate(input, form) {
     if (!isEqualPasswords(form)) {
         removeError(input);
         createError(input, "Пароли должны совпадать");
@@ -151,21 +154,27 @@ export function validateSignupForm(form) {
             createError(input, "Поле не заполнено");
             isValid = false;
         } else {
-            if (input.name === "password") {
-                isValid = passwordInputValidate(input);
-            }
+            switch (input["id"]) {
+                case "username":
+                    isValid = usernameInputValidate(input);
+                    break;
 
-            if (input.name === "confirm-password") {
-                isValid = repeatPasswordInputValidate(input, form);
-            }
+                case "phone":
+                    isValid = phoneInputListener(input);
+                    break;
 
-            if (input.name === "phone") {
-                isValid = cleanedPhoneInputValidate(input);
-            }
+                case "password":
+                    isValid = passwordInputValidate(input);
+                    break;
 
-            if (input.name === "username") {
-                isValid = usernameInputValidate(input);
+                case "confirm-password":
+                    isValid = repeatPasswordInputValidate(input, form);
+                    break;
             }
+        }
+
+        if (isValid === false) {
+            return false;
         }
     }
 
@@ -183,6 +192,28 @@ export function validateLoginForm(form) {
         if (input.value === "") {
             createError(input, "Поле не заполнено");
             isValid = false;
+        } else {
+            switch (input["id"]) {
+                case "username":
+                    isValid = usernameInputValidate(input);
+                    break;
+
+                case "phone":
+                    isValid = phoneInputListener(input);
+                    break;
+
+                case "password":
+                    isValid = passwordInputValidate(input);
+                    break;
+
+                case "confirm-password":
+                    isValid = repeatPasswordInputValidate(input, form);
+                    break;
+            }
+        }
+
+        if (isValid === false) {
+            return false;
         }
     }
 

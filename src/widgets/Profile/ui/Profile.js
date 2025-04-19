@@ -10,7 +10,8 @@ class Profile {
             avatarSrc: currentUser.avatarSrc,
             email: currentUser.getEmail(),
         };
-        data.avatarSrc=data.avatarSrc===undefined?"img/Avatar.png":data.avatarSrc
+        data.avatarSrc =
+            data.avatarSrc === undefined ? "img/Avatar.png" : data.avatarSrc;
 
         const profileTemplate = Handlebars.templates["Profile.hbs"];
         const html = profileTemplate({ ...data });
@@ -46,7 +47,7 @@ class Profile {
         const logoutButton = this.container.querySelector("#button-logout");
         logoutButton.addEventListener("click", (event) => {
             event.preventDefault();
-            eventBus.emit("profile -> logout");
+            eventBus.emit("logout");
         });
     }
 }

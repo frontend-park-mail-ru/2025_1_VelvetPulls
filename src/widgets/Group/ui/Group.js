@@ -21,6 +21,9 @@ class Group {
         eventBus.on("group is edited", this.onGroupEdit.bind(this));
         eventBus.on("group new members", this.onNewMembers.bind(this));
         eventBus.on("group delete member", this.onDeleteMember.bind(this));
+        eventBus.on("open dialog", () => {
+            this.infoIsOpen = false;
+        });
     }
 
     async setData(chatId) {

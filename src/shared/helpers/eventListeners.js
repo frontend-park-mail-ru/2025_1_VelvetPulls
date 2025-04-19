@@ -40,8 +40,6 @@ export const signupFormSubmitListener = async (event) => {
             eventBus.emit("do update profile");
             goToPage("main");
         } else {
-            console.log("response:", response);
-
             const error = response.error;
 
             switch (error) {
@@ -117,7 +115,6 @@ export const phoneInputListener = (event) => {
     }
 
     if (value.length < 10) {
-        console.log(value.length);
         createError(phoneInput, "Введите телефон полностью");
     }
 
@@ -157,20 +154,15 @@ export const loginFormSubmit = async (event) => {
 
         const response = await auth.login(username, password);
 
-        console.log("response:", response);
-
         if (response.status === true) {
             eventBus.emit("do update profile");
             goToPage("main");
         } else {
-            console.log("response:", response);
-
             const error = response.error;
 
             switch (error) {
                 case "invalid password":
                 case "invalid username":
-                    console.log("invalid username or password");
                     createError(submitButton, "Неверный логин или пароль");
                     break;
             }

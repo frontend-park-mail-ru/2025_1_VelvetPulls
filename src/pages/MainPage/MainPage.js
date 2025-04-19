@@ -32,6 +32,13 @@ class MainPage {
         // Инициализация WebSocket
         chatWebSocket.connect();
         this.addListeners();
+
+        eventBus.on("logout", () => {
+            this.sidebar = chats;
+            this.chat = noChat;
+            this.currentChatId = null;
+            this.currentChatType = null;
+        });
     }
 
     addListeners() {
@@ -119,10 +126,13 @@ class MainPage {
             goToPage("main");
         });
 
-        eventBus.on("profile -> logout", () => {
+        eventBus.on("logout", () => {
             auth.logout();
             goToPage("login");
             this.sidebar = chats;
+            this.chat = noChat;
+            this.currentChatId = null;
+            this.currentChatType = null;
         });
 
         // --------------- edit profile ----------------------

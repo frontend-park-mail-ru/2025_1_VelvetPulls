@@ -20,6 +20,10 @@ class Dialog {
         eventBus.on("close dialog info", () => {
             this.infoIsOpen = false;
         });
+
+        eventBus.on("open group", () => {
+            this.infoIsOpen = false;
+        });
     }
 
     async init({ user, chatId }) {

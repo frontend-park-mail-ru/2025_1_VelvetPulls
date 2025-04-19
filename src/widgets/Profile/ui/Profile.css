@@ -27,6 +27,7 @@
     width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
+    background-color: var(--bg);
 }
 
 .avatar-container__image {

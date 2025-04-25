@@ -152,7 +152,17 @@ class MainPage {
             goToPage("main");
         });
 
+        eventBus.on("store: profile updated", () => {
+            this.sidebar = profile;
+            goToPage("main");
+        });
+
         // ------------------- contacts ----------------------
+
+        eventBus.on("store: contacts updated", () => {
+            this.sidebar = contacts;
+            goToPage("main");
+        });
 
         eventBus.on("contacts -> chats", () => {
             this.sidebar = chats;

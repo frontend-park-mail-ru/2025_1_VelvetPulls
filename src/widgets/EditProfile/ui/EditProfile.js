@@ -1,17 +1,9 @@
-// import { api } from "../../../shared/api/api.js";
-
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { currentUser } from "../../../entities/User/model/User.js";
+import { store } from "../../../app/store/index.js";
 
 class EditProfile {
     getHTML() {
-        const data = {
-            firstName: currentUser.getFirstName(),
-            lastName: currentUser.getLastName(),
-            email: currentUser.getEmail(),
-            username: currentUser.getUsername(),
-            avatarSrc: currentUser.avatarSrc,
-        };
+        const data = store.profile;
 
         const editProfileTemplate = Handlebars.templates["EditProfile.hbs"];
         const html = editProfileTemplate({ ...data });
@@ -119,14 +111,17 @@ class EditProfile {
             "#repeat-password-input",
         );
         const repeatPassword = repeatPasswordInput.value;
-        if (this.isEqualPasswords(newPassword, repeatPassword) && newPassword != null) {
+        if (
+            this.isEqualPasswords(newPassword, repeatPassword) &&
+            newPassword != null
+        ) {
             const profileData = {
                 first_name: firstName,
                 last_name: lastName,
                 email: email,
                 username: username,
                 password: newPassword,
-                phone: currentUser.getPhone(),
+                phone: store.profile.phone,
             };
             const formData = new FormData();
 
@@ -136,10 +131,7 @@ class EditProfile {
 
             formData.append("profile_data", JSON.stringify(profileData));
 
-            await currentUser.update(formData);
-            await currentUser.init(null);
-
-            eventBus.emit("edit profile -> save");
+            eventBus.emit("profile: update", formData);
         } else if (newPassword != null) {
             this.removeError(repeatPasswordInput);
             this.createError(
@@ -152,7 +144,7 @@ class EditProfile {
                 last_name: lastName,
                 email: email,
                 username: username,
-                phone: currentUser.getPhone(),
+                phone: store.profile.phone,
             };
 
             const formData = new FormData();
@@ -163,10 +155,7 @@ class EditProfile {
 
             formData.append("profile_data", JSON.stringify(profileData));
 
-            await currentUser.update(formData);
-            await currentUser.init(null);
-
-            eventBus.emit("edit profile -> save");
+            eventBus.emit("profile: update", formData);
         }
     }
 }

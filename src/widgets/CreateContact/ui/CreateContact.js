@@ -1,5 +1,4 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { api } from "../../../shared/api/api.js";
 
 class CreateContact {
     getHTML() {
@@ -33,22 +32,9 @@ class CreateContact {
         nextButton.addEventListener("click", async (event) => {
             event.preventDefault();
 
-            // alert(
-            //     "Здесь будет выполняться сохранение контакта (со всеми необходимыми проверками)",
-            // );
-
             const input = this.container.querySelector("#username-input");
-            const requestBody = {
-                username: input.value,
-            };
-
-            const response = await api.post("/contacts", requestBody);
-
-            if (response.status === false) {
-                alert(`Пользователь ${input.value} не найден`);
-            }
-
-            eventBus.emit("new contact -> chats");
+            const username = input.value;
+            eventBus.emit("contacts: create", username);
         });
     }
 }

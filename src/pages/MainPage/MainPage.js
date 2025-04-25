@@ -195,6 +195,7 @@ class MainPage {
 
         eventBus.on("close dialog", () => {
             this.chat = noChat;
+            this.currentChatId=null;
             this.currentChatType = null;
             goToPage("main");
         });
@@ -233,6 +234,14 @@ class MainPage {
         const root = document.getElementById("root");
         root.innerHTML = "";
         root.appendChild(container);
+
+        if (document.querySelector("#messages")!==null){
+            document.querySelector("#messages").scrollTop=document.querySelector("#messages").scrollHeight
+        }
+
+        if(this.currentChatId!==null){
+            document.getElementById(this.currentChatId).style.backgroundColor="green"
+        }
 
         return new RenderResult({});
     }

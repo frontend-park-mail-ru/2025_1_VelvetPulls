@@ -47,6 +47,7 @@ class Chats {
 
                 const chatInfo = {
                     title: chat.title,
+                    id: chat.id,
                     // lastMessage:
                     avatarSrc: await getAvatar(chat.avatar_path),
                     chatId: chat.id,

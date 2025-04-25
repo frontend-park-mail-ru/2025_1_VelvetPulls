@@ -50,21 +50,83 @@ class Dialog {
         const container = doc.body.firstChild;
         this.container = container;
 
+        // const messages = this.container.querySelector("#messages");
+        // if (this.messages !== null) {
+        //     for (const messageItem of this.messages) {
+        //         const message = new Message(messageItem);
+
+        //         if (messageItem.user === currentUser.getUsername()) {
+        //             messages.appendChild(await message.getElement("my"));
+        //         } else {
+        //             messages.appendChild(await message.getElement("dialog"));
+        //         }
+
+        //         messages.scrollTop = messages.scrollHeight;
+        //     }
+        // }
+        let queue=this.messages
+        //queue=queue.reverse()
         const messages = this.container.querySelector("#messages");
         if (this.messages !== null) {
-            for (const messageItem of this.messages) {
-                const message = new Message(messageItem);
-
-                if (messageItem.user === currentUser.getUsername()) {
-                    messages.appendChild(await message.getElement("my"));
+            for (let i=0;(i<8)&&(queue.length>0);i++){
+                let a=queue.pop()
+                const message = new Message(a);
+                if (a.user === currentUser.getUsername()) {
+                    messages.insertBefore(await message.getElement("my"),messages.firstChild)
                 } else {
-                    messages.appendChild(await message.getElement("dialog"));
+                    messages.insertBefore(await message.getElement("dialog"),messages.firstChild)
                 }
-
-                messages.scrollTop = messages.scrollHeight;
+                // if (a.user === currentUser.getUsername()) {
+                //     messages.appendChild(await message.getElement("my"));
+                // } else {
+                //     messages.appendChild(await message.getElement("dialog"));
+                // }
             }
-        }
+            // for (const messageItem of this.messages) {
+            //     const message = new Message(messageItem);
 
+            //     if (messageItem.user === currentUser.getUsername()) {
+            //         messages.appendChild(await message.getElement("my"));
+            //     } else {
+            //         messages.appendChild(await message.getElement("dialog"));
+            //     }
+
+            //     messages.scrollTop = messages.scrollHeight;
+            // }
+        }
+    //     const newElement = doc.createElement('p');
+    // newElement.textContent = 'Новый элемент в начале';
+
+    // messages.insertBefore(newElement, messages.firstChild);
+        let m=this.messages
+        async function handleScroll() {
+            // const scrollTop = messages.scrollY || messages.pageYOffset;
+            // const windowHeight = messages.innerHeight;
+            //const documentHeight = messages.documentElement.scrollHeight;
+            //console.log(messages.scrollHeight,messages.scrollTop,m)
+            if ((messages.scrollTop===0)&&(queue.length>0)){
+                let a=queue.pop()
+                const message = new Message(a);
+                if (a.user === currentUser.getUsername()) {
+                    messages.insertBefore(await message.getElement("my"),messages.firstChild)
+                } else {
+                    messages.insertBefore(await message.getElement("dialog"),messages.firstChild)
+                }
+                console.log(queue)
+                console.log(messages)
+                messages.scrollTop=100
+            }
+            // if (scrollTop + windowHeight >= documentHeight - 100) { // Загружаем, если осталось 100px до конца
+            //     // loadItems();
+            // }
+        }
+    
+        messages.addEventListener('scroll', handleScroll);
+        //console.log(messages)
+        console.log(this.messages)
+
+        
+        //
         this.bindListeners();
 
         return container;
@@ -124,7 +186,7 @@ class Dialog {
             ".chat-input-container__input",
         );
 
-        if (messageInput.value !== "") {
+        if ((messageInput.value !== "")&&((messageInput.value.split(' ').length-1)!==messageInput.value.length)) {
             await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {

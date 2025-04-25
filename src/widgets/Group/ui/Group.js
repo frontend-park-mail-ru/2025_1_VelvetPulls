@@ -136,7 +136,7 @@ class Group {
             ".chat-input-container__input",
         );
 
-        if (messageInput.value !== "") {
+        if (messageInput.value !== "" &&((messageInput.value.split(' ').length-1)!==messageInput.value.length)) {
             await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {

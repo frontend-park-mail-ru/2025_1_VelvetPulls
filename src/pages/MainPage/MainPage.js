@@ -57,7 +57,12 @@ class MainPage {
             goToPage("main");
         });
 
-        eventBus.on("chat is deleted", () => {
+        eventBus.on("chat is deleted", (chat) => {
+            if (chat["id"] === this.currentChatId) {
+                this.currentChatId = null;
+                this.currentChatType = null;
+                this.chat = noChat;
+            }
             goToPage("main");
         });
 

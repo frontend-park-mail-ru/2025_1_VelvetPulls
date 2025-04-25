@@ -2,9 +2,7 @@ import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { currentUser, User } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
 import { deleteChat } from "../../../entities/Chat/api/api.js";
-import { createChat } from "../../../entities/Chat/api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
-import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class Chats {
     constructor() {
@@ -109,7 +107,7 @@ class Chats {
                     event.stopPropagation();
 
                     await deleteChat(chatModel.id);
-                    eventBus.emit("chat is deleted");
+                    eventBus.emit("chat is deleted", chatModel);
                 });
             }
         }

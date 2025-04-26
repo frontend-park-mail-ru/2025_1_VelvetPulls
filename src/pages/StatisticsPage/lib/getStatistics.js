@@ -1,22 +1,26 @@
 export const getStatistics = () => {
-    const returnData = {
-        1: 1,
-        2: 2,
-        3: 3,
-        4: 4,
-        5: 5,
-    };
-
-    let averageRate = 0;
-    let ratesCount = 0;
-    for (const key in returnData) {
-        averageRate += key * returnData[key];
-        ratesCount += returnData[key];
-    }
-    averageRate /= ratesCount;
-    averageRate = Math.round(averageRate * 100) / 100;
-
-    returnData["averageRate"] = averageRate;
+    const returnData = [
+        {
+            rate: 1,
+            count: 10,
+        },
+        {
+            rate: 2,
+            count: 2,
+        },
+        {
+            rate: 3,
+            count: 0,
+        },
+        {
+            rate: 4,
+            count: 4,
+        },
+        {
+            rate: 5,
+            count: 5,
+        },
+    ];
 
     return returnData;
 };

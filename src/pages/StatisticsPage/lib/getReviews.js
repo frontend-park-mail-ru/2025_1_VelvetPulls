@@ -1,24 +1,25 @@
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 export const getReviews = async () => {
-    const returnData = [
+    const reviews = [
         {
             avatarSrc: await getAvatar(null),
             username: "ruslantus228",
             rate: 5,
-            comment: "Супер гуд",
+            comment:
+                "Супер гуд жфдлывоа ффжыдлвао фыжвдла фывждлао фыждао фыжа жавождвлоа фджывлао фыждлваофы да",
         },
         {
             avatarSrc: await getAvatar(null),
             username: "ruslantus228",
             rate: 5,
-            comment: "Супер гуд",
+            comment: "",
         },
         {
             avatarSrc: await getAvatar(null),
             username: "ruslantus228",
             rate: 5,
-            comment: "Супер гуд",
+            comment: "",
         },
         {
             avatarSrc: await getAvatar(null),
@@ -82,5 +83,13 @@ export const getReviews = async () => {
         },
     ];
 
-    return returnData;
+    for (const review of reviews) {
+        let hasComment = false;
+        if (review["comment"] !== "") {
+            hasComment = true;
+        }
+        review["hasComment"] = hasComment;
+    }
+
+    return reviews;
 };

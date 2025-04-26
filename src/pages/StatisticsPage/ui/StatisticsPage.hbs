@@ -12,13 +12,16 @@
 
         <div class="sidebar-list scrollable">
             {{#each reviews}}
-                <div class="sidebar-list__item sidebar-list-item review">
+                <div class="review sidebar-list__item">
                     <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
                     
-                    <div class="sidebar-list-item__info">
-                        <div class="sidebar-list-item__full-name">{{this.username}}</div>
-                        <div class="sidebar-list-item__message-preview">Оценка: {{this.rate}}</div>
-                        <div class="sidebar-list-item__message-preview">Комментарий: {{this.comment}}</div>
+                    <div class="review-info">
+                        <div><b>{{this.username}}</b></div>
+                        <div><b>Оценка:</b> {{this.rating}}</div>
+
+                        {{#if hasFeedback}}
+                            <div class="comment-text"><b>Комментарий:</b> {{this.feedback}}</div>
+                        {{/if}}
                     </div>
                 </div>
             {{/each}}
@@ -29,8 +32,39 @@
     <div class="container__divider"></div>
 
     <div class="statistics-container">
+        <select id="selectQuestion">
+            {{#each questions}}
+                {{#if this.selected}}
+                    <option value="{{this.id}}" selected>{{this.text}}</option>
+                {{else}}
+                    <option value="{{this.id}}">{{this.text}}</option>
+                {{/if}}
+                {{!-- <option value="2">Второй вопрос</option>
+                <option value="3">Третий вопрос</option> --}}
+            {{/each}}
+        </select>
+
         <div class="average-rate">
-            Средний балл: {{averageRate}}
+            Средний балл: {{averageRating}}
         </div>
+
+        {{!-- <table class="statistics-table">
+            <thead>
+                <tr>
+                    <th scope="col">Оценка</th>
+                    <th scope="col">Количество</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each rates}}
+                    <tr>
+                        <th scope="row">{{this.rate}}</th>
+                        <td>{{this.count}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table> --}}
+
+        <canvas id="histogram" width="600" height="400"></canvas>
     </div>
 </div>

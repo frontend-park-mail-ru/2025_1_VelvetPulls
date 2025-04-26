@@ -2,4 +2,48 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.average-rate {
+    font-family: var(--font-family);
+    font-size: 40px;
+}
+
+.review {
+    display: flex;
+    gap: 10px;
+    min-height: fit-content;
+
+    border-radius: 5px;
+    background-color: var(--white);
+    overflow: hidden;
+    
+    font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    color: var(--black);
+}
+
+.review:hover {
+    background-color: var(--gray);
+    cursor: pointer;
+}
+
+.review-info {
+    height: fit-content;
+    font-family: var(--font-family);
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.comment-text {
+    /* height: 50px; */
+    font-family: var(--font-family);
+
+    font-size: 14px;
+    min-height: fit-content;
+    overflow-y: auto;
 }

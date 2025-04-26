@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="sidebar">
+        <header class="sidebar-header">
+            <div id="button-back" class="button">
+                <img src="icons/Back.svg" alt="Back" class="icon"></img>
+            </div>
+            
+            <div class="sidebar-header__title">Отзывы пользователей</div>
+        </header>
+
+        <div class="horizontal-divider"></div>
+
+        <div class="sidebar-list scrollable">
+            {{#each reviews}}
+                <div class="sidebar-list__item sidebar-list-item review">
+                    <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
+                    
+                    <div class="sidebar-list-item__info">
+                        <div class="sidebar-list-item__full-name">{{this.username}}</div>
+                        <div class="sidebar-list-item__message-preview">Оценка: {{this.rate}}</div>
+                        <div class="sidebar-list-item__message-preview">Комментарий: {{this.comment}}</div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    
+    <div class="container__divider"></div>
+
+    <div class="statistics-container">
+        <div class="average-rate">
+            Средний балл: {{averageRate}}
+        </div>
+    </div>
+</div>

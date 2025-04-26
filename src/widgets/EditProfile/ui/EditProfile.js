@@ -95,7 +95,6 @@ class EditProfile {
         // let avatarFile =
         //     avatarInput.files.length > 0 ? avatarInput.files[0] : null;
         const avatarFile = avaImg.files.length > 0 ? avaImg.files[0] : null;
-        console.log(avatarFile);
 
         const firstNameInput =
             this.container.querySelector("#first-name-input");
@@ -119,7 +118,10 @@ class EditProfile {
             "#repeat-password-input",
         );
         const repeatPassword = repeatPasswordInput.value;
-        if (this.isEqualPasswords(newPassword, repeatPassword) && newPassword != null) {
+        if (
+            this.isEqualPasswords(newPassword, repeatPassword) &&
+            newPassword != null
+        ) {
             const profileData = {
                 first_name: firstName,
                 last_name: lastName,

@@ -3,6 +3,7 @@
     width: 100%;
     height: 100%;
 
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -10,4 +11,12 @@
 .no-chat-stub {
     font-family: var(--second-family);
     font-size: 50px;
+}
+
+.statistics-link {
+    text-decoration: underline;
+}
+
+.statistics-link:hover {
+    cursor: pointer;
 }

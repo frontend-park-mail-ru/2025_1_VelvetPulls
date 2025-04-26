@@ -1,6 +1,7 @@
 import { loginPage } from "../pages/LoginPage/LoginPage.js";
 import { signupPage } from "../pages/SignupPage/SignupPage.js";
 import { mainPage } from "../pages/MainPage/MainPage.js";
+import { statisticsPage } from "../pages/StatisticsPage/index.js";
 
 import { goToPage } from "../shared/helpers/goToPage.js";
 
@@ -23,6 +24,11 @@ export const config = {
         href: "/main",
         title: "Keftegram",
         page: mainPage,
+    },
+    statistics: {
+        href: "/statistics",
+        title: "Статистика",
+        page: statisticsPage,
     },
 };
 

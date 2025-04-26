@@ -1,13 +1,21 @@
 import { goToPage } from "../../../shared/helpers/goToPage.js";
+import { api } from "../../../shared/api/api.js";
+import { currentUser } from "../../../entities/User/model/User.js";
 
 class NoChat {
     constructor(parent) {
         this.parent = parent;
     }
 
-    getHTML() {
+    async getHTML() {
+        const responseBody = await api.get("/csat/questions");
+        console.log(responseBody.data[0]);
+        const data = {
+            question: responseBody.data[0].text,
+
+        }
         const dialogTemplate = Handlebars.templates["NoChat.hbs"];
-        const html = dialogTemplate();
+        const html = dialogTemplate({ ...data });
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
@@ -22,16 +30,19 @@ class NoChat {
         const allsmiles=doc.querySelectorAll(".smile")
         const rateinput=doc.querySelector("#rate-form")
         const inval=doc.querySelector("#rating")
+        const no_rate=doc.querySelector("#no-rate")
         //const rate1=doc.querySelector(".rate1")
 
         const toClose = (event) => {
             event.preventDefault();
-            block.style.display="none"
+            block.classList.add('fade-out')
+            //block.style.display="none"
         };
-        let res="no rate"
+        let res=0
         const rate1_eve = (event) => {
             event.preventDefault();
-            res="very-hate"
+            res=1
+            
             allsmiles.forEach(element => {
                 element.style.height="50px"
                 element.style.width="50px"
@@ -41,7 +52,7 @@ class NoChat {
         };
         const rate2_eve = (event) => {
             event.preventDefault();
-            res="hate"
+            res=2
             allsmiles.forEach(element => {
                 element.style.height="50px"
                 element.style.width="50px"
@@ -51,7 +62,7 @@ class NoChat {
             };
         const rate3_eve = (event) => {
             event.preventDefault();
-            res="neutral"
+            res=3
             allsmiles.forEach(element => {
                 element.style.height="50px"
                 element.style.width="50px"
@@ -61,7 +72,7 @@ class NoChat {
                 };
         const rate4_eve = (event) => {
             event.preventDefault();
-            res="like"
+            res=4
             allsmiles.forEach(element => {
                 element.style.height="50px"
                 element.style.width="50px"
@@ -71,7 +82,7 @@ class NoChat {
                 };
         const rate5_eve = (event) => {
             event.preventDefault();
-            res="very-like"
+            res=5
             allsmiles.forEach(element => {
                 element.style.height="50px"
                 element.style.width="50px"
@@ -79,9 +90,25 @@ class NoChat {
             rate5.style.height="70px"
             rate5.style.width="70px"
                 };
-        const rate_input_eve = (event) => {
+        const rate_input_eve = async (event) => {
             event.preventDefault();
-            console.log(inval.value,res)
+            if (res===0){
+                no_rate.textContent="поставьте оценку"
+            } else {
+                const response = await api.post(
+                    "/csat/answers",
+                    { question_id: responseBody.data[0].id,
+                        username:currentUser.getUsername(),
+                        rating: res,
+                        feedback:inval.value
+                     },
+                    // message.toApiFormat(),
+                );
+                console.log(response)
+                console.log(currentUser.getUsername(),inval.value,res,responseBody.data[0].id)
+                block.classList.add('fade-out')
+            }
+            //console.log(inval.value,res,)
                 };
         // const rate4_eve = (event) => {
         //     event.preventDefault();

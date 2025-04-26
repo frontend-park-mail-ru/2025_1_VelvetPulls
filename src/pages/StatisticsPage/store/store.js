@@ -1,6 +1,7 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 // import { getReviews } from "../lib/getReviews.js";
 // import { getStatistics } from "../lib/getStatistics.js";
+import { api } from "../../../shared/api/api.js";
 
 class StatisticsStore {
     constructor() {
@@ -19,82 +20,89 @@ class StatisticsStore {
         eventBus.emit("statistics: render");
     }
 
-    async getData() {
-        const data = [
-            {
-                questionID: 1,
-                questionText: "Как Вам Keftegram?",
-                averageRating: 4.5,
-                answerCount: 2,
-                distribution: [
-                    {
-                        rating: 4,
-                        count: 1,
-                    },
-                    {
-                        rating: 5,
-                        count: 1,
-                    },
-                ],
-                comments: [
-                    {
-                        // questionID: 1,
-                        username: "ruslantus228",
-                        rating: 5,
-                        feedback: "Очень нравится",
-                    },
-                    {
-                        // questionID: 1,
-                        username: "testuser",
-                        rating: 4,
-                        feedback: "Чётко",
-                    },
-                ],
-            },
-            {
-                questionID: 2,
-                questionText: "Насколько удобно пользоваться контактами?",
-                averageRating: 3.5,
-                answerCount: 2,
-                distribution: [
-                    {
-                        rating: 3,
-                        count: 1,
-                    },
-                    {
-                        rating: 4,
-                        count: 1,
-                    },
-                ],
-                comments: [
-                    {
-                        // questionID: 1,
-                        username: "ruslantus228",
-                        rating: 4,
-                        feedback: "Норм",
-                    },
-                    {
-                        // questionID: 1,
-                        username: "testuser",
-                        rating: 3,
-                        feedback: "Удовлетворительно",
-                    },
-                ],
-            },
-        ];
+    async getData(l) {
+        console.log(l)
+        // const response = await api.get("/csat/statistics");
+        // console.log("response:", response);
+
+        // const data = [
+        //     {
+        //         questionID: 1,
+        //         questionText: "Как Вам Keftegram?",
+        //         averageRating: 4.5,
+        //         answerCount: 2,
+        //         distribution: [
+        //             {
+        //                 rating: 4,
+        //                 count: 1,
+        //             },
+        //             {
+        //                 rating: 5,
+        //                 count: 1,
+        //             },
+        //         ],
+        //         comments: [
+        //             {
+        //                 // questionID: 1,
+        //                 username: "ruslantus228",
+        //                 rating: 5,
+        //                 feedback: "Очень нравится",
+        //             },
+        //             {
+        //                 // questionID: 1,
+        //                 username: "testuser",
+        //                 rating: 4,
+        //                 feedback: "Чётко",
+        //             },
+        //         ],
+        //     },
+        //     {
+        //         questionID: 2,
+        //         questionText: "Насколько удобно пользоваться контактами?",
+        //         averageRating: 3.5,
+        //         answerCount: 2,
+        //         distribution: [
+        //             {
+        //                 rating: 3,
+        //                 count: 1,
+        //             },
+        //             {
+        //                 rating: 4,
+        //                 count: 1,
+        //             },
+        //         ],
+        //         comments: [
+        //             {
+        //                 // questionID: 1,
+        //                 username: "ruslantus228",
+        //                 rating: 4,
+        //                 feedback: "Норм",
+        //             },
+        //             {
+        //                 // questionID: 1,
+        //                 username: "testuser",
+        //                 rating: 3,
+        //                 feedback: "Удовлетворительно",
+        //             },
+        //         ],
+        //     },
+        // ];
+        const data = l["question_statistics"];
+        this.currentQuestionId = data[0]["question_id"];
 
         this.data = data;
+        console.log("data:", data);
 
         const questions = [];
         for (const item of data) {
             let selected = false;
-            if (item["questionID"] === this.currentQuestionId) {
+            if (item["question_id"] === this.currentQuestionId) {
                 selected = true;
             }
 
             questions.push({
-                id: item["questionID"],
-                text: item["questionText"],
+                id: item["question_id"],
+                text: item["question_text"],
                 selected: selected,
             });
         }

@@ -19,7 +19,6 @@ class NoChat {
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-
         const close=doc.querySelector("#closeModal")
         const block=doc.querySelector("#modal")
         const rate1=doc.querySelector("#rate1")
@@ -39,7 +38,7 @@ class NoChat {
             //block.style.display="none"
         };
         let res=0
-        const rate1_eve = (event) => {
+        const rate1_eve = async (event) => {
             event.preventDefault();
             res=1
             

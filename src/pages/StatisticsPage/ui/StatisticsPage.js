@@ -1,7 +1,7 @@
 import { goToPage } from "../../../shared/helpers/goToPage.js";
 import { RenderResult } from "../../../shared/helpers/RenderResponse.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-
+import { api } from "../../../shared/api/api.js";
 // import { getReviews } from "../lib/getReviews.js";
 // import { getStatistics } from "../lib/getStatistics.js";
 
@@ -17,7 +17,10 @@ class StatisticsPage {
     // }
 
     async render() {
-        statisticsStore.getData();
+        // statisticsStore.getData();
+        const response1 = await api.get("/csat/statistics");
+        console.log("response:", response1.data);
+        statisticsStore.getData(response1.data);
 
         // const reviews = await getReviews();
         // const statistics = await getStatistics();
@@ -66,7 +69,7 @@ class StatisticsPage {
             console.log("currentQuestionId:", currentQuestionId);
             console.log("item questionId:", item["questionID"]);
 
-            if (item["questionID"] === currentQuestionId) {
+            if (item["question_id"] === currentQuestionId) {
                 console.log("here");
                 currentData = item;
                 break;
@@ -79,22 +82,26 @@ class StatisticsPage {
         console.log("currentData:", currentData);
 
         const comments = currentData["comments"];
-        for (const comment of comments) {
-            let hasFeedback = false;
-            if (comment["feedback"] !== "") {
-                hasFeedback = true;
-            }
-
-            comment["hasFeedback"] = hasFeedback;
+        console.log("comments:", comments);
+        if (comments !== undefined) {
+            for (const comment of comments) {
+                let hasFeedback = false;
+                if (comment["feedback"] !== "") {
+                    hasFeedback = true;
+                }
+    
+                comment["hasFeedback"] = hasFeedback;
+            }   
         }
 
         const data = {
-            averageRating: currentData["averageRating"],
-            questions: statisticsStore["questions"],
-            reviews: comments,
+            // averageRating: currentData["averageRating"],
+            // questions: statisticsStore["questions"],
+            // reviews: comments,
+            averageRating: response1.data["average_rating"],
         };
 
-        console.log("data:", data);
+        console.log("template data:", data);
 
         const template = Handlebars.templates["StatisticsPage.hbs"];
         const html = template({ ...data });

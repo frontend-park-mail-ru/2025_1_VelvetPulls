@@ -32,7 +32,7 @@
     <div class="container__divider"></div>
 
     <div class="statistics-container">
-        <select id="selectQuestion">
+        <select id="selectQuestion" style="display: none;">
             {{#each questions}}
                 {{#if this.selected}}
                     <option value="{{this.id}}" selected>{{this.text}}</option>

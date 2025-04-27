@@ -28,6 +28,7 @@ class MainPage {
         this.chat = noChat;
         this.currentChatId = null;
         this.currentChatType = null;
+        this.lastMes="";
 
         // Инициализация WebSocket
         chatWebSocket.connect();
@@ -45,9 +46,10 @@ class MainPage {
         // --------------- chats ----------------------
 
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
-            if (message.chatId === this.currentChatId) {
+            if ((message.chatId === this.currentChatId)&&(message.id!==this.lastMes)) {
                 await this.handleNewMessage(message);
             }
+            this.lastMes=message.id
         });
 
         eventBus.on("new dialog", (user) => {

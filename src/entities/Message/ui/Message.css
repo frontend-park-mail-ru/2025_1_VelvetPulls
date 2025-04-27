@@ -26,6 +26,16 @@
     /* border-style: solid; */
 }
 
+.message__delete{
+    cursor: pointer;
+    display: none;
+    height: 20px;
+}
+
+.redact-mes{
+    border-radius: 5px;
+}
+
 .message_my {
     justify-self: end;
     max-width: 70%;
@@ -73,6 +83,7 @@
 }
 
 .message__content {
+    /* cursor: pointer; */
     font-size: 20px;
 }
 

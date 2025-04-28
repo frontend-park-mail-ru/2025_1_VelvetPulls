@@ -1,7 +1,5 @@
 import { RenderResult } from "../../shared/helpers/RenderResponse.js";
 
-import { auth } from "../../shared/api/auth.js";
-
 import { addMembers } from "../../widgets/AddMembers/index.js";
 import { chats } from "../../widgets/Chats/index.js";
 import { contacts } from "../../widgets/Contacts/index.js";
@@ -18,9 +16,8 @@ import { groupInstance } from "../../widgets/Group/index.js";
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 
-import { chatWebSocket } from "../../shared/api/websocket.js";
-import { currentUser } from "../../entities/User/model/User.js";
 import { createDialog } from "../../widgets/CreateDialog/index.js";
+import { store } from "../../app/store/index.js";
 
 class MainPage {
     constructor() {
@@ -29,19 +26,32 @@ class MainPage {
         this.currentChatId = null;
         this.currentChatType = null;
 
-        // Инициализация WebSocket
-        chatWebSocket.connect();
         this.addListeners();
+    }
 
+    addListeners() {
         eventBus.on("logout", () => {
             this.sidebar = chats;
             this.chat = noChat;
             this.currentChatId = null;
             this.currentChatType = null;
         });
-    }
 
-    addListeners() {
+        eventBus.on("store: ready", () => {
+            this.sidebar = chats;
+            this.chat = noChat;
+            this.currentChatId = null;
+            this.currentChatType = null;
+
+            this.render();
+        });
+
+        eventBus.on("store: chats updated", () => {
+            if (this.sidebar === chats) {
+                this.render();
+            }
+        });
+
         // --------------- chats ----------------------
 
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
@@ -132,7 +142,7 @@ class MainPage {
         });
 
         eventBus.on("logout", () => {
-            auth.logout();
+            // auth.logout();
             goToPage("login");
             this.sidebar = chats;
             this.chat = noChat;
@@ -152,7 +162,17 @@ class MainPage {
             goToPage("main");
         });
 
+        eventBus.on("store: profile updated", () => {
+            this.sidebar = profile;
+            goToPage("main");
+        });
+
         // ------------------- contacts ----------------------
+
+        eventBus.on("store: contacts updated", () => {
+            this.sidebar = contacts;
+            goToPage("main");
+        });
 
         eventBus.on("contacts -> chats", () => {
             this.sidebar = chats;
@@ -204,7 +224,8 @@ class MainPage {
         const messagesContainer = document.querySelector("#messages");
         if (messagesContainer) {
             let messageType = null;
-            if (message.username === currentUser.getUsername()) {
+            // if (message.username === currentUser.getUsername()) {
+            if (message.username === store.profile["username"]) {
                 messageType = "my";
             } else {
                 messageType = this.currentChatType;

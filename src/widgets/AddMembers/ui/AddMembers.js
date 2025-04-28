@@ -1,8 +1,6 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { api } from "../../../shared/api/api.js";
-import { createChat } from "../../../entities/Chat/api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
-import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class AddMembers {
     setGroupInfo(info) {
@@ -78,17 +76,6 @@ class AddMembers {
     async onClickButtonNext(event) {
         event.preventDefault();
 
-        // Создать группу
-        const chatData = {
-            type: "group",
-            title: this.title,
-        };
-        const responseBody = await createChat(chatData);
-
-        chatWebSocket.reconnect();
-
-        const chatId = responseBody.data.id;
-
         // Добавить участников
         const members = [];
         const checkboxes = this.container.querySelectorAll(
@@ -102,8 +89,12 @@ class AddMembers {
                 members.push(contact.username);
             }
         }
-        await api.post(`/chat/${chatId}/users`, members);
-        eventBus.emit("add members -> next");
+
+        const groupData = {
+            title: this.title,
+            members: members,
+        };
+        eventBus.emit("create group", groupData);
     }
 }
 

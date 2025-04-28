@@ -20,3 +20,7 @@
 .add-member__checkbox:hover{
     cursor: pointer;
 }
+
+.error-label {
+    color: var(--error);
+}

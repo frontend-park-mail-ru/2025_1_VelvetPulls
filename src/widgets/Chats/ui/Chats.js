@@ -1,8 +1,6 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { currentUser, User } from "../../../entities/User/model/User.js";
-import { api } from "../../../shared/api/api.js";
-import { deleteChat } from "../../../entities/Chat/api/api.js";
-import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { User } from "../../../entities/User/model/User.js";
+import { store } from "../../../app/store/module/store.js";
 
 class Chats {
     constructor() {
@@ -11,52 +9,13 @@ class Chats {
         this.menuIsOpen = false;
         this.newChatIsOpen = false;
 
-        this.getData();
-
         eventBus.on("group is edited", this.onGroupEdit.bind(this));
     }
 
-    async getData() {
-        const responseBody = await api.get("/chats");
-        this.chats = responseBody.data;
-    }
-
     async getHTML() {
-        await this.getData();
+        const chats = store.chats;
 
         const template = Handlebars.templates["Chats.hbs"];
-        const chats = [];
-
-        if (this.chats !== null && this.chats !== undefined) {
-            for (const chat of this.chats) {
-                let isOwner = true;
-                if (chat["type"] == "group") {
-                    const responseBody = await api.get(`/chat/${chat["id"]}`);
-
-                    const users = responseBody["data"]["users"];
-
-                    const currentMember = users.find(
-                        (item) =>
-                            item["username"] === currentUser.getUsername(),
-                    );
-
-                    if (currentMember["role"] === "member") {
-                        isOwner = false;
-                    }
-                }
-
-                const chatInfo = {
-                    title: chat.title,
-                    // lastMessage:
-                    avatarSrc: await getAvatar(chat.avatar_path),
-                    chatId: chat.id,
-                    isOwner: isOwner,
-                };
-
-                chats.push(chatInfo);
-            }
-        }
-
         const html = template({ chats });
 
         const parser = new DOMParser();
@@ -75,7 +34,7 @@ class Chats {
         const chats = this.container.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < chats.length; ++i) {
             const chatElement = chats[i];
-            const chatModel = this.chats[i];
+            const chatModel = store.chats[i];
 
             // Открыть чат
             chatElement.addEventListener("click", async (event) => {
@@ -83,7 +42,7 @@ class Chats {
 
                 switch (chatModel.type) {
                     case "dialog": {
-                        const chatId = chatModel.id;
+                        const chatId = chatModel.chatId;
 
                         const username = chatModel.title;
                         const user = new User();
@@ -94,7 +53,7 @@ class Chats {
                     }
 
                     case "group": {
-                        eventBus.emit("open group", chatModel.id);
+                        eventBus.emit("open group", chatModel.chatId);
                     }
                 }
             });
@@ -106,8 +65,9 @@ class Chats {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    await deleteChat(chatModel.id);
-                    eventBus.emit("chat is deleted", chatModel);
+                    // await deleteChat(chatModel.chatId);
+                    // eventBus.emit("chat is deleted", chatModel);
+                    eventBus.emit("delete chat", chatModel.chatId);
                 });
             }
         }
@@ -198,15 +158,6 @@ class Chats {
             this.newChatIsOpen = false;
             eventBus.emit("chats -> new group");
         });
-
-        // Новый канал
-        // const newChannel = newChatPopoverElement.querySelector("#new-channel");
-        // newChannel.addEventListener("click", (event) => {
-        //     event.preventDefault();
-        //     // this.newChatIsOpen = false;
-        //     // eventBus.emit("chats -> new channel");
-        //     alert("Создание канала ещё не готово - это требование РК 3");
-        // });
 
         // Новый контакт
         const newContact = newChatPopoverElement.querySelector("#new-contact");

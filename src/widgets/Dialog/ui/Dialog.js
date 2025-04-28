@@ -5,8 +5,9 @@ import {
     getMessageHistory,
     sendMessage,
 } from "../../../entities/Message/index.js";
-import { currentUser } from "../../../entities/User/model/User.js";
+// import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
+import { store } from "../../../app/store/index.js";
 
 class Dialog {
     constructor() {
@@ -55,7 +56,8 @@ class Dialog {
             for (const messageItem of this.messages) {
                 const message = new Message(messageItem);
 
-                if (messageItem.user === currentUser.getUsername()) {
+                // if (messageItem.user === currentUser.getUsername()) {
+                if (messageItem.user === store.profile["username"]) {
                     messages.appendChild(await message.getElement("my"));
                 } else {
                     messages.appendChild(await message.getElement("dialog"));
@@ -130,7 +132,8 @@ class Dialog {
             const messageData = {
                 body: messageInput.value,
                 sent_at: new Date(),
-                user: currentUser.getUsername(),
+                // user: currentUser.getUsername(),
+                user: store.profile["username"],
             };
             const message = new Message(messageData);
 

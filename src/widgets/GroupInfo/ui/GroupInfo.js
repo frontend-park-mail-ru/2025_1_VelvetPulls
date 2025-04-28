@@ -1,8 +1,9 @@
-import { currentUser } from "../../../entities/User/model/User.js";
+// import { currentUser } from "../../../entities/User/model/User.js";
 import { api } from "../../../shared/api/api.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { editGroup } from "../../EditGroup/index.js";
 import { groupAddMembers } from "../../GroupAddMembers/ui/GroupAddMembers.js";
+import { store } from "../../../app/store/index.js";
 
 class GroupInfo {
     constructor() {
@@ -21,7 +22,8 @@ class GroupInfo {
         for (const user of data.users) {
             if (
                 user.role === "owner" &&
-                user.username === currentUser.getUsername()
+                // user.username === currentUser.getUsername()
+                user.username === store.profile["username"]
             ) {
                 this.isOwner = true;
                 break;
@@ -70,7 +72,8 @@ class GroupInfo {
                     ".detail-item__username",
                 ).innerHTML;
 
-                if (username !== currentUser.getUsername()) {
+                // if (username !== currentUser.getUsername()) {
+                if (username !== store.profile["username"]) {
                     const deleteButtonElement = document.createElement("img");
                     deleteButtonElement.src = "icons/delete.svg";
                     deleteButtonElement.alt = "Delete";

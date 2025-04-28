@@ -1,7 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { api } from "../../../shared/api/api.js";
-import { createChat } from "../../../entities/Chat/api/api.js";
-import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 class CreateDialog {
     getHTML() {
@@ -35,29 +33,31 @@ class CreateDialog {
         nextButton.addEventListener("click", async (event) => {
             event.preventDefault();
 
-            const input = this.container.querySelector("#group-name-input");
+            const input = this.container.querySelector("#username-input");
 
             if (input.value === "") {
-                alert("username не может быть пустым");
+                this.createErrorIfNotExists("username не может быть пустым");
             } else {
-                let username = input.value;
+                let username = input.value.trim();
 
                 if (username !== null) {
                     const responseBody = await api.get(`/profile/${username}`);
 
                     if (responseBody.status === true) {
-                        const chatData = {
-                            type: "dialog",
-                            dialog_user: username,
-                            title: "1",
-                        };
-                        await createChat(chatData);
+                        eventBus.emit("create dialog", username);
 
-                        chatWebSocket.reconnect();
+                        // const chatData = {
+                        //     type: "dialog",
+                        //     dialog_user: username,
+                        //     title: "1",
+                        // };
+                        // await createChat(chatData);
 
-                        eventBus.emit("new chat is created");
+                        // chatWebSocket.reconnect();
+
+                        // eventBus.emit("new chat is created");
                     } else {
-                        alert(
+                        this.createErrorIfNotExists(
                             `Пользователь с username "${username}" не найден`,
                         );
                     }
@@ -66,6 +66,39 @@ class CreateDialog {
                 //eventBus.emit("new dialog -> chats");
             }
         });
+
+        const usernameInput = this.container.querySelector("#username-input");
+        usernameInput.addEventListener(
+            "input",
+            this.removeErrorIfExists.bind(this),
+        );
+    }
+
+    createErrorIfNotExists(textError) {
+        const errorElement = document.createElement("div");
+        errorElement.innerHTML = textError;
+        errorElement.classList.add("error-label");
+
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const lastElementChild = sidebarList.lastElementChild;
+
+        if (!lastElementChild.classList.contains("error-label")) {
+            sidebarList.appendChild(errorElement);
+        }
+    }
+
+    removeErrorIfExists() {
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const lastElementChild = sidebarList.lastElementChild;
+
+        if (
+            lastElementChild.classList !== undefined &&
+            lastElementChild.classList.contains("error-label")
+        ) {
+            sidebarList.removeChild(lastElementChild);
+        }
     }
 }
 

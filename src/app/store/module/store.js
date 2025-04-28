@@ -33,10 +33,15 @@ class Store {
 
     async init() {
         this.profile = await getProfile();
-        this.contacts = await getContacts();
-        this.chats = await getChats(this.profile);
 
-        localStorage.setItem(IS_AUTHORIZED, true);
+        if (this.profile == null) {
+            eventBus.emit("logout");
+        } else {
+            this.contacts = await getContacts();
+            this.chats = await getChats(this.profile);
+
+            localStorage.setItem(IS_AUTHORIZED, true);
+        }
     }
 
     clear() {

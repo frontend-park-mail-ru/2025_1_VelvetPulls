@@ -3,6 +3,11 @@ import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 export const getProfile = async () => {
     const response = await api.get("/profile");
+
+    if (!response.status) {
+        return null;
+    }
+
     const responseData = response.data;
 
     const avatarSrc = await getAvatar(responseData["avatar_path"]);

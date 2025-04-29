@@ -21,6 +21,7 @@
 }
 
 .message-container {
+    display: grid;
     width: 90%;
     /* padding: 10px; */
     /* border-style: solid; */

@@ -93,7 +93,7 @@ class Store {
         await api.delete(`/chat/${chatId}`);
         this.chats = await getChats(this.profile);
 
-        eventBus.emit("store: chats updated");
+        eventBus.emit("store: chat is deleted", chatId);
     }
 
     async createDialog(username) {

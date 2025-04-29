@@ -46,10 +46,12 @@ class MainPage {
             this.render();
         });
 
-        eventBus.on("store: chats updated", () => {
-            if (this.sidebar === chats) {
-                this.render();
+        eventBus.on("store: chat is deleted", (chatId) => {
+            if (this.currentChatId === chatId) {
+                this.chat = noChat;
             }
+
+            this.render();
         });
 
         // --------------- chats ----------------------

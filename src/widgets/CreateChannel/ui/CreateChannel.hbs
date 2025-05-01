@@ -1,0 +1,35 @@
+<div class="sidebar">
+    {{!-- Header --}}
+    <header class="sidebar-header">
+        <div id="button-back" class="button">
+            <img src="icons/Back.svg" alt="Back" class="icon"></img>
+        </div>
+        <div class="sidebar-header__title">Создать канал</div>
+    </header>
+
+    <div class="horizontal-divider"></div>
+
+    <!-- Создание группы -->
+    <main class="create-group">
+        <section class="sidebar-list">
+            {{!-- <div class="create-group__photo-container">
+                <img src="icons/addPhoto.svg" alt="Add photo" class="create-group__add-avatar-icon">
+            </div> --}}
+
+            <div class="sidebar-list__input-container">
+                <input type="text" placeholder="Название канала" id="group-name-input" class="sidebar-list__input">
+            </div>
+
+            {{!-- <div class="sidebar-list__input-container">
+                <input type="text" placeholder="Описание (необязательно)" class="sidebar-list__input">
+                <div class="input-description">Можете указать дополнительное описание группы</div>
+            </div> --}}
+        </section>
+
+        <div class="sidebar__fixed-button-container">
+            <button class="sidebar__fixed-button">
+                <img src="icons/next.svg" alt="New chat" class="sidebar__fixed-button-icon">
+            </button>
+        </div>
+    </main>
+</div>

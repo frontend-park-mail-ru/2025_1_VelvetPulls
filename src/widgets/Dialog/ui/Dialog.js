@@ -7,6 +7,7 @@ import {
 } from "../../../entities/Message/index.js";
 import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
+import { api } from "../../../shared/api/api.js";
 
 class Dialog {
     constructor() {
@@ -41,6 +42,7 @@ class Dialog {
             avatarSrc: this.user.avatarSrc,
             messages: this.messages,
         };
+        const ch_id=this.chatId
 
         const dialogTemplate = Handlebars.templates["Dialog.hbs"];
         const html = dialogTemplate({ ...data });
@@ -125,6 +127,21 @@ class Dialog {
         //console.log(messages)
         console.log(this.messages)
 
+
+        const search=doc.querySelector(".sidebar-header__search-input")
+        const search_res=doc.querySelector("#search_msgs_res")
+        search.addEventListener('keypress', async function(event) {
+            if (event.key === 'Enter') {
+                console.log(search.value,ch_id)
+                const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
+                console.log(responseBody1.data.messages)
+                let res=responseBody1.data.messages
+                search_res.style.visibility="visible"
+                for (let i=0;i<res.length;i++){
+                    search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                }
+            }
+        })
         
         //
         this.bindListeners();

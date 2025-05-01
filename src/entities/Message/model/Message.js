@@ -85,6 +85,9 @@ export class Message {
             case "group":
                 template = Handlebars.templates["GroupMessage.hbs"];
                 break;
+            case "channel":
+                template = Handlebars.templates["ChannelPost.hbs"];
+                break;
 
             default:
                 throw Error("Задан некорректный тип сообщения");

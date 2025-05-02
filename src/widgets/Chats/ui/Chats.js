@@ -1,7 +1,8 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { User } from "../../../entities/User/model/User.js";
-import { store } from "../../../app/store/module/store.js";
-
+import { deleteChat } from "../../../entities/Chat/api/api.js";
+import { currentUser, User } from "../../../entities/User/model/User.js";
+import { api } from "../../../shared/api/api.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 class Chats {
     constructor() {
         this.container = null;
@@ -11,10 +12,13 @@ class Chats {
 
         eventBus.on("group is edited", this.onGroupEdit.bind(this));
     }
-
+    async getData() {
+        const responseBody = await api.get("/chats");
+        this.chats = responseBody.data;
+    }
     async getHTML() {
-        const chats = store.chats;
-
+        //const chats = store.chats;
+        await this.getData();
         const template = Handlebars.templates["Chats.hbs"];
 
         const chats = [];
@@ -173,7 +177,7 @@ if (container1) {
                     event.preventDefault();
                     event.stopPropagation();
                     const response = await api.get(`/chat/${chatModel.id}`);
-                    // console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
+                    //console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
                     if ((response.data.users[0].role==="owner") && (response.data.users[0].username!==currentUser.getUsername())){
                         await api.post(`/chat/${chatModel.id}/leave`);
                     } else {
@@ -187,7 +191,7 @@ if (container1) {
         const chats = this.container.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < chats.length; ++i) {
             const chatElement = chats[i];
-            const chatModel = store.chats[i];
+            const chatModel = this.chats[i];
 
             // Открыть чат
             chatElement.addEventListener("click", async (event) => {

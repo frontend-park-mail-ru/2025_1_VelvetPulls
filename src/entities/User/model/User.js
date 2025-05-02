@@ -89,5 +89,5 @@ export class User {
     }
 }
 
-// export let currentUser = new User();
-// currentUser.init(null);
+export let currentUser = new User();
+currentUser.init(null);

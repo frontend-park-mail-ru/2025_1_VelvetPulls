@@ -38,7 +38,7 @@ class Channel {
     async setData(chatId) {
         const responseBody = await api.get(`/chat/${chatId}`);
         const responseData = responseBody["data"];
-        // console.log(responseData.users)
+        //console.log(responseData.users)
         responseData.users.forEach(element => {
             if (element.role==="owner"){
                 this.owner=element

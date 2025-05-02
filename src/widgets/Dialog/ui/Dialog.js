@@ -5,10 +5,12 @@ import {
     getMessageHistory,
     sendMessage,
 } from "../../../entities/Message/index.js";
-// import { currentUser } from "../../../entities/User/model/User.js";
+import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
 
 import { api } from "../../../shared/api/api.js";
+
+import { store } from "../../../app/store/index.js";
 
 
 class Dialog {
@@ -69,6 +71,9 @@ class Dialog {
         //     }
         // }
         let queue=this.messages
+        if (queue===undefined){
+            queue=[]
+        }
         //queue=queue.reverse()
         const messages = this.container.querySelector("#messages");
         if (this.messages !== null) {

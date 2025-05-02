@@ -199,7 +199,7 @@ if (container1) {
 
                 switch (chatModel.type) {
                     case "dialog": {
-                        const chatId = chatModel.chatId;
+                        const chatId = chatModel.id;
 
                         const username = chatModel.title;
                         const user = new User();
@@ -210,7 +210,7 @@ if (container1) {
                     }
 
                     case "group": {
-                        eventBus.emit("open group", chatModel.chatId);
+                        eventBus.emit("open group", chatModel.id);
                     }
 
                     case "channel": {

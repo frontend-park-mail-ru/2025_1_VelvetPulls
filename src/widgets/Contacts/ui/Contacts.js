@@ -1,6 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { api } from "../../../shared/api/api.js";
-import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { store } from "../../../app/store/index.js";
 
 class Contacts {
     constructor(parentWidget) {
@@ -8,31 +7,10 @@ class Contacts {
         this.container = null;
     }
 
-    async getData() {
-        const response = await api.get("/contacts");
-        this.data = response.data;
-    }
-
     async getHTML() {
-        await this.getData();
+        const contacts = store.contacts;
 
         const template = Handlebars.templates["Contacts.hbs"];
-
-        const contacts = [];
-        if (this.data !== null) {
-            for (const contact of this.data) {
-                const username = contact["username"];
-
-                const avatarPath = contact["avatar_path"];
-                const avatarSrc = await getAvatar(avatarPath);
-
-                contacts.push({
-                    username: username,
-                    avatarSrc: avatarSrc,
-                });
-            }
-        }
-
         const html = template({ contacts });
 
         const parser = new DOMParser();
@@ -146,15 +124,9 @@ const contacts1 = document.querySelectorAll(".sidebar-list-item");
                 event.preventDefault();
                 event.stopPropagation();
 
-                const contactUser = this.data[i];
+                const contactUser = store.contacts[i];
 
-                const responseBody = {
-                    username: contactUser.username,
-                };
-
-                await api.delete("/contacts", responseBody);
-
-                contactElement.parentNode.removeChild(contactElement);
+                eventBus.emit("contacts: delete", contactUser.username);
             });
         }
     }

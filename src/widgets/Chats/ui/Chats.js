@@ -1,8 +1,6 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { currentUser, User } from "../../../entities/User/model/User.js";
-import { api } from "../../../shared/api/api.js";
-import { deleteChat } from "../../../entities/Chat/api/api.js";
-import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { User } from "../../../entities/User/model/User.js";
+import { store } from "../../../app/store/module/store.js";
 
 class Chats {
     constructor() {
@@ -11,20 +9,14 @@ class Chats {
         this.menuIsOpen = false;
         this.newChatIsOpen = false;
 
-        this.getData();
-
         eventBus.on("group is edited", this.onGroupEdit.bind(this));
     }
 
-    async getData() {
-        const responseBody = await api.get("/chats");
-        this.chats = responseBody.data;
-    }
-
     async getHTML() {
-        await this.getData();
+        const chats = store.chats;
 
         const template = Handlebars.templates["Chats.hbs"];
+
         const chats = [];
 
         if (this.chats !== null && this.chats !== undefined) {
@@ -195,7 +187,7 @@ if (container1) {
         const chats = this.container.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < chats.length; ++i) {
             const chatElement = chats[i];
-            const chatModel = this.chats[i];
+            const chatModel = store.chats[i];
 
             // Открыть чат
             chatElement.addEventListener("click", async (event) => {
@@ -203,7 +195,7 @@ if (container1) {
 
                 switch (chatModel.type) {
                     case "dialog": {
-                        const chatId = chatModel.id;
+                        const chatId = chatModel.chatId;
 
                         const username = chatModel.title;
                         const user = new User();
@@ -214,7 +206,7 @@ if (container1) {
                     }
 
                     case "group": {
-                        eventBus.emit("open group", chatModel.id);
+                        eventBus.emit("open group", chatModel.chatId);
                     }
 
                     case "channel": {
@@ -229,6 +221,7 @@ if (container1) {
                 deleteChatButton.addEventListener("click", async (event) => {
                     event.preventDefault();
                     event.stopPropagation();
+
                     const response = await api.get(`/chat/${chatModel.id}`);
                     // console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
                     if ((response.data.users[0].role==="owner") && (response.data.users[0].username!==currentUser.getUsername())){
@@ -239,6 +232,7 @@ if (container1) {
 
                     //await deleteChat(chatModel.id);
                     eventBus.emit("chat is deleted", chatModel);
+
                 });
             }
         }
@@ -330,7 +324,7 @@ if (container1) {
             eventBus.emit("chats -> new group");
         });
 
-        // Новый канал
+
         const newChannel = newChatPopoverElement.querySelector("#new-channel");
         newChannel.addEventListener("click", (event) => {
             event.preventDefault();

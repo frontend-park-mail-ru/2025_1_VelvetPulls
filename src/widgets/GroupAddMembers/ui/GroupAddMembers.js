@@ -15,11 +15,11 @@ class GroupAddMembers {
     }
 
     setData(data) {
+        this.users = data.users;
         this.chatId = data.chatId;
         // this.title = data.title;
         // this.countUsers = data.countUsers;
         // this.avatarSrc = data.avatarSrc;
-        this.users = data.users;
     }
 
     async render() {
@@ -55,19 +55,20 @@ class GroupAddMembers {
         buttonBack.addEventListener("click", this.onButtonBackClik.bind(this));
 
         const buttonSearch = container.querySelector("#button-search");
-        buttonSearch.addEventListener(
-            "click",
-            this.onButtonSearchClick.bind(this),
-        );
+        buttonSearch.addEventListener("click", this.onSearch.bind(this));
 
         const inputUsername = this.container.querySelector(
             ".sidebar-header__search-input",
         );
         inputUsername.addEventListener("keypress", (event) => {
             if (event.key === "Enter") {
-                this.onButtonSearchClick(event);
+                this.onSearch(event);
             }
         });
+        inputUsername.addEventListener(
+            "input",
+            this.removeErrorIfExists.bind(this),
+        );
 
         const buttonAdd = container.querySelector("#button-add");
         buttonAdd.addEventListener("click", this.onButtonAddClik.bind(this));
@@ -78,7 +79,7 @@ class GroupAddMembers {
         groupInfo.render();
     }
 
-    async onButtonSearchClick(event) {
+    async onSearch(event) {
         event.preventDefault();
 
         const container = this.container;
@@ -86,19 +87,20 @@ class GroupAddMembers {
         const searchInput = container.querySelector(
             ".sidebar-header__search-input",
         );
-        const username = searchInput.value;
-        searchInput.value = "";
+        const username = searchInput.value.trim();
 
         for (const user of this.users) {
             if (username === user["username"]) {
-                alert(`Пользователь ${username} уже есть в группе`);
+                this.createErrorIfNotExists(
+                    `Пользователь ${username} уже есть в группе`,
+                );
                 return;
             }
         }
 
         for (const newMember of this.newMembers) {
             if (username === newMember) {
-                alert(
+                this.createErrorIfNotExists(
                     `Пользователь ${username} уже есть в списке добавляемых пользователей`,
                 );
                 return;
@@ -108,13 +110,41 @@ class GroupAddMembers {
         const response = await api.get(`/profile/${username}`);
 
         if (response.status === false) {
-            alert(`Пользоватль ${username} не найден`);
+            this.createErrorIfNotExists(`Пользоватль ${username} не найден`);
             return;
         }
 
         this.showNewMember(username);
+        searchInput.value = "";
 
         this.newMembers.push(username);
+    }
+
+    createErrorIfNotExists(textError) {
+        const errorElement = document.createElement("div");
+        errorElement.innerHTML = textError;
+        errorElement.classList.add("error-label");
+
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const firstChild = sidebarList.firstChild;
+
+        if (firstChild.classList === undefined) {
+            sidebarList.firstChild.before(errorElement);
+        }
+    }
+
+    removeErrorIfExists() {
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const firstChild = sidebarList.firstChild;
+
+        if (
+            firstChild.classList !== undefined &&
+            firstChild.classList.contains("error-label")
+        ) {
+            sidebarList.removeChild(firstChild);
+        }
     }
 
     showNewMember(username) {

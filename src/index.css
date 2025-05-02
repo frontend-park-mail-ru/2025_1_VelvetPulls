@@ -17,6 +17,7 @@
 @import url("widgets/DialogInfo/ui/DialogInfo.css");
 @import url("widgets/Group/ui/Group.css");
 @import url("widgets/GroupInfo/ui/GroupInfo.css");
+@import url("widgets/GroupAddMembers/ui/GroupAddMembers.css");
 @import url("widgets/NoChat/ui/NoChat.css");
 
 @import url("entities/Message/ui/Message.css");

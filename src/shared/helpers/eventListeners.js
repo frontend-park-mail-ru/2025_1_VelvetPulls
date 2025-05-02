@@ -37,7 +37,7 @@ export const signupFormSubmitListener = async (event) => {
         );
 
         if (response.status === true) {
-            eventBus.emit("do update profile");
+            eventBus.emit("authorized");
             goToPage("main");
         } else {
             const error = response.error;
@@ -83,7 +83,7 @@ export const repeatPasswordInputListener = (event) => {
     repeatPasswordInputValidate(input, form);
 };
 
-export const phoneInputListener = (event) => {
+export const phoneInputListener = () => {
     const submitButton = document.querySelector(".auth-form__button");
     removeError(submitButton);
 
@@ -155,7 +155,7 @@ export const loginFormSubmit = async (event) => {
         const response = await auth.login(username, password);
 
         if (response.status === true) {
-            eventBus.emit("do update profile");
+            eventBus.emit("authorized");
             goToPage("main");
         } else {
             const error = response.error;

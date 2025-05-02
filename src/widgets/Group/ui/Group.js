@@ -5,10 +5,11 @@ import {
     sendMessage,
     getMessageHistory,
 } from "../../../entities/Message/index.js";
-import { currentUser } from "../../../entities/User/model/User.js";
+// import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { groupInfo } from "../../GroupInfo/index.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { store } from "../../../app/store/index.js";
 
 class Group {
     constructor() {
@@ -70,7 +71,8 @@ class Group {
             for (const messageItem of this.messages) {
                 const message = new Message(messageItem);
 
-                if (messageItem.user === currentUser.getUsername()) {
+                // if (messageItem.user === currentUser.getUsername()) {
+                if (messageItem.user === store.profile["username"]) {
                     messages.appendChild(await message.getElement("my"));
                 } else {
                     messages.appendChild(await message.getElement("group"));

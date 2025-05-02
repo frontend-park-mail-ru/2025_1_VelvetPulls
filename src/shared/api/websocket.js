@@ -41,7 +41,9 @@ class ChatWebSocket {
     }
 
     disconnect() {
-        this.socket.close();
+        if (this.socket !== null) {
+            this.socket.close();
+        }
     }
 
     reconnect() {

@@ -37,7 +37,7 @@ export class User {
             this.#lastName = data["last_name"];
         }
 
-        if (this.#avatarPath !== null) {
+        if ((this.#avatarPath !== null)&&(this.#avatarPath !== undefined)) {
             const path = this.#avatarPath.replace(".", "");
             this.avatarSrc = await getAvatar(path);
         } else {

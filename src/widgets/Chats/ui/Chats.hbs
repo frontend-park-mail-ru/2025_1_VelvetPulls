@@ -28,7 +28,7 @@
     <section class="chats">
         <div class="sidebar-list scrollable">
             {{#each chats}}
-            <div id="chat-{{chatId}}" class="sidebar-list__item sidebar-list-item">
+            <div class="sidebar-list__item sidebar-list-item" id="{{this.id}}">
                 <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
 
                 <div class="sidebar-list-item__info">
@@ -66,10 +66,10 @@
                         <span class="popover__item_text">Создать группу</span>
                     </button>
                     
-                    <!--<button id="new-channel" class="popover__item">
+                    <button id="new-channel" class="popover__item">
                         <img src="icons/plus.svg" alt="New channel" class="icon">
                         <span class="popover__item_text">Создать канал</span>
-                    </button>!-->
+                    </button>
 
                     <button id="new-contact" class="popover__item">
                         <img src="icons/Profile.svg" alt="New contact" class="icon">

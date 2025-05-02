@@ -12,11 +12,13 @@ import { editProfile } from "../../widgets/EditProfile/index.js";
 import { noChat } from "../../widgets/NoChat/index.js";
 import { dialogInstace } from "../../widgets/Dialog/index.js";
 import { groupInstance } from "../../widgets/Group/index.js";
+import { channelInstance } from "../../widgets/Channel/index.js";
 
 import { eventBus } from "../../shared/modules/EventBus/EventBus.js";
 import { goToPage } from "../../shared/helpers/goToPage.js";
 
 import { createDialog } from "../../widgets/CreateDialog/index.js";
+import { createChannel } from "../../widgets/CreateChannel/index.js";
 import { store } from "../../app/store/index.js";
 
 class MainPage {
@@ -25,6 +27,7 @@ class MainPage {
         this.chat = noChat;
         this.currentChatId = null;
         this.currentChatType = null;
+        this.lastMes="";
 
         this.addListeners();
     }
@@ -55,9 +58,10 @@ class MainPage {
         // --------------- chats ----------------------
 
         eventBus.on("ws:NEW_MESSAGE", async (message) => {
-            if (message.chatId === this.currentChatId) {
+            if ((message.chatId === this.currentChatId)&&(message.id!==this.lastMes)) {
                 await this.handleNewMessage(message);
             }
+            this.lastMes=message.id
         });
 
         eventBus.on("new dialog", (user) => {
@@ -98,6 +102,14 @@ class MainPage {
             goToPage("main");
         });
 
+        eventBus.on("open channel", async (chatId) => {
+            this.currentChatId = chatId;
+            this.currentChatType = "channel";
+            await channelInstance.setData(chatId);
+            this.chat = channelInstance;
+            goToPage("main");
+        });
+
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
             goToPage("main");
@@ -110,6 +122,11 @@ class MainPage {
 
         eventBus.on("chats -> new group", () => {
             this.sidebar = createGroup;
+            goToPage("main");
+        });
+
+        eventBus.on("chats -> new channel", () => {
+            this.sidebar = createChannel;
             goToPage("main");
         });
 
@@ -215,6 +232,7 @@ class MainPage {
 
         eventBus.on("close dialog", () => {
             this.chat = noChat;
+            this.currentChatId=null;
             this.currentChatType = null;
             goToPage("main");
         });
@@ -254,6 +272,14 @@ class MainPage {
         const root = document.getElementById("root");
         root.innerHTML = "";
         root.appendChild(container);
+
+        if (document.querySelector("#messages")!==null){
+            document.querySelector("#messages").scrollTop=document.querySelector("#messages").scrollHeight
+        }
+
+        if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+            document.getElementById(this.currentChatId).style.backgroundColor="green"
+        }
 
         return new RenderResult({});
     }

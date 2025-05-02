@@ -1,4 +1,6 @@
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { api } from "../../../shared/api/api.js";
+import { currentUser } from "../../User/model/User.js";
 
 export class Message {
     constructor({
@@ -83,6 +85,9 @@ export class Message {
             case "group":
                 template = Handlebars.templates["GroupMessage.hbs"];
                 break;
+            case "channel":
+                template = Handlebars.templates["ChannelPost.hbs"];
+                break;
 
             default:
                 throw Error("Задан некорректный тип сообщения");
@@ -93,7 +98,53 @@ export class Message {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
         const element = doc.body.firstChild;
+        let ch_id=this.chatId,mes_id=this.id
 
+        let txts=doc.querySelectorAll(".message__content")
+        let del_but=doc.querySelector(".message__delete")
+        del_but.addEventListener("click", async function(){
+            // console.log(del_but.parentNode.parentNode.parentNode)
+            del_but.parentNode.parentNode.parentNode.remove()
+            // console.log(ch_id,mes_id)
+            await api.delete(`/chat/${ch_id}/messages/${mes_id}`)
+        })
+        if ((txts!==undefined)&&((this.username===currentUser.getUsername()))){
+            // console.log(txts)
+            // txts.style.cursor="pointer"
+            txts.forEach(textBlock => {
+                textBlock.style.cursor="pointer"
+                textBlock.addEventListener('dblclick', function() {
+                    //console.log(textBlock.parentNode.querySelector(".message__delete"))
+                    textBlock.parentNode.querySelector(".message__delete").style.display="flex"
+                    const currentText = textBlock.innerText;
+                    const input = document.createElement('input');
+                    
+                    input.type = 'text';
+                    input.value = currentText;
+                    input.className="redact-mes"
+            
+                    // Заменяем блок текста на инпут
+                    textBlock.innerHTML = '';
+                    textBlock.appendChild(input);
+                    input.focus();
+            
+                    // Обработчик для нажатия Enter
+                    input.addEventListener('keypress', async function(event) {
+                        if (event.key === 'Enter') {
+                            const newText = input.value;
+                            textBlock.parentNode.querySelector(".message__delete").style.display="none"
+                            // console.log(textBlock)
+                            textBlock.innerHTML = newText; // Возвращаем новый текст в блок
+                            // console.log(ch_id, mes_id, newText)
+                            await api.put(`/chat/${ch_id}/messages/${mes_id}`,{
+                                "message":newText,
+                            })
+                        }
+                    });
+                });
+                
+            });
+        }
         this.element = element;
 
         return element;

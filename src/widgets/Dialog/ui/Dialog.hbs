@@ -29,6 +29,13 @@
         </div>
         <div class="chat-container__main">
             {{!-- Сообщения --}}
+            <div class="sidebar-header__search" id="search_msgs">
+            <img src="icons/Search.svg" alt="Search" class="icon">
+            <input type="text" class="sidebar-header__search-input" placeholder="Поиск сообщений">
+            </div>
+            <div id="search_msgs_res">
+            
+            </div>
             <section id="messages" class="sidebar-list scrollable">
                 {{!-- Здесь будут сообщения --}}
             </section>

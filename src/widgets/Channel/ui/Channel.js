@@ -5,13 +5,13 @@ import {
     sendMessage,
     getMessageHistory,
 } from "../../../entities/Message/index.js";
-// import { currentUser } from "../../../entities/User/model/User.js";
+import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { groupInfo } from "../../GroupInfo/index.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
-import { store } from "../../../app/store/index.js";
+import { channelInfo } from "../../ChannelInfo/index.js";
 
-class Group {
+class Channel {
     constructor() {
         this.infoIsOpen = false;
 
@@ -25,11 +25,27 @@ class Group {
         eventBus.on("open dialog", () => {
             this.infoIsOpen = false;
         });
+        eventBus.on("close channel info", () => {
+            //event.preventDefault();
+
+        //if (!this.infoIsOpen) {
+            channelInfo.render();
+            this.infoIsOpen = true;
+        //}
+        });
     }
 
     async setData(chatId) {
         const responseBody = await api.get(`/chat/${chatId}`);
         const responseData = responseBody["data"];
+        // console.log(responseData.users)
+        responseData.users.forEach(element => {
+            if (element.role==="owner"){
+                this.owner=element
+            }
+        });
+        // console.log(this.owner)
+        //this.owner=responseData.users[responseData.users.length-1]
 
         const avatarPath = responseData["avatar_path"];
 
@@ -49,6 +65,7 @@ class Group {
         };
 
         groupInfo.setData(data);
+        channelInfo.setData(data)
     }
 
     async getHTML() {
@@ -58,7 +75,7 @@ class Group {
             avatarSrc: this.avatarSrc,
         };
 
-        const groupTemplate = Handlebars.templates["Group.hbs"];
+        const groupTemplate = Handlebars.templates["Channel.hbs"];
         const html = groupTemplate({ ...data });
 
         const parser = new DOMParser();
@@ -71,11 +88,10 @@ class Group {
             for (const messageItem of this.messages) {
                 const message = new Message(messageItem);
 
-                // if (messageItem.user === currentUser.getUsername()) {
-                if (messageItem.user === store.profile["username"]) {
+                if (messageItem.user === currentUser.getUsername()) {
                     messages.appendChild(await message.getElement("my"));
                 } else {
-                    messages.appendChild(await message.getElement("group"));
+                    messages.appendChild(await message.getElement("channel"));
                 }
 
                 messages.scrollTop = messages.scrollHeight;
@@ -89,7 +105,7 @@ class Group {
             if (event.key === 'Enter') {
                 // console.log(search.value,ch_id)
                 const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
-                // console.log(responseBody1)
+                // console.log(responseBody1.data.messages)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
                 search_res.innerHTML=""
@@ -100,6 +116,14 @@ class Group {
         })
 
         this.bindListeners();
+
+        // console.log(currentUser.getUsername(), this.owner.username)
+
+        if (currentUser.getUsername()!==this.owner.username){
+        container.querySelector(".chat-input-container").innerHTML="<p>Ты всего лишь подписота, только смотреть можно</p>"
+        }
+
+        // container.querySelector(".chat-input-container").innerHTML=""
 
         return container;
     }
@@ -143,7 +167,7 @@ class Group {
         event.preventDefault();
 
         if (!this.infoIsOpen) {
-            groupInfo.render();
+            channelInfo.render();
             this.infoIsOpen = true;
         }
     }
@@ -202,4 +226,4 @@ class Group {
     }
 }
 
-export const groupInstance = new Group();
+export const channelInstance = new Channel();

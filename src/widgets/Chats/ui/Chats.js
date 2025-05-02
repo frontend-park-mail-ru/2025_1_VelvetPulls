@@ -77,7 +77,7 @@ class Chats {
         finder.addEventListener('keypress', async function(event) {
             if (event.key === 'Enter') {
                 document.querySelector(".scrollable").innerHTML=""
-            console.log(finder.value)
+            // console.log(finder.value)
             const responseBody1 = await api.get(`/search?query=${finder.value}`);
                 this.chats1 = responseBody1.data;
                 const chats1 = [];
@@ -140,8 +140,8 @@ if (container1) {
 }
                     }
                 }
-                console.log(chats1)
-                console.log(document.querySelector(".scrollable"))
+                // console.log(chats1)
+                // console.log(document.querySelector(".scrollable"))
 
                 const chats = document.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < chats.length; ++i) {
@@ -181,7 +181,7 @@ if (container1) {
                     event.preventDefault();
                     event.stopPropagation();
                     const response = await api.get(`/chat/${chatModel.id}`);
-                    console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
+                    // console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
                     if ((response.data.users[0].role==="owner") && (response.data.users[0].username!==currentUser.getUsername())){
                         await api.post(`/chat/${chatModel.id}/leave`);
                     } else {
@@ -230,10 +230,9 @@ if (container1) {
                     event.preventDefault();
                     event.stopPropagation();
                     const response = await api.get(`/chat/${chatModel.id}`);
-                    console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
+                    // console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
                     if ((response.data.users[0].role==="owner") && (response.data.users[0].username!==currentUser.getUsername())){
                         await api.post(`/chat/${chatModel.id}/leave`);
-                        console.log("vhudjik")
                     } else {
                     await deleteChat(chatModel.id);
                     }

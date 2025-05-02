@@ -16,12 +16,7 @@ class CreateChannel {
         this.container = container;
 
         this.container = container;
-        let response = await api.get("/contacts");
-        let res=[]
-        response.data.forEach(element => {
-            res.push(element.username)
-        });
-        console.log(res);
+
         this.addListeners();
 
         return container;
@@ -84,7 +79,7 @@ class CreateChannel {
         // response.data.forEach(element => {
         //     members.push(element.username)
         // });
-                        console.log(chatData,members)
+                        // console.log(chatData,members)
                         await api.post(`/chat/${chatId}/users`, members);
 
                         chatWebSocket.reconnect();

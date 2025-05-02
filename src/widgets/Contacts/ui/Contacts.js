@@ -52,9 +52,9 @@ class Contacts {
                 finder.addEventListener('keypress', async function(event) {
                     if (event.key === 'Enter') {
                         //document.querySelector(".scrollable").innerHTML=""
-                    console.log(finder.value)
+                    // console.log(finder.value)
                     const responseBody1 = await api.get(`/search/contacts?query=${finder.value}`);
-                    console.log(responseBody1.data)
+                    // console.log(responseBody1.data)
                     const contacts = [];
         if (responseBody1.data !== null) {
             for (const contact of responseBody1.data) {
@@ -69,7 +69,7 @@ class Contacts {
                 });
             }
         }
-        console.log(contacts)
+        // console.log(contacts)
         const templateSource = `
     <div class="sidebar-list scrollable">
             {{#each contacts}}
@@ -94,20 +94,20 @@ class Contacts {
 const template1 = Handlebars.compile(templateSource);
 // Создаем HTML из шаблона с данными
 const html1 = template1({contacts:contacts});
-console.log(html1)
+// console.log(html1)
 const container1 = document.querySelector('.contacts');
 if (container1) {
     container1.innerHTML=""
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html1;
     container1.appendChild(tempDiv);
-    console.log(container1)
+    // console.log(container1)
 }
 
 const contacts1 = document.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < contacts1.length; ++i) {
             const contactElement = contacts1[i];
-            console.log(contacts1[i])
+            // console.log(contacts1[i])
 
             const deleteButton = contactElement.querySelector(".button");
             deleteButton.addEventListener("click", async (event) => {
@@ -139,7 +139,7 @@ const contacts1 = document.querySelectorAll(".sidebar-list-item");
         const contacts = this.container.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < contacts.length; ++i) {
             const contactElement = contacts[i];
-            console.log(contacts[i])
+            // console.log(contacts[i])
 
             const deleteButton = contactElement.querySelector(".button");
             deleteButton.addEventListener("click", async (event) => {

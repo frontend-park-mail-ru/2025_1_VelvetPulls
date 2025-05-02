@@ -103,9 +103,9 @@ export class Message {
         let txts=doc.querySelectorAll(".message__content")
         let del_but=doc.querySelector(".message__delete")
         del_but.addEventListener("click", async function(){
-            console.log(del_but.parentNode.parentNode.parentNode)
+            // console.log(del_but.parentNode.parentNode.parentNode)
             del_but.parentNode.parentNode.parentNode.remove()
-            console.log(ch_id,mes_id)
+            // console.log(ch_id,mes_id)
             await api.delete(`/chat/${ch_id}/messages/${mes_id}`)
         })
         if ((txts!==undefined)&&((this.username===currentUser.getUsername()))){
@@ -133,9 +133,9 @@ export class Message {
                         if (event.key === 'Enter') {
                             const newText = input.value;
                             textBlock.parentNode.querySelector(".message__delete").style.display="none"
-                            console.log(textBlock)
+                            // console.log(textBlock)
                             textBlock.innerHTML = newText; // Возвращаем новый текст в блок
-                            console.log(ch_id, mes_id, newText)
+                            // console.log(ch_id, mes_id, newText)
                             await api.put(`/chat/${ch_id}/messages/${mes_id}`,{
                                 "message":newText,
                             })

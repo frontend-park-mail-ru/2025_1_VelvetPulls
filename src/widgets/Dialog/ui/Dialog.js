@@ -114,8 +114,8 @@ class Dialog {
                 } else {
                     messages.insertBefore(await message.getElement("dialog"),messages.firstChild)
                 }
-                console.log(queue)
-                console.log(messages)
+                // console.log(queue)
+                // console.log(messages)
                 messages.scrollTop=100
             }
             // if (scrollTop + windowHeight >= documentHeight - 100) { // Загружаем, если осталось 100px до конца
@@ -125,24 +125,25 @@ class Dialog {
     
         messages.addEventListener('scroll', handleScroll);
         //console.log(messages)
-        console.log(this.messages)
+        // console.log(this.messages)
 
 
         const search=doc.querySelector(".sidebar-header__search-input")
         const search_res=doc.querySelector("#search_msgs_res")
         search.addEventListener('keypress', async function(event) {
             if (event.key === 'Enter') {
-                console.log(search.value,ch_id)
+                // console.log(search.value,ch_id)
                 const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
-                console.log(responseBody1.data.messages)
+                // console.log(responseBody1.data.messages)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
+                search_res.innerHTML=""
                 for (let i=0;i<res.length;i++){
                     search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
                 }
             }
         })
-        
+
         //
         this.bindListeners();
 

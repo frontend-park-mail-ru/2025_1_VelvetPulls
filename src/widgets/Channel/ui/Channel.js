@@ -38,13 +38,13 @@ class Channel {
     async setData(chatId) {
         const responseBody = await api.get(`/chat/${chatId}`);
         const responseData = responseBody["data"];
-        console.log(responseData.users)
+        // console.log(responseData.users)
         responseData.users.forEach(element => {
             if (element.role==="owner"){
                 this.owner=element
             }
         });
-        console.log(this.owner)
+        // console.log(this.owner)
         //this.owner=responseData.users[responseData.users.length-1]
 
         const avatarPath = responseData["avatar_path"];
@@ -103,11 +103,12 @@ class Channel {
         const search_res=doc.querySelector("#search_msgs_res")
         search.addEventListener('keypress', async function(event) {
             if (event.key === 'Enter') {
-                console.log(search.value,ch_id)
+                // console.log(search.value,ch_id)
                 const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
-                console.log(responseBody1.data.messages)
+                // console.log(responseBody1.data.messages)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
+                search_res.innerHTML=""
                 for (let i=0;i<res.length;i++){
                     search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
                 }
@@ -116,7 +117,7 @@ class Channel {
 
         this.bindListeners();
 
-        console.log(currentUser.getUsername(), this.owner.username)
+        // console.log(currentUser.getUsername(), this.owner.username)
 
         if (currentUser.getUsername()!==this.owner.username){
         container.querySelector(".chat-input-container").innerHTML="<p>Ты всего лишь подписота, только смотреть можно</p>"

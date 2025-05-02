@@ -85,11 +85,12 @@ class Group {
         const search_res=doc.querySelector("#search_msgs_res")
         search.addEventListener('keypress', async function(event) {
             if (event.key === 'Enter') {
-                console.log(search.value,ch_id)
+                // console.log(search.value,ch_id)
                 const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
-                console.log(responseBody1)
+                // console.log(responseBody1)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
+                search_res.innerHTML=""
                 for (let i=0;i<res.length;i++){
                     search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
                 }

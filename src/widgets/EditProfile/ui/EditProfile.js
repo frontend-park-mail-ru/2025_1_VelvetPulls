@@ -95,7 +95,7 @@ class EditProfile {
         // let avatarFile =
         //     avatarInput.files.length > 0 ? avatarInput.files[0] : null;
         const avatarFile = avaImg.files.length > 0 ? avaImg.files[0] : null;
-        console.log(avatarFile);
+        // console.log(avatarFile);
 
         const firstNameInput =
             this.container.querySelector("#first-name-input");

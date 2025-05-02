@@ -121,8 +121,11 @@ class ChannelInfo {
             if (event.key === "Enter") {
                 let members=[]
                 members.push(this.inputUser.value)
-                console.log(this.chatId,members)
-        await api.post(`/chat/${this.chatId}/users`, members);
+                // console.log(this.chatId,members)
+        const response = await api.post(`/chat/${this.chatId}/users`, members);
+        if (response.data.not_added_users!==undefined){
+            alert("Такого пользователя не существует")
+        } else {
         let a1=document.querySelector("#group-header__count-members").innerHTML
         let a2=document.querySelector("#group-info__members-count").innerHTML
         let a3=document.querySelector("#members").innerHTML+=`<div class="detail-item member">
@@ -131,8 +134,8 @@ class ChannelInfo {
     </div>`
     document.querySelector("#group-header__count-members").innerHTML=Number(a1)+1
     document.querySelector("#group-info__members-count").innerHTML=Number(a2)+1
-        console.log(a1,a2,a3)
-            }
+        // console.log(a1,a2,a3)
+            }}
         });
 
             const addMembersButton = container.querySelector(
@@ -188,7 +191,7 @@ class ChannelInfo {
 
         // Удалить участника из массива
         this.users = this.users.filter((user) => user["username"] !== username);
-        console.log(this.chatId)
+        // console.log(this.chatId)
         let a1=document.querySelector("#group-header__count-members").innerHTML
         document.querySelector("#group-header__count-members").innerHTML=Number(a1)-1
     }

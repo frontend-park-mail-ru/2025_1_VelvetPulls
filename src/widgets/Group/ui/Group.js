@@ -28,10 +28,8 @@ class Group {
     }
 
     async setData(chatId) {
-        console.log(chatId)
         const responseBody = await api.get(`/chat/${chatId}`);
         const responseData = responseBody["data"];
-        console.log(responseBody)
 
         const avatarPath = responseData["avatar_path"];
 

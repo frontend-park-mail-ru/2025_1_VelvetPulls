@@ -127,7 +127,8 @@ class EditGroup {
         };
 
         // Обновить данные там, где нужно
-        eventBus.emit("group is edited", data);
+        eventBus.emit("close dialog");
+        //eventBus.emit("group is edited", data);
 
         groupInfo.render();
     }

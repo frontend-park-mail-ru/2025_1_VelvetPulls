@@ -1,6 +1,7 @@
 // import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { getUserData, updateUser } from "../api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { store } from "../../../app/store/index.js";
 
 // function checkUsernameIsValid(input) {
 //     const patt = /^[a-zA-Z0-9_]{3,20}$/;
@@ -18,26 +19,39 @@ export class User {
 
     async init(username) {
         const data = await getUserData(username);
-
-        this.#username = data["username"];
+        if (data!==undefined){
+            this.#username = data["username"];
         this.#phone = data["phone"];
         this.#avatarPath = data["avatar_path"];
         this.#email = data["email"];
         this.#password = data["password"];
+        } else {
+            this.#username = undefined;
+        this.#phone = undefined;
+        this.#avatarPath = "";
+        this.#email = undefined;
+        this.#password = undefined;
+        }
 
-        if (data["first_name"] === null || data["first_name"] === undefined) {
+        // this.#username = data["username"];
+        // this.#phone = data["phone"];
+        // this.#avatarPath = data["avatar_path"];
+        // this.#email = data["email"];
+        // this.#password = data["password"];
+
+        if (data === undefined || data["first_name"] === null || data["first_name"] === undefined) {
             this.#firstName = "";
         } else {
             this.#firstName = data["first_name"];
         }
 
-        if (data["last_name"] === null || data["last_name"] === undefined) {
+        if (data === undefined || data["last_name"] === null || data["last_name"] === undefined) {
             this.#lastName = "";
         } else {
             this.#lastName = data["last_name"];
         }
 
-        if ((this.#avatarPath !== null)&&(this.#avatarPath !== undefined)) {
+        if (data !== undefined && ((this.#avatarPath !== null)&&(this.#avatarPath !== undefined))) {
             const path = this.#avatarPath.replace(".", "");
             this.avatarSrc = await getAvatar(path);
         } else {
@@ -57,6 +71,9 @@ export class User {
     }
 
     getUsername() {
+        if (this.#username===undefined){
+            return store.profile.username
+        }
         return this.#username;
     }
 

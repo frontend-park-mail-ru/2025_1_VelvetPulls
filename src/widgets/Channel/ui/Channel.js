@@ -10,6 +10,7 @@ import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { groupInfo } from "../../GroupInfo/index.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 import { channelInfo } from "../../ChannelInfo/index.js";
+import { store } from "../../../app/store/index.js";
 
 class Channel {
     constructor() {

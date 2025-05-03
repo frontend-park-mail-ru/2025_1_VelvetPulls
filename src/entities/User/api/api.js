@@ -3,21 +3,26 @@ import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 
 export const getUserData = async (username = null) => {
     let response;
+    let una=true
     if (username === null) {
-        response = await api.get("/profile");
+        //response = await api.get("/profile");
+        una=false
     } else {
         response = await api.get(`/profile/${username}`);
     }
 
-    if (response.status === false) {
-        if (response.error === "Unauthorized") {
+    if (una === false) {
+        //if (response.error === "Unauthorized") {
             eventBus.emit("logout");
             // throw Error("Unauthorized");
-        }
+        //}
+    }
+    if (response!==undefined){
+        return response.data
     }
 
-    const data = response.data;
-    return data;
+    // const data = response.data;
+    // return data;
 };
 
 export const updateUser = async (formData) => {

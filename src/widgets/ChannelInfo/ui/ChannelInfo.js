@@ -150,6 +150,7 @@ class ChannelInfo {
 
     onClickEditGroup(event) {
         event.preventDefault();
+        editGroup.render();
     }
 
     onGroupEdit(data) {

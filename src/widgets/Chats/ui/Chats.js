@@ -211,6 +211,7 @@ if (container1) {
 
                     case "group": {
                         eventBus.emit("open group", chatModel.id);
+                        break;
                     }
 
                     case "channel": {
@@ -354,12 +355,12 @@ if (container1) {
             `#chat-${data.chatId}`,
         );
 
-        const title = chatContainer.querySelector(
+        const title = document.querySelector(
             ".sidebar-list-item__full-name",
         );
         title.innerHTML = this.title;
 
-        const avatar = chatContainer.querySelector(".avatar");
+        const avatar = document.querySelector(".avatar");
         avatar.src = this.avatarSrc;
     }
 }

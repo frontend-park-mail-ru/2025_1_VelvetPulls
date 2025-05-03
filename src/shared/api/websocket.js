@@ -7,7 +7,7 @@ class ChatWebSocket {
     constructor() {
         this.socket = null;
         this.connected = false;
-        this.baseUrl = `ws://${API_HOST}:${API_PORT}/ws`;
+        this.baseUrl = `ws://${API_HOST}:8082/ws`;
     }
 
     connect() {
@@ -26,7 +26,7 @@ class ChatWebSocket {
                     eventBus.emit("ws:NEW_MESSAGE", msg);
                 }
             } catch (error) {
-                console.error("WebSocket message error:", error);
+                //console.error("WebSocket message error:", error);
             }
         };
 
@@ -36,7 +36,7 @@ class ChatWebSocket {
         };
 
         this.socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
+            //console.error("WebSocket error:", error);
         };
     }
 

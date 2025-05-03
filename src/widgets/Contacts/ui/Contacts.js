@@ -42,7 +42,7 @@ class Contacts {
 
                 const avatarPath = contact["avatar_path"];
 
-                const avatarSrc = "icons/Profile.svg";
+                let avatarSrc = "icons/Profile.svg";
                 if (avatarPath!==undefined){
                     avatarSrc = await getAvatar(avatarPath)
                 }

@@ -127,10 +127,12 @@ class EditGroup {
         };
 
         // Обновить данные там, где нужно
-        eventBus.emit("close dialog");
+        document.querySelector(".chat-header__full-name").innerHTML=title
+        //eventBus.emit("close dialog");
         //eventBus.emit("group is edited", data);
 
         groupInfo.render();
+        document.querySelector(".user-info__full-name").innerHTML=title
     }
 }
 

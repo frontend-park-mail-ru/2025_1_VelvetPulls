@@ -1,6 +1,7 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { store } from "../../../app/store/index.js";
 import { api } from "../../../shared/api/api.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 class Contacts {
     constructor(parentWidget) {

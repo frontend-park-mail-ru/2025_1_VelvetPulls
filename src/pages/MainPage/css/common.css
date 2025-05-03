@@ -20,9 +20,9 @@ body {
     display: flex;
     flex-direction: column;
     
-    --width: 430px;
-    min-width: var(--width);
-    max-width: var(--width);
+    /* --width: 430px; */
+    /* min-width: 430px;
+    max-width: 430px; */
 }
 
 .avatar {

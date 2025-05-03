@@ -11,6 +11,7 @@ import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { api } from "../../../shared/api/api.js";
 
 import { store } from "../../../app/store/index.js";
+import { mainPage } from "../../../pages/MainPage/MainPage.js";
 
 
 class Dialog {
@@ -147,8 +148,10 @@ class Dialog {
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
                 search_res.innerHTML=""
-                for (let i=0;i<res.length;i++){
-                    search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                if (res!==null){
+                    for (let i=0;i<res.length;i++){
+                        search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                    }
                 }
             }
         })
@@ -203,6 +206,11 @@ class Dialog {
             const divider = this.container.querySelector(".vertical-divider");
             divider.after(groupInfoContainer);
             this.infoIsOpen = true;
+            if (mainPage.mobile){
+                            document.querySelector(".chat-container").querySelector(".chat").style.visibility="hidden"
+                        document.querySelector(".chat-container").querySelector(".chat").style.width="0px"
+                        document.querySelector(".chat-container").querySelector(".sidebar").style.width="320px"
+                        }
         }
     }
 

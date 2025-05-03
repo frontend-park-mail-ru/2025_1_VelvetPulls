@@ -11,6 +11,7 @@ import { groupInfo } from "../../GroupInfo/index.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 import { channelInfo } from "../../ChannelInfo/index.js";
 import { store } from "../../../app/store/index.js";
+import { mainPage } from "../../../pages/MainPage/MainPage.js";
 
 class Channel {
     constructor() {
@@ -110,8 +111,10 @@ class Channel {
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
                 search_res.innerHTML=""
-                for (let i=0;i<res.length;i++){
-                    search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                if (res!==null){
+                    for (let i=0;i<res.length;i++){
+                        search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                    }
                 }
             }
         })
@@ -170,6 +173,11 @@ class Channel {
         if (!this.infoIsOpen) {
             channelInfo.render();
             this.infoIsOpen = true;
+            if (mainPage.mobile) {
+                            document.querySelector(".chat-container").querySelector(".chat").style.visibility="hidden"
+                        document.querySelector(".chat-container").querySelector(".chat").style.width="0px"
+                        document.querySelector(".chat-container").querySelector(".sidebar").style.width="320px"
+                        }
         }
     }
 

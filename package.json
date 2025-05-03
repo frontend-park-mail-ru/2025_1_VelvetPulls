@@ -5,7 +5,7 @@
     "type": "module",
     "main": "./server/server.js",
     "scripts": {
-        "compile-templates": "compile-templates.bat",
+        "compile-templates": "compile-templates.sh",
         "prestart": "npm run compile-templates",
         "start": "node ./server/server.js",
         "dev": "nodemon --ignore \"*.precompiled.js\" --ext js,css,html,hbs --exec npm run start"

@@ -1,4 +1,4 @@
-import { API_HOST, API_PORT } from "./api.js";
+import { API_HOST} from "./api.js";
 
 import { eventBus } from "../modules/EventBus/EventBus.js";
 import { Message } from "../../entities/Message/index.js";

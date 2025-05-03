@@ -4,9 +4,9 @@ import path from "path";
 
 const app = express();
 
-const port = 8088;
+const port = 80;
 
-const hostname = "localhost";
+const hostname = "90.156.217.108";
 
 app.use(morgan("dev"));
 app.use(express.static("src"));

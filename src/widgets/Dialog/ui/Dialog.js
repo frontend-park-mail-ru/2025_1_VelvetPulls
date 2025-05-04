@@ -144,13 +144,17 @@ class Dialog {
             if (event.key === 'Enter') {
                 // console.log(search.value,ch_id)
                 const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
-                // console.log(responseBody1.data.messages)
+                console.log(responseBody1.data.messages)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
                 search_res.innerHTML=""
                 if (res!==null){
                     for (let i=0;i<res.length;i++){
-                        search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                        const sentAt = new Date(res[i].sent_at)
+                        search_res.innerHTML+=`<p>${res[i].username} в ${sentAt.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })} отправил: ${res[i].body}</p>`
                     }
                 }
             }

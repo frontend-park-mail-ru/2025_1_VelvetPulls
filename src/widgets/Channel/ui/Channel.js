@@ -113,7 +113,11 @@ class Channel {
                 search_res.innerHTML=""
                 if (res!==null){
                     for (let i=0;i<res.length;i++){
-                        search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                        const sentAt = new Date(res[i].sent_at)
+                        search_res.innerHTML+=`<p>${res[i].username} в ${sentAt.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })} отправил: ${res[i].body}</p>`
                     }
                 }
             }

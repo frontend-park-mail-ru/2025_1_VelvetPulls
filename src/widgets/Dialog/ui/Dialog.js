@@ -147,6 +147,8 @@ class Dialog {
                 console.log(responseBody1.data.messages)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
+                search_res.style.height="150px"
+                document.querySelector("#messages").style.height="100%"
                 search_res.innerHTML=""
                 if (res!==null){
                     for (let i=0;i<res.length;i++){
@@ -159,6 +161,12 @@ class Dialog {
                 }
             }
         })
+
+        search_res.addEventListener("click", (event) => {
+            event.preventDefault();
+            search_res.style.visibility="hidden"
+            search_res.style.height="0px"
+        });
 
         //
         this.bindListeners();

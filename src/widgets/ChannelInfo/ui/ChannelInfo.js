@@ -3,6 +3,7 @@ import { api } from "../../../shared/api/api.js";
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { editGroup } from "../../EditGroup/index.js";
 import { groupAddMembers } from "../../GroupAddMembers/ui/GroupAddMembers.js";
+import { mainPage } from "../../../pages/MainPage/MainPage.js";
 
 class ChannelInfo {
     constructor() {
@@ -107,6 +108,10 @@ class ChannelInfo {
             event.preventDefault();
 
             container.parentElement.removeChild(container);
+            if (mainPage.mobile){
+                                        document.querySelector(".chat-container").querySelector(".chat").style.visibility="visible"
+                                    document.querySelector(".chat-container").querySelector(".chat").style.width="320px"
+                                    }
             eventBus.emit("group-info: close", {});
         });
 

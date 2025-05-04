@@ -23,6 +23,7 @@ import { store } from "../../app/store/index.js";
 
 class MainPage {
     constructor() {
+        this.mobile=window.innerWidth<=768
         this.sidebar = chats;
         this.chat = noChat;
         this.currentChatId = null;
@@ -279,6 +280,20 @@ class MainPage {
 
         if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
             document.getElementById(this.currentChatId).style.backgroundColor="green"
+        }
+
+        if(this.chat===noChat){
+            if (this.mobile){
+                document.querySelector(".sidebar").style["min-width"]="100%"
+            document.querySelector(".sidebar").style["max-width"]="100%"
+            } else {
+                document.querySelector(".sidebar").style["min-width"]="430px"
+            document.querySelector(".sidebar").style["max-width"]="430px"
+            }
+        }
+        if (!this.mobile){
+            document.querySelector(".sidebar").style["min-width"]="430px"
+            document.querySelector(".sidebar").style["max-width"]="430px"
         }
 
         return new RenderResult({});

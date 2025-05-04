@@ -183,7 +183,9 @@
 .sidebar__fixed-button-container {
     position: fixed;
     
-    left: calc(0.8 * var(--width));
+    /* left: calc(0.8 * var(--width));
+    bottom: 10%; */
+    left: 20px;
     bottom: 10%;
 }
 

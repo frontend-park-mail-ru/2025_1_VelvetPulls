@@ -282,16 +282,16 @@ class MainPage {
             document.getElementById(this.currentChatId).style.backgroundColor="green"
         }
 
-        if(this.chat===noChat){
-            if (this.mobile){
-                document.querySelector(".sidebar").style["min-width"]="100%"
-            document.querySelector(".sidebar").style["max-width"]="100%"
+        if (this.mobile){
+            if(this.chat===noChat){
+                    document.querySelector(".sidebar").style["min-width"]="100%"
+                document.querySelector(".sidebar").style["max-width"]="100%"
             } else {
-                document.querySelector(".sidebar").style["min-width"]="430px"
-            document.querySelector(".sidebar").style["max-width"]="430px"
-            }
-        }
-        if (!this.mobile){
+                    document.querySelector(".sidebar").style["min-width"]="0%"
+                document.querySelector(".sidebar").style["max-width"]="0%"
+                document.querySelector(".sidebar").style.visibility="hidden"
+            }    
+        } else {
             document.querySelector(".sidebar").style["min-width"]="430px"
             document.querySelector(".sidebar").style["max-width"]="430px"
         }

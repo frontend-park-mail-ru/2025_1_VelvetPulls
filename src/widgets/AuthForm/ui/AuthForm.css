@@ -15,6 +15,10 @@
     padding: 0 5px;
 }
 
+.auth-form__input-container{
+    position: relative;
+}
+
 .auth-form__input {
     border: none;
     background: none;

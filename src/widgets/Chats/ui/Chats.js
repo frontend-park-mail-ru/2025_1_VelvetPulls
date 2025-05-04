@@ -335,7 +335,6 @@ if (container1) {
             event.preventDefault();
             this.newChatIsOpen = false;
             eventBus.emit("chats -> new channel");
-            //alert("Создание канала ещё не готово - это требование РК 3");
         });
 
         // Новый контакт

@@ -99,22 +99,24 @@ export class Message {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
         const element = doc.body.firstChild;
+        element.dataset.messageId = this.id; 
         let ch_id=this.chatId,mes_id=this.id
 
         let txts=doc.querySelectorAll(".message__content")
         let del_but=doc.querySelector(".message__delete")
         del_but.addEventListener("click", async function(){
-            // console.log(del_but.parentNode.parentNode.parentNode)
-            del_but.parentNode.parentNode.parentNode.remove();
-            // console.log(ch_id,mes_id)
+            // Сначала отправляем запрос на удаление
+            await api.delete(`/chat/${ch_id}/messages/${mes_id}`);
+            
+            // Затем отправляем WS-сообщение
             chatWebSocket.send({
                 action: "deleteMessage",
                 payload: {
-                    chatId: ch_id,
                     messageId: mes_id
                 }
             });
-            await api.delete(`/chat/${ch_id}/messages/${mes_id}`);
+            // Визуальное удаление
+            this.parentNode.parentNode.parentNode.remove();
         })
         if ((txts!==undefined)&&((this.username===currentUser.getUsername()))){
             // console.log(txts)
@@ -142,8 +144,12 @@ export class Message {
                             const newText = input.value;
                             textBlock.parentNode.querySelector(".message__delete").style.display="none"
                             // console.log(textBlock)
-                            textBlock.innerHTML = newText; // Возвращаем новый текст в блок
-                            // console.log(ch_id, mes_id, newText)
+                            // Сначала отправляем на сервер
+                            await api.put(`/chat/${ch_id}/messages/${mes_id}`, {
+                                "message": newText,
+                            });
+                            
+                            // Затем WS-событие
                             chatWebSocket.send({
                                 action: "updateMessage",
                                 payload: {
@@ -152,9 +158,9 @@ export class Message {
                                     newText: newText
                                 }
                             });
-                            await api.put(`/chat/${ch_id}/messages/${mes_id}`,{
-                                "message":newText,
-                            });
+                            
+                            // Обновляем локально
+                            textBlock.innerHTML = newText;
                         }
                     });
                 });

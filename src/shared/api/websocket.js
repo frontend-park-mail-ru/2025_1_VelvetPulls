@@ -25,16 +25,13 @@ class ChatWebSocket {
                     case "newMessage":
                         const msg = Message.fromApi(message.payload);
                         eventBus.emit("ws:NEW_MESSAGE", msg);
-                        console.log("message sent");
                         break;
                     case "updateMessage":
                         const updatedMsg = Message.fromApi(message.payload);
                         eventBus.emit("ws:MESSAGE_UPDATED", updatedMsg);
-                        console.log("message updated");
                         break;
                     case "deleteMessage":
-                        eventBus.emit("ws:MESSAGE_DELETED", message.payload.messageId);
-                        console.log("message deleted");
+                        eventBus.emit("ws:MESSAGE_DELETED", message.payload.id);
                         break;
                     default:
                         console.warn("Unknown WebSocket action:", message.action);

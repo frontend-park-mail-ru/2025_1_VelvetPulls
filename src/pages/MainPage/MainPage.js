@@ -68,37 +68,39 @@ class MainPage {
         eventBus.on("ws:MESSAGE_UPDATED", (updatedMessage) => {
             if (updatedMessage.chatId !== this.currentChatId) return;
 
-            const messageElement = this.messagesMap.get(updatedMessage.id);
+            const messagesContainer = document.querySelector("#messages");
+            if (!messagesContainer) return;
+
+            // Ищем сообщение по data-атрибуту
+            const messageElement = messagesContainer.querySelector(
+                `[data-message-id="${updatedMessage.id}"]`
+            );
             if (messageElement) {
                 const content = messageElement.querySelector('.message__content');
                 if (content) {
-                    if (content.textContent !== updatedMessage.body) {
-                        content.textContent = updatedMessage.body;
-                    }
-                    
-                    if (updatedMessage.is_redacted && !content.querySelector('.edited-mark')) {
-                        const editedMark = document.createElement('span');
-                        editedMark.className = 'edited-mark';
-                        editedMark.textContent = ' (edited)';
-                        content.appendChild(editedMark);
+                    content.textContent = updatedMessage.body;
+                    if (updatedMessage.is_redacted) {
+                        if (!content.querySelector('.edited-mark')) {
+                            const editedMark = document.createElement('span');
+                            editedMark.className = 'edited-mark';
+                            editedMark.textContent = ' (edited)';
+                            content.appendChild(editedMark);
+                        }
                     }
                 }
             }
         });
 
-        eventBus.on("ws:MESSAGE_DELETED", ({ chatId, messageId }) => {
-            if (chatId !== this.currentChatId) return;
+        eventBus.on("ws:MESSAGE_DELETED", (messageId) => {
+            const messagesContainer = document.querySelector("#messages");
+            if (!messagesContainer) return;
 
-            const messageElement = this.messagesMap.get(messageId);
+            const messageElement = messagesContainer.querySelector(
+                `[data-message-id="${messageId}"]`
+            );
             if (messageElement) {
-                // Плавное удаление с анимацией
                 messageElement.classList.add('deleting');
-                setTimeout(() => {
-                    if (messageElement.parentNode) {
-                        messageElement.parentNode.removeChild(messageElement);
-                    }
-                    this.messagesMap.delete(messageId);
-                }, 300);
+                setTimeout(() => messageElement.remove(), 300);
             }
         });
 
@@ -128,6 +130,7 @@ class MainPage {
             this.currentChatType = "dialog";
             await dialogInstace.init({ user, chatId });
             this.chat = dialogInstace;
+
             goToPage("main");
         });
 
@@ -137,6 +140,7 @@ class MainPage {
 
             await groupInstance.setData(chatId);
             this.chat = groupInstance;
+
             goToPage("main");
         });
 
@@ -275,8 +279,8 @@ class MainPage {
             goToPage("main");
         });
     }
-
     async handleNewMessage(message) {
+        if (this.messagesMap.has(message.id)) return;
         const messagesContainer = document.querySelector("#messages");
         if (messagesContainer) {
             let messageType = null;
@@ -289,8 +293,6 @@ class MainPage {
             const messageElement = await message.getElement(messageType);
             messagesContainer.appendChild(messageElement);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            this.messagesMap.set(message.id, messageElement);
         }
     }
 

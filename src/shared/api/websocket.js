@@ -21,9 +21,23 @@ class ChatWebSocket {
         this.socket.onmessage = (event) => {
             try {
                 const message = JSON.parse(event.data);
-                if (message.action === "newMessage") {
-                    const msg = Message.fromApi(message.payload);
-                    eventBus.emit("ws:NEW_MESSAGE", msg);
+                switch (message.action) {
+                    case "newMessage":
+                        const msg = Message.fromApi(message.payload);
+                        eventBus.emit("ws:NEW_MESSAGE", msg);
+                        console.log("message sent");
+                        break;
+                    case "updateMessage":
+                        const updatedMsg = Message.fromApi(message.payload);
+                        eventBus.emit("ws:MESSAGE_UPDATED", updatedMsg);
+                        console.log("message updated");
+                        break;
+                    case "deleteMessage":
+                        eventBus.emit("ws:MESSAGE_DELETED", message.payload.messageId);
+                        console.log("message deleted");
+                        break;
+                    default:
+                        console.warn("Unknown WebSocket action:", message.action);
                 }
             } catch (error) {
                 //console.error("WebSocket message error:", error);

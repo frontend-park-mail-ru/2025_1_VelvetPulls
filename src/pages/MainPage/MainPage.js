@@ -29,6 +29,7 @@ class MainPage {
         this.currentChatId = null;
         this.currentChatType = null;
         this.lastMes="";
+        this.messagesMap = new Map();
 
         this.addListeners();
     }
@@ -63,6 +64,42 @@ class MainPage {
                 await this.handleNewMessage(message);
             }
             this.lastMes=message.id
+        });
+        eventBus.on("ws:MESSAGE_UPDATED", (updatedMessage) => {
+            if (updatedMessage.chatId !== this.currentChatId) return;
+
+            const messageElement = this.messagesMap.get(updatedMessage.id);
+            if (messageElement) {
+                const content = messageElement.querySelector('.message__content');
+                if (content) {
+                    if (content.textContent !== updatedMessage.body) {
+                        content.textContent = updatedMessage.body;
+                    }
+                    
+                    if (updatedMessage.is_redacted && !content.querySelector('.edited-mark')) {
+                        const editedMark = document.createElement('span');
+                        editedMark.className = 'edited-mark';
+                        editedMark.textContent = ' (edited)';
+                        content.appendChild(editedMark);
+                    }
+                }
+            }
+        });
+
+        eventBus.on("ws:MESSAGE_DELETED", ({ chatId, messageId }) => {
+            if (chatId !== this.currentChatId) return;
+
+            const messageElement = this.messagesMap.get(messageId);
+            if (messageElement) {
+                // Плавное удаление с анимацией
+                messageElement.classList.add('deleting');
+                setTimeout(() => {
+                    if (messageElement.parentNode) {
+                        messageElement.parentNode.removeChild(messageElement);
+                    }
+                    this.messagesMap.delete(messageId);
+                }, 300);
+            }
         });
 
         eventBus.on("new dialog", (user) => {
@@ -252,8 +289,12 @@ class MainPage {
             const messageElement = await message.getElement(messageType);
             messagesContainer.appendChild(messageElement);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            this.messagesMap.set(message.id, messageElement);
         }
     }
+
+    
 
     async render() {
         const mainPageTemplate = Handlebars.templates["MainPage.hbs"];

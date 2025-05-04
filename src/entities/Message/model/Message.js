@@ -1,5 +1,6 @@
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 import { api } from "../../../shared/api/api.js";
+import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { currentUser } from "../../User/model/User.js";
 
 export class Message {
@@ -104,9 +105,16 @@ export class Message {
         let del_but=doc.querySelector(".message__delete")
         del_but.addEventListener("click", async function(){
             // console.log(del_but.parentNode.parentNode.parentNode)
-            del_but.parentNode.parentNode.parentNode.remove()
+            del_but.parentNode.parentNode.parentNode.remove();
             // console.log(ch_id,mes_id)
-            await api.delete(`/chat/${ch_id}/messages/${mes_id}`)
+            chatWebSocket.send({
+                action: "deleteMessage",
+                payload: {
+                    chatId: ch_id,
+                    messageId: mes_id
+                }
+            });
+            await api.delete(`/chat/${ch_id}/messages/${mes_id}`);
         })
         if ((txts!==undefined)&&((this.username===currentUser.getUsername()))){
             // console.log(txts)
@@ -136,9 +144,17 @@ export class Message {
                             // console.log(textBlock)
                             textBlock.innerHTML = newText; // Возвращаем новый текст в блок
                             // console.log(ch_id, mes_id, newText)
+                            chatWebSocket.send({
+                                action: "updateMessage",
+                                payload: {
+                                    chatId: ch_id,
+                                    messageId: mes_id,
+                                    newText: newText
+                                }
+                            });
                             await api.put(`/chat/${ch_id}/messages/${mes_id}`,{
                                 "message":newText,
-                            })
+                            });
                         }
                     });
                 });
@@ -146,9 +162,126 @@ export class Message {
             });
         }
         this.element = element;
+        // this.messageContent = element.querySelector(".message__content");
+        // this.deleteButton = element.querySelector(".message__delete");
+
+        // if (this.username === currentUser.getUsername()) {
+        //     this._setupEventHandlers();
+        // }
 
         return element;
     }
+
+    // _setupEventHandlers() {
+    //     // Обработчик удаления сообщения
+    //     if (this.deleteButton) {
+    //         this.deleteButton.addEventListener("click", (e) => {
+    //             e.stopPropagation();
+    //             this._deleteMessage();
+    //         });
+    //         this.deleteButton.style.display = "none";
+    //     }
+    //     else{
+    //         console.log("no delete button");
+    //     }
+
+    //     // Обработчик редактирования сообщения (по двойному клику)
+    //     if (this.messageContent) {
+    //         this.messageContent.style.cursor = "pointer";
+    //         this.messageContent.addEventListener("dblclick", (e) => {
+    //             e.stopPropagation();
+    //             this._startEditing();
+    //         });
+    //     }
+    // }
+
+    // _startEditing() {
+    //     if (!this.messageContent) return;
+
+    //     const originalContent = this.messageContent.innerHTML;
+    //     const input = document.createElement('input');
+    //     input.value = this.body;
+    //     input.className = "redact-mes";
+
+    //     // Сохраняем ссылки на элементы
+    //     const parent = this.messageContent.parentNode;
+    //     const nextSibling = this.messageContent.nextSibling;
+        
+    //     // Заменяем содержимое
+    //     parent.replaceChild(input, this.messageContent);
+    //     if (this.deleteButton) this.deleteButton.style.display = "flex";
+
+    //     const finish = async (save = true) => {
+    //         if (this.deleteButton) this.deleteButton.style.display = "none";
+            
+    //         if (save && input.value.trim() !== this.body && input.value.trim() !== '') {
+    //             await this._updateMessage(input.value.trim());
+    //         }
+            
+    //         // Восстанавливаем оригинальный элемент
+    //         const newContent = document.createElement('div');
+    //         newContent.className = 'message__content';
+    //         newContent.innerHTML = save ? this.body : originalContent;
+    //         newContent.style.cursor = "pointer";
+            
+    //         if (nextSibling) {
+    //             parent.insertBefore(newContent, nextSibling);
+    //         } else {
+    //             parent.appendChild(newContent);
+    //         }
+            
+    //         input.remove();
+    //         this.messageContent = newContent;
+    //         this._setupEventHandlers(); // Перепривязываем обработчики
+    //     };
+
+    //     input.addEventListener('blur', () => finish(true));
+    //     input.addEventListener('keydown', (e) => {
+    //         if (e.key === 'Enter') finish(true);
+    //         if (e.key === 'Escape') finish(false);
+    //     });
+        
+    //     input.focus();
+    // }
+
+    // async _updateMessage(newText) {
+    //     this.body = newText;
+    //     this.isRedacted = true;
+        
+    //     // Отправка на сервер
+    //     await api.put(`/chat/${this.chatId}/messages/${this.id}`, {
+    //         message: newText
+    //     });
+        
+    //     // WebSocket-уведомление
+    //     chatWebSocket.send({
+    //         action: "updateMessage",
+    //         payload: {
+    //             chatId: this.chatId,
+    //             messageId: this.id,
+    //             newText: newText
+    //         }
+    //     });
+    // }
+
+    // async _deleteMessage() {
+    //     if (!this.element?.parentNode) return;
+        
+    //     // Визуальное удаление
+    //     this.element.remove();
+        
+    //     // Отправка на сервер
+    //     await api.delete(`/chat/${this.chatId}/messages/${this.id}`);
+        
+    //     // WebSocket-уведомление
+    //     chatWebSocket.send({
+    //         action: "deleteMessage",
+    //         payload: {
+    //             chatId: this.chatId,
+    //             messageId: this.id
+    //         }
+    //     });
+    // }
 
     // Статический метод для создания экземпляра из данных API
     static fromApi(data) {

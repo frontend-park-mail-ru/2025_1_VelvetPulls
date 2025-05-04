@@ -72,7 +72,6 @@ export const passwordInputListener = (event) => {
 
     const input = event.target;
     const parent = input.closest(".auth-form__input-container"); 
-    
     passwordInputValidate(parent, input); 
 };
 

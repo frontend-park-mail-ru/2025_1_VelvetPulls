@@ -164,11 +164,13 @@ export function validateSignupForm(form) {
                     break;
 
                 case "password":
-                    isValid = passwordInputValidate(input);
+                    const parentPass = input.closest(".auth-form__input-container"); 
+                    isValid = passwordInputValidate(parentPass, input);
                     break;
 
                 case "confirm-password":
-                    isValid = repeatPasswordInputValidate(input, form);
+                    const parentConfPass = input.closest(".auth-form__input-container"); 
+                    isValid = repeatPasswordInputValidate(parentConfPass, form);
                     break;
             }
         }
@@ -203,11 +205,13 @@ export function validateLoginForm(form) {
                     break;
 
                 case "password":
-                    isValid = passwordInputValidate(input);
+                    const parentPass = input.closest(".auth-form__input-container"); 
+                    isValid = passwordInputValidate(parentPass, input);
                     break;
-
+    
                 case "confirm-password":
-                    isValid = repeatPasswordInputValidate(input, form);
+                    const parentConfPass = input.closest(".auth-form__input-container"); 
+                    isValid = repeatPasswordInputValidate(parentConfPass, form);
                     break;
             }
         }

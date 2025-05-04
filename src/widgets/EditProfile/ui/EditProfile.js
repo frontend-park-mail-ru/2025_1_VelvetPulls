@@ -84,77 +84,61 @@ class EditProfile {
 
     async updateUser() {
         const avaImg = this.container.querySelector("#fileInput1");
-        // let avatarFile =
-        //     avatarInput.files.length > 0 ? avatarInput.files[0] : null;
         const avatarFile = avaImg.files.length > 0 ? avaImg.files[0] : null;
-
-
-        const firstNameInput =
-            this.container.querySelector("#first-name-input");
-        const firstName = firstNameInput.value;
-
+    
+        const firstNameInput = this.container.querySelector("#first-name-input");
+        const firstName = firstNameInput.value.trim();
+    
         const lastNameInput = this.container.querySelector("#last-name-input");
-        const lastName = lastNameInput.value;
-
+        const lastName = lastNameInput.value.trim();
+    
         const emailInput = this.container.querySelector("#email-input");
-        const email = emailInput.value;
-
+        const email = emailInput.value.trim();
+    
         const usernameInput = this.container.querySelector("#username-input");
-        const username = usernameInput.value;
-
-        const newPasswordInput = this.container.querySelector(
-            "#new-password-input",
-        );
-        const newPassword = newPasswordInput.value;
-
-        const repeatPasswordInput = this.container.querySelector(
-            "#repeat-password-input",
-        );
-        const repeatPassword = repeatPasswordInput.value;
-        if (
-            this.isEqualPasswords(newPassword, repeatPassword) &&
-            newPassword != null
-        ) {
-            const profileData = {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                username: username,
-                password: newPassword,
-                phone: store.profile.phone,
-            };
+        const username = usernameInput.value.trim();
+    
+        const newPasswordInput = this.container.querySelector("#new-password-input");
+        const newPassword = newPasswordInput.value.trim();
+    
+        const repeatPasswordInput = this.container.querySelector("#repeat-password-input");
+        const repeatPassword = repeatPasswordInput.value.trim();
+    
+        if (newPassword && this.isEqualPasswords(newPassword, repeatPassword)) {
+            const profileData = {};
+    
+            if (firstName) profileData.first_name = firstName;
+            if (lastName) profileData.last_name = lastName;
+            if (email) profileData.email = email;
+            if (username) profileData.username = username;
+            if (newPassword) profileData.password = newPassword;
+    
+            const phone = store.profile.phone?.trim();
+            if (phone) profileData.phone = phone;
+    
             const formData = new FormData();
-
-            if (avatarFile !== null) {
-                formData.append("avatar", avatarFile);
-            }
-
+            if (avatarFile) formData.append("avatar", avatarFile);
             formData.append("profile_data", JSON.stringify(profileData));
-
+    
             eventBus.emit("profile: update", formData);
-        } else if (newPassword != null) {
+        } else if (newPassword) {
             this.removeError(repeatPasswordInput);
-            this.createError(
-                repeatPasswordInput,
-                "Новый пароль не подтвержден!",
-            );
+            this.createError(repeatPasswordInput, "Новый пароль не подтвержден!");
         } else {
-            const profileData = {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                username: username,
-                phone: store.profile.phone,
-            };
-
+            const profileData = {};
+    
+            if (firstName) profileData.first_name = firstName;
+            if (lastName) profileData.last_name = lastName;
+            if (email) profileData.email = email;
+            if (username) profileData.username = username;
+    
+            const phone = store.profile.phone?.trim();
+            if (phone) profileData.phone = phone;
+    
             const formData = new FormData();
-
-            if (avatarFile !== null) {
-                formData.append("avatar", avatarFile);
-            }
-
+            if (avatarFile) formData.append("avatar", avatarFile);
             formData.append("profile_data", JSON.stringify(profileData));
-
+    
             eventBus.emit("profile: update", formData);
         }
     }

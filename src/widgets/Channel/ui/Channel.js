@@ -176,7 +176,7 @@ class Channel {
             if (mainPage.mobile) {
                             document.querySelector(".chat-container").querySelector(".chat").style.visibility="hidden"
                         document.querySelector(".chat-container").querySelector(".chat").style.width="0px"
-                        document.querySelector(".chat-container").querySelector(".sidebar").style.width="320px"
+                        document.querySelector(".chat-container").querySelector(".sidebar").style.width="100%"
                         }
         }
     }

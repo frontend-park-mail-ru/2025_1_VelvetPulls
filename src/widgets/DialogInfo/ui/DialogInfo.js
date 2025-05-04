@@ -41,7 +41,7 @@ class DialogInfo {
             this.container.parentElement.removeChild(this.container);
             if (mainPage.mobile){
                                         document.querySelector(".chat-container").querySelector(".chat").style.visibility="visible"
-                                    document.querySelector(".chat-container").querySelector(".chat").style.width="320px"
+                                    document.querySelector(".chat-container").querySelector(".chat").style.width="100%"
                                     }
             eventBus.emit("close dialog info", {});
         });

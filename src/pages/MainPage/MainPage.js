@@ -29,7 +29,6 @@ class MainPage {
         this.currentChatId = null;
         this.currentChatType = null;
         this.lastMes="";
-        this.messagesMap = new Map();
 
         this.addListeners();
     }
@@ -154,32 +153,56 @@ class MainPage {
 
         eventBus.on("chats -> profile", () => {
             this.sidebar = profile;
+            this.chat = noChat;
             goToPage("main");
+            if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+                document.getElementById(this.currentChatId).style.backgroundColor="grey"
+            }
         });
 
         eventBus.on("chats -> contacts", () => {
             this.sidebar = contacts;
+            this.chat = noChat;
             goToPage("main");
+            if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+                document.getElementById(this.currentChatId).style.backgroundColor="grey"
+            }
         });
 
         eventBus.on("chats -> new group", () => {
             this.sidebar = createGroup;
+            this.chat = noChat;
             goToPage("main");
+            if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+                document.getElementById(this.currentChatId).style.backgroundColor="grey"
+            }
         });
 
         eventBus.on("chats -> new channel", () => {
             this.sidebar = createChannel;
+            this.chat = noChat;
             goToPage("main");
+            if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+                document.getElementById(this.currentChatId).style.backgroundColor="grey"
+            }
         });
 
         eventBus.on("chats -> new dialog", () => {
             this.sidebar = createDialog;
+            this.chat = noChat;
             goToPage("main");
+            if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+                document.getElementById(this.currentChatId).style.backgroundColor="grey"
+            }
         });
 
         eventBus.on("chats -> new contact", () => {
             this.sidebar = createContact;
+            this.chat = noChat;
             goToPage("main");
+            if((this.currentChatId!==null)&&(document.getElementById(this.currentChatId)!==null)){
+                document.getElementById(this.currentChatId).style.backgroundColor="grey"
+            }
         });
 
         eventBus.on("new dialog", (user) => {
@@ -280,7 +303,6 @@ class MainPage {
         });
     }
     async handleNewMessage(message) {
-        if (this.messagesMap.has(message.id)) return;
         const messagesContainer = document.querySelector("#messages");
         if (messagesContainer) {
             let messageType = null;

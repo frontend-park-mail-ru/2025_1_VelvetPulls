@@ -70,8 +70,9 @@ export const passwordInputListener = (event) => {
     const submitButton = document.querySelector(".auth-form__button");
     removeError(submitButton);
 
-    let input = event.target;
-    passwordInputValidate(input);
+    const input = event.target;
+    const parent = input.closest(".auth-form__input-container"); 
+    passwordInputValidate(parent, input); 
 };
 
 export const repeatPasswordInputListener = (event) => {
@@ -79,8 +80,9 @@ export const repeatPasswordInputListener = (event) => {
     removeError(submitButton);
 
     let input = event.target;
+    const parent = input.closest(".auth-form__input-container");
     let form = document.getElementsByTagName("form")[0];
-    repeatPasswordInputValidate(input, form);
+    repeatPasswordInputValidate(parent, form);
 };
 
 export const phoneInputListener = () => {

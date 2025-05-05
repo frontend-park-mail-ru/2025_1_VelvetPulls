@@ -112,26 +112,26 @@ export function cleanedPhoneInputValidate(input) {
     return true;
 }
 
-export function passwordInputValidate(input) {
+export function passwordInputValidate(parent, input) {
     if (!checkPassword(input)) {
-        removeError(input);
+        removeError(parent);
         createError(
-            input,
+            parent,
             "Введите от 8 до 32 символов, включая латинские буквы, цифры и нижнее подчёркивание",
         );
         return false;
     }
-    removeError(input);
+    removeError(parent);
     return true;
 }
 
-export function repeatPasswordInputValidate(input, form) {
+export function repeatPasswordInputValidate(parent, form) {
     if (!isEqualPasswords(form)) {
-        removeError(input);
-        createError(input, "Пароли должны совпадать");
+        removeError(parent);
+        createError(parent, "Пароли должны совпадать");
         return false;
     }
-    removeError(input);
+    removeError(parent);
     return true;
 }
 /**
@@ -164,11 +164,13 @@ export function validateSignupForm(form) {
                     break;
 
                 case "password":
-                    isValid = passwordInputValidate(input);
+                    const parentPass = input.closest(".auth-form__input-container"); 
+                    isValid = passwordInputValidate(parentPass, input);
                     break;
 
                 case "confirm-password":
-                    isValid = repeatPasswordInputValidate(input, form);
+                    const parentConfPass = input.closest(".auth-form__input-container"); 
+                    isValid = repeatPasswordInputValidate(parentConfPass, form);
                     break;
             }
         }
@@ -203,11 +205,13 @@ export function validateLoginForm(form) {
                     break;
 
                 case "password":
-                    isValid = passwordInputValidate(input);
+                    const parentPass = input.closest(".auth-form__input-container"); 
+                    isValid = passwordInputValidate(parentPass, input);
                     break;
-
+    
                 case "confirm-password":
-                    isValid = repeatPasswordInputValidate(input, form);
+                    const parentConfPass = input.closest(".auth-form__input-container"); 
+                    isValid = repeatPasswordInputValidate(parentConfPass, form);
                     break;
             }
         }

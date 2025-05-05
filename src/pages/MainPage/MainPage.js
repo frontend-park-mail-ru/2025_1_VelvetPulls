@@ -29,6 +29,7 @@ class MainPage {
         this.currentChatId = null;
         this.currentChatType = null;
         this.lastMes="";
+        this.messagesMap = new Map();
 
         this.addListeners();
     }
@@ -64,6 +65,44 @@ class MainPage {
             }
             this.lastMes=message.id
         });
+        eventBus.on("ws:MESSAGE_UPDATED", (updatedMessage) => {
+            if (updatedMessage.chatId !== this.currentChatId) return;
+
+            const messagesContainer = document.querySelector("#messages");
+            if (!messagesContainer) return;
+
+            // Ищем сообщение по data-атрибуту
+            const messageElement = messagesContainer.querySelector(
+                `[data-message-id="${updatedMessage.id}"]`
+            );
+            if (messageElement) {
+                const content = messageElement.querySelector('.message__content');
+                if (content) {
+                    content.textContent = updatedMessage.body;
+                    if (updatedMessage.is_redacted) {
+                        if (!content.querySelector('.edited-mark')) {
+                            const editedMark = document.createElement('span');
+                            editedMark.className = 'edited-mark';
+                            editedMark.textContent = ' (edited)';
+                            content.appendChild(editedMark);
+                        }
+                    }
+                }
+            }
+        });
+
+        eventBus.on("ws:MESSAGE_DELETED", (messageId) => {
+            const messagesContainer = document.querySelector("#messages");
+            if (!messagesContainer) return;
+
+            const messageElement = messagesContainer.querySelector(
+                `[data-message-id="${messageId}"]`
+            );
+            if (messageElement) {
+                messageElement.classList.add('deleting');
+                setTimeout(() => messageElement.remove(), 300);
+            }
+        });
 
         eventBus.on("new dialog", (user) => {
             dialogInstace.setUser(user);
@@ -91,6 +130,7 @@ class MainPage {
             this.currentChatType = "dialog";
             await dialogInstace.init({ user, chatId });
             this.chat = dialogInstace;
+
             goToPage("main");
         });
 
@@ -100,6 +140,7 @@ class MainPage {
 
             await groupInstance.setData(chatId);
             this.chat = groupInstance;
+
             goToPage("main");
         });
 
@@ -238,8 +279,8 @@ class MainPage {
             goToPage("main");
         });
     }
-
     async handleNewMessage(message) {
+        if (this.messagesMap.has(message.id)) return;
         const messagesContainer = document.querySelector("#messages");
         if (messagesContainer) {
             let messageType = null;
@@ -254,6 +295,8 @@ class MainPage {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     }
+
+    
 
     async render() {
         const mainPageTemplate = Handlebars.templates["MainPage.hbs"];

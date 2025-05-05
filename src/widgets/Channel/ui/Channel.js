@@ -110,14 +110,26 @@ class Channel {
                 // console.log(responseBody1.data.messages)
                 let res=responseBody1.data.messages
                 search_res.style.visibility="visible"
+                search_res.style.height="150px"
+                document.querySelector("#messages").style.height="100%"
                 search_res.innerHTML=""
                 if (res!==null){
                     for (let i=0;i<res.length;i++){
-                        search_res.innerHTML+=`<p>${res[i].username} отправил: ${res[i].body}</p>`
+                        const sentAt = new Date(res[i].sent_at)
+                        search_res.innerHTML+=`<p>${res[i].username} в ${sentAt.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })} отправил: ${res[i].body}</p>`
                     }
                 }
             }
         })
+
+        search_res.addEventListener("click", (event) => {
+            event.preventDefault();
+            search_res.style.visibility="hidden"
+            search_res.style.height="0px"
+        });
 
         this.bindListeners();
 

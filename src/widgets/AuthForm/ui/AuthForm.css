@@ -1,34 +1,50 @@
 .auth-form {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    gap: 18px;
+    width: 100%;
     box-sizing: border-box;
-    margin: 0 10% 20% 10%;
+    padding: 0 10px;
+    max-width: 100%;
+}
+
+.auth-form__input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 0 5px;
+}
+
+.auth-form__input-container{
+    position: relative;
 }
 
 .auth-form__input {
     border: none;
     background: none;
-    box-sizing: border-box;
     width: 100%;
+    max-width: -webkit-fill-available;
     height: 50px;
-    padding: 10px 15px 10px 15px;
+    padding: 12px 45px 12px 15px;
     background: var(--bg);
     color: var(--black);
     font-size: 16px;
     border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: calc(100% - 4px);
 }
-
 
 .auth-form__input::placeholder {
     color: var(--black);
     font-size: 16px;
+    opacity: 0.7;
 }
 
 .auth-form__input:invalid {
-    padding: 10px 45px 10px 15px;
-    border: 2px solid var(--error);
+    border-color: var(--error);
     background-color: var(--white);
+    padding-right: 45px;
 }
 
 .auth-form__input:invalid::placeholder {
@@ -36,61 +52,126 @@
 }
 
 .auth-form__input:focus {
-    border: 2px solid var(--black); 
+    border-color: var(--black);
     background-color: var(--active);
     outline: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
 .auth-form__input:focus::placeholder {
     color: var(--black);
+    opacity: 0.5;
+}
+
+.auth-form__button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
 }
 
 .auth-form__button {
     border: none;
-    background: none;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 30px 10px 30px;
-    width: 50%;
-    background-color: var(--black);
+    background: var(--black);
     color: var(--white);
+    width: 100%;
+    max-width: 240px;
+    height: 50px;
+    padding: 12px;
     font-size: 16px;
     border-radius: 12px;
-    align-self: center;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.auth-form__input-wrapper {
-    position: relative;
-    width: 100%;
-    margin-bottom: 15px;
+.auth-form__button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.auth-form__toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.6;
 }
 
 .auth-form__input-error-icon {
     position: absolute;
-    right: 15px;
+    right: 45px;
     top: 50%;
     transform: translateY(-50%);
     width: 24px;
     height: 24px;
     pointer-events: none;
-    stroke: var(--error);
-    stroke-width: 2px;
 }
 
-.auth-form__input-wrapper:focus-within .auth-form__input-error-icon {
-    stroke: var(--black);
+/* Адаптация формы */
+@media (max-width: 768px) {
+    .auth-form {
+        gap: 15px;
+        padding: 0 5px;
+    }
+    
+    .auth-form__input {
+        width: calc(100% - 4px);
+        height: 48px;
+        font-size: 15px;
+        padding: 10px 40px 10px 12px;
+    }
+    
+    .auth-form__input::placeholder {
+        font-size: 15px;
+    }
+    
+    .auth-form__button {
+        height: 48px;
+        font-size: 15px;
+        max-width: 200px;
+    }
+
+    .auth-form__toggle-password {
+        right: 12px;
+    }
 }
 
-.auth-form__error {
-    margin-bottom: 15px;
-    align-self: center;
-    color: var(--error);
+@media (max-width: 480px) {
+    .auth-form__input {
+        height: 46px;
+        padding: 10px 40px 10px 12px;
+        font-size: 14px;
+    }
+    
+    .auth-form__input::placeholder {
+        font-size: 14px;
+    }
+    
+    .auth-form__button {
+        height: 46px;
+        font-size: 14px;
+        max-width: 180px;
+    }
+    
+    .auth-form__toggle-password {
+        right: 12px;
+    }
+    
+    .auth-form__input-error-icon {
+        right: 40px;
+    }
 }
 
-.auth-form__toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 15px;
+@media (max-width: 480px) {
+    #auth-body {
+        background-size: auto 120%;
+    }
+    
+    .auth-form__input {
+        padding: 8px 38px 8px 10px;
+    }
 }

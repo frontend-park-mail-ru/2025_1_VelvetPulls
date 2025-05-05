@@ -1,6 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
 import { api } from "../../../shared/api/api.js";
-import { createChat } from "../../../entities/Chat/api/api.js";
 import { getAvatar } from "../../../shared/helpers/getAvatar.js";
 
 class AddMembers {
@@ -20,11 +19,18 @@ class AddMembers {
         const template = Handlebars.templates["AddMembers.hbs"];
 
         const contacts = [];
-        for (const contact of this.contacts) {
-            contacts.push({
-                username: contact.username,
-                avatarSrc: await getAvatar(contact.avatar_path),
-            });
+        if (this.contacts !== null) {
+            for (const contact of this.contacts) {
+                const username = contact["username"];
+
+                const avatarPath = contact["avatar_path"];
+                const avatarSrc = await getAvatar(avatarPath);
+
+                contacts.push({
+                    username: username,
+                    avatarSrc: avatarSrc,
+                });
+            }
         }
 
         const html = template({ contacts });
@@ -70,20 +76,12 @@ class AddMembers {
     async onClickButtonNext(event) {
         event.preventDefault();
 
-        // Создать группу
-        const chatData = {
-            type: "group",
-            title: this.title,
-        };
-        const responseBody = await createChat(chatData);
-        const chatId = responseBody.data.id;
-
         // Добавить участников
         const members = [];
         const checkboxes = this.container.querySelectorAll(
             ".add-member__checkbox",
         );
-        for (let i = 0; i < this.contacts.length; ++i) {
+        for (let i = 0; i < checkboxes.length; ++i) {
             const checkbox = checkboxes[i];
             const contact = this.contacts[i];
 
@@ -91,8 +89,12 @@ class AddMembers {
                 members.push(contact.username);
             }
         }
-        await api.post(`/chat/${chatId}/users`, members);
-        eventBus.emit("add members -> next");
+
+        const groupData = {
+            title: this.title,
+            members: members,
+        };
+        eventBus.emit("create group", groupData);
     }
 }
 

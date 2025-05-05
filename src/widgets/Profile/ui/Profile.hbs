@@ -18,11 +18,11 @@
         {{!-- Аватар --}}
         <section class="avatar-container">
             <div class="avatar-container__user-info">
-                <div class="user-info__full-name">{{fullName}}</div>
+                <div class="user-info__full-name">{{firstName}} {{lastName}}</div>
             </div>
 
             <div class="avatar-container__square-image">
-                <img class="avatar-container__image" src="{{avatarPath}}" alt="Avatar">
+                <img class="avatar-container__image" src="{{avatarSrc}}" alt="Avatar">
             </div>
         </section>
 
@@ -35,7 +35,7 @@
                     <div class="detail-item__label">Телефон</div>
                 </div>
             </div>
-
+            <hr class="divider">
             <div class="detail-item">
                 <img class="icon" src="icons/At.svg" alt="At"></img>
                 <div class="sidebar-list__item-info">
@@ -43,15 +43,23 @@
                     <div class="detail-item__label">Имя пользователя</div>
                 </div>
             </div>
-
+            <hr class="divider">
+            <div class="detail-item">
+                <img class="icon" src="icons/At.svg" alt="At"></img>
+                <div class="sidebar-list__item-info">
+                    <div class="detail-item__value">{{email}}</div>
+                    <div class="detail-item__label">Электронная почта</div>
+                </div>
+            </div>
+            {{!-- <hr class="divider">
             <div class="detail-item">
                 <img class="icon" src="icons/info.svg" alt="Bio"></img>
                 <div class="sidebar-list__item-info">
                     <div class="detail-item__value">{{bio}}</div>
                     <div class="detail-item__label">Bio</div>
                 </div>
-            </div>
-
+            </div> --}}
+            <hr class="divider">
             <div id="button-logout" class="detail-item">
                 <img class="icon" src="icons/Logout.svg" alt="Logout">
                 <div class="sidebar-list__item-info">

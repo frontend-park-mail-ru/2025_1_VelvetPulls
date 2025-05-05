@@ -1,10 +1,13 @@
+import { API_HOST, API_PORT } from "./api.js";
+
 import { eventBus } from "../modules/EventBus/EventBus.js";
 import { Message } from "../../entities/Message/index.js";
+
 class ChatWebSocket {
     constructor() {
         this.socket = null;
         this.connected = false;
-        this.baseUrl = "ws://localhost:8080/ws";
+        this.baseUrl = `ws://${API_HOST}:8082/ws`;
     }
 
     connect() {
@@ -18,12 +21,23 @@ class ChatWebSocket {
         this.socket.onmessage = (event) => {
             try {
                 const message = JSON.parse(event.data);
-                if (message.action === "newMessage") {
-                    const msg = Message.fromApi(message.payload);
-                    eventBus.emit("ws:NEW_MESSAGE", msg);
+                switch (message.action) {
+                    case "newMessage":
+                        const msg = Message.fromApi(message.payload);
+                        eventBus.emit("ws:NEW_MESSAGE", msg);
+                        break;
+                    case "updateMessage":
+                        const updatedMsg = Message.fromApi(message.payload);
+                        eventBus.emit("ws:MESSAGE_UPDATED", updatedMsg);
+                        break;
+                    case "deleteMessage":
+                        eventBus.emit("ws:MESSAGE_DELETED", message.payload.id);
+                        break;
+                    default:
+                        console.warn("Unknown WebSocket action:", message.action);
                 }
             } catch (error) {
-                console.error("WebSocket message error:", error);
+                //console.error("WebSocket message error:", error);
             }
         };
 
@@ -33,8 +47,19 @@ class ChatWebSocket {
         };
 
         this.socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
+            //console.error("WebSocket error:", error);
         };
+    }
+
+    disconnect() {
+        if (this.socket !== null) {
+            this.socket.close();
+        }
+    }
+
+    reconnect() {
+        this.disconnect();
+        this.connect();
     }
 
     send(message) {

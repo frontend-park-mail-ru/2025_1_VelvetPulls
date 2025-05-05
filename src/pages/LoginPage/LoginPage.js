@@ -1,6 +1,8 @@
 import {
     loginFormSubmit,
+    passwordInputListener,
     togglePasswordListener,
+    usernameInputListener,
 } from "../../shared/helpers/eventListeners.js";
 
 import { toSignup } from "./eventListeners.js";
@@ -30,6 +32,12 @@ class LoginPage {
         // Отправить форму
         const loginForm = this.container.querySelector(".auth-form");
         loginForm.addEventListener("submit", loginFormSubmit);
+
+        const usernameInput = this.container.querySelector("#username");
+        usernameInput.addEventListener("input", usernameInputListener);
+
+        const passwordInput = this.container.querySelector("#password");
+        passwordInput.addEventListener("input", passwordInputListener);
 
         // Переключить видимость пароля
         const togglers = this.container.querySelectorAll(

@@ -22,3 +22,7 @@
     left: var(--half-size);
     filter: invert(100%) sepia(1%) saturate(7422%) hue-rotate(210deg) brightness(105%) contrast(117%);
 }
+
+#username-input-channel{
+    visibility: hidden;
+}

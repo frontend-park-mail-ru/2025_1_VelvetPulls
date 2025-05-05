@@ -12,14 +12,14 @@
 }
 
 .user-info__full-name {
-    font: bold;
+    font-weight: bold;
     font-size: 50px;
     font-family: var(--font-family);
-    color: var(--main);
+    color: var(--white);
 }
 
 .user-info__online-status {
-    color: var(--online);
+    color: var(--gray);
     font-family: var(--font-family);
 }
 
@@ -27,6 +27,7 @@
     width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
+    background-color: var(--bg);
 }
 
 .avatar-container__image {
@@ -46,6 +47,14 @@
 
 }
 
+.divider {
+    width: 100%;
+    min-height: 1px;
+    background-color: var(--gray);
+    border: none;
+    margin: 0;
+}
+
 .detail-item {
     display: flex;
     align-items: center;
@@ -54,10 +63,6 @@
     padding: 10px;
     width: 90%;
     font-family: var(--font-family);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--black);
-    border-radius: 10px;
 }
 
 .detail-item__label {

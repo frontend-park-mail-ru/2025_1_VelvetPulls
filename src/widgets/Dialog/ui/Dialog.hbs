@@ -27,34 +27,43 @@
             {{!-- Горизонтальный разделитель --}}
             <div class="horizontal-divider"></div>
         </div>
-        
-        {{!-- Сообщения --}}
-        <section id="messages" class="sidebar-list scrollable">
-            {{!-- Здесь будут сообщения --}}
-        </section>
-        
-        {{!-- Ввод сообщения --}}
-        <div class="chat-input-container">
-            <div class="chat-input-container__input-wrapper">
-                {{!-- Вложения --}}
-                <button class="button">
-                    <img src="icons/PaperClip.svg" alt="Add attachment" class="icon">
-                </button>
-                
-                {{!-- Поле для ввода --}}
-                <input type="text" placeholder="Написать" class="chat-input-container__input">
-                
-                {{!-- Эмодзи --}}
-                <button class="button">
-                    <img src="icons/Emoji.svg" alt="Emoji" class="icon">
-                </button>
+        <div class="chat-container__main">
+            {{!-- Сообщения --}}
+            <div class="sidebar-header__search" id="search_msgs">
+            <img src="icons/Search.svg" alt="Search" class="icon">
+            <input type="text" class="sidebar-header__search-input" placeholder="Поиск сообщений">
             </div>
+            <div id="search_msgs_res">
             
-            {{!-- Отправить --}}
-            <button id="send-message-button" class="button">
-                <img src="icons/Send.svg" alt="Send message" class="icon">
-            </button>
-            
+            </div>
+            <section id="messages" class="sidebar-list scrollable">
+                {{!-- Здесь будут сообщения --}}
+            </section>
+
+
+
+            {{!-- Ввод сообщения --}}
+            <div class="chat-input-container">
+                <div class="chat-input-container__input-wrapper">
+                    {{!-- Вложения --}}
+                    <button class="button">
+                        <img src="icons/PaperClip.svg" alt="Add attachment" class="icon">
+                    </button>
+                    
+                    {{!-- Поле для ввода --}}
+                    <input id="send-message-input" type="text" placeholder="Написать" class="chat-input-container__input">
+                    
+                    {{!-- Эмодзи --}}
+                    <button class="button">
+                        <img src="icons/Emoji.svg" alt="Emoji" class="icon">
+                    </button>
+                </div>
+                
+                {{!-- Отправить --}}
+                <button id="send-message-button" class="button">
+                    <img src="icons/Send.svg" alt="Send message" class="icon">
+                </button>    
+            </div>
         </div>
     </section>
     

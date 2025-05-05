@@ -25,8 +25,15 @@
             </div> --}}
 
             {{!-- Аватар --}}
-            <div class="sidebar-list__input-container">
+            {{!-- <div class="sidebar-list__input-container">
                 <input type="file" id="avatar-input">
+            </div> --}}
+            <div class="sidebar-list__input-container">
+                <div class="avatar-container-upload">
+                    <img id="avatarImage" class="avatar-upload" src="{{avatarSrc}}" alt="Аватар">
+                </div>
+
+                <input type="file" id="fileInput1" accept="image/*">
             </div>
 
             {{!-- Имя --}}
@@ -38,11 +45,17 @@
 
             {{!-- Фамилия --}}
             <div class="sidebar-list__input-container">
-                <div class="sidebar-list__input-label">Фамилия</div>
+                <div class="sidebar-list__input-label">Фамилия (обязательно)</div>
                 <input type="text" placeholder="Фамилия" value="{{lastName}}"
                         id="last-name-input" class="sidebar-list__input">
             </div>
 
+            {{!-- Почта --}}
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Электронная почта (обязательно)</div>
+                <input type="text" placeholder="Email" value="{{email}}"
+                        id="email-input" class="sidebar-list__input">
+            </div>
             {{!-- <div class="sidebar-list__input-container">
                 <input class="sidebar-list__input" type="text" placeholder="О себе" value="{{bio}}">
                 <div class="sidebar-list__input-description">
@@ -54,21 +67,46 @@
 
         <div class="edit-profile__divider"></div>
 
-        <section class="sidebar-list">
-            <div class="sidebar-list__input-container">
-                <div class="sidebar-list__input-label">Имя пользователя</div>
-                <input type="text" placeholder="Имя пользователя" value="{{username}}"
-                        id="username-input" class="sidebar-list__input">
-                <div class="sidebar-list__input-description">
-                    <div>
-                        Вы можете выбрать публичное имя пользователя в <b>Keftegram</b>.
-                        В этом случае другие люди смогут найти Вас по такому имени и связаться, не зная Вашего телефона.<br>
-                        <br>
-                        Вы можете использовать символы <b>a-z</b>, <b>0-9</b> и подчёркивания.
-                        Минимальная длина - <b>8</b> символов.
+        <form>
+            <section class="sidebar-list">
+                {{!-- Имя пользователя --}}
+                <div class="sidebar-list__input-container">
+                    <div class="sidebar-list__input-label">Имя пользователя (обязательно)</div>
+                    <input type="text" placeholder="Имя пользователя" value="{{username}}"
+                            id="username-input" class="sidebar-list__input" autocomplete="username">
+                    <div class="sidebar-list__input-description">
+                        <div>
+                            Вы можете выбрать публичное имя пользователя в <b>Keftegram</b>.
+                            В этом случае другие люди смогут найти Вас по такому имени и связаться, не зная Вашего телефона.<br>
+                            <br>
+                            Вы можете использовать символы <b>a-z</b>, <b>0-9</b> и подчёркивания.
+                            Минимальная длина - <b>8</b> символов.
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+
+                {{!-- Пароль --}}
+                <div class="sidebar-list__input-container">
+                    <div class="sidebar-list__input-label">Новый пароль</div>
+                    <input type="password" placeholder="Пароль"
+                            id="new-password-input" class="sidebar-list__input" autocomplete="new-password">
+                    <div class="sidebar-list__input-description">
+                        <div>
+                            Вы можете поменять свой пароль.
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-list__input-container">
+                    <div class="sidebar-list__input-label">Подтвердите новый пароль</div>
+                    <input type="password" placeholder="Пароль" 
+                            id="repeat-password-input" class="sidebar-list__input" autocomplete="new-password">
+                    <div class="sidebar-list__input-description">
+                        <div>
+                            Подтвердите новый пароль для замены.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
     </main>
 </div>

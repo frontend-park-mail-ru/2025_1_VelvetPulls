@@ -19,11 +19,11 @@
             {{#each contacts}}
             <div class="sidebar-list__item sidebar-list-item">
                 {{!-- Аватар --}}
-                <img src="{{this.photoURL}}" alt="User avatar" class="avatar">
+                <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
 
                 {{!-- Информация о контакте --}}
                 <div class="sidebar-list-item__info">
-                    <div class="sidebar-list-item__full-name">{{this.name}}</div>
+                    <div class="sidebar-list-item__full-name">{{this.username}}</div>
                     {{!-- <div class="sidebar-list-item__online-status">{{this.onlineStatus}}</div> --}}
                 </div>
 

@@ -1,4 +1,5 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
+import { mainPage } from "../../../pages/MainPage/MainPage.js";
 
 class DialogInfo {
     constructor() {}
@@ -38,6 +39,10 @@ class DialogInfo {
             event.preventDefault();
 
             this.container.parentElement.removeChild(this.container);
+            if (mainPage.mobile){
+                                        document.querySelector(".chat-container").querySelector(".chat").style.visibility="visible"
+                                    document.querySelector(".chat-container").querySelector(".chat").style.width="100%"
+                                    }
             eventBus.emit("close dialog info", {});
         });
     }

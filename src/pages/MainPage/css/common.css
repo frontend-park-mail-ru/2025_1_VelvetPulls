@@ -11,7 +11,7 @@ body {
 }
 
 .container__divider {
-    width: 1px;
+    min-width: 1px;
     height: 100%;
     background-color: var(--black_divide);
 }
@@ -20,14 +20,20 @@ body {
     display: flex;
     flex-direction: column;
     
-    --width: 430px;
-    min-width: var(--width);
-    max-width: var(--width);
+    /* --width: 430px; */
+    /* min-width: 430px;
+    max-width: 430px; */
 }
 
 .avatar {
-    width: 60px;
-    aspect-ratio: 1;
+    --size: 60px;
+    min-width: var(--size);
+    min-height: var(--size);
+
+    max-width: var(--size);
+    max-height: var(--size);
+
+    background-color: var(--bg);
     border-radius: 100%;
 }
 

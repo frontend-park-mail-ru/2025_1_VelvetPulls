@@ -40,7 +40,11 @@
 }
 
 .popover__item:hover {
-    background-color: var(--gray);
+    background-color: var(--bg);
+}
+
+.popover__item_text{
+    min-width: 105px;
 }
 
 .popover__item__text {

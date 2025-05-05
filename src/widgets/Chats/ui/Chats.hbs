@@ -28,7 +28,7 @@
     <section class="chats">
         <div class="sidebar-list scrollable">
             {{#each chats}}
-            <div class="sidebar-list__item sidebar-list-item">
+            <div class="sidebar-list__item sidebar-list-item" id="{{this.id}}">
                 <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
 
                 <div class="sidebar-list-item__info">
@@ -36,17 +36,19 @@
                     <div class="sidebar-list-item__message-preview">{{this.lastMessage}}</div>
                 </div>
                 
-                <div class="sidebar-list-item__meta">
+                {{!-- <div class="sidebar-list-item__meta">
                     <time class="sidebar-list-item__time">{{this.time}}11:00</time>
                     {{#if this.unreadCount}}
                     <div class="sidebar-list-item__unread-count">{{this.unreadCount}}</div>
                     {{/if}}
-                </div>
+                </div> --}}
 
                 {{!-- Удалить контакт --}}
-                <button class="button">
-                    <img src="icons/delete.svg" alt="Delete" class="icon">
-                </button>
+                {{#if isOwner }}
+                    <button class="button">
+                        <img src="icons/delete.svg" alt="Delete" class="icon">
+                    </button>
+                {{/if}}
             </div>
             {{/each}}
         </div>

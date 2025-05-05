@@ -1,10 +1,13 @@
-export const API_URI = "http://localhost:8080/api";
+export const API_HOST = "localhost";
+export const API_PORT = "8080";
+
+export const API_URL = `http://${API_HOST}:${API_PORT}/api`;
 
 class API {
     #api;
 
     constructor() {
-        this.#api = API_URI;
+        this.#api = API_URL;
     }
     /**
      * Выполняет асинхронный HTTP-запрос к API.

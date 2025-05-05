@@ -32,10 +32,10 @@ class CreateGroup {
         nextButton.addEventListener("click", (event) => {
             event.preventDefault();
 
-            const input = this.container.querySelector("#group-name-input");
+            const input = this.container.querySelector("#group-title-input");
 
             if (input.value === "") {
-                alert("Название группы не может быть пустым");
+                this.createError("Название группы не может быть пустым");
             } else {
                 const groupInfo = {
                     title: input.value,
@@ -44,6 +44,39 @@ class CreateGroup {
                 eventBus.emit("new group -> add members", groupInfo);
             }
         });
+
+        const titleInput = this.container.querySelector("#group-title-input");
+        titleInput.addEventListener(
+            "input",
+            this.removeErrorIfExists.bind(this),
+        );
+    }
+
+    createError(textError) {
+        const errorElement = document.createElement("div");
+        errorElement.innerHTML = textError;
+        errorElement.classList.add("error-label");
+
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const lastElementChild = sidebarList.lastElementChild;
+
+        if (!lastElementChild.classList.contains("error-label")) {
+            sidebarList.appendChild(errorElement);
+        }
+    }
+
+    removeErrorIfExists() {
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const lastElementChild = sidebarList.lastElementChild;
+
+        if (
+            lastElementChild.classList !== undefined &&
+            lastElementChild.classList.contains("error-label")
+        ) {
+            sidebarList.removeChild(lastElementChild);
+        }
     }
 }
 

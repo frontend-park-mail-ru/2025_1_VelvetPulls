@@ -1,0 +1,26 @@
+.add-members-container {
+    position: relative;
+    height: 100%;
+    padding: 10px;
+    /* background-color: var(--bg); */
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.add-member__checkbox {
+    transform: scale(1.5);
+    accent-color: var(--main);
+}
+
+.add-member__checkbox:hover{
+    cursor: pointer;
+}
+
+.error-label {
+    color: var(--error);
+}

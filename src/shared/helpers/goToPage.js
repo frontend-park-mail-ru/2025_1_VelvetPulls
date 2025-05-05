@@ -4,7 +4,6 @@ import { auth } from "../api/auth.js";
 export const goToPage = async (page, pushState = true) => {
     if (!config[page]) {
         console.error(`Page "${page}" not found in config`);
-        alert("Page", page, "not found in config");
         return;
     }
 

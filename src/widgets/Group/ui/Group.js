@@ -5,9 +5,12 @@ import {
     sendMessage,
     getMessageHistory,
 } from "../../../entities/Message/index.js";
-import { currentUser } from "../../../entities/User/model/User.js";
+// import { currentUser } from "../../../entities/User/model/User.js";
 import { chatWebSocket } from "../../../shared/api/websocket.js";
 import { groupInfo } from "../../GroupInfo/index.js";
+import { getAvatar } from "../../../shared/helpers/getAvatar.js";
+import { store } from "../../../app/store/index.js";
+import { mainPage } from "../../../pages/MainPage/MainPage.js";
 
 class Group {
     constructor() {
@@ -16,27 +19,44 @@ class Group {
         eventBus.on("group-info: close", () => {
             this.infoIsOpen = false;
         });
+
+        eventBus.on("group is edited", this.onGroupEdit.bind(this));
+        eventBus.on("group new members", this.onNewMembers.bind(this));
+        eventBus.on("group delete member", this.onDeleteMember.bind(this));
+        eventBus.on("open dialog", () => {
+            this.infoIsOpen = false;
+        });
     }
 
-    async getData(chatId) {
-        this.chatId = chatId;
-
+    async setData(chatId) {
         const responseBody = await api.get(`/chat/${chatId}`);
+        const responseData = responseBody["data"];
 
-        const data = responseBody.data;
-        this.title = data.title;
-        this.countUsers = data.count_users;
+        const avatarPath = responseData["avatar_path"];
+
+        this.chatId = responseData["id"];
+        this.title = responseData["title"];
+        this.countUsers = responseData["count_users"];
+        this.avatarSrc = await getAvatar(avatarPath);
 
         this.messages = (await getMessageHistory(chatId)).data;
 
-        groupInfo.getData(data);
+        const data = {
+            chatId: this.chatId,
+            title: this.title,
+            countUsers: this.countUsers,
+            avatarSrc: this.avatarSrc,
+            users: responseData["users"],
+        };
+
+        groupInfo.setData(data);
     }
 
     async getHTML() {
         const data = {
             title: this.title,
             countUsers: this.countUsers,
-            // avatarSrc: this.user.avatarSrc,
+            avatarSrc: this.avatarSrc,
         };
 
         const groupTemplate = Handlebars.templates["Group.hbs"];
@@ -52,7 +72,8 @@ class Group {
             for (const messageItem of this.messages) {
                 const message = new Message(messageItem);
 
-                if (messageItem.user === currentUser.getUsername()) {
+                // if (messageItem.user === currentUser.getUsername()) {
+                if (messageItem.user === store.profile["username"]) {
                     messages.appendChild(await message.getElement("my"));
                 } else {
                     messages.appendChild(await message.getElement("group"));
@@ -61,6 +82,37 @@ class Group {
                 messages.scrollTop = messages.scrollHeight;
             }
         }
+
+        const search=doc.querySelector(".sidebar-header__search-input")
+        const ch_id=this.chatId
+        const search_res=doc.querySelector("#search_msgs_res")
+        search.addEventListener('keypress', async function(event) {
+            if (event.key === 'Enter') {
+                // console.log(search.value,ch_id)
+                const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
+                //console.log(responseBody1)
+                let res=responseBody1.data.messages
+                search_res.style.visibility="visible"
+                search_res.style.height="150px"
+                document.querySelector("#messages").style.height="100%"
+                search_res.innerHTML=""
+                if (res!==null){
+                    for (let i=0;i<res.length;i++){
+                        const sentAt = new Date(res[i].sent_at)
+                        search_res.innerHTML+=`<p>${res[i].username} в ${sentAt.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })} отправил: ${res[i].body}</p>`
+                    }
+                }
+            }
+        })
+
+        search_res.addEventListener("click", (event) => {
+            event.preventDefault();
+            search_res.style.visibility="hidden"
+            search_res.style.height="0px"
+        });
 
         this.bindListeners();
 
@@ -84,6 +136,14 @@ class Group {
             "click",
             this.onClickSendMessage.bind(this),
         );
+        const inputMessage = this.container.querySelector(
+            "#send-message-input",
+        );
+        inputMessage.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                this.onClickSendMessage(event);
+            }
+        });
     }
 
     onClickButtonClose(event) {
@@ -98,10 +158,13 @@ class Group {
         event.preventDefault();
 
         if (!this.infoIsOpen) {
-            const groupInfoContainer = groupInfo.getHTML();
-            const divider = this.container.querySelector(".vertical-divider");
-            divider.after(groupInfoContainer);
+            groupInfo.render();
             this.infoIsOpen = true;
+            if (mainPage.mobile){
+                document.querySelector(".chat-container").querySelector(".chat").style.visibility="hidden"
+            document.querySelector(".chat-container").querySelector(".chat").style.width="0px"
+            document.querySelector(".chat-container").querySelector(".sidebar").style.width="100%"
+            }
         }
     }
 
@@ -112,7 +175,7 @@ class Group {
             ".chat-input-container__input",
         );
 
-        if (messageInput.value !== "") {
+        if (messageInput.value !== "" &&((messageInput.value.split(' ').length-1)!==messageInput.value.length)) {
             await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {
@@ -120,15 +183,42 @@ class Group {
                 sent_at: new Date(),
             };
             const message = new Message(messageData);
-            const messages = this.container.querySelector("#messages");
-            messages.appendChild(await message.getElement("my"));
 
             messageInput.value = "";
 
-            messages.scrollTop = messages.scrollHeight;
-
             chatWebSocket.send(message);
         }
+    }
+
+    onGroupEdit(data) {
+        this.title = data.title;
+        this.avatarSrc = data.avatarSrc;
+
+        const container = this.container;
+
+        const title = container.querySelector(".chat-header__full-name");
+        title.innerHTML = this.title;
+
+        const avatar = container.querySelector(".chat-header__avatar");
+        avatar.src = this.avatarSrc;
+    }
+
+    onNewMembers(newMembers) {
+        const container = this.container;
+
+        const membersCountElement = container.querySelector(
+            "#group-header__count-members",
+        );
+        const currentMembersCount = Number(membersCountElement.innerHTML);
+        membersCountElement.innerHTML = currentMembersCount + newMembers.length;
+    }
+
+    onDeleteMember() {
+        const countElement = this.container.querySelector(
+            "#group-header__count-members",
+        );
+        const count = Number(countElement.innerHTML) - 1;
+        countElement.innerHTML = count;
     }
 }
 

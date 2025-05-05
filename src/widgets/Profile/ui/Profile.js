@@ -1,14 +1,20 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { currentUser } from "../../../entities/User/model/User.js";
+
+import { store } from "../../../app/store/index.js";
 
 class Profile {
     getHTML() {
-        const data = {
-            username: currentUser.getUsername(),
-            fullName: currentUser.getFullName(),
-            phone: currentUser.getPhone(),
-            avatarPath: currentUser.avatarSrc,
-        };
+        // const data = {
+        //     username: currentUser.getUsername(),
+        //     fullName: currentUser.getFullName(),
+        //     phone: currentUser.getPhone(),
+        //     avatarSrc: currentUser.avatarSrc,
+        //     email: currentUser.getEmail(),
+        // };
+        // data.avatarSrc =
+        //     data.avatarSrc === undefined ? "img/Avatar.png" : data.avatarSrc;
+
+        const data = store.profile;
 
         const profileTemplate = Handlebars.templates["Profile.hbs"];
         const html = profileTemplate({ ...data });
@@ -44,7 +50,7 @@ class Profile {
         const logoutButton = this.container.querySelector("#button-logout");
         logoutButton.addEventListener("click", (event) => {
             event.preventDefault();
-            eventBus.emit("profile -> logout");
+            eventBus.emit("logout");
         });
     }
 }

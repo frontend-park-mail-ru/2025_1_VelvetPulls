@@ -1,0 +1,21 @@
+import { api } from "../../../shared/api/api.js";
+
+export const createChat = async (chatData = null, avatar = null) => {
+    const formData = new FormData();
+
+    if (chatData !== null) {
+        formData.append("chat_data", JSON.stringify(chatData));
+    }
+
+    if (avatar !== null) {
+        formData.append("avatar", avatar);
+    }
+
+    const responseBody = await api.post("/chat", formData);
+
+    if (responseBody.status !== true) {
+        throw Error("Возникла ошибка при создании чата:", responseBody.error);
+    }
+
+    return responseBody;
+};

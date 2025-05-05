@@ -1,7 +1,13 @@
 import { eventBus } from "../../../shared/modules/EventBus/EventBus.js";
-import { api } from "../../../shared/api/api.js";
 
 class CreateContact {
+    constructor() {
+        eventBus.on(
+            "store: contact not found",
+            this.onContactNotFound.bind(this),
+        );
+    }
+
     getHTML() {
         const createGroupTemplate = Handlebars.templates["CreateContact.hbs"];
         const html = createGroupTemplate({});
@@ -33,23 +39,43 @@ class CreateContact {
         nextButton.addEventListener("click", async (event) => {
             event.preventDefault();
 
-            // alert(
-            //     "Здесь будет выполняться сохранение контакта (со всеми необходимыми проверками)",
-            // );
-
             const input = this.container.querySelector("#username-input");
-            const requestBody = {
-                username: input.value,
-            };
-
-            const response = await api.post("/contacts", requestBody);
-
-            if (response.status === false) {
-                alert(`Пользователь ${input.value} не найден`);
-            }
-
-            eventBus.emit("new contact -> chats");
+            const username = input.value.trim();
+            eventBus.emit("contacts: create", username);
         });
+
+        const usernameInput = this.container.querySelector("#username-input");
+        usernameInput.addEventListener(
+            "input",
+            this.removeErrorIfExists.bind(this),
+        );
+    }
+
+    onContactNotFound(username) {
+        const errorElement = document.createElement("div");
+        errorElement.innerHTML = `Пользователь ${username} не найден`;
+        errorElement.classList.add("error-label");
+
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const lastElementChild = sidebarList.lastElementChild;
+
+        if (!lastElementChild.classList.contains("error-label")) {
+            sidebarList.appendChild(errorElement);
+        }
+    }
+
+    removeErrorIfExists() {
+        const container = this.container;
+        const sidebarList = container.querySelector(".sidebar-list");
+        const lastElementChild = sidebarList.lastElementChild;
+
+        if (
+            lastElementChild.classList !== undefined &&
+            lastElementChild.classList.contains("error-label")
+        ) {
+            sidebarList.removeChild(lastElementChild);
+        }
     }
 }
 

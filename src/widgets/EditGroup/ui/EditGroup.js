@@ -129,9 +129,8 @@ class EditGroup {
         // Обновить данные там, где нужно
         document.querySelector(".chat-header__full-name").innerHTML=title
         //eventBus.emit("close dialog");
-        groupInfo.render();
+        
         eventBus.emit("group is edited", data);
-
         
         document.querySelector(".user-info__full-name").innerHTML=title
     }

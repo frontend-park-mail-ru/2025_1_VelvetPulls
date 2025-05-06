@@ -106,7 +106,8 @@ class Group {
                     }
                 }
                 else {
-                    search_res.innerHTML = "<p style='font-family: var(--font-family);'>Сообщений не найдено</p>"
+                    search_res.style.visibility = "hidden"
+                    search_res.style.height = "0px"
                 }
             }
         })

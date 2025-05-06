@@ -30,10 +30,10 @@ class Channel {
         eventBus.on("close channel info", () => {
             //event.preventDefault();
 
-        //if (!this.infoIsOpen) {
+            //if (!this.infoIsOpen) {
             channelInfo.render();
             this.infoIsOpen = true;
-        //}
+            //}
         });
     }
 
@@ -42,8 +42,8 @@ class Channel {
         const responseData = responseBody["data"];
         //console.log(responseData.users)
         responseData.users.forEach(element => {
-            if (element.role==="owner"){
-                this.owner=element
+            if (element.role === "owner") {
+                this.owner = element
             }
         });
         // console.log(this.owner)
@@ -100,23 +100,23 @@ class Channel {
             }
         }
 
-        const search=doc.querySelector(".sidebar-header__search-input")
-        const ch_id=this.chatId
-        const search_res=doc.querySelector("#search_msgs_res")
-        search.addEventListener('keypress', async function(event) {
+        const search = doc.querySelector(".sidebar-header__search-input")
+        const ch_id = this.chatId
+        const search_res = doc.querySelector("#search_msgs_res")
+        search.addEventListener('keypress', async function (event) {
             if (event.key === 'Enter') {
                 // console.log(search.value,ch_id)
                 const responseBody1 = await api.get(`/search/${ch_id}/messages?query=${search.value}&limit=10`);
                 // console.log(responseBody1.data.messages)
-                let res=responseBody1.data.messages
-                search_res.style.visibility="visible"
-                search_res.style.height="150px"
-                document.querySelector("#messages").style.height="100%"
-                search_res.innerHTML=""
-                if (res!==null){
-                    for (let i=0;i<res.length;i++){
+                let res = responseBody1.data.messages
+                search_res.style.visibility = "visible"
+                search_res.style.height = "150px"
+                document.querySelector("#messages").style.height = "100%"
+                search_res.innerHTML = ""
+                if (res !== null) {
+                    for (let i = 0; i < res.length; i++) {
                         const sentAt = new Date(res[i].sent_at)
-                        search_res.innerHTML+=`<p>${res[i].username} в ${sentAt.toLocaleTimeString([], {
+                        search_res.innerHTML += `<p>${res[i].username} в ${sentAt.toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                         })} отправил: ${res[i].body}</p>`
@@ -127,16 +127,16 @@ class Channel {
 
         search_res.addEventListener("click", (event) => {
             event.preventDefault();
-            search_res.style.visibility="hidden"
-            search_res.style.height="0px"
+            search_res.style.visibility = "hidden"
+            search_res.style.height = "0px"
         });
 
         this.bindListeners();
 
         // console.log(currentUser.getUsername(), this.owner.username)
 
-        if (currentUser.getUsername()!==this.owner.username){
-        container.querySelector(".chat-input-container").innerHTML="<p>Ты всего лишь подписота, только смотреть можно</p>"
+        if (currentUser.getUsername() !== this.owner.username) {
+            container.querySelector(".chat-input-container").innerHTML = "<p style='font-family: var(--font-family);'>Подписчики канала не могут оставлять свои посты</p>"
         }
 
         // container.querySelector(".chat-input-container").innerHTML=""
@@ -186,10 +186,10 @@ class Channel {
             channelInfo.render();
             this.infoIsOpen = true;
             if (mainPage.mobile) {
-                            document.querySelector(".chat-container").querySelector(".chat").style.visibility="hidden"
-                        document.querySelector(".chat-container").querySelector(".chat").style.width="0px"
-                        document.querySelector(".chat-container").querySelector(".sidebar").style.width="100%"
-                        }
+                document.querySelector(".chat-container").querySelector(".chat").style.visibility = "hidden"
+                document.querySelector(".chat-container").querySelector(".chat").style.width = "0px"
+                document.querySelector(".chat-container").querySelector(".sidebar").style.width = "100%"
+            }
         }
     }
 
@@ -200,7 +200,7 @@ class Channel {
             ".chat-input-container__input",
         );
 
-        if (messageInput.value !== "" &&((messageInput.value.split(' ').length-1)!==messageInput.value.length)) {
+        if (messageInput.value !== "" && ((messageInput.value.split(' ').length - 1) !== messageInput.value.length)) {
             await sendMessage(this.chatId, messageInput.value);
 
             const messageData = {

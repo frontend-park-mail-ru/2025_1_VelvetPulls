@@ -122,6 +122,9 @@ class Channel {
                         })} отправил: ${res[i].body}</p>`
                     }
                 }
+                else {
+                    search_res.innerHTML = "<p style='font-family: var(--font-family);'>Сообщений не найдено</p>"
+                }
             }
         })
 

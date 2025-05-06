@@ -55,9 +55,7 @@ class Contacts {
                     }
                 }
                 else {
-                    //console.log(document.querySelector(".scrollable"));
                     searchEmpty = true;
-                    document.querySelector(".scrollable").innerHTML = "<p style='font-family: var(--font-family);'>Контактов не найдено</p>";
                 }
                 const templateSource = `
                         <div class="sidebar-list scrollable">

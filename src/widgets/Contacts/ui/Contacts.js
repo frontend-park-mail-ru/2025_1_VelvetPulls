@@ -35,7 +35,7 @@ class Contacts {
                 // console.log(finder.value)
                 const responseBody1 = await api.get(`/search/contacts?query=${finder.value}`);
                 //console.log(responseBody1.data)
-                const searchEmpty = false;
+                let searchEmpty = false;
                 const contacts = [];
                 if (responseBody1.data !== null) {
                     for (const contact of responseBody1.data) {

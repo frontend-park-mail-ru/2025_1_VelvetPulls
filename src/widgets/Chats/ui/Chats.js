@@ -136,7 +136,7 @@ class Chats {
                     }
                 }
                 else {
-                    document.querySelector(".scrollable").innerHTML = "<p style='font-family: var(--font-family);'>Чатов не найдено</p>"
+                    document.querySelector(".scrollable").innerHTML = "<p style='font-family: var(--font-family);'>Чатов не найдено</p>";
                 }
                 // console.log(chats1)
                 // console.log(document.querySelector(".scrollable"))

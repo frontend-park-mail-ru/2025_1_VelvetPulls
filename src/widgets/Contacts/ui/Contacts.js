@@ -28,91 +28,93 @@ class Contacts {
     }
 
     addListeners() {
-        const finder=this.container.querySelector(".sidebar-header__search-input")
-                finder.addEventListener('keypress', async function(event) {
-                    if (event.key === 'Enter') {
-                        //document.querySelector(".scrollable").innerHTML=""
-                    // console.log(finder.value)
-                    const responseBody1 = await api.get(`/search/contacts?query=${finder.value}`);
-                    // console.log(responseBody1.data)
-                    const contacts = [];
-        if (responseBody1.data !== null) {
-            for (const contact of responseBody1.data) {
-                const username = contact["username"];
+        const finder = this.container.querySelector(".sidebar-header__search-input")
+        finder.addEventListener('keypress', async function (event) {
+            if (event.key === 'Enter') {
+                //document.querySelector(".scrollable").innerHTML=""
+                // console.log(finder.value)
+                const responseBody1 = await api.get(`/search/contacts?query=${finder.value}`);
+                // console.log(responseBody1.data)
+                const contacts = [];
+                if (responseBody1.data !== null) {
+                    for (const contact of responseBody1.data) {
+                        const username = contact["username"];
 
-                const avatarPath = contact["avatar_path"];
+                        const avatarPath = contact["avatar_path"];
 
-                let avatarSrc = "icons/Profile.svg";
-                if (avatarPath!==undefined){
-                    avatarSrc = await getAvatar(avatarPath)
+                        let avatarSrc = "icons/Profile.svg";
+                        if (avatarPath !== undefined) {
+                            avatarSrc = await getAvatar(avatarPath)
+                        }
+
+                        contacts.push({
+                            username: username,
+                            avatarSrc: avatarSrc,
+                        });
+                    }
+                }
+                else {
+                    document.querySelector(".scrollable").innerHTML = "<p style='font-family: var(--font-family);'>Контактов не найдено</p>";
+                }
+                const templateSource = `
+                        <div class="sidebar-list scrollable">
+                                {{#each contacts}}
+                                <div class="sidebar-list__item sidebar-list-item">
+                                    {{!-- Аватар --}}
+                                    <img src="{{avatarSrc}}" alt="User avatar" class="avatar">
+
+                                    {{!-- Информация о контакте --}}
+                                    <div class="sidebar-list-item__info">
+                                        <div class="sidebar-list-item__full-name">{{username}}</div>
+                                        {{!-- <div class="sidebar-list-item__online-status">{{onlineStatus}}</div> --}}
+                                    </div>
+
+                                    {{!-- Удалить контакт --}}
+                                    <button class="button">
+                                        <img src="icons/delete.svg" alt="Delete" class="icon">
+                                    </button>
+                                </div>
+                                {{/each}}
+                            </div>
+                    `;
+                const template1 = Handlebars.compile(templateSource);
+                // Создаем HTML из шаблона с данными
+                const html1 = template1({ contacts: contacts });
+                // console.log(html1)
+                const container1 = document.querySelector('.contacts');
+                if (container1) {
+                    container1.innerHTML = ""
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html1;
+                    container1.appendChild(tempDiv);
+                    // console.log(container1)
                 }
 
-                contacts.push({
-                    username: username,
-                    avatarSrc: avatarSrc,
-                });
+                const contacts1 = document.querySelectorAll(".sidebar-list-item");
+                for (let i = 0; i < contacts1.length; ++i) {
+                    const contactElement = contacts1[i];
+                    // console.log(contacts1[i])
+
+                    const deleteButton = contactElement.querySelector(".button");
+                    deleteButton.addEventListener("click", async (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        const contactUser = contacts[i];
+
+                        const responseBody = {
+                            username: contactUser.username,
+                        };
+
+                        await api.delete("/contacts", responseBody);
+
+                        contactElement.parentNode.removeChild(contactElement);
+                    });
+                }
+
             }
-        }
-        // console.log(contacts)
-        const templateSource = `
-    <div class="sidebar-list scrollable">
-            {{#each contacts}}
-            <div class="sidebar-list__item sidebar-list-item">
-                {{!-- Аватар --}}
-                <img src="{{avatarSrc}}" alt="User avatar" class="avatar">
+        })
 
-                {{!-- Информация о контакте --}}
-                <div class="sidebar-list-item__info">
-                    <div class="sidebar-list-item__full-name">{{username}}</div>
-                    {{!-- <div class="sidebar-list-item__online-status">{{onlineStatus}}</div> --}}
-                </div>
-
-                {{!-- Удалить контакт --}}
-                <button class="button">
-                    <img src="icons/delete.svg" alt="Delete" class="icon">
-                </button>
-            </div>
-            {{/each}}
-        </div>
-`;
-const template1 = Handlebars.compile(templateSource);
-// Создаем HTML из шаблона с данными
-const html1 = template1({contacts:contacts});
-// console.log(html1)
-const container1 = document.querySelector('.contacts');
-if (container1) {
-    container1.innerHTML=""
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html1;
-    container1.appendChild(tempDiv);
-    // console.log(container1)
-}
-
-const contacts1 = document.querySelectorAll(".sidebar-list-item");
-        for (let i = 0; i < contacts1.length; ++i) {
-            const contactElement = contacts1[i];
-            // console.log(contacts1[i])
-
-            const deleteButton = contactElement.querySelector(".button");
-            deleteButton.addEventListener("click", async (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-
-                const contactUser = contacts[i];
-
-                const responseBody = {
-                    username: contactUser.username,
-                };
-
-                await api.delete("/contacts", responseBody);
-
-                contactElement.parentNode.removeChild(contactElement);
-            });
-        }
-
-}
-                })
-                    
         const back = this.container.querySelector("#button-back");
 
         back.addEventListener("click", (event) => {

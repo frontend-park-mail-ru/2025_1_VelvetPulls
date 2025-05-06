@@ -34,7 +34,8 @@ class Contacts {
                 //document.querySelector(".scrollable").innerHTML=""
                 // console.log(finder.value)
                 const responseBody1 = await api.get(`/search/contacts?query=${finder.value}`);
-                console.log(responseBody1.data)
+                //console.log(responseBody1.data)
+                const searchEmpty = false;
                 const contacts = [];
                 if (responseBody1.data !== null) {
                     for (const contact of responseBody1.data) {
@@ -54,7 +55,8 @@ class Contacts {
                     }
                 }
                 else {
-                    console.log(document.querySelector(".scrollable"));
+                    //console.log(document.querySelector(".scrollable"));
+                    searchEmpty = true;
                     document.querySelector(".scrollable").innerHTML = "<p style='font-family: var(--font-family);'>Контактов не найдено</p>";
                 }
                 const templateSource = `
@@ -90,7 +92,9 @@ class Contacts {
                     container1.appendChild(tempDiv);
                     // console.log(container1)
                 }
-
+                if (searchEmpty) {
+                    document.querySelector(".scrollable").innerHTML = "<p style='font-family: var(--font-family);'>Контактов не найдено</p>";
+                }
                 const contacts1 = document.querySelectorAll(".sidebar-list-item");
                 for (let i = 0; i < contacts1.length; ++i) {
                     const contactElement = contacts1[i];

@@ -98,6 +98,11 @@
     font-size: 20px;
 }
 
+.message__redact {
+    font-size: 20px;
+    font-style: italic;
+}
+
 .message__status {
     display: block;
 }

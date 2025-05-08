@@ -71,6 +71,7 @@ export class Message {
             sentAt: this.getTime(),
             username: this.username,
             avatarSrc: await getAvatar(this.avatarPath),
+            redact: this.isRedacted?"ред.":"",
         };
 
         let template = null;
@@ -142,6 +143,14 @@ export class Message {
                     input.addEventListener('keypress', async function(event) {
                         if (event.key === 'Enter') {
                             const newText = input.value;
+                            if (!((newText !== "")&&((newText.split(' ').length-1)!==newText.length))){
+                                return
+                            }
+                            if (newText===currentText){
+                                input.remove()
+                                textBlock.innerHTML = newText;
+                                return
+                            }
                             textBlock.parentNode.querySelector(".message__delete").style.display="none"
                             // console.log(textBlock)
                             // Сначала отправляем на сервер

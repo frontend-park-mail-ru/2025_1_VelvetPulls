@@ -31,3 +31,19 @@
     
     display: none;
 }
+
+.finder-opt{
+    width: 33%;
+    text-align: center;
+    background-color: blue;
+    margin: 0.5%;
+    cursor: pointer;
+    color: aliceblue;
+}
+
+.finder-options{
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+    height: 0px;
+}

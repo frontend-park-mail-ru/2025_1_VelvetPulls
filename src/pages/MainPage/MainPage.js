@@ -20,6 +20,7 @@ import { goToPage } from "../../shared/helpers/goToPage.js";
 import { createDialog } from "../../widgets/CreateDialog/index.js";
 import { createChannel } from "../../widgets/CreateChannel/index.js";
 import { store } from "../../app/store/index.js";
+import { currentUser } from "../../entities/User/model/User.js";
 
 class MainPage {
     constructor() {
@@ -65,6 +66,7 @@ class MainPage {
             this.lastMes=message.id
         });
         eventBus.on("ws:MESSAGE_UPDATED", (updatedMessage) => {
+            console.log(updatedMessage)
             if (updatedMessage.chatId !== this.currentChatId) return;
 
             const messagesContainer = document.querySelector("#messages");
@@ -76,8 +78,10 @@ class MainPage {
             );
             if (messageElement) {
                 const content = messageElement.querySelector('.message__content');
+                const redact=messageElement.querySelector('.message__redact');
                 if (content) {
                     content.textContent = updatedMessage.body;
+                    redact.textContent="ред."
                     if (updatedMessage.is_redacted) {
                         if (!content.querySelector('.edited-mark')) {
                             const editedMark = document.createElement('span');
@@ -128,6 +132,17 @@ class MainPage {
             this.currentChatId = chatId;
             this.currentChatType = "dialog";
             await dialogInstace.init({ user, chatId });
+            this.chat = dialogInstace;
+
+            goToPage("main");
+        });
+
+        eventBus.on("reopen dialog", async () => {
+            let chatId=this.currentChatId;
+            this.currentChatType = "dialog";
+            let a=store.profile.username
+            console.log(a)
+            await dialogInstace.init({ a, chatId });
             this.chat = dialogInstace;
 
             goToPage("main");

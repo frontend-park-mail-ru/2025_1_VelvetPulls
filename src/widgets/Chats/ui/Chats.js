@@ -75,8 +75,17 @@ class Chats {
                 document.querySelector(".scrollable").innerHTML=""
             // console.log(finder.value)
             const responseBody1 = await api.get(`/search?query=${finder.value}`);
+            const type_con=document.querySelector('.finder-options')
+            type_con.style.visibility="visible"
+            type_con.style.height="auto"
                 this.chats1 = responseBody1.data;
-                const chats1 = [];
+                const group_bar=document.querySelector("#finder-group")
+                let type=""
+                group_bar.addEventListener('click', async function(event) {
+                    event.preventDefault()
+                    type="group"
+                    console.log(type)
+                const chats1 = [];this.chats1 = responseBody1.data;;
         
                 if (this.chats1 !== null && this.chats1 !== undefined) {
                     for (const chat of this.chats1) {
@@ -186,8 +195,11 @@ if (container1) {
                     eventBus.emit("chat is deleted", chatModel);
                 });
             }
-        }   
-            }})
+        }
+                })
+                
+    }
+})
         const chats = this.container.querySelectorAll(".sidebar-list-item");
         for (let i = 0; i < chats.length; ++i) {
             const chatElement = chats[i];

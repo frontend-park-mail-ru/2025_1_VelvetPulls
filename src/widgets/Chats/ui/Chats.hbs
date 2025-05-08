@@ -26,6 +26,11 @@
 
     {{!-- Chats --}}
     <section class="chats">
+        <div class="finder-options">
+            <div class="finder-opt" id="finder-group">group</div>
+            <div class="finder-opt" id="finder-channel">channel</div>
+            <div class="finder-opt" id="finder-dialog">dialog</div>
+        </div>
         <div class="sidebar-list scrollable">
             {{#each chats}}
             <div class="sidebar-list__item sidebar-list-item" id="{{this.id}}">

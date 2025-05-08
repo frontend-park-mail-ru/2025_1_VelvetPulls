@@ -19,7 +19,11 @@ class Dialog {
         this.user = null;
         this.chatId = null;
         this.messages = [];
+        this.messages1 = [];
         this.container = null;
+        this.topMsgs=[]
+        this.curMsgs=[]
+        this.botMsgs=[]
 
         this.infoIsOpen = false;
 
@@ -37,6 +41,7 @@ class Dialog {
         this.user = user;
 
         this.messages = (await getMessageHistory(chatId)).data;
+        this.messages1=(await getMessageHistory(chatId)).data;
 
         dialogInfo.setUser(user);
     }
@@ -57,21 +62,9 @@ class Dialog {
         const container = doc.body.firstChild;
         this.container = container;
 
-        // const messages = this.container.querySelector("#messages");
-        // if (this.messages !== null) {
-        //     for (const messageItem of this.messages) {
-        //         const message = new Message(messageItem);
-
-        //         if (messageItem.user === currentUser.getUsername()) {
-        //             messages.appendChild(await message.getElement("my"));
-        //         } else {
-        //             messages.appendChild(await message.getElement("dialog"));
-        //         }
-
-        //         messages.scrollTop = messages.scrollHeight;
-        //     }
-        // }
         let queue=this.messages
+        let curMes=[]
+        let prevMes=[]
         if (queue===undefined){
             queue=[]
         }
@@ -81,6 +74,7 @@ class Dialog {
 
             for (let i=0;(i<8)&&(queue.length>0);i++){
                 let a=queue.pop()
+                curMes.push(a)
                 const message = new Message(a);
                 if (a.user === currentUser.getUsername()) {
                     messages.insertBefore(await message.getElement("my"),messages.firstChild)
@@ -88,45 +82,52 @@ class Dialog {
                 } else {
                     messages.insertBefore(await message.getElement("dialog"),messages.firstChild)
                 }
-                // if (a.user === currentUser.getUsername()) {
-                //     messages.appendChild(await message.getElement("my"));
-                // } else {
-                //     messages.appendChild(await message.getElement("dialog"));
-                // }
             }
-            // for (const messageItem of this.messages) {
-            //     const message = new Message(messageItem);
-
-            //     if (messageItem.user === currentUser.getUsername()) {
-            //         messages.appendChild(await message.getElement("my"));
-            //     } else {
-            //         messages.appendChild(await message.getElement("dialog"));
-            //     }
-
-            //     messages.scrollTop = messages.scrollHeight;
-            // }
         }
-    //     const newElement = doc.createElement('p');
-    // newElement.textContent = 'Новый элемент в начале';
-
-    // messages.insertBefore(newElement, messages.firstChild);
         let m=this.messages
-        async function handleScroll() {
-            // const scrollTop = messages.scrollY || messages.pageYOffset;
-            // const windowHeight = messages.innerHeight;
-            //const documentHeight = messages.documentElement.scrollHeight;
-            //console.log(messages.scrollHeight,messages.scrollTop,m)
+        this.topMsgs=[]
+        this.curMsgs=[]
+        this.botMsgs=[]
+        const handleScroll = async () => {
+        // async function handleScroll() {
+            // console.log(messages.clientHeight,messages.scrollTop,messages.scrollHeight)
             if ((messages.scrollTop===0)&&(queue.length>0)){
                 let a=queue.pop()
+                curMes.push(a)
                 const message = new Message(a);
                 if (a.user === currentUser.getUsername()) {
                     messages.insertBefore(await message.getElement("my"),messages.firstChild)
                 } else {
                     messages.insertBefore(await message.getElement("dialog"),messages.firstChild)
                 }
-                // console.log(queue)
-                // console.log(messages)
-                messages.scrollTop=100
+                messages.removeChild(messages.lastElementChild)
+                let b=curMes.shift()
+                prevMes.push(b)
+                console.log(prevMes,curMes,queue)
+                this.topMsgs=queue
+                this.curMsgs=curMes
+                this.botMsgs=prevMes
+                messages.scrollTop=10
+            }
+            if ((messages.clientHeight+messages.scrollTop+5>messages.scrollHeight)&&(prevMes.length>0)){
+                let a=prevMes.pop()
+                //console.log(a,queue.pop())
+                curMes.unshift(a)
+                const message = new Message(a);
+                if (a.user === currentUser.getUsername()) {
+                    messages.appendChild(await message.getElement("my"))
+                } else {
+                    messages.appendChild(await message.getElement("dialog"))
+                }
+                messages.removeChild(messages.firstChild)
+                // let b=curMes.pop()
+                // queue.unshift(b)
+                let b=curMes.pop()
+                queue.push(b)
+                this.topMsgs=queue
+                this.curMsgs=curMes
+                this.botMsgs=prevMes
+                console.log(curMes)
             }
             // if (scrollTop + windowHeight >= documentHeight - 100) { // Загружаем, если осталось 100px до конца
             //     // loadItems();
@@ -134,10 +135,6 @@ class Dialog {
         }
     
         messages.addEventListener('scroll', handleScroll);
-        //console.log(messages)
-        // console.log(this.messages)
-
-
         const search=doc.querySelector(".sidebar-header__search-input")
         const search_res=doc.querySelector("#search_msgs_res")
         search.addEventListener('keypress', async function(event) {
@@ -232,9 +229,29 @@ class Dialog {
         const messageInput = this.container.querySelector(
             ".chat-input-container__input",
         );
-
+        const messages = this.container.querySelector("#messages");
         if ((messageInput.value !== "")&&((messageInput.value.split(' ').length-1)!==messageInput.value.length)) {
+            while (this.botMsgs.length>0){
+                let a=this.botMsgs.pop()
+
+                this.curMsgs.unshift(a)
+                const message = new Message(a);
+                if (a.user === currentUser.getUsername()) {
+                    messages.appendChild(await message.getElement("my"))
+                } else {
+                    messages.appendChild(await message.getElement("dialog"))
+                }
+                //messages.removeChild(messages.firstChild)
+                // let b=curMes.pop()
+                // queue.unshift(b)
+                //let b=this.curMsgs.pop()
+                //this.topMsgs.push(b)
+
+                console.log(a)
+            }
             await sendMessage(this.chatId, messageInput.value);
+            // messages.removeChild(messages.lastElementChild)
+            console.log(this.messages1)
 
             const messageData = {
                 body: messageInput.value,
@@ -247,6 +264,8 @@ class Dialog {
             chatWebSocket.send(message);
 
             messageInput.value = "";
+            console.log(this.messages)
+            // document.querySelector("#messages").innerHTML = ""
         }
     }
 }

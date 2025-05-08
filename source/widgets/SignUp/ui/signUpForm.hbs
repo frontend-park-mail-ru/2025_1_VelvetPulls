@@ -1,0 +1,71 @@
+<div class="signup-page">
+  <div id="right1" class="auth-form">
+    <form class="auth-form-user">
+      <p class="auth-form-user__p">Chatty</p>
+      <div class="auth-form-error">
+        <span class="auth-form-error__span" id="errorNickname"></span>
+      </div>
+      <input
+        id="nickname"
+        class="auth-form-user__input auth-form-input nickname not_error"
+        type="text"
+        placeholder="Имя пользователя"
+        name="text"
+      />
+      <div class="auth-form-error">
+        <span class="auth-form-error__span" id="errorLogin"></span>
+      </div>
+      <input
+        id="login"
+        class="auth-form-user__input auth-form-input not_error"
+        type="text"
+        placeholder="Логин"
+        name="text"
+      />
+      <div class="auth-form-error">
+        <span class="auth-form-error__span" id="errorPassword"></span>
+      </div>
+      <div class="auth-form-user-password" style="position: relative;">
+        <input
+          id="password"
+          class="auth-form-user__input auth-form-input not_error"
+          type="password"
+          placeholder="Пароль"
+          name="password"
+        />
+        <img
+          id="password-visibility-toggle"
+          class="auth-form-user-password__img-pass_show signup-password-eye"
+          src="/assets/image/eye.svg"
+        />
+      </div>
+      <div class="auth-form-error">
+        <span class="auth-form-error__span" id="errorPassword2"></span>
+      </div>
+      <div class="auth-form-user-password" style="position: relative;">
+        <input
+          id="password2"
+          class="auth-form-user__input auth-form-input not_error"
+          type="password"
+          placeholder="Повторите пароль"
+          name="password"
+        />
+        <img
+          id="password-visibility-toggle2"
+          class="auth-form-user-password__img-pass_show password-visibility-toggle signup-password-eye"
+          src="/assets/image/eye.svg"
+        />
+      </div>
+      {{!-- <div class="login-href-wrapper">
+        <a
+          class="auth-form-user__a-login-redirect"
+          id="login_href"
+          href="/login"
+        >Уже есть аккаунт? Войти</a>
+      </div> --}}
+      <button type="submit" class="auth-form-user__button-create btn">Создать
+        аккаунт</button>
+    </form>
+    <p>Нет аккаунта? <span id="login_href">Войти</span></p>
+  </div>
+</div>

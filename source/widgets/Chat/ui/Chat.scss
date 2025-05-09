@@ -1,0 +1,547 @@
+@import "@/shared/styles/styles.scss";
+$background-shadow-50: var(--background-shadow-50);
+$primary: var(--primary);
+$primary-shadow-25: var(--primary-shadow-25);
+$accent: var(--accent);
+
+$text-over-primary: var(--text-over-primary);
+$text-over-primary-shadow-50: var(--text-over-primary-shadow-50);
+
+$button-next-page-color : var(--button-next-page-color);
+$scroll-bar-color: var(--scroll-bar-color);
+$chat-header-height: 70px;
+$chat-min-width: 500px;
+$messages-container-max-width: 600px;
+
+@mixin font-settings($font-family, $font-weight, $font-size, $color) {
+  font-family: $font-family;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  color: $color;
+}
+
+textarea {
+  border: none;
+  outline: none;
+
+  display: inline-block;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none;
+
+  overflow: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 40px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+
+  @include font-settings("Inter", 400, 16px, $text-over-primary);
+  background: transparent;
+  padding: 0px;
+}
+
+.chat {
+  @include chat();
+}
+
+.chat-branch {
+  @include chat();
+}
+
+.start-branch{
+
+  &__button {
+    @include subscribe-start-btn(); 
+  }
+}
+
+.header {
+  border-bottom: groove;
+  @include chat-header();
+
+  .chat-back-button-img {
+    margin-left: 12px;
+    width: 24px;
+    height: 24px;
+
+    cursor: pointer;
+  }
+  .avatar {
+    margin-left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+  }
+}
+
+.info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &__chat-name {
+    @include font-settings("Inter", 500, 20px, $text-over-primary);
+    min-width: 0;
+
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &__chat-status {
+    @include font-settings("Inter", 400, 16px, $text-over-primary-shadow-50);
+    min-width: 0;
+
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+}
+
+.messages {
+  width: 100%;
+  flex: 1;
+  gap: 5px;
+
+  display: flex;
+  flex-direction: column-reverse;
+
+  overflow: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 40px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+}
+
+.chat-messages-placeholder {
+  @include font-settings("Inter", 400, 16px, $text-over-primary-shadow-50);
+
+  margin: auto;
+}
+
+.input {
+  width: 100%;
+
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.input-files-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.input-files {
+  height: 100px;
+
+  display: flex;
+  gap: 10px;
+
+  transition: all 300ms ease;
+
+  &__prev-page {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%) rotate(180deg);
+
+    background: $button-next-page-color;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  &__next-page {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    background: $button-next-page-color;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+}
+
+
+
+.input-bubble {
+  position: relative;
+
+  background: $primary-shadow-25;
+  border-radius: 25px;
+
+  flex: 1;
+  min-width: 0;
+
+  box-sizing: border-box;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-base {
+  position: relative;
+  background: $primary-shadow-25;
+  border-radius: 25px;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.attach-icon {
+  width: 24px;
+  height: 24px;
+  
+  cursor: pointer;
+}
+
+.attach__popup {
+  position: absolute;
+  left: 0;
+  bottom: 45px;
+
+  background: $primary-shadow-25;
+  border-radius: 10px;
+  padding: 5px 10px;
+
+  flex-direction: column;
+
+  &__item {
+    @include font-settings("Inter", 400, 16px, $text-over-primary);
+    height: 30px;
+    cursor: pointer;
+    
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+.attach-item__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.emoji {
+  &-popup {
+    position: absolute;
+    width: 305px;
+    height: 400px;
+    right: 0;
+    bottom: 45px;
+
+    background: var(--text-over-primary-shadow-30);
+    border-radius: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__header {
+      display: flex;
+      justify-content: space-around;
+
+      &__item {
+        @include font-settings("Inter", 400, 16px, $accent);
+        cursor: pointer;
+      }
+    }
+
+    &__body {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+
+      display: flex;
+    }
+
+    &__carousel {
+      flex: 1;
+      min-height: 0;
+      transition: all 300ms ease;
+
+      display: flex;
+
+      &__item {
+        width: 100%;
+        min-width: 100%;
+        height: 100%;
+      }
+      .emoji-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: $scroll-bar-color;
+          border-radius: 40px;
+        }
+        &::-webkit-scrollbar-track {
+          background: inherit;
+        }
+
+        &__item {
+          width: 25px;
+          height: 25px;
+          text-align: center;
+
+          cursor: pointer;
+        }
+      }
+
+      .sticker-list {
+        display: flex;
+        flex-direction: column
+        ;
+        &__stickers {
+          flex: 1;
+          display: flex;
+          flex-wrap: wrap;
+          align-content: flex-start;
+
+          overflow-x: hidden;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: $scroll-bar-color;
+            border-radius: 40px;
+          }
+          &::-webkit-scrollbar-track {
+            background: inherit;
+          }
+
+          &__item {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+          }
+        }
+
+        &__packs {
+          display: flex;
+          gap: 5px;
+
+          overflow-x: scroll;
+
+          &::-webkit-scrollbar {
+            height: 5px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: $scroll-bar-color;
+            border-radius: 40px;
+          }
+          &::-webkit-scrollbar-track {
+            background: inherit;
+          }
+
+          &__item {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.text-area {
+  flex: 1;
+  height: 19px;
+  max-height: calc(10 * 19px);
+  width: 100%;
+
+  line-height: 19px;
+}
+
+.emoji-icon {
+  width: 24px;
+  height: 24px;
+
+  cursor: pointer;
+}
+
+.input-send-btn {
+  width: 54px;
+  height: 54px;
+  
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.search-messages {
+
+
+  margin-right: 10px;
+  margin-left: auto;
+  padding: 10px;
+
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.input-search {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  align-items: center;
+
+  &__input {
+    @include search-input();
+    width: 100%;
+    height: 70px;
+  }
+
+  
+}
+
+.hidden {
+  display: none;
+}
+
+.search-cancel__img{
+  margin-inline: 20px;
+  width: 30px;
+  height: 30px;
+
+  cursor: pointer;
+}
+
+.search-results {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-shadow-50;
+  border-radius: 20px;
+  z-index: 100;
+}
+
+.search-results-div {
+  position: relative;
+  background: $background-shadow-50;
+  margin-left: 15px;
+}
+
+.search-results-messages {
+  position: absolute;
+  top: 69px;
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: column-reverse;
+  color: #fff;
+  max-height: 250px;
+  overflow: scroll;
+  overflow-x: hidden;
+  background-color: $background-shadow-50;
+
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 40px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+}
+@media screen and (max-width: 950px) {
+  .header {
+    .chat-back-button-img {
+      display: inline;
+    }
+
+    .avatar {
+      margin-left: 0;
+    }
+  }
+}
+
+.subscribe-channel {
+  &__button {
+    @include subscribe-start-btn(); 
+  }
+}
+
+.header-branch {
+  @include chat-header();
+  cursor: default;
+
+  &__img-cancel {
+    margin-left: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  &__span {
+    @include font-settings("Inter", 500, 20px, $text-over-primary);
+  }
+}
+
+.branch-input {
+  width: 100%;
+  max-width: $messages-container-max-width;
+
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.branch-input-bubble {
+  background: $primary-shadow-25;
+  border-radius: 25px;
+
+  flex: 1;
+
+  box-sizing: border-box;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 15px;
+}

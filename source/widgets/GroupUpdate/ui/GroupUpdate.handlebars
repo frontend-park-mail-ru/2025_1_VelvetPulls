@@ -1,0 +1,55 @@
+<div class="group-update">
+  <div class="group-update-header">
+    <img
+      id="back-button"
+      class="group-update-header__img"
+      src="/assets/image/back-btn-img.svg"
+      alt=""
+    />
+    <span class="group-update-header__span">Изменить информацию</span>
+    <img
+    id="confirm-update-group"
+    class="confirm-group-update__img"
+    src="/assets/image/Ok.svg"
+    alt=""
+  />
+  </div>
+  <div class="group-update-content">
+    <div class="group-avatar">
+      <label class="group-avatar__label" for="group-ava">
+        <img
+          id="avatar-group"
+          class="group-avatar__img"
+          src="{{avatar}}"
+          alt=""
+        />
+        <input
+          style="width: 0px; height: 0px"
+          type="file"
+          id="group-ava"
+          name="ava"
+          class="group-avatar__input-avatar"
+          accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
+        /><br />
+      </label>
+
+    </div>
+    <div class="group-name">
+      <span id="group-name-error" class="group-name__span-error"></span>
+      <span class="group-name__span">Название</span>
+      <input
+        id="group-name"
+        class="group-name__input"
+        type="text"
+        name="text"
+        value="{{chat.chatName}}"
+      />
+    </div>
+  </div>
+  {{!-- <img
+    id="confirm-update-group"
+    class="confirm-group-update__img"
+    src="/assets/image/Ok.svg"
+    alt=""
+  /> --}}
+</div>

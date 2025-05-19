@@ -16,7 +16,6 @@ export class MessageMenu {
     render(message : TChatMessage, messageId : string, messageText : string, x : number, y : number, chatMessageObject : ChatMessage, branch : boolean = false) {
         
         let thisUser = true;
-        console.log("menu")
         if (message.authorID !== UserStorage.getUser().username) {
           thisUser = false;
         }

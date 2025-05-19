@@ -14,10 +14,9 @@ export class SearchedMessageCard{
     }
 
     render(message : TChatMessage, avatar : string, person : string, chatMessages : HTMLElement, Message : ChatMessage) {
-        console.log(ChatStorage.getCurrentBranchId())
         message.datetime = getTimeString(message.datetime);
 
-        avatar = avatar ? serverHost + avatar : "/assets/image/default-avatar.svg";
+        avatar = avatar ? "http://localhost:8080/" + avatar : "/assets/image/default-avatar.svg";
         const messageResult = SearchedMessageCardTempalte({message, avatar, person});
         this.#parent.insertAdjacentHTML("beforeend", messageResult);
         const currentMessage = this.#parent.lastElementChild!;
@@ -57,7 +56,6 @@ export class SearchedMessageCard{
                 }
                 
                 message = document.querySelector("#chat-branch")!.querySelector("#chat__messages")!.querySelector(`[id='${messageId}']`)!;
-                console.log(message, messageId)
                 message.scrollIntoView({ block: "center", behavior: "smooth" });
             }
 

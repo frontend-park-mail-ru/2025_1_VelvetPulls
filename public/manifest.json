@@ -1,0 +1,16 @@
+{
+    "name": "App",
+    "short_name": "App",
+    "description": "",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#101723",
+    "theme_color": "#4f82bf",
+    "icons": [
+        {
+            "src": "public/assets/image/Edit.svg",
+            "sizes": "93x93",
+            "type": "image/svg"
+        }
+    ]
+}

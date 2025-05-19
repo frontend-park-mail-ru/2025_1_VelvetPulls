@@ -12,10 +12,9 @@ class UserStore {
 
   async init() {
     const response = await API.get<AuthResponse>("/profile");
-    console.log(response)
     if (!response.error) {
       this.#user = response.data;
-      console.log(this.#user,response.data)
+      this.#user.avatarURL=this.#user.avatar_path
       wsConn.start();
     }
   }

@@ -47,7 +47,6 @@ export class UserAddChat {
       elem.addEventListener("click", async (e) => {
         const users: string[] = [];
         if (elem instanceof HTMLAnchorElement) {
-          console.log(elem.querySelector(".contact-card-name")?.innerHTML.replaceAll(' ',''))
           const index = elem.href.lastIndexOf("/");
           const href = elem.href.slice(index + 1);
           users.push(elem.querySelector(".contact-card-name")?.innerHTML.replaceAll(' ','').replaceAll('\n',''));

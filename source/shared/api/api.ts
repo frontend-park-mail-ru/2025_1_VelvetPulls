@@ -85,7 +85,6 @@ class Api {
     try {
       const url = this.#baseURl + path;
       const CSRFToken = Csrf.get() ?? localStorage.getItem("csrf");
-      console.log(formData)
       const state: RequestInit = {
         method: "POST",
         headers: {
@@ -102,7 +101,6 @@ class Api {
       }
 
       const response = await fetch(url, state);
-      console.log(response)
       const responseBody: Response = await response.json();
       return responseBody;
     } catch {
@@ -127,7 +125,6 @@ class Api {
         credentials: "include",
       };
       const response = await fetch(url, state);
-      console.log(response)
       const CSRFToken =
         response.headers.get("x-csrf-token") ?? localStorage.getItem("csrf");
       if (CSRFToken) {

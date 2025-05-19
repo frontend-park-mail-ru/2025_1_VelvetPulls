@@ -18,7 +18,6 @@ export const SendMessage = async (chatId : string, text : string, files? : File[
         `/chat/${chatId}/messages`,
         formData,
       );
-    console.log(response)
 
     return response;
 };

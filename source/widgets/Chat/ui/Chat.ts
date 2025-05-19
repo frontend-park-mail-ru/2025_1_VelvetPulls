@@ -41,7 +41,6 @@ export class Chat {
    * @async
    */
   async render(chat: TChat) {
-    console.log(chat)
     this.#chatInfo.innerHTML = "";
 
     if (ChatStorage.getChat().chatId) {
@@ -58,7 +57,6 @@ export class Chat {
         : "/assets/image/default-avatar.svg";
 
     const responseInfo = await API.get<ChatResponse>(`/chat/${chat.chatId}`);
-    console.log(responseInfo)
     responseInfo.role=responseInfo.data.role
     const userType : UserType = {owner: false, user: false, admin: false, not_in_chat: false};
     if (responseInfo.role === "owner") {
@@ -240,11 +238,9 @@ export class Chat {
     if (chatCard) {
       chatCard.classList.add('active');
     }
-    console.log("fuhrrfhrj")
     const subscribeButton : HTMLElement = this.#parent.querySelector("#subscribe-channel")!;
     const handleSubscribe = async () => {
       const responseSubscribe = await API.post(`/chat/${chat.chatId}/join`, {});
-      console.log(responseSubscribe)
       if (!responseSubscribe.error) {
         subscribeButton.classList.add('hidden');
         Router.go(`/chat/${chat.chatId}`, false);
@@ -253,7 +249,6 @@ export class Chat {
     if (chatType.channel ) {
 
       if (subscribeButton) {
-        console.log("hfuiheui")
         subscribeButton.classList.remove('hidden');
         subscribeButton.addEventListener("click", handleSubscribe);
       }
@@ -351,7 +346,6 @@ export class Chat {
     const responseChat = await API.get<ChatResponse>(
       `/chat/${chat.chatId}`,
     );
-    console.log(responseChat.data.messages)
     ChatStorage.setRole(responseChat.data.role ?? "");
     ChatStorage.setUsers(responseChat.data.users ?? []);
 
@@ -375,11 +369,9 @@ export class Chat {
     // messages[0].datetime=responseChat.data.messages[0].sent_at
     // messages[0].text=responseChat.data.messages[0].body
     // messages[0].authorID=responseChat.data.messages[0].user
-    console.log(messages)
 
 
     if (messages.length > 0) {
-      console.log("simple")
       chatMessage.renderMessages(messages);
     }
 
@@ -415,7 +407,6 @@ export class Chat {
       const messageText = searchInput.value;
       if (messageText !== "") {
         const response = await API.get<searchMessagesResponse>(`/search/${chat.chatId}/messages?query=${messageText}&limit=10`);
-        console.log(response.data.messages)
         if (response.data.messages){
           response.messages=[] 
 

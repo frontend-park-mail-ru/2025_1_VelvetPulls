@@ -36,12 +36,10 @@ export class ContactAddForm {
       const username: ContactRequest = {
         username: usernameInput.value,
       };
-      console.log(username)
       const response = await API.post<TContact, ContactRequest>(
         "/contacts",
         username,
       );
-      console.log(response)
 
       const spanError = this.#parent.querySelector("#error-span")!;
 

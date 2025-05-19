@@ -32,7 +32,7 @@ export class MainPage extends View {
     const parent = document.getElementById("root")!;
     let avatar: string;
     if (user.avatarURL) {
-      avatar = serverHost + user.avatarURL;
+      avatar = "http://localhost:8080/" + user.avatarURL;
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -72,6 +72,6 @@ export class MainPage extends View {
     wsConn.subscribe("newMessage", renderMessage);
     wsConn.subscribe("updateMessage", renderMessage1);
     wsConn.subscribe("deleteMessage", renderMessage2);
-    wsConn.subscribe("newChat", newChat);
+    // wsConn.subscribe("newChat", newChat);
   }
 }

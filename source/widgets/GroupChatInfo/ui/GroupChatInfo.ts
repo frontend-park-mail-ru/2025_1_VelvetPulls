@@ -27,7 +27,7 @@ export class GroupChatInfo {
     const chat = this.#chat;
     const userType = this.#userType;
     let avatar: string;
-    if (chat.avatarPath !== "") {
+    if ((chat.avatarPath)&&(chat.avatarPath !== "")) {
       //avatar = serverHost + chat.avatarPath;
       avatar = "http://localhost:8080/" + chat.avatarPath;
     } else {
@@ -102,11 +102,10 @@ export class GroupChatInfo {
 
       if (ChatUsers.data.users) {
           ChatUsers.data.users.forEach(async (element) => {
-            console.log(element)
           const user: TContact = {
             id: element.id,
             name: element.username,
-            avatarURL: element.avatar_path,
+            avatarURL: element.avatar_path===undefined ? null : element.avatar_path,
             username: element.username,
           };
           userCard.render(user);

@@ -32,7 +32,7 @@ export class ChatInfo {
       }
        
       if (profileUser.avatarURL) {
-        profileUser.avatarURL = serverHost + profileUser.avatarURL;
+        profileUser.avatarURL = "http://localhost:8080/" + profileUser.avatarURL;
       } else {
         profileUser.avatarURL = "/assets/image/default-avatar.svg";
       }
@@ -40,7 +40,6 @@ export class ChatInfo {
       const chatInfo = await API.get<ChatResponse>(`/chat/${this.#chat.chatId}`);
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
-      console.log(profileUser)
 
       this.#parent.innerHTML = ChatInfoTemplate({ profileUser, birthdate,
         chat: {
@@ -81,9 +80,7 @@ export class ChatInfo {
       };
 
       deleteChatButton.addEventListener("click", handleDeleteGroup);
-      console.log(this.#parent)
     }
-    console.log(this.#parent)
 
     this.#parent.querySelector('#chat-info-close-button')!.addEventListener('click', () => {
       this.#parent.style.right = '-100vw';

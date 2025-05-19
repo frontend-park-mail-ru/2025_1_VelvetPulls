@@ -70,7 +70,6 @@ export class AddGroupForm {
         usersToAdd: selectedContacts.getSelectedContacts(),
       };
       newChat.usersToAdd.push(UserStorage.getUser().username)
-      console.log(newChat)
 
       const chatNameRender: HTMLSpanElement =
         this.#parent.querySelector("#nickname")!;
@@ -96,30 +95,19 @@ export class AddGroupForm {
       const jsonProfileData = JSON.stringify(newChat);
       formData.append("chat_data", jsonProfileData);
       formData.append("avatar", avatarFile);
-      console.log(newChat,UserStorage.getUser())
 
       // const newChatRes = await API.postFormData<ChatResponse>(
       //   "/addchat",
       //   formData,
       // );
            const responseSubscribe = await API.post("/chat", newChat);
-           console.log(responseSubscribe)
            Router.go("/")
       
 
-      if (!newChatRes.error) {
         const chatList = new ChatList(this.#parent, this.#chat);
         chatList.render();
-        this.#chat.render(newChatRes);
-      }
 
-      if (newChatRes.error) {
-        validateForm(
-          nameInput,
-          "Произошла какая-то ошибка, попробуйте еще раз",
-          chatNameRender,
-        );
-      }
+      
     };
 
     const confirmButton = this.#parent.querySelector("#confirm-button");

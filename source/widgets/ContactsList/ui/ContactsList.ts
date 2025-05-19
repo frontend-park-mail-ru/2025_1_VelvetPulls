@@ -20,7 +20,6 @@ export class ContactsList {
     this.#parent.innerHTML = ContactsListTemplate();
 
     const response = await API.get<ContactResponse>("/contacts");
-    console.log(response)
     const contactList : HTMLElement = this.#parent.querySelector("#contacts-list")!;
     const contactCard = new ContactCard(contactList);
     const chatList = new ChatList(this.#parent, this.#chat);
@@ -76,7 +75,6 @@ export class ContactsList {
           labelGlobalContacts.classList.add("hidden");
 
           const response = await API.get<searchContactsResponse>(`/search/contacts?query=${contactName}`);
-          console.log(response.data.contacts)
           response.user_contacts=response.data.contacts
           if (!response.error) {
             contactList.classList.add("hidden");

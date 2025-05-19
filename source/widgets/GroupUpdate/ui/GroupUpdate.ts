@@ -23,7 +23,7 @@ export class GroupUpdate {
 
   render(chat: TChat) {
     let avatar: string;
-    if (chat.avatarPath !== "") {
+    if ((chat.avatarPath)&&(chat.avatarPath !== "")) {
       avatar = "http://localhost:8080/" + chat.avatarPath;
     } else {
       avatar = "/assets/image/default-avatar.svg";
@@ -94,7 +94,6 @@ export class GroupUpdate {
         `/chat/${chat.chatId}`,
         formData,
       );
-      console.log(response)
       if (!response.error) {
         chat.chatName = name.chatName;
         if (response.updatedAvatarPath !== "") {

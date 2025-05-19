@@ -8,7 +8,7 @@ export class DeleteMessage {
         this.#parent = parent;
     }
 
-    render(messageId : string) {
+    render(messageId : string,chatId : string) {
         this.#parent.innerHTML = DeleteMessageForm();
 
         const cancelButton = this.#parent.querySelector("#cancel-btn")!;
@@ -21,7 +21,7 @@ export class DeleteMessage {
         const deleteButton = this.#parent.querySelector("#delete-btn")!;
 
         const handleDelete = async () => {
-            const response = await API.delete(`/messages/${messageId}`, messageId);
+            const response = await API.delete(`/chat/${chatId}/messages/${messageId}`, messageId);
             if (!response.error) {
                 this.#parent.innerHTML = '';
                 const deletedMessage = document.querySelector(`[id='${messageId}']`)!;

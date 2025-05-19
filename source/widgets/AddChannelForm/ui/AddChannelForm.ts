@@ -99,19 +99,18 @@ export class AddChannelForm{
             //     formData,
             // );
             const responseSubscribe = await API.post("/chat", newChat);
-           console.log(responseSubscribe)
            Router.go("/")
 
             
-            if (!newChatRes.error) {
-                this.#chat.render(newChatRes);
-                const chatList = new ChatList(this.#parent, this.#chat);
-                chatList.render();
-            }
-            else {
+            // if (!newChatRes.error) {
+            //     // this.#chat.render(newChatRes);
+            //     // const chatList = new ChatList(this.#parent, this.#chat);
+            //     // chatList.render();
+            // }
+            // else {
                 validateForm(channelNameInput, "Файл не является изображением", channelNameRender);
                 return;
-            }
+            // }
             
         };
         createChannelButton.addEventListener('click', handleCreateChannel);

@@ -5,4 +5,4 @@ export const ChatLabel = {
 };
 
 export const serverHost = "http://localhost:8080/api";
-export const websocketHost = "ws://localhost:8083/api";
+export const websocketHost = "ws://localhost:8082";

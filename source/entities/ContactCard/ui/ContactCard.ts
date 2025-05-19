@@ -21,7 +21,6 @@ export class ContactCard {
   }
 
   render(contact: TContact) {
-    console.log(contact)
     if ((contact.avatarURL !== null)&&(contact.avatarURL !== undefined)) {
       contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
     } else {
@@ -40,7 +39,7 @@ export class ContactCard {
   }
 
   renderChat(contact: TContact, chat: Chat, chatList: ChatList) {
-    if (contact.avatarURL !== null) {
+    if ((contact.avatarURL !== null)&&(contact.avatarURL !== undefined)) {
       contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
@@ -54,7 +53,6 @@ export class ContactCard {
     this.#parent.lastElementChild!.addEventListener("click", async (e) => {
       e.preventDefault();
       const response = await API.get<ChatsResponse>("/chats");
-          console.log(response)
           if (response.data!==null){
             response.chats=[]
             response.data.forEach(element => {
@@ -69,18 +67,14 @@ export class ContactCard {
       // if (!response.chats) {
       //   return;
       // }
-      console.log("rygbrhjrfgbjrfvj")
       const chats: TChat[] = response.chats ?? [];
 
       for (const elem of chats) {
-        console.log("rygbrhjrfgbjrfvj")
         if (elem.chatType === "dialog") {
           const chatResponse = await API.get<ChatResponse>(
             `/chat/${elem.chatId}`,
           );
-          console.log(chatResponse)
           if (chatResponse.users && (chatResponse.users.find(user => user.id === contact.id))) {
-            console.log("rygbrhjrfgbjrfvj")
             chatList.render();
             chat.render(elem);
             return;
@@ -103,13 +97,10 @@ export class ContactCard {
       //   formData,
       // );
       const responseSubscribe = await API.post("/chat", newChat);
-           console.log(responseSubscribe)
 
       // if (!newChatRes.error) {
         chatList.render();
-        console.log(responseSubscribe.data.id)
         const responseInfo = await API.get<ChatResponse>(`/chat/${responseSubscribe.data.id}`);
-            console.log(responseInfo)
             // {
             //   chatId: responseSubscribe.data.id,
             //   chatType: responseSubscribe.data.type,
@@ -127,7 +118,7 @@ export class ContactCard {
   }
 
   renderForm(contact: TContact, selectedContacts: SelectedContacts) {
-    if (contact.avatarURL) {
+    if ((contact.avatarURL)&&(contact.avatarURL !== undefined)) {
       contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
@@ -155,7 +146,6 @@ export class ContactCard {
     this.#parent.lastElementChild!.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
-      console.log(contact)
 
       selectedContacts.toggleCheckbox(contact.username);
 

@@ -17,6 +17,7 @@ import { ChatList } from "@/widgets/ChatList";
 import { Chat } from "@/widgets/Chat";
 import { Router } from "@/shared/Router/Router";
 import { wsConn } from "@/shared/api/ws";
+import { validatePassword } from "@/shared/validation/passwordValidation";
 
 export class ProfileForm {
   #parent;
@@ -28,24 +29,17 @@ export class ProfileForm {
 
   async render() {
     const user = UserStorage.getUser();
-    console.log(user)
     const response = await API.get<ProfileResponse>("/profile");
-    console.log(response.data)
 
-    if (response.avatarURL) {
+    if (response.data.avatar_path) {
       response.avatarURL = "http://localhost:8080/" + response.avatarURL;
       response.ava="http://localhost:8080/" + response.data.avatar_path
-    } else if (UserStorage.getUser().avatarURL) {
-      response.avatarURL = UserStorage.getUser().avatarURL;
-      response.ava = UserStorage.getUser().avatarURL;
-    } else {
+    }  else {
       response.avatarURL = "/assets/image/default-avatar.svg";
       response.ava = "/assets/image/default-avatar.svg";
     }
-    console.log(response.ava)
 
     const currentDate = new Date();
-    console.log(response)
     this.#parent.innerHTML = ProfileFormTemplate({
       user,
       response,
@@ -129,6 +123,7 @@ export class ProfileForm {
         bio: bioInput.value,
         birthdate: new Date(birthdayValue),
         name: nickname,
+        bio1: bioInput1.value,
       };
 
       let flag = true;
@@ -145,6 +140,20 @@ export class ProfileForm {
         validateForm(
           nameInput,
           "Имя не может быть длиннее 20 символов",
+          nicknameSpan,
+        );
+        flag = false;
+      } else if (profileData.bio!==profileData.bio1){
+        validateForm(
+          nameInput,
+          "Пароли не совпали",
+          nicknameSpan,
+        );
+        flag = false;
+      } else if(!validatePassword(profileData.bio)){
+        validateForm(
+          nameInput,
+          "Пароль должен состоять минимум из 8 латинских букв, цифр или нижних подчеркиваний.",
           nicknameSpan,
         );
         flag = false;
@@ -170,7 +179,6 @@ export class ProfileForm {
       if (!flag) {
         return;
       }
-      console.log(profileData)
 
       const errorMessage = await genProfileData(profileData, avatarFile);
       if (errorMessage != "" && errorMessage === "error message") {

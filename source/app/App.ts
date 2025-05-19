@@ -17,6 +17,7 @@ export class App {
     Router.setRoutes(routes, strictRoutes);
 
     const currentURL = window.location.pathname;
+    // console.log(UserStorage.getUser())
 
     const index = routes.paths?.find(
       (element) => element.path?.exec(currentURL) !== null,

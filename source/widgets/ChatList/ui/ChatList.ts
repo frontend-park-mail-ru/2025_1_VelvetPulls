@@ -30,7 +30,6 @@ export class ChatList {
    */
   async render() {
     const response = await API.get<ChatsResponse>("/chats");
-    console.log(response.data)
     if (response.data!==null){
       response.chats=[]
       response.data.forEach(element => {
@@ -43,7 +42,6 @@ export class ChatList {
         })
       });
     }
-    console.log(response.chats)
 
     const chats: TChat[] = response.chats ?? [];
 
@@ -101,15 +99,24 @@ export class ChatList {
       .querySelector("#create-personal-chat")!
       .addEventListener("click", () => {
         const contactForm = new ContactsList(this.#parent, this.#chat);
+        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        Выберите чат
+      </p>`
         contactForm.render();
       });
       toCon
       .addEventListener("click", () => {
+        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        Выберите чат
+      </p>`
         const contactForm = new ContactsList(this.#parent, this.#chat);
         contactForm.render();
       });
       toProf
       .addEventListener("click", () => {
+        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        Выберите чат
+      </p>`
         const contactForm = new ProfileForm(this.#parent,this.#chat);
         contactForm.render();
       });
@@ -118,6 +125,9 @@ export class ChatList {
       .querySelector("#create-group-chat")!
       .addEventListener("click", () => {
         const addGroupForm = new AddGroupForm(this.#parent, this.#chat);
+        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        Выберите чат
+      </p>`
         addGroupForm.render();
       });
 
@@ -125,6 +135,9 @@ export class ChatList {
 
     const handelCreateChannel = () => {
       const addChannelForm = new AddChannelForm(this.#parent, this.#chat);
+      document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        Выберите чат
+      </p>`
       addChannelForm.render();
     };
     createChannelBtn.addEventListener('click', handelCreateChannel);
@@ -216,7 +229,6 @@ export class ChatList {
             });
           }
         });
-        console.log(response.data)
         // if (response.data.global_channels){
         //   response.global_channels=[]
         //   response.data.global_channels.forEach(element => {

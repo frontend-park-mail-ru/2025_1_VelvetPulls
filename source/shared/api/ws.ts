@@ -25,7 +25,6 @@ class wsConnection {
     this.ws.onmessage = (event: MessageEvent) => {
       try {
         const res = JSON.parse(event.data);
-        console.log(res,event)
         let element=res.payload
         res.payload={
           text:element.body,

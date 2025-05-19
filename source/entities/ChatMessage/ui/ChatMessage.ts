@@ -158,7 +158,7 @@ export class ChatMessage {
 
         const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
         const avatarURL = user.avatarURL
-          ? serverHost + user.avatarURL
+          ? "http://localhost:8080/" + user.avatarURL
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
@@ -253,7 +253,7 @@ export class ChatMessage {
 
         const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
         const avatarURL = user.avatarURL
-          ? serverHost + user.avatarURL
+          ? "http://localhost:8080/" + user.avatarURL
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
@@ -305,7 +305,7 @@ export class ChatMessage {
           const messageText = messageInChat.querySelector("#message-text-content")?.textContent;
           const messageMenu = new MessageMenu(menu);
           if (messageText) {
-            console.log("hihihi")
+            // console.log("hihihi")
             if (ChatStorage.getCurrentBranchId()) {
               messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
               return;
@@ -338,7 +338,7 @@ export class ChatMessage {
 
   async renderNewMessage(message: TChatMessage, chatIsNotBranch = true) {
     const placeholder= this.#parent.querySelector('#msg-placeholder');
-        console.log(this.#needNewMsg)
+        // console.log(this.#needNewMsg)
         if (!this.#needNewMsg){
           return
         }
@@ -372,7 +372,7 @@ export class ChatMessage {
 
       const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
       const avatarURL = user.avatarURL
-        ? serverHost + user.avatarURL
+        ? "http://localhost:8080/" + user.avatarURL
         : "/assets/image/default-avatar.svg";
 
       const photos = message.photos ? message.photos.map(photo => ({
@@ -425,7 +425,7 @@ export class ChatMessage {
           const messageText = messageInChat.querySelector("#message-text-content")?.textContent;
           const messageMenu = new MessageMenu(menu);
           if (messageText) {
-            console.log("hihihi")
+            // console.log("hihihi")
             if (ChatStorage.getCurrentBranchId()) {
               messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
               return;

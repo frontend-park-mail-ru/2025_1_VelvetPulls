@@ -10,8 +10,8 @@ export class ChatUserCard {
   }
 
   render(userProfile: ProfileResponse) {
-    if (userProfile.avatarURL) {
-      userProfile.avatarURL = serverHost + userProfile.avatarURL;
+    if ((userProfile.avatarURL)&&(userProfile.avatarURL!==undefined)) {
+      userProfile.avatarURL = "http://localhost:8080/" + userProfile.avatarURL;
     } else {
       userProfile.avatarURL = "/assets/image/default-avatar.svg";
     }

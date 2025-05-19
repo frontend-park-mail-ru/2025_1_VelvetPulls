@@ -8,14 +8,6 @@ body#login {
   overflow-y: hidden;
 }
 
-.news-block {
-  width: 50%;
-  min-width: 500px;
-  display: flex;
-  flex-direction: column;
-  background: var(--primary);
-}
-
 .auth-form {
   flex: 1;
   min-width: 500px;
@@ -138,9 +130,6 @@ body#login {
 }
 
 @media screen and (max-width: 950px) {
-  .news-block {
-    display: none;
-  }
   .login-page {
     overflow-y: scroll;
   }

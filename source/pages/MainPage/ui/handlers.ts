@@ -7,7 +7,6 @@ import { ChatResponse, ChatsResponse, NewChatWS, ProfileResponse, TMessageWS } f
 import { Chat } from "@/widgets/Chat";
 
 export const renderMessage = async (message: TMessageWS) => {
-  console.log(message)
   if (message.chatId !== ChatStorage.getChat().chatId && message.parent_chat_id !== ChatStorage.getChat().chatId) {
     const responseProfile = await API.get<ProfileResponse>(`/profile/${message.authorID}`);
     if (!responseProfile.error) {
@@ -29,8 +28,6 @@ export const renderMessage = async (message: TMessageWS) => {
         if (!message.text) {
           message.text = "file";
         }
-        console.log(message)
-        console.log(message.text)
         const notificationChat : TChat = {
           chatId: message.chatId,
           lastMessage: message,
@@ -40,7 +37,6 @@ export const renderMessage = async (message: TMessageWS) => {
         };
 
         if (newChatResponse && newChatResponse.send_notifications) {
-          console.log(message)
           chatCard.render(notificationChat, true, newChatResponse);
           UserNotification.show();
         }
@@ -71,7 +67,6 @@ export const renderMessage1 = async (message: TMessageWS) => {
 
 
 export const renderMessage2 = async (message: TMessageWS) => {
-  console.log(message.messageId)
   const msg=document.getElementById(message.messageId)
   if ((msg===null)||(!msg.classList.contains("left-side"))){
     return
@@ -103,6 +98,9 @@ export const newChat = async (chatInfo: NewChatWS) => {
       return;
     }
   }
+  if (responseChats.chats===undefined){
+          return
+        }
   if (!responseChats.error) {
     const newChatResponse = responseChats.chats.find((elem) => {
       return elem.chatId === chatInfo.chatId;

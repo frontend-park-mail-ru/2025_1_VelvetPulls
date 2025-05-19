@@ -75,13 +75,11 @@ export class LoginForm extends View {
       if (!validatePassword(password) || !validateLogin(username)) {
         return;
       }
-      console.log(username)
 
       const response = await API.post<AuthResponse, LoginRequest>("/login", {
         username,
         password,
       });
-      console.log(response)
 
       if (response.error) {
         loginInput.classList.add("error");

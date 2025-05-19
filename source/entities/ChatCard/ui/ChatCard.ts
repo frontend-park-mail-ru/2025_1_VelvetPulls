@@ -18,15 +18,15 @@ export class ChatCard {
 
   async render(chat: TChat, notificate = false, notificationChat : TChat | null = null) {
 
-    console.log(chat);
+    // console.log(chat);
     if (notificationChat) {
       chat = notificationChat;
     }
-    console.log(chat)
+    // console.log(chat)
     let avatar;
     if ((chat.avatarPath !== "")&&(chat.avatarPath!==undefined)) {
       avatar = "http://localhost:8080/" + chat.avatarPath;
-      console.log(avatar)
+      // console.log(avatar)
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -38,7 +38,7 @@ export class ChatCard {
           ...chat,
           lastMessage: {
             ...chat.lastMessage,
-            datetime: "hufrhifubewjhb",//datetime: getTimeString(chat.lastMessage.datetime),
+            datetime: "",//datetime: getTimeString(chat.lastMessage.datetime),
           },
         },
         avatar,

@@ -75,6 +75,7 @@ class Chats {
                 document.querySelector(".scrollable").innerHTML=""
             // console.log(finder.value)
             const responseBody1 = await api.get(`/search?query=${finder.value}`);
+            console.log(responseBody1.data)
             const type_con=document.querySelector('.finder-options')
             type_con.style.visibility="visible"
             type_con.style.height="auto"
@@ -84,8 +85,110 @@ class Chats {
                 group_bar.addEventListener('click', async function(event) {
                     event.preventDefault()
                     type="group"
-                    console.log(type)
-                const chats1 = [];this.chats1 = responseBody1.data;;
+                    document.querySelector(".scrollable").innerHTML=""
+                    console.log(responseBody1.data.groups)
+                const chats1 = [];this.chats1 = responseBody1.data.groups;;
+        
+                if (this.chats1 !== null && this.chats1 !== undefined) {
+                    for (const chat of this.chats1) {
+                        let isOwner = true;
+                        if (chat["type"] == "group") {
+                            const responseBody = await api.get(`/chat/${chat["id"]}`);
+        
+                            const users = responseBody["data"]["users"];
+        
+                            const currentMember = users.find(
+                                (item) =>
+                                    item["username"] === currentUser.getUsername(),
+                            );
+        
+                            if (currentMember["role"] === "member") {
+                                isOwner = false;
+                            }
+                        }
+        
+                        const chatInfo = {
+                            title: chat.title,
+                            id: chat.id,
+                            // lastMessage:
+                            avatarSrc: await getAvatar(chat.avatar_path),
+                            chatId: chat.id,
+                            isOwner: isOwner,
+                        };
+        
+                        chats1.push(chatInfo);
+
+                        const templateSource = `
+    <div class="sidebar-list__item sidebar-list-item" id="{{id}}">
+        <img src="{{avatarSrc}}" alt="User avatar" class="avatar">
+
+        <div class="sidebar-list-item__info">
+            <div class="sidebar-list-item__full-name">{{title}}</div>
+            <div class="sidebar-list-item__message-preview">{{lastMessage}}</div>
+        </div>
+        
+        {{#if isOwner}}
+            <button class="button">
+                <img src="icons/delete.svg" alt="Delete" class="icon">
+            </button>
+        {{/if}}
+    </div>
+`;
+const template1 = Handlebars.compile(templateSource);
+
+let chatData=chatInfo
+// Создаем HTML из шаблона с данными
+const html1 = template1(chatData);
+const container1 = document.querySelector('.scrollable');
+if (container1) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html1;
+    container1.appendChild(tempDiv.firstElementChild);
+}
+                    }
+                }
+                // console.log(chats1)
+                // console.log(document.querySelector(".scrollable"))
+
+                const chats = document.querySelectorAll(".sidebar-list-item");
+        for (let i = 0; i < chats.length; ++i) {
+            const chatElement = chats[i];
+            const chatModel = this.chats1[i];
+
+            // Открыть чат
+            console.log(chatElement)
+            chatElement.addEventListener("click", async (event) => {
+                event.preventDefault();
+                console.log(chatModel)
+
+                        eventBus.emit("open group", chatModel.id);
+            });
+
+            // Удалить чат
+            const deleteChatButton = chatElement.querySelector(".button");
+            if (deleteChatButton !== null) {
+                deleteChatButton.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const response = await api.get(`/chat/${chatModel.id}`);
+                    //console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
+                    if ((response.data.users[0].role==="owner") && (response.data.users[0].username!==currentUser.getUsername())){
+                        await api.post(`/chat/${chatModel.id}/leave`);
+                    } else {
+                    await deleteChat(chatModel.id);
+                    }
+                    eventBus.emit("chat is deleted", chatModel);
+                });
+            }
+        }
+                })
+                //
+                document.querySelector("#finder-channel").addEventListener('click', async function(event) {
+                    event.preventDefault()
+                    document.querySelector(".scrollable").innerHTML=""
+                    type="group"
+                    console.log(responseBody1.data.channels)
+                const chats1 = [];this.chats1 = responseBody1.data.channels;;
         
                 if (this.chats1 !== null && this.chats1 !== undefined) {
                     for (const chat of this.chats1) {
@@ -157,26 +260,7 @@ if (container1) {
             chatElement.addEventListener("click", async (event) => {
                 event.preventDefault();
 
-                switch (chatModel.type) {
-                    case "dialog": {
-                        const chatId = chatModel.id;
-
-                        const username = chatModel.title;
-                        const user = new User();
-                        await user.init(username);
-
-                        eventBus.emit("open dialog", { user, chatId });
-                        break;
-                    }
-
-                    case "group": {
-                        eventBus.emit("open group", chatModel.id);
-                    }
-
-                    case "channel": {
                         eventBus.emit("open channel", chatModel.id);
-                    }
-                }
             });
 
             // Удалить чат
@@ -197,7 +281,113 @@ if (container1) {
             }
         }
                 })
-                
+                //
+                //
+                document.querySelector("#finder-dialog").addEventListener('click', async function(event) {
+                    event.preventDefault()
+                    document.querySelector(".scrollable").innerHTML=""
+                    type="group"
+                    console.log(responseBody1.data.dialogs)
+                const chats1 = [];this.chats1 = responseBody1.data.dialogs;;
+        
+                if (this.chats1 !== null && this.chats1 !== undefined) {
+                    for (const chat of this.chats1) {
+                        let isOwner = true;
+                        if (chat["type"] == "group") {
+                            const responseBody = await api.get(`/chat/${chat["id"]}`);
+        
+                            const users = responseBody["data"]["users"];
+        
+                            const currentMember = users.find(
+                                (item) =>
+                                    item["username"] === currentUser.getUsername(),
+                            );
+        
+                            if (currentMember["role"] === "member") {
+                                isOwner = false;
+                            }
+                        }
+        
+                        const chatInfo = {
+                            title: chat.title,
+                            id: chat.id,
+                            // lastMessage:
+                            avatarSrc: await getAvatar(chat.avatar_path),
+                            chatId: chat.id,
+                            isOwner: isOwner,
+                        };
+        
+                        chats1.push(chatInfo);
+
+                        const templateSource = `
+    <div class="sidebar-list__item sidebar-list-item" id="{{id}}">
+        <img src="{{avatarSrc}}" alt="User avatar" class="avatar">
+
+        <div class="sidebar-list-item__info">
+            <div class="sidebar-list-item__full-name">{{title}}</div>
+            <div class="sidebar-list-item__message-preview">{{lastMessage}}</div>
+        </div>
+        
+        {{#if isOwner}}
+            <button class="button">
+                <img src="icons/delete.svg" alt="Delete" class="icon">
+            </button>
+        {{/if}}
+    </div>
+`;
+const template1 = Handlebars.compile(templateSource);
+
+let chatData=chatInfo
+// Создаем HTML из шаблона с данными
+const html1 = template1(chatData);
+const container1 = document.querySelector('.scrollable');
+if (container1) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html1;
+    container1.appendChild(tempDiv.firstElementChild);
+}
+                    }
+                }
+                // console.log(chats1)
+                // console.log(document.querySelector(".scrollable"))
+
+                const chats = document.querySelectorAll(".sidebar-list-item");
+        for (let i = 0; i < chats.length; ++i) {
+            const chatElement = chats[i];
+            const chatModel = this.chats1[i];
+
+            // Открыть чат
+            chatElement.addEventListener("click", async (event) => {
+                event.preventDefault();
+
+                        const chatId = chatModel.id;
+
+                        const username = chatModel.title;
+                        const user = new User();
+                        await user.init(username);
+
+                        eventBus.emit("open dialog", { user, chatId });
+            });
+
+            // Удалить чат
+            const deleteChatButton = chatElement.querySelector(".button");
+            if (deleteChatButton !== null) {
+                deleteChatButton.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const response = await api.get(`/chat/${chatModel.id}`);
+                    //console.log(response.data.users[0].role==="owner", response.data.users[0].username!==currentUser.getUsername())
+                    if ((response.data.users[0].role==="owner") && (response.data.users[0].username!==currentUser.getUsername())){
+                        await api.post(`/chat/${chatModel.id}/leave`);
+                    } else {
+                    await deleteChat(chatModel.id);
+                    }
+                    eventBus.emit("chat is deleted", chatModel);
+                });
+            }
+        }
+                })
+                //
     }
 })
         const chats = this.container.querySelectorAll(".sidebar-list-item");

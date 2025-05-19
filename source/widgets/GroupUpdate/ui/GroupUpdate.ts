@@ -8,6 +8,10 @@ import { API } from "@/shared/api/api";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { validateForm } from "@/shared/validation/formValidation";
 import { UserType } from "@/widgets/AddChannelForm/lib/types";
+import { routes } from "@/shared/Router/Routes";
+
+import { Router } from "@/shared/Router/Router";
+
 
 export class GroupUpdate {
   #parent;
@@ -20,7 +24,7 @@ export class GroupUpdate {
   render(chat: TChat) {
     let avatar: string;
     if (chat.avatarPath !== "") {
-      avatar = serverHost + chat.avatarPath;
+      avatar = "http://localhost:8080/" + chat.avatarPath;
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -76,18 +80,21 @@ export class GroupUpdate {
         );
         return;
       }
-      const name: GroupUpdateRequest = { chatName: groupNameInput.value };
+      const name: GroupUpdateRequest = { title: groupNameInput.value };
 
       const groupName = JSON.stringify(name);
 
       const formData = new FormData();
       formData.append("chat_data", groupName);
       formData.append("avatar", groupAvatarFile);
+      formData["title"]=groupNameInput.value
+      formData["avatar"]=groupAvatarFile
 
       const response = await API.putFormData<GroupUpdateResponse>(
         `/chat/${chat.chatId}`,
         formData,
       );
+      console.log(response)
       if (!response.error) {
         chat.chatName = name.chatName;
         if (response.updatedAvatarPath !== "") {
@@ -105,6 +112,7 @@ export class GroupUpdate {
         }
 
         this.#parent.innerHTML = "";
+        Router.go("/")
       }
     };
 

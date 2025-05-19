@@ -28,7 +28,8 @@ export class GroupChatInfo {
     const userType = this.#userType;
     let avatar: string;
     if (chat.avatarPath !== "") {
-      avatar = serverHost + chat.avatarPath;
+      //avatar = serverHost + chat.avatarPath;
+      avatar = "http://localhost:8080/" + chat.avatarPath;
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -36,8 +37,8 @@ export class GroupChatInfo {
       `/chat/${chat.chatId}`,
     );
     let usersCount = 0;
-    if ( ChatUsers?.users?.length) {
-      usersCount = ChatUsers.users.length;
+    if ( ChatUsers.data?.users?.length) {
+      usersCount = ChatUsers.data.users.length;
     }
     const chatType = {channel: false, group: false};
     if (chat.chatType == "group") {
@@ -99,12 +100,13 @@ export class GroupChatInfo {
       
       const userCard = new ContactCard(chatUsersList);
 
-      if (ChatUsers.users) {
-          ChatUsers.users.forEach(async (element) => {
+      if (ChatUsers.data.users) {
+          ChatUsers.data.users.forEach(async (element) => {
+            console.log(element)
           const user: TContact = {
             id: element.id,
-            name: element.name,
-            avatarURL: element.avatarURL,
+            name: element.username,
+            avatarURL: element.avatar_path,
             username: element.username,
           };
           userCard.render(user);
@@ -132,12 +134,13 @@ export class GroupChatInfo {
     const handleDeleteGroup = async () => {
       if (userType.owner) {
         const response = await API.delete(
-          `/chat/${chat.chatId}/delete`,
+          `/chat/${chat.chatId}`,
           chat.chatId,
         );
         if (!response.error) {
           Router.go("/");
         }
+        Router.go("/");
         return; 
         
       }

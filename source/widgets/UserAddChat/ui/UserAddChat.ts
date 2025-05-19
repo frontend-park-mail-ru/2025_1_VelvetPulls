@@ -31,6 +31,7 @@ export class UserAddChat {
     const contactListContainer =
       this.#parent.querySelector("#chat-contact-list")!;
     const response = await API.get<ContactResponse>("/contacts");
+    response.contacts=response.data
     if (!response.error) {
       const contacts = response.contacts;
       if (contacts && contacts.length) {
@@ -44,36 +45,37 @@ export class UserAddChat {
     const contactCardElement = document.querySelectorAll(".contact-card");
     contactCardElement.forEach((elem) => {
       elem.addEventListener("click", async (e) => {
-        const usersId: string[] = [];
+        const users: string[] = [];
         if (elem instanceof HTMLAnchorElement) {
+          console.log(elem.querySelector(".contact-card-name")?.innerHTML.replaceAll(' ',''))
           const index = elem.href.lastIndexOf("/");
           const href = elem.href.slice(index + 1);
-          usersId.push(href);
+          users.push(elem.querySelector(".contact-card-name")?.innerHTML.replaceAll(' ','').replaceAll('\n',''));
         }
 
         e.preventDefault();
         const response = await API.post<AddUserResponse, UsersIdRequest>(
-          `/chat/${chat.chatId}/addusers`,
-          { usersId },
+          `/chat/${chat.chatId}/users`,
+          { users },
         );
         if (!response.error) {
           this.#parent.innerHTML = "";
           const ChatUsersId = await API.get<UsersIdResponse>(
             `/chat/${chat.chatId}`,
           );
-          if (ChatUsersId.users) {
+          if (ChatUsersId.data) {
             chatUsersList.innerHTML = "";
             const userCard = new ContactCard(chatUsersList);
-            ChatUsersId.users.forEach(async (element) => {
+            ChatUsersId.data.users.forEach(async (element) => {
               const user: TContact = {
                 id: element.id,
-                name: element.name,
+                name: element.username,
                 avatarURL: element.avatarURL,
                 username: element.username,
               };
               userCard.render(user);
             });
-            usersCount.innerHTML = ChatUsersId.users.length.toString();
+            usersCount.innerHTML = ChatUsersId.data.users.length.toString();
           }
         }
       });

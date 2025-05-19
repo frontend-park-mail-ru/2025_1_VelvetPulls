@@ -17,20 +17,21 @@ export class MessageMenu {
         
         let thisUser = true;
         console.log("menu")
-        if (message.authorID !== UserStorage.getUser().id) {
+        if (message.authorID !== UserStorage.getUser().username) {
           thisUser = false;
         }
         const notBranch = !branch;
         const notPersonalChat = true;
-        if (ChatStorage.getChat().chatType === "personal") {
+        if (ChatStorage.getChat().chatType === "dialog") {
           return;
         }
+        // console.log(ChatStorage.getChat().chatId)
         this.#parent.innerHTML = MessageMenuTemplate({x, y, notBranch, thisUser, notPersonalChat});
         const deleteButton = this.#parent.querySelector("#delete-message")!;
 
         const handleDelete = async () => {
             const deleteMessageMenu = new DeleteMessage(this.#parent);
-            deleteMessageMenu.render(messageId);
+            deleteMessageMenu.render(messageId,ChatStorage.getChat().chatId);
         };
         if (deleteButton) {
           deleteButton.addEventListener("click", handleDelete);

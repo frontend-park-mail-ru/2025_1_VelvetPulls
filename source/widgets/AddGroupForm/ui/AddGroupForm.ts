@@ -12,7 +12,8 @@ import { validateForm } from "@/shared/validation/formValidation";
 import { Chat } from "@/widgets/Chat";
 import { ChatList } from "@/widgets/ChatList";
 import { SelectedContacts } from "../lib/SelectedContacts";
-
+import { UserStorage } from "@/entities/User";
+import { Router } from "@/shared/Router/Router";
 export class AddGroupForm {
   #parent;
   #chat;
@@ -48,7 +49,7 @@ export class AddGroupForm {
     const contactCard = new ContactCard(contactList);
 
     if (!response.error) {
-      const contacts = response.contacts;
+      const contacts = response.data;
 
       if (contacts) {
         contacts.forEach((element) => {
@@ -64,14 +65,16 @@ export class AddGroupForm {
       const chatName: string = nameInput.value;
 
       const newChat: NewChatRequest = {
-        chatName: chatName,
-        chatType: "group",
+        title: chatName,
+        type: "group",
         usersToAdd: selectedContacts.getSelectedContacts(),
       };
+      newChat.usersToAdd.push(UserStorage.getUser().username)
+      console.log(newChat)
 
       const chatNameRender: HTMLSpanElement =
         this.#parent.querySelector("#nickname")!;
-      if (!validateNickname(newChat.chatName) || newChat.chatName.length > 20) {
+      if (!validateNickname(newChat.title) || newChat.title.length > 20) {
         validateForm(nameInput, "Не валидное название", chatNameRender);
         return;
       } else {
@@ -93,11 +96,16 @@ export class AddGroupForm {
       const jsonProfileData = JSON.stringify(newChat);
       formData.append("chat_data", jsonProfileData);
       formData.append("avatar", avatarFile);
+      console.log(newChat,UserStorage.getUser())
 
-      const newChatRes = await API.postFormData<ChatResponse>(
-        "/addchat",
-        formData,
-      );
+      // const newChatRes = await API.postFormData<ChatResponse>(
+      //   "/addchat",
+      //   formData,
+      // );
+           const responseSubscribe = await API.post("/chat", newChat);
+           console.log(responseSubscribe)
+           Router.go("/")
+      
 
       if (!newChatRes.error) {
         const chatList = new ChatList(this.#parent, this.#chat);

@@ -29,11 +29,11 @@ class Api {
         },
         credentials: "include",
       });
-      const CSRFToken =
-        response.headers.get("x-csrf-token") ?? localStorage.getItem("csrf");
-      if (CSRFToken) {
-        Csrf.set(CSRFToken);
-      }
+      // const CSRFToken =
+      //   response.headers.get("x-csrf-token") ?? localStorage.getItem("csrf");
+      // if (CSRFToken) {
+      //   Csrf.set(CSRFToken);
+      // }
 
       const body: Response = await response.json();
       return body;
@@ -57,7 +57,7 @@ class Api {
         mode: "cors",
         headers: {
           "Access-Control-Allow-Credentials": "true",
-          not_csrf: Csrf.get(),
+          //not_csrf: Csrf.get(),
           "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify(body),
@@ -85,12 +85,13 @@ class Api {
     try {
       const url = this.#baseURl + path;
       const CSRFToken = Csrf.get() ?? localStorage.getItem("csrf");
+      console.log(formData)
       const state: RequestInit = {
         method: "POST",
         headers: {
           "Access-Control-Allow-Credentials": "true",
           enctype: "multipart/form-data",
-          not_csrf: CSRFToken,
+          //not_csrf: CSRFToken,
         },
         mode: "cors",
         body: formData,
@@ -101,6 +102,7 @@ class Api {
       }
 
       const response = await fetch(url, state);
+      console.log(response)
       const responseBody: Response = await response.json();
       return responseBody;
     } catch {
@@ -118,13 +120,14 @@ class Api {
         headers: {
           "Access-Control-Allow-Credentials": "true",
           enctype: "multipart/form-data",
-          not_csrf: Csrf.get(),
+          //not_csrf: Csrf.get(),
         },
         mode: "cors",
         body: formData,
         credentials: "include",
       };
       const response = await fetch(url, state);
+      console.log(response)
       const CSRFToken =
         response.headers.get("x-csrf-token") ?? localStorage.getItem("csrf");
       if (CSRFToken) {
@@ -147,7 +150,7 @@ class Api {
         headers: {
           "Access-Control-Allow-Credentials": "true",
           enctype: "multipart/form-data",
-          not_csrf: Csrf.get(),
+          //not_csrf: Csrf.get(),
         },
         mode: "cors",
         body: JSON.stringify(body),
@@ -175,7 +178,7 @@ class Api {
         method: "DELETE",
         body: body,
         headers: {
-          not_csrf: Csrf.get(),
+          //not_csrf: Csrf.get(),
         },
         mode: "cors",
         credentials: "include",

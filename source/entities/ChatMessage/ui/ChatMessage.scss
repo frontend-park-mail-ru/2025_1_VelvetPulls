@@ -38,7 +38,7 @@ $messages-container-width: 700px;
     padding: 6px 12px 3px 12px;
 
     &__username {
-      @include font-settings("Inter", 400, 14px, $secondary);
+      @include font-settings("Inter", 400, 14px, $text-over-primary);
 
       overflow: hidden;
       text-overflow: ellipsis;
@@ -201,7 +201,7 @@ $messages-container-width: 700px;
     flex-direction: row-reverse;
 
     .message__body {
-      background: $primary-shadow-25;
+      background: $secondary;
     }
 
     &.first-message {

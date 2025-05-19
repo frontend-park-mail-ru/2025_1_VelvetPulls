@@ -20,11 +20,21 @@ class wsConnection {
       return;
     }
 
-    this.ws = new WebSocket(this.url + "/startwebsocket");
+    this.ws = new WebSocket(this.url + "/ws");
 
     this.ws.onmessage = (event: MessageEvent) => {
       try {
         const res = JSON.parse(event.data);
+        console.log(res,event)
+        let element=res.payload
+        res.payload={
+          text:element.body,
+          chatId: element.chat_id,
+    messageId:element.id,
+    datetime:element.sent_at,
+    text:element.body,
+    authorID:element.user,
+        }
         
         if (res.messageType === "error") {
           return;

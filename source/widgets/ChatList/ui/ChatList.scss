@@ -156,3 +156,24 @@ $chat-padding-top: var(--chat-padding-top);
     opacity: 0.6;
   }
 }
+
+.finder-opt{
+  width: 33%;
+  text-align: center;
+  background-color: blue;
+  margin: 0.5%;
+  cursor: pointer;
+  color: aliceblue;
+}
+
+.finder-options{
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  height: 0px;
+}
+
+.finder-options-visible{
+  visibility: visible;
+  height: auto;
+}

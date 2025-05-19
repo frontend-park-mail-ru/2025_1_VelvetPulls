@@ -22,9 +22,9 @@ export class ChatInfo {
       `/chat/${this.#chat.chatId}`,
     );
     let user;
-    if (usersInChat.users) {
-      user = usersInChat.users[(usersInChat.users[0].id !== UserStorage.getUser().id) ? 0 : 1];
-      const profileUser = await API.get<ProfileResponse>(`/profile/${user.id}`);
+    if (usersInChat.data.users) {
+      user = usersInChat.data.users[(usersInChat.data.users[0].id !== UserStorage.getUser().id) ? 0 : 1];
+      const profileUser = await API.get<ProfileResponse>(`/profile/${user.username}`);
       let birthdate;
       if (profileUser.birthdate) {
         const bhd = new Date(profileUser.birthdate);
@@ -40,6 +40,7 @@ export class ChatInfo {
       const chatInfo = await API.get<ChatResponse>(`/chat/${this.#chat.chatId}`);
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
+      console.log(profileUser)
 
       this.#parent.innerHTML = ChatInfoTemplate({ profileUser, birthdate,
         chat: {
@@ -71,7 +72,7 @@ export class ChatInfo {
 
       const handleDeleteGroup = async () => {
         const response = await API.delete(
-          `/chat/${this.#chat.chatId}/delete`,
+          `/chat/${this.#chat.chatId}`,
           this.#chat.chatId,
         );
         if (!response.error) {
@@ -80,7 +81,9 @@ export class ChatInfo {
       };
 
       deleteChatButton.addEventListener("click", handleDeleteGroup);
+      console.log(this.#parent)
     }
+    console.log(this.#parent)
 
     this.#parent.querySelector('#chat-info-close-button')!.addEventListener('click', () => {
       this.#parent.style.right = '-100vw';

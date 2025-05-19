@@ -148,7 +148,7 @@ export class SignupForm extends View {
       }
       const username = login;
       const name = nickname;
-      const response = await API.post<AuthResponse, SignUpRequest>("/signup", {
+      const response = await API.post<AuthResponse, SignUpRequest>("/register", {
         name,
         username,
         password,
@@ -169,16 +169,18 @@ export class SignupForm extends View {
         nickText.textContent = "Ошибка сервера, попробуйте еще";
         return;
       }
-
-      const user = response.user;
-      UserStorage.setUser({
-        id: user.id,
-        name: user.name,
-        username: user.username,
-        avatarURL: user.avatarURL,
-      });
-
-      wsConn.start();
+      const responseAuth = await API.get<AuthResponse>("/profile");
+      if (!responseAuth.error) {
+        UserStorage.setUser({
+          id: responseAuth.data.id,
+          name: responseAuth.data.name,
+          username: responseAuth.data.username,
+          avatarURL: responseAuth.data.avatarURL,
+        });
+        wsConn.start();
+      } else {
+        UserStorage.setUser({ id: "", name: "", username: "", avatarURL: "" });
+      }
       Router.go("/");
     };
 

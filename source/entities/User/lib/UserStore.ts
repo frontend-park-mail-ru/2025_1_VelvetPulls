@@ -11,9 +11,11 @@ class UserStore {
   }
 
   async init() {
-    const response = await API.get<AuthResponse>("/auth");
+    const response = await API.get<AuthResponse>("/profile");
+    console.log(response)
     if (!response.error) {
-      this.#user = response.user;
+      this.#user = response.data;
+      console.log(this.#user,response.data)
       wsConn.start();
     }
   }

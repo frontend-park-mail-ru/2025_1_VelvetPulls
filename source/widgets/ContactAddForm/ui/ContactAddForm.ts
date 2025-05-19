@@ -33,20 +33,22 @@ export class ContactAddForm {
       this.#parent.querySelector("#username-input")!;
 
     const handleAddContact = async () => {
-      const contactUsername: ContactRequest = {
-        contactUsername: usernameInput.value,
+      const username: ContactRequest = {
+        username: usernameInput.value,
       };
+      console.log(username)
       const response = await API.post<TContact, ContactRequest>(
         "/contacts",
-        contactUsername,
+        username,
       );
+      console.log(response)
 
       const spanError = this.#parent.querySelector("#error-span")!;
 
       if (!response.error) {
         spanError.textContent = "";
         const contactCard = new ContactCard(this.#contactList);
-        contactCard.renderChat(response, this.#chat, this.#chatList);
+        contactCard.renderChat(response.data, this.#chat, this.#chatList);
         const contactCardElements = document.querySelectorAll(".contact-card")!;
         contactCardElements[contactCardElements.length - 1].addEventListener(
           "click",

@@ -41,6 +41,7 @@ export class Chat {
    * @async
    */
   async render(chat: TChat) {
+    console.log(chat)
     this.#chatInfo.innerHTML = "";
 
     if (ChatStorage.getChat().chatId) {
@@ -53,10 +54,12 @@ export class Chat {
     ChatStorage.setChat(chat);
     ChatStorage.setCurrentBranchId("");
     const avatar = chat.avatarPath
-        ? serverHost + chat.avatarPath
+        ? "http://localhost:8080/" + chat.avatarPath
         : "/assets/image/default-avatar.svg";
 
     const responseInfo = await API.get<ChatResponse>(`/chat/${chat.chatId}`);
+    console.log(responseInfo)
+    responseInfo.role=responseInfo.data.role
     const userType : UserType = {owner: false, user: false, admin: false, not_in_chat: false};
     if (responseInfo.role === "owner") {
       userType.owner = true;
@@ -66,6 +69,9 @@ export class Chat {
       userType.user = true;
     } else{
       userType.not_in_chat = true;
+    }
+    if ((chat.chatType === "channel")&&(responseInfo.role==="member")) {
+      userType.not_in_chat=false
     }
     const chatType = {channel: false, group: false, personal: false};
     if (chat.chatType == "group") {
@@ -128,21 +134,21 @@ export class Chat {
     
         const response = await API.get<StickerPacksResponse>('/stickerpacks');
         const packs = response.packs;
-        packs.map((pack) => {
-          packsList.insertAdjacentHTML("beforeend", `<img class="sticker-list__packs__item" src="${serverHost}${pack.photo}" alt=""/>`);
-          packsList.lastElementChild?.addEventListener('click', async () => {
-            const response = await API.get<StickersResponse>(`/stickerpacks/${pack.id}`); 
-            const stickers = response.stickers;
-            stickersList.innerHTML = '';
-            stickers.map((sticker) => {
-              stickersList.insertAdjacentHTML("beforeend", `<img class="sticker-list__stickers__item" src="${serverHost}${sticker}" alt="">`);
-              stickersList.lastElementChild?.addEventListener('click', () => {
-                SendSticker(chat.chatId, sticker);
-                emojiPopup.style.display = 'none';
-              });
-            });
-          });
-        });
+        // packs.map((pack) => {
+        //   packsList.insertAdjacentHTML("beforeend", `<img class="sticker-list__packs__item" src="${serverHost}${pack.photo}" alt=""/>`);
+        //   packsList.lastElementChild?.addEventListener('click', async () => {
+        //     const response = await API.get<StickersResponse>(`/stickerpacks/${pack.id}`); 
+        //     const stickers = response.stickers;
+        //     stickersList.innerHTML = '';
+        //     stickers.map((sticker) => {
+        //       stickersList.insertAdjacentHTML("beforeend", `<img class="sticker-list__stickers__item" src="${serverHost}${sticker}" alt="">`);
+        //       stickersList.lastElementChild?.addEventListener('click', () => {
+        //         SendSticker(chat.chatId, sticker);
+        //         emojiPopup.style.display = 'none';
+        //       });
+        //     });
+        //   });
+        // });
       this.#parent.querySelector('#attachBtn')!.addEventListener("click", (event) => {
         event.stopPropagation();
         attachFilePopup.style.display = attachFilePopup.style.display === "none" ? "flex" : "none";
@@ -234,18 +240,20 @@ export class Chat {
     if (chatCard) {
       chatCard.classList.add('active');
     }
+    console.log("fuhrrfhrj")
     const subscribeButton : HTMLElement = this.#parent.querySelector("#subscribe-channel")!;
     const handleSubscribe = async () => {
-      const responseSubscribe = await API.post(`/channel/${chat.chatId}/join`, {});
-      
+      const responseSubscribe = await API.post(`/chat/${chat.chatId}/join`, {});
+      console.log(responseSubscribe)
       if (!responseSubscribe.error) {
         subscribeButton.classList.add('hidden');
         Router.go(`/chat/${chat.chatId}`, false);
       }
     };
-    if (chatType.channel && responseInfo.error) {
+    if (chatType.channel ) {
 
       if (subscribeButton) {
+        console.log("hfuiheui")
         subscribeButton.classList.remove('hidden');
         subscribeButton.addEventListener("click", handleSubscribe);
       }
@@ -279,9 +287,9 @@ export class Chat {
             return;
           }
           const response = await API.put(
-            `/messages/${messageId}`,
+            `/chat/${ChatStorage.getChat().chatId}/messages/${messageId}`,
             {
-              text: messageText,
+              message: messageText,
             },
           );
           if (!response.error) {
@@ -343,11 +351,35 @@ export class Chat {
     const responseChat = await API.get<ChatResponse>(
       `/chat/${chat.chatId}`,
     );
-    ChatStorage.setRole(responseChat.role ?? "");
-    ChatStorage.setUsers(responseChat.users ?? []);
+    console.log(responseChat.data.messages)
+    ChatStorage.setRole(responseChat.data.role ?? "");
+    ChatStorage.setUsers(responseChat.data.users ?? []);
 
     const messages: TChatMessage[] = responseChat.messages ?? [];
+    if (responseChat.data.messages!==null){
+      responseChat.data.messages.forEach(element => {
+        messages.push({
+          text:element.body,
+          chatId: element.chat_id,
+    messageId:element.id,
+    datetime:element.sent_at,
+    text:element.body,
+    authorID:element.user,
+    isRedacted: element.is_redacted,
+        })
+      });
+    }
+    // messages[0].text=responseChat.data.messages[0].body
+    // messages[0].chatId=responseChat.data.messages[0].chat_id
+    // messages[0].messageId=responseChat.data.messages[0].id
+    // messages[0].datetime=responseChat.data.messages[0].sent_at
+    // messages[0].text=responseChat.data.messages[0].body
+    // messages[0].authorID=responseChat.data.messages[0].user
+    console.log(messages)
+
+
     if (messages.length > 0) {
+      console.log("simple")
       chatMessage.renderMessages(messages);
     }
 
@@ -356,7 +388,7 @@ export class Chat {
     const handleChatHeader = async () => {
       if (this.#chatInfo.innerHTML !== "") {
         this.#chatInfo.innerHTML = "";
-      } else if (chat.chatType === "personal") {
+      } else if (chat.chatType === "dialog") {
         const chatInfo = new ChatInfo(this.#chatInfo, chat);
         chatInfo.render();
       } else if (chat.chatType === "group" || chat.chatType === "channel") {
@@ -382,7 +414,20 @@ export class Chat {
 
       const messageText = searchInput.value;
       if (messageText !== "") {
-        const response = await API.get<searchMessagesResponse>(`/chat/${chat.chatId}/messages/search?search_query=${messageText}`);
+        const response = await API.get<searchMessagesResponse>(`/search/${chat.chatId}/messages?query=${messageText}&limit=10`);
+        console.log(response.data.messages)
+        if (response.data.messages){
+          response.messages=[] 
+
+          response.data.messages.forEach(element => {
+            response.messages.push({
+              text: element.body,
+              messageId: element.id,
+              datetime: element.sent_at,
+              authorID: element.user_id,
+            })
+          });
+        }
         messagesSearchResult.innerHTML = '';
         if (!response.error) {
           if (response.messages) {

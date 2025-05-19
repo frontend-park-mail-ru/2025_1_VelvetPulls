@@ -33,7 +33,7 @@ export interface AuthResponse {
 }
 
 export interface ContactRequest {
-  contactUsername: string;
+  username: string;
 }
 
 export interface ProfileResponse {
@@ -112,7 +112,7 @@ export interface SendMessageRequest {
 }
 
 export interface UsersIdRequest {
-  usersId: string[];
+  users: string[];
 }
 
 export interface UsersIdResponse {
@@ -141,7 +141,7 @@ export interface SendMessageRequest {
 }
 
 export interface UsersIdRequest {
-  usersId: string[];
+  users: string[];
 }
 
 export interface UsersIdResponse {

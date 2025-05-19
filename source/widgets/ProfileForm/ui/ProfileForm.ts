@@ -28,17 +28,24 @@ export class ProfileForm {
 
   async render() {
     const user = UserStorage.getUser();
+    console.log(user)
     const response = await API.get<ProfileResponse>("/profile");
+    console.log(response.data)
 
     if (response.avatarURL) {
-      response.avatarURL = serverHost + response.avatarURL;
+      response.avatarURL = "http://localhost:8080/" + response.avatarURL;
+      response.ava="http://localhost:8080/" + response.data.avatar_path
     } else if (UserStorage.getUser().avatarURL) {
       response.avatarURL = UserStorage.getUser().avatarURL;
+      response.ava = UserStorage.getUser().avatarURL;
     } else {
       response.avatarURL = "/assets/image/default-avatar.svg";
+      response.ava = "/assets/image/default-avatar.svg";
     }
+    console.log(response.ava)
 
     const currentDate = new Date();
+    console.log(response)
     this.#parent.innerHTML = ProfileFormTemplate({
       user,
       response,
@@ -163,6 +170,7 @@ export class ProfileForm {
       if (!flag) {
         return;
       }
+      console.log(profileData)
 
       const errorMessage = await genProfileData(profileData, avatarFile);
       if (errorMessage != "" && errorMessage === "error message") {
@@ -179,7 +187,7 @@ export class ProfileForm {
 
       if (avatarFile) {
         const userAvatar: HTMLImageElement =
-          document.querySelector("#user-avatar")!;
+          document.querySelector("#avatar")!;
         userAvatar.src = URL.createObjectURL(avatarFile);
         UserStorage.setAvatar(userAvatar.src);
       }
@@ -192,7 +200,7 @@ export class ProfileForm {
     const exitButton = this.#parent.querySelector("#logout")!;
 
     const handleExitClick = async () => {
-      const response = await API.post<EmptyResponse, EmptyRequest>(
+      const response = await API.delete<EmptyResponse, EmptyRequest>(
         "/logout",
         {},
       );

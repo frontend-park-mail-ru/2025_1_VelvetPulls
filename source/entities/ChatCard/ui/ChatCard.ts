@@ -22,9 +22,11 @@ export class ChatCard {
     if (notificationChat) {
       chat = notificationChat;
     }
+    console.log(chat)
     let avatar;
-    if (chat.avatarPath !== "") {
-      avatar = serverHost + chat.avatarPath;
+    if ((chat.avatarPath !== "")&&(chat.avatarPath!==undefined)) {
+      avatar = "http://localhost:8080/" + chat.avatarPath;
+      console.log(avatar)
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -36,13 +38,13 @@ export class ChatCard {
           ...chat,
           lastMessage: {
             ...chat.lastMessage,
-            datetime: getTimeString(chat.lastMessage.datetime),
+            datetime: "hufrhifubewjhb",//datetime: getTimeString(chat.lastMessage.datetime),
           },
         },
         avatar,
       }),
     );
-    console.log(chat.lastMessage.text)
+    //console.log(chat.lastMessage.text)
     this.#parent.lastElementChild!.addEventListener("click", (e) => {
       e.preventDefault();
       

@@ -75,11 +75,13 @@ export class LoginForm extends View {
       if (!validatePassword(password) || !validateLogin(username)) {
         return;
       }
+      console.log(username)
 
       const response = await API.post<AuthResponse, LoginRequest>("/login", {
         username,
         password,
       });
+      console.log(response)
 
       if (response.error) {
         loginInput.classList.add("error");
@@ -88,13 +90,13 @@ export class LoginForm extends View {
         return;
       }
 
-      const responseAuth = await API.get<AuthResponse>("/auth");
+      const responseAuth = await API.get<AuthResponse>("/profile");
       if (!responseAuth.error) {
         UserStorage.setUser({
-          id: responseAuth.user.id,
-          name: responseAuth.user.name,
-          username: responseAuth.user.username,
-          avatarURL: responseAuth.user.avatarURL,
+          id: responseAuth.data.id,
+          name: responseAuth.data.name,
+          username: responseAuth.data.username,
+          avatarURL: responseAuth.data.avatarURL,
         });
         wsConn.start();
       } else {

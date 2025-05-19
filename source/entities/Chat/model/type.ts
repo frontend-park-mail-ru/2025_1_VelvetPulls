@@ -1,6 +1,6 @@
 import { TChatMessage } from "@/entities/ChatMessage";
 
-export type ChatType = "personal" | "group" | "channel";
+export type ChatType = "dialog" | "group" | "channel";
 
 export interface TChat {
   avatarPath: string;

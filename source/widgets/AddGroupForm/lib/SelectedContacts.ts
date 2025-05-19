@@ -12,7 +12,7 @@ export class SelectedContacts {
   toggleCheckbox(contactId: string) {
     if (this.#selectedContacts.includes(contactId)) {
       this.#selectedContacts = this.#selectedContacts.filter(
-        (id) => id !== contactId,
+        (username) => username !== contactId,
       );
     } else {
       this.#selectedContacts = [...this.#selectedContacts, contactId];

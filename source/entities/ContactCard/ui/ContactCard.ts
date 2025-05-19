@@ -21,8 +21,9 @@ export class ContactCard {
   }
 
   render(contact: TContact) {
-    if (contact.avatarURL !== null) {
-      contact.avatarURL = serverHost + contact.avatarURL;
+    console.log(contact)
+    if ((contact.avatarURL !== null)&&(contact.avatarURL !== undefined)) {
+      contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
     }
@@ -40,7 +41,7 @@ export class ContactCard {
 
   renderChat(contact: TContact, chat: Chat, chatList: ChatList) {
     if (contact.avatarURL !== null) {
-      contact.avatarURL = serverHost + contact.avatarURL;
+      contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
     }
@@ -53,18 +54,33 @@ export class ContactCard {
     this.#parent.lastElementChild!.addEventListener("click", async (e) => {
       e.preventDefault();
       const response = await API.get<ChatsResponse>("/chats");
+          console.log(response)
+          if (response.data!==null){
+            response.chats=[]
+            response.data.forEach(element => {
+              response.chats.push({
+                chatId: element.id,
+                chatType: element.type,
+                countOfUsers: element.count_users,
+                chatName: element.title,
+              })
+            });}
 
-      if (!response.chats) {
-        return;
-      }
+      // if (!response.chats) {
+      //   return;
+      // }
+      console.log("rygbrhjrfgbjrfvj")
       const chats: TChat[] = response.chats ?? [];
 
       for (const elem of chats) {
-        if (elem.chatType === "personal") {
+        console.log("rygbrhjrfgbjrfvj")
+        if (elem.chatType === "dialog") {
           const chatResponse = await API.get<ChatResponse>(
             `/chat/${elem.chatId}`,
           );
+          console.log(chatResponse)
           if (chatResponse.users && (chatResponse.users.find(user => user.id === contact.id))) {
+            console.log("rygbrhjrfgbjrfvj")
             chatList.render();
             chat.render(elem);
             return;
@@ -73,30 +89,46 @@ export class ContactCard {
       }
 
       const newChat: TNewChat = {
-        chatName: contact.name,
-        chatType: "personal",
-        usersToAdd: [contact.id],
+        title: contact.username,
+        type: "dialog",
+        usersToAdd: [contact.username],
       };
 
       const formData: FormData = new FormData();
       const jsonProfileData = JSON.stringify(newChat);
       formData.append("chat_data", jsonProfileData);
 
-      const newChatRes = await API.postFormData<ChatResponse>(
-        "/addchat",
-        formData,
-      );
+      // const newChatRes = await API.postFormData<ChatResponse>(
+      //   "/addchat",
+      //   formData,
+      // );
+      const responseSubscribe = await API.post("/chat", newChat);
+           console.log(responseSubscribe)
 
-      if (!newChatRes.error) {
+      // if (!newChatRes.error) {
         chatList.render();
-        chat.render(newChatRes);
-      }
+        console.log(responseSubscribe.data.id)
+        const responseInfo = await API.get<ChatResponse>(`/chat/${responseSubscribe.data.id}`);
+            console.log(responseInfo)
+            // {
+            //   chatId: responseSubscribe.data.id,
+            //   chatType: responseSubscribe.data.type,
+            //   countOfUsers: responseSubscribe.data.count_users,
+            //   chatName: responseSubscribe.data.title,
+            // }
+        chat.render({
+          chatId: responseSubscribe.data.id,
+          chatType: responseSubscribe.data.type,
+          countOfUsers: responseSubscribe.data.count_users,
+          chatName: responseSubscribe.data.title,
+        });
+      // }
     });
   }
 
   renderForm(contact: TContact, selectedContacts: SelectedContacts) {
     if (contact.avatarURL) {
-      contact.avatarURL = serverHost + contact.avatarURL;
+      contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
     }
@@ -123,8 +155,9 @@ export class ContactCard {
     this.#parent.lastElementChild!.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
+      console.log(contact)
 
-      selectedContacts.toggleCheckbox(contact.id);
+      selectedContacts.toggleCheckbox(contact.username);
 
       checkedIcon.style.display =
         checkedIcon.style.display === "none" ? "inline" : "none";

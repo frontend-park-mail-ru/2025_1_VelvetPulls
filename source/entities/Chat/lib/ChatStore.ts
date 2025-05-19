@@ -13,7 +13,7 @@ class ChatStore {
       avatarPath: "",
       chatId: "",
       chatName: "",
-      chatType: "personal",
+      chatType: "dialog",
       lastMessage: {
         authorID: "",
         chatId: "",

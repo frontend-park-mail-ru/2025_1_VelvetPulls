@@ -7,6 +7,7 @@ import { ChatResponse, NewChatRequest } from "@/shared/api/types";
 import { API } from "@/shared/api/api";
 import { validateNickname } from "@/shared/validation/nicknameValidation";
 import "./AddChannelForm.scss";
+import { Router } from "@/shared/Router/Router";
 
 export class AddChannelForm{
     #parent;
@@ -62,10 +63,10 @@ export class AddChannelForm{
 
         const handleCreateChannel = async () => {
             const channelName = channelNameInput.value;
-            const user : string[] = [UserStorage.getUser().id];
+            const user : string[] = [UserStorage.getUser().username];
             const newChat: NewChatRequest = {
-                chatName: channelName,
-                chatType: "channel",
+                title: channelName,
+                type: "channel",
                 usersToAdd: user,
               };
 
@@ -79,11 +80,11 @@ export class AddChannelForm{
                 validateForm(channelNameInput, "Название канала должно содержать хотя бы 1 символ", channelNameRender);
                 return;
               }
-            if (!validateNickname(newChat.chatName)) {
+            if (!validateNickname(newChat.title)) {
               validateForm(channelNameInput, "Допустимы только латинские и русские буквы, пробелы, цифры и нижние подчеркивания.", channelNameRender);
               return;
             }
-            if (newChat.chatName.length > 20) {
+            if (newChat.title.length > 20) {
               validateForm(channelNameInput, "Название канала должно быть меньше 20 символов", channelNameRender);
               return;
             }
@@ -93,10 +94,13 @@ export class AddChannelForm{
             formData.append("chat_data", jsonProfileData);
             formData.append("avatar", avatarFile);
 
-            const newChatRes = await API.postFormData<ChatResponse>(
-                "/addchat",
-                formData,
-            );
+            // const newChatRes = await API.postFormData<ChatResponse>(
+            //     "/addchat",
+            //     formData,
+            // );
+            const responseSubscribe = await API.post("/chat", newChat);
+           console.log(responseSubscribe)
+           Router.go("/")
 
             
             if (!newChatRes.error) {

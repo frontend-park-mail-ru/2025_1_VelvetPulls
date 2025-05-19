@@ -10,7 +10,7 @@ import { ProfileForm } from "@/widgets/ProfileForm";
 import { ContactsList } from "@/widgets/ContactsList";
 import { wsConn } from "@/shared/api/ws";
 import { TChat } from "@/entities/Chat";
-import { newChat, renderMessage } from "./handlers";
+import { newChat, renderMessage, renderMessage1, renderMessage2 } from "./handlers";
 import { serverHost } from "@/app/config";
 import { UserNotification } from "@/feature/Notification";
 
@@ -65,8 +65,13 @@ export class MainPage extends View {
         }
       }
     }
+    wsConn.unsubscribe("newMessage", renderMessage);
+    wsConn.unsubscribe("updateMessage", renderMessage1);
+    wsConn.unsubscribe("deleteMessage", renderMessage2);
 
     wsConn.subscribe("newMessage", renderMessage);
+    wsConn.subscribe("updateMessage", renderMessage1);
+    wsConn.subscribe("deleteMessage", renderMessage2);
     wsConn.subscribe("newChat", newChat);
   }
 }

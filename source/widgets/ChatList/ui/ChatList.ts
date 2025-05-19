@@ -30,6 +30,20 @@ export class ChatList {
    */
   async render() {
     const response = await API.get<ChatsResponse>("/chats");
+    console.log(response.data)
+    if (response.data!==null){
+      response.chats=[]
+      response.data.forEach(element => {
+        response.chats.push({
+          chatId: element.id,
+          chatType: element.type,
+          countOfUsers: element.count_users,
+          chatName: element.title,
+          avatarPath: element.avatar_path,
+        })
+      });
+    }
+    console.log(response.chats)
 
     const chats: TChat[] = response.chats ?? [];
 
@@ -121,6 +135,7 @@ export class ChatList {
       const searchChatsList : HTMLElement = this.#parent.querySelector('#search-chats-list')!;
       const searchUserChats : HTMLElement = searchChatsList.querySelector("#search-user-chats")!;
       const searchGlobalChats : HTMLElement = searchChatsList.querySelector("#search-globals-chats")!;
+      const search_options=document.querySelector(".finder-options")
       searchUserChats.innerHTML = '';
       searchGlobalChats.innerHTML = '';
       
@@ -130,7 +145,101 @@ export class ChatList {
         const labelGlobalContacts : HTMLInputElement = searchChatsList.querySelector("#label-global-chats")!;
         const labelUserContacts : HTMLInputElement = searchChatsList.querySelector("#label-user-chats")!;
 
-        const response = await API.get<searchChatsResponse>(`/chat/search?key_word=${chatName}`);
+        const response = await API.get<searchChatsResponse>(`/search?query=${chatName}`);
+        search_options?.classList.add("finder-options-visible")
+        search_options?.querySelector("#finder-group").addEventListener("click", (event) => {
+          event.preventDefault();
+          searchUserChats.innerHTML = '';
+          if (response.data.groups){
+            response.user_chats=[]
+            // response.user_chats[0].
+            response.data.groups.forEach(element => {
+              // response.global_channels[0].
+              response.user_chats.push({
+                chatId: element.id,
+                chatName: element.title,
+                chatType: "group",
+              })
+            });
+            
+            searchUserChats.innerHTML = '';
+            labelUserContacts.style.display = "block";
+            const userChats = new ChatCard(searchUserChats, this.#chat);
+            response.user_chats.forEach((element) => {
+              userChats.render(element);
+            });
+          }
+        });
+        search_options?.querySelector("#finder-dialog").addEventListener("click", (event) => {
+          event.preventDefault();
+          searchUserChats.innerHTML = '';
+          if (response.data.dialogs){
+            response.user_chats=[]
+            // response.user_chats[0].
+            response.data.dialogs.forEach(element => {
+              // response.global_channels[0].
+              response.user_chats.push({
+                chatId: element.id,
+                chatName: element.title,
+                chatType: "dialog",
+              })
+            });
+            
+            searchUserChats.innerHTML = '';
+            labelUserContacts.style.display = "block";
+            const userChats = new ChatCard(searchUserChats, this.#chat);
+            response.user_chats.forEach((element) => {
+              userChats.render(element);
+            });
+          }
+        });
+        search_options?.querySelector("#finder-channel").addEventListener("click", (event) => {
+          event.preventDefault();
+          searchUserChats.innerHTML = '';
+          if (response.data.global_channels){
+            response.user_chats=[]
+            // response.user_chats[0].
+            response.data.global_channels.forEach(element => {
+              // response.global_channels[0].
+              response.user_chats.push({
+                chatId: element.id,
+                chatName: element.title,
+                chatType: "channel",
+              })
+            });
+            
+            searchUserChats.innerHTML = '';
+            labelUserContacts.style.display = "block";
+            const userChats = new ChatCard(searchUserChats, this.#chat);
+            response.user_chats.forEach((element) => {
+              userChats.render(element);
+            });
+          }
+        });
+        console.log(response.data)
+        // if (response.data.global_channels){
+        //   response.global_channels=[]
+        //   response.data.global_channels.forEach(element => {
+        //     // response.global_channels[0].
+        //     response.global_channels.push({
+        //       chatId: element.id,
+        //       chatName: element.title,
+        //       chatType: "channel",
+        //     })
+        //   });
+        // }
+        // if (response.data.groups){
+        //   response.user_chats=[]
+        //   // response.user_chats[0].
+        //   response.data.groups.forEach(element => {
+        //     // response.global_channels[0].
+        //     response.user_chats.push({
+        //       chatId: element.id,
+        //       chatName: element.title,
+        //       chatType: "group",
+        //     })
+        //   });
+        // }
         if (!response.error) {
           chatList.style.display = "none";
           searchChatsList.style.display = "block";
@@ -161,6 +270,7 @@ export class ChatList {
       else {
         searchChatsList.style.display = "none";
         chatList.style.display = "block";
+        search_options?.classList.remove("finder-options-visible")
       }
       return;
     };

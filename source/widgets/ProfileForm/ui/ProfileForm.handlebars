@@ -13,7 +13,7 @@
       <img
         id="avatar"
         class="profile-form-user__img"
-        src={{response.avatarURL}}
+        src={{response.ava}}
       />
       <input
         type="file"
@@ -25,12 +25,15 @@
       <span id="avatar-error" class="avatar-error"></span>
       <br />
     </label>
+    <div class="profile-error-nickname">
+      <span id="nickname" class="profile-error__span"></span>
+    </div>
     <input
       id="user-name"
       class="profile-form-user__input-name profile-form-user__input"
       type="text"
       placeholder="Имя"
-      value="{{user.name}}"
+      value="{{response.data.username}}"
       name="text"
     />
     <p class="profile-form-user__p">Отображаемое имя</p>
@@ -85,6 +88,7 @@
     <p class="profile-form-user__p">Подтвердите новый пароль</p>
     </div>
   </form>
+
   <div class="profile-buttons">
   <img
     class="exit-btn-img"

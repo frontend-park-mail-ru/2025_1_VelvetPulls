@@ -2,12 +2,13 @@ import { API } from "@/shared/api/api";
 import ChatInfoTemplate from "./ChatInfo.handlebars";
 import "./ChatInfo.scss";
 import { UserStorage } from "@/entities/User";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { TChat } from "@/entities/Chat";
 import { ChatResponse, ProfileResponse, UsersIdResponse } from "@/shared/api/types";
 import { Router } from "@/shared/Router/Router";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { formatBytes } from "@/shared/helpers/formatBytes";
+import { ChatList } from "@/widgets/ChatList";
 
 export class ChatInfo {
   #parent;
@@ -32,7 +33,7 @@ export class ChatInfo {
       }
        
       if (profileUser.avatarURL) {
-        profileUser.avatarURL = "http://localhost:8080/" + profileUser.avatarURL;
+        profileUser.avatarURL = staticHost + profileUser.avatarURL;
       } else {
         profileUser.avatarURL = "/assets/image/default-avatar.svg";
       }
@@ -70,13 +71,18 @@ export class ChatInfo {
       const deleteChatButton = this.#parent.querySelector("#delete-chat")!;
 
       const handleDeleteGroup = async () => {
+        console.log("dele")
         const response = await API.delete(
           `/chat/${this.#chat.chatId}`,
           this.#chat.chatId,
         );
-        if (!response.error) {
+        // console.log(response)
+        // if (!response.error) {
+          // console.log("dele")
           Router.go("/");
-        }
+          const chatList = new ChatList(this.#parent, this.#chat);
+                  chatList.render();
+        //}
       };
 
       deleteChatButton.addEventListener("click", handleDeleteGroup);

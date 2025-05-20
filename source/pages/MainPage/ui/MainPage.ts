@@ -11,7 +11,7 @@ import { ContactsList } from "@/widgets/ContactsList";
 import { wsConn } from "@/shared/api/ws";
 import { TChat } from "@/entities/Chat";
 import { newChat, renderMessage, renderMessage1, renderMessage2 } from "./handlers";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { UserNotification } from "@/feature/Notification";
 
 /**
@@ -32,7 +32,7 @@ export class MainPage extends View {
     const parent = document.getElementById("root")!;
     let avatar: string;
     if (user.avatarURL) {
-      avatar = "http://localhost:8080/" + user.avatarURL;
+      avatar = staticHost + user.avatarURL;
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }

@@ -2,7 +2,7 @@ import { TChat } from "@/entities/Chat/model/type";
 import ChatCardTemplate from "./ChatCard.handlebars";
 import "./ChatCard.scss";
 import { Chat } from "@/widgets/Chat";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { getTimeString } from "@/shared/helpers/getTimeString";
 import { UserNotification } from "@/feature/Notification";
@@ -25,7 +25,7 @@ export class ChatCard {
     // console.log(chat)
     let avatar;
     if ((chat.avatarPath !== "")&&(chat.avatarPath!==undefined)) {
-      avatar = "http://localhost:8080/" + chat.avatarPath;
+      avatar = staticHost + chat.avatarPath;
       // console.log(avatar)
     } else {
       avatar = "/assets/image/default-avatar.svg";

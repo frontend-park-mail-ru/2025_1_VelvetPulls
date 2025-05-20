@@ -14,7 +14,7 @@ import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { getChatLabel } from "@/shared/helpers/getChatLabel";
 import { ChatInfo } from "@/widgets/ChatInfo";
 import { GroupChatInfo } from "@/widgets/GroupChatInfo";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { UserType } from "@/widgets/AddChannelForm/lib/types";
 import { debounce } from "@/shared/helpers/debounce";
 import { SearchedMessageCard } from "@/entities/SearchedMessageCard/ui/SearchedMessageCard";
@@ -53,7 +53,7 @@ export class Chat {
     ChatStorage.setChat(chat);
     ChatStorage.setCurrentBranchId("");
     const avatar = chat.avatarPath
-        ? "http://localhost:8080/" + chat.avatarPath
+        ? staticHost + chat.avatarPath
         : "/assets/image/default-avatar.svg";
 
     const responseInfo = await API.get<ChatResponse>(`/chat/${chat.chatId}`);

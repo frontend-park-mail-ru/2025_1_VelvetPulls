@@ -101,7 +101,7 @@ export class AddGroupForm {
       //   formData,
       // );
            const responseSubscribe = await API.post("/chat", newChat);
-           Router.go("/")
+          //  Router.go("/")
       
 
         const chatList = new ChatList(this.#parent, this.#chat);

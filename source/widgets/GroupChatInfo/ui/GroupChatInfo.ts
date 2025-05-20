@@ -8,7 +8,7 @@ import { ChatResponse, EmptyRequest, NotificationResponse, UsersIdResponse } fro
 import { ContactCard } from "@/entities/ContactCard/ui/ContactCard";
 import { TContact } from "@/entities/ContactCard";
 import { Router } from "@/shared/Router/Router";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { UserType } from "@/widgets/AddChannelForm/lib/types";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { formatBytes } from "@/shared/helpers/formatBytes";
@@ -29,7 +29,7 @@ export class GroupChatInfo {
     let avatar: string;
     if ((chat.avatarPath)&&(chat.avatarPath !== "")) {
       //avatar = serverHost + chat.avatarPath;
-      avatar = "http://localhost:8080/" + chat.avatarPath;
+      avatar = staticHost + chat.avatarPath;
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -136,7 +136,10 @@ export class GroupChatInfo {
           `/chat/${chat.chatId}`,
           chat.chatId,
         );
+        console.log(response)
+
         if (!response.error) {
+          console.log("dele")
           Router.go("/");
         }
         Router.go("/");
@@ -145,6 +148,7 @@ export class GroupChatInfo {
       }
       else {
         const response = await API.delete(`/chat/${chat.chatId}/leave`, "");
+        console.log(response)
         if (!response.error) {
           Router.go("/");
         }

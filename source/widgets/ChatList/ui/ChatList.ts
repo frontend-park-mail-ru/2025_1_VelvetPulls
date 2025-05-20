@@ -61,11 +61,11 @@ export class ChatList {
       }
     }
 
-    const addChat = document.querySelector("#add-chat")!;
-    const addChat1 = document.querySelector("#add-chat1")!;
-    const addChatIcon = addChat.querySelector<HTMLElement>("#addChatIcon")!;
-    const addChatIcon1 = addChat1.querySelector<HTMLElement>("#addChatIcon1")!;
-    const addChatPopup = addChat.querySelector<HTMLElement>("#addChatPopUp")!;
+    const addChat = document.querySelector("#add-chat");
+    const addChat1 = document.querySelector("#add-chat1");
+    const addChatIcon = document.querySelector<HTMLElement>("#addChatIcon")!;
+    const addChatIcon1 = document.querySelector<HTMLElement>("#addChatIcon1")!;
+    const addChatPopup = document.querySelector<HTMLElement>("#addChatPopUp")!;
     const addChatPopup1 = document.querySelector<HTMLElement>("#addChatPopUp1")!;
     const toCon=addChatPopup1.querySelector<HTMLElement>("#contact-button1")!;
     const toProf=addChatPopup1.querySelector<HTMLElement>("#profile-button1")!;

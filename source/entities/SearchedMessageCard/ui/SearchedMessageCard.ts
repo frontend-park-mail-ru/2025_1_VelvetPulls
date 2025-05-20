@@ -1,7 +1,7 @@
 import { ChatMessage, TChatMessage } from "@/entities/ChatMessage";
 import SearchedMessageCardTempalte from "./SearchedMessageCard.handlebars";
 import "./SearchedMessageCard.scss";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { getTimeString } from "@/shared/helpers/getTimeString";
 import { ChatMessagesResponse } from "@/shared/api/types";
 import { API } from "@/shared/api/api";
@@ -16,7 +16,7 @@ export class SearchedMessageCard{
     render(message : TChatMessage, avatar : string, person : string, chatMessages : HTMLElement, Message : ChatMessage) {
         message.datetime = getTimeString(message.datetime);
 
-        avatar = avatar ? "http://localhost:8080/" + avatar : "/assets/image/default-avatar.svg";
+        avatar = avatar ? staticHost + avatar : "/assets/image/default-avatar.svg";
         const messageResult = SearchedMessageCardTempalte({message, avatar, person});
         this.#parent.insertAdjacentHTML("beforeend", messageResult);
         const currentMessage = this.#parent.lastElementChild!;

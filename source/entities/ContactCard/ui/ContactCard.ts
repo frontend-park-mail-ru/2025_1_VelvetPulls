@@ -1,7 +1,7 @@
 import ContactCardTemplate from "./ContactCard.handlebars";
 import { TContact } from "../api/ContactType";
 import "./ContactCard.scss";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { TChat } from "@/entities/Chat";
 import {
   ChatResponse,
@@ -22,7 +22,7 @@ export class ContactCard {
 
   render(contact: TContact) {
     if ((contact.avatarURL !== null)&&(contact.avatarURL !== undefined)) {
-      contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
+      contact.avatarURL = staticHost + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
     }
@@ -40,7 +40,7 @@ export class ContactCard {
 
   renderChat(contact: TContact, chat: Chat, chatList: ChatList) {
     if ((contact.avatarURL !== null)&&(contact.avatarURL !== undefined)) {
-      contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
+      contact.avatarURL = staticHost + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
     }
@@ -119,7 +119,7 @@ export class ContactCard {
 
   renderForm(contact: TContact, selectedContacts: SelectedContacts) {
     if ((contact.avatarURL)&&(contact.avatarURL !== undefined)) {
-      contact.avatarURL = "http://localhost:8080/" + contact.avatarURL;
+      contact.avatarURL = staticHost + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
     }

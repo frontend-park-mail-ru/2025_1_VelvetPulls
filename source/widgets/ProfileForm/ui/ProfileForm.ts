@@ -11,7 +11,7 @@ import {
 } from "@/shared/api/types";
 import { UserStorage } from "@/entities/User";
 import { validateYear } from "@/shared/validation/yearValidation";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { genProfileData } from "../api/updateProfile";
 import { ChatList } from "@/widgets/ChatList";
 import { Chat } from "@/widgets/Chat";
@@ -32,8 +32,8 @@ export class ProfileForm {
     const response = await API.get<ProfileResponse>("/profile");
 
     if (response.data.avatar_path) {
-      response.avatarURL = "http://localhost:8080/" + response.avatarURL;
-      response.ava="http://localhost:8080/" + response.data.avatar_path
+      response.avatarURL = staticHost + response.avatarURL;
+      response.ava=staticHost + response.data.avatar_path
     }  else {
       response.avatarURL = "/assets/image/default-avatar.svg";
       response.ava = "/assets/image/default-avatar.svg";

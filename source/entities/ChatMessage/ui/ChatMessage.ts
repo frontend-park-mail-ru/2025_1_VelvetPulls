@@ -6,7 +6,7 @@ import ChatMessageTemplate from "./ChatMessage.handlebars";
 import "./ChatMessage.scss";
 import { UserStorage } from "@/entities/User";
 import { getTimeString } from "@/shared/helpers/getTimeString";
-import { serverHost } from "@/app/config";
+import { serverHost, staticHost } from "@/app/config";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { API } from "@/shared/api/api";
 import { MessageMenu } from "@/widgets/MessageMenu/ui/MessageMenu.ts";
@@ -106,7 +106,7 @@ export class ChatMessage {
               const msgs1=document.querySelector(".messages")
               msgs1.removeChild(msgs1.lastElementChild)
             }
-            if (c<25){
+            if (c<5){
               this.#needNewMsg=true
             }
             // res.messages.forEach(element => {
@@ -158,7 +158,7 @@ export class ChatMessage {
 
         const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
         const avatarURL = user.avatarURL
-          ? "http://localhost:8080/" + user.avatarURL
+          ? staticHost + user.avatarURL
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
@@ -253,7 +253,7 @@ export class ChatMessage {
 
         const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
         const avatarURL = user.avatarURL
-          ? "http://localhost:8080/" + user.avatarURL
+          ? staticHost + user.avatarURL
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
@@ -372,7 +372,7 @@ export class ChatMessage {
 
       const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
       const avatarURL = user.avatarURL
-        ? "http://localhost:8080/" + user.avatarURL
+        ? staticHost + user.avatarURL
         : "/assets/image/default-avatar.svg";
 
       const photos = message.photos ? message.photos.map(photo => ({

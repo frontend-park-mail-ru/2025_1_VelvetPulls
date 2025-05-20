@@ -28,7 +28,7 @@ export class ChatMessage {
     this.#needNewMsg=true;
     this.#parent.addEventListener('scroll', () => { 
       //messages.clientHeight+messages.scrollTop+5>messages.scrollHeight
-      // console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
+      console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
       if (this.#parent.offsetHeight - this.#parent.scrollTop >= this.#parent.scrollHeight-2) {
 
         if (nextPageLoading) {
@@ -109,6 +109,7 @@ export class ChatMessage {
             if (c<5){
               this.#needNewMsg=true
             }
+            this.#parent.scrollTop=-50
             // res.messages.forEach(element => {
             //   console.log("msgs1.lastElementChild()")
             //   // msgs1.removeChild(msgs1.lastElementChild())

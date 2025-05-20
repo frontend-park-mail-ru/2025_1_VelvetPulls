@@ -1,17 +1,14 @@
 # 2025_1_VelvetPulls
 
-Frontend-репозиторий проекта "Telegram" команды "Бархатные тяги"
+Frontend-репозиторий проекта "Telegram" команды "Unbreakable guys"
 
 ## Состав команды
 
-[Руслан Новиков](https://github.com/ruslann19) - *Frontend-разработчик*
-
 [Воронов Денис](https://github.com/VDEN5) - *Frontend-разработчик*
-
-[Илья Малютин](https://github.com/Xeonoff) - *Fullstack-разработчик*
 
 [Алексей Лупенков](https://github.com/onionfriend2004) - *Backend-разработчик*
 
+[Илья Малютин](https://github.com/Xeonoff) - *Fullstack-разработчик*
 
 ## Менторы
 
@@ -21,7 +18,7 @@ Frontend-репозиторий проекта "Telegram" команды "Бар
 
 [Владимир Борозенец](https://github.com/He11Coder) - *Go*
 
-Дарья Крылова - *UX*
+Ирена Сиренко - *UX*
 
 ## Ссылки
  
@@ -30,3 +27,5 @@ Frontend-репозиторий проекта "Telegram" команды "Бар
  [Макет](https://www.figma.com/design/oJ8iEKcWhUmiWh77I1aw1V/Keftegram?node-id=0-1&t=12UVo6mpYY5m7czR-1)
 
  [Деплой](http://90.156.217.108)
+
+ [Но деплой тут](http://90.156.217.108:8088)

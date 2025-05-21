@@ -143,3 +143,10 @@ $scroll-bar-color: var(--scroll-bar-color);
 
   cursor: pointer;
 }
+
+#pswd-err{
+  font-size: 14px;
+    color: $text-error-message;
+    font-family: var(--main-font-family);
+    opacity: 100%;
+}

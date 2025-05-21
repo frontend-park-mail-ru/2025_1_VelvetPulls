@@ -40,6 +40,7 @@ export class ContactAddForm {
         "/contacts",
         username,
       );
+      console.log(response)
 
       const spanError = this.#parent.querySelector("#error-span")!;
 

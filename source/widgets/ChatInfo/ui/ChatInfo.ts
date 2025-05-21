@@ -32,8 +32,8 @@ export class ChatInfo {
         birthdate = `${bhd.getUTCFullYear()}-${bhd.getUTCMonth()+1}-${bhd.getUTCDate()}`;
       }
        
-      if (profileUser.avatarURL) {
-        profileUser.avatarURL = staticHost + profileUser.avatarURL;
+      if (profileUser.data.avatar_path) {
+        profileUser.avatarURL = staticHost + profileUser.data.avatar_path;
       } else {
         profileUser.avatarURL = "/assets/image/default-avatar.svg";
       }

@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:wght@300;400;500&display=swap");
+
+body {
+  margin: 0 0 0 0;
+}
+
+:root {
+  --background: #ffffff;
+  --background-shadow-50: #ffffff;
+  --primary: #ffffff;
+  --primary-shadow-15: #ffffff;
+  --primary-shadow-25: #ffffff;
+  --secondary: #4f82bf;
+  --accent: #afcbee;
+
+  --text-over-primary: #090707;
+  --text-over-primary-shadow-30: #5F6266;
+  --text-over-primary-shadow-50: #85878a;
+  --text-over-secondary: #ffffff;
+  --text-error-message: red;
+
+  --button-next-page-color: #444444;
+  --delete-button-color: tomato;
+  --button-over-background-hover: #1414de;
+  --scroll-bar-color: #b8b6b6;
+  --form-button-access: #afcbee;
+  --a-element: #99c3ff;
+  --render-signup-button: #2d3339;
+  --main-page-right-column-width: 240px;
+  --chat-padding-top: 20px;
+  --input-width: 356px;
+  --input-height: 55px;
+  --main-font-family: "Inter";
+  --form-font-size: 22px;
+  --error-font-size: 14px;
+  --base-font-size: 16px;
+  --avatar-size: 60px;
+  --header: #ffffff;
+}

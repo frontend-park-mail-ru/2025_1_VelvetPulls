@@ -1,0 +1,141 @@
+$secondary: var(--secondary);
+
+$text-over-primary: var(--text-over-primary);
+$text-error-message: var(--text-error-message);
+
+.contact-add {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: 8000;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  align-content: center;
+    justify-items: center;
+}
+
+.contact-add-modal {
+  width: 100%;
+  max-width: 351px;
+
+  opacity: 1;
+  z-index: 9000;
+  border-radius: 25px;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  padding-inline: 15px;
+  padding-top: 10px;
+}
+
+.contact-header-name {
+  &__span {
+    color: $text-over-primary;
+    font-size: 22px;
+    font-family: var(--main-font-family);
+  }
+}
+
+.contact-header-back {
+  margin-left: 39%;
+
+  &__img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
+
+.contact-add-input-information {
+  margin-top: 20px;
+  padding-left: 15px;
+
+  &__span {
+    color: $text-over-primary;
+    font-size: 16px;
+    font-family: var(--main-font-family);
+  }
+}
+
+.contact-add-input-data {
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: 15px;
+
+  &__input {
+    display: block;
+    width: 100%;
+    max-width: 316px;
+    height: 25px;
+    display: block;
+    border: none;
+    border-bottom: 2px solid var(--text-over-primary);
+    color: var(--text-over-primary);
+    background-color: white;
+    outline: none;
+    transition: 1s;
+    font-size: 16px;
+
+    &::placeholder {
+      color: var(--text-over-primary);
+    }
+
+    &:focus {
+      border-bottom: 2px solid var(--background);
+      transition: 1s;
+    }
+  }
+}
+
+.contact-send {
+  padding: 0 10px 10px 0;
+  display: flex;
+  justify-content: end;
+}
+
+.contact-add-input-info-data {
+  margin-top: 7px;
+  padding-left: 15px;
+
+  &__span {
+    color: $text-over-primary;
+    font-size: 12px;
+    opacity: 50%;
+    font-family: var(--main-font-family);
+  }
+}
+
+.contact-send-img {
+  &__img {
+    cursor: pointer;
+  }
+}
+
+.contact-add-error {
+  padding-left: 15px;
+  min-height: 18px;
+
+  &__span {
+    font-size: 14px;
+    font-family: var(--main-font-family);
+  }
+}
+
+.error-span {
+  color: $text-error-message;
+}
+
+.not-error-span {
+  color: $text-over-primary;
+}

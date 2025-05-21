@@ -1,22 +1,31 @@
-import express from "express";
-import morgan from "morgan";
-import path from "path";
+// import { json } from "body-parser";
 
-const app = express();
+import express from "express";
+import pkg from 'body-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Получаем путь к текущему файлу
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const { json } = pkg;
+let app = express();
+
+app.use(express.static(path.join(__dirname, "..", "/dist")));
+app.use(express.static(path.join(__dirname, "..", "/public")));
+app.use(express.static(path.join(__dirname, "..", "/source")));
+app.use(express.static(path.resolve(__dirname, "..", "node_modules")));
+app.use(json());
 
 const port = 8088;
 
-const hostname = "localhost";
-
-app.use(morgan("dev"));
-app.use(express.static("src"));
-app.use(express.static("node_modules"));
-app.use(express.static("server/static"));
-
+// Создаём HTTP-сервер
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve("src", "index.html"));
+  // Устанавливаем HTTP-заголовок ответа с HTTP статусом и Content type
+  res.sendFile(path.join(__dirname, "..", "/dist/index.html"));
 });
 
-app.listen(port, hostname, () => {
-    console.log(`Server is running on http://${hostname}:${port}/`);
-});
+// Выводим лог как только сервер будет запущен
+app.listen(port, () => {});
+console.log("Server start");

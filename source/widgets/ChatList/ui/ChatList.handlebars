@@ -1,0 +1,86 @@
+<div class="chat-list-container">
+  <div id="head-chats-container">
+    <div class="add-chat1" id="add-chat1">
+    <img class="add-icon1" id="addChatIcon1" src="/assets/image/Menu.svg" />
+    
+  </div>
+    <div class="chat-list-container-search">
+    <div class="chat-list-container-search-input">
+      <img class="chat-list-container-search-input__img" src="/assets/image/search-icon.svg" alt="">
+      <input id="search-input" class="chat-list-container-search-input__input" type="text" name="text" placeholder="Поиск">
+    </div>
+  </div>
+  </div>
+  <div class="finder-options">
+      <div class="finder-opt" id="finder-group">group</div>
+      <div class="finder-opt" id="finder-channel">channel</div>
+      <div class="finder-opt" id="finder-dialog">dialog</div>
+  </div>
+  <div id="chat-list" class="chat-list-container-chatlist">
+    <div class="add-chat__popup" id="addChatPopUp1" style="display: none; position: fixed;">
+      <span 
+        class="create-personal-chat add-chat__popup__item" 
+        id="profile-button1"
+      >
+        <img
+          class="create-personal-chat__icon"
+          src="/assets/image/default-avatar.svg"
+        />
+        Профиль
+      </span>
+      <span 
+        class="create-group-chat add-chat__popup__item" 
+        id="contact-button1"
+      >
+        <img class="create-group-chat__icon" src="/assets/image/Contacts1.svg" />
+        Контакты
+      </span>
+    </div>
+
+  </div>
+  <div id="search-chats-list" class="search-chats" style="display: none;">
+    <div id="label-user-chats" class="user-chats" style="display: none;">
+      <hr class="user-chats__hr">
+      <span class="user-chats__span" style="color: #fff;">Ваши чаты</span>
+    </div>
+    <div id="search-user-chats" class="search-user-chats">
+
+    </div>
+    <div id="label-global-chats" class="global-chats" style="display: none;">
+      <hr class="global-chats__hr">
+    <span class="global-chats__span" style="color: #fff;">Глобальный поиск</span>
+    </div>
+    <div id="search-globals-chats" class="search-global-chats">
+
+    </div>
+  </div>
+  
+
+  <div class="add-chat" id="add-chat">
+    <img class="add-icon" id="addChatIcon" src="/assets/image/add-24px.svg" />
+    <div class="add-chat__popup" id="addChatPopUp" style="display: none;">
+      <span 
+        class="create-personal-chat add-chat__popup__item" 
+        id="create-personal-chat"
+      >
+        <img
+          class="create-personal-chat__icon"
+          src="/assets/image/default-avatar.svg"
+        />
+        Создать личный чат
+      </span>
+      <span 
+        class="create-group-chat add-chat__popup__item" 
+        id="create-group-chat"
+      >
+        <img class="create-group-chat__icon" src="/assets/image/group.svg" />
+        Создать группу
+      </span>
+      <span id="create-channel" class="create-channel-chat add-chat__popup__item">
+          <img class="create-channel-chat__icon" src="/assets/image/plus.svg" />
+          Создать канал
+        </span>
+    </div>
+  </div>
+
+</div>

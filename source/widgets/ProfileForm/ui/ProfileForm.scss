@@ -1,0 +1,145 @@
+$text-over-primary: var(--text-over-primary);
+$text-error-message: var(--text-error-message);
+
+$scroll-bar-color: var(--scroll-bar-color);
+
+.profile-form {
+  position: relative;
+  width: 100%;
+
+  background: var(--primary);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form-header {
+  height: 60px;
+
+  background: var(--header);
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-form-header-img {
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
+
+  cursor: pointer;
+}
+
+.profile-form-header-name {
+  font-size: 22px;
+  font-family: var(--main-font-family);
+  color: $text-over-primary;
+}
+
+.profile-form-user {
+  margin: 20px;
+  flex: 1;
+  overflow-y: scroll;
+
+  &__input {
+    display: block;
+    border: none;
+    border-bottom: 2px solid var(--text-over-primary);
+    padding-left: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--input-height);
+    font-size: 18px;
+    font-family: var(--main-font-family);
+    color: var(--text-over-primary);
+    background-color: var(--primary);
+    outline: none;
+    transition: 1s;
+
+    &:focus {
+      border-bottom: 2px solid #4f82bf;
+      transition: 1s;
+    }
+  }
+
+  &__img {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    margin: auto;
+    border-radius: 100%;
+    opacity: 75%;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+
+  &__input-avatar {
+    display: none;
+  }
+
+  &__p {
+    font-size: 14px;
+    color: var(--text-over-primary);
+    opacity: 50%;
+    font-family: var(--main-font-family);
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 40px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+}
+
+.avatar-error {
+  color: $text-error-message;
+  font-size: 14px;
+  font-family: var(--main-font-family);
+}
+
+.profile-error-nickname {
+  min-height: 50px;
+}
+
+.profile-error {
+  &__span {
+    font-size: 14px;
+    color: $text-error-message;
+    font-family: var(--main-font-family);
+  }
+}
+
+.profile-buttons {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+
+  display: flex;
+}
+
+.exit-btn-img {
+  margin-left: 15px;
+
+  width: 54px;
+  height: 54px;
+
+  cursor: pointer;
+}
+
+.profile-form-confirm-img {
+  margin: 0 15px 0 auto;
+  
+  width: 54px;
+  height: 54px;
+
+  cursor: pointer;
+}

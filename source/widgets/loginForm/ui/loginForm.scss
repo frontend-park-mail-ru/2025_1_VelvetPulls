@@ -1,0 +1,154 @@
+body#login {
+  background-color: white;
+}
+
+.login-page {
+  height: 100vh;
+  display: flex;
+  overflow-y: hidden;
+}
+
+.auth-form {
+  flex: 1;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0px 15px 0px black;
+
+  &__button {
+    background-color: var(--render-signup-button);
+    color: var(--text-over-primary);
+  }
+
+  &__p-login {
+    text-align: center;
+    font-size: 30px;
+    color: black;
+    font-family: var(--main-font-family);
+    margin-top: 15%;
+    margin-bottom: 15%;
+  }
+}
+
+
+.auth-form{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.login {
+  width: 500px;
+}
+
+.login-page {
+  .password-visibility-toggle {
+    right: 10px;
+  }
+}
+
+.auth-form-user {
+  &__input {
+    display: block;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    width: var(--input-width);
+    height: var(--input-height);
+    border-radius: 15px 15px 15px 15px;
+    font-size: var(--form-font-size);
+    font-family: var(--main-font-family);
+    color: grey;
+    background-color: white;
+  }
+
+  &__button-enter {
+    margin-top: 50px;
+    background-color: black;
+    color: white;
+  }
+}
+
+.btn {
+  margin-bottom: 20px;
+  display: block;
+  border: none;
+  width: var(--input-width);
+  min-height: var(--input-height);
+  border-radius: 60px 60px 60px 60px;
+  font-size: var(--form-font-size);
+  font-family: var(--main-font-family);
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.auth_btn {
+  margin-left: 7px;
+}
+
+#Create{
+  cursor: pointer;
+  color: blue;
+}
+
+.not_error {
+  border: 2px solid #4f82bf;
+}
+
+.error {
+  border: 2px solid red;
+}
+
+.auth-form-login-error {
+  min-height: 16px;
+  max-width: var(--input-width);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &__span {
+    font-size: var(--error-font-size);
+    font-family: var(--main-font-family);
+    color: var(--text-error-message);
+    min-height: 17px;
+    height: fit-content;
+    display: inline-block;
+    align-self: flex-start;
+  }
+}
+
+.auth-form-user-password {
+  &__img-pass_show {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .login-page {
+    overflow-y: scroll;
+  }
+
+  .btn {
+    max-width: 100%;
+  }
+
+  .auth-form {
+    min-width: 0;
+
+    .auth-form-user {
+      max-width: 100%;
+
+      &__input {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      
+    }
+  }
+}

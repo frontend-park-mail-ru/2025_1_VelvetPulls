@@ -1,0 +1,74 @@
+<div class="sidebar">
+    {{!-- Header --}}
+    <header class="sidebar-header">
+        <div id="button-back" class="button">
+            <img src="icons/Back.svg" alt="Back" class="icon"></img>
+        </div>
+
+        <div class="sidebar-header__title">Изменить профиль</div>
+        
+        <div id="button-save" class="button">
+            <img src="icons/Ok.svg" alt="Save" class="icon"></img>
+        </div>
+    </header>
+
+    <div class="horizontal-divider"></div>
+
+    <!-- Изменение профиля -->
+    <main class="edit-profile">
+        <section class="sidebar-list">
+            {{!-- Аватар --}}
+            {{!-- <div class="edit-profile__avatar-container">
+                <img src="img/Avatar.png" alt="Avatar" class="edit-profile__avatar-image" >
+                <img src="icons/addPhoto.svg" alt="Add photo" class="edit-profile__add-avatar-icon">
+
+            </div> --}}
+
+            {{!-- Аватар --}}
+            <div class="sidebar-list__input-container">
+                <input type="file" id="avatar-input">
+            </div>
+
+            {{!-- Имя --}}
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Имя (обязательно)</div>
+                <input type="text" placeholder="Имя" value="{{firstName}}"
+                        id="first-name-input" class="sidebar-list__input">
+            </div>
+
+            {{!-- Фамилия --}}
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Фамилия</div>
+                <input type="text" placeholder="Фамилия" value="{{lastName}}"
+                        id="last-name-input" class="sidebar-list__input">
+            </div>
+
+            {{!-- <div class="sidebar-list__input-container">
+                <input class="sidebar-list__input" type="text" placeholder="О себе" value="{{bio}}">
+                <div class="sidebar-list__input-description">
+                    <div>Любые подробности, например: возраст, род занятий или город.</div>
+                    <div>Пример: 23 года, дизайнер из Санкт-Петербурга.</div>
+                </div>
+            </div> --}}
+        </section>
+
+        <div class="edit-profile__divider"></div>
+
+        <section class="sidebar-list">
+            <div class="sidebar-list__input-container">
+                <div class="sidebar-list__input-label">Имя пользователя</div>
+                <input type="text" placeholder="Имя пользователя" value="{{username}}"
+                        id="username-input" class="sidebar-list__input">
+                <div class="sidebar-list__input-description">
+                    <div>
+                        Вы можете выбрать публичное имя пользователя в <b>Keftegram</b>.
+                        В этом случае другие люди смогут найти Вас по такому имени и связаться, не зная Вашего телефона.<br>
+                        <br>
+                        Вы можете использовать символы <b>a-z</b>, <b>0-9</b> и подчёркивания.
+                        Минимальная длина - <b>8</b> символов.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

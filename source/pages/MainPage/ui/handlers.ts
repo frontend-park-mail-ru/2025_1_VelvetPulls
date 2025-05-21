@@ -18,8 +18,21 @@ export const renderMessage = async (message: TMessageWS) => {
       contentNotification.innerHTML = "";
       const chatCard = new ChatCard(contentNotification, chat);
       const responseChats = await API.get<ChatsResponse>("/chats");
-      if(responseChats.chats===undefined){
-        return
+      // if(responseChats.chats===undefined){
+      //   return
+      // }
+      if (responseChats.data!==null){
+        responseChats.chats=[]
+        responseChats.data.forEach(element => {
+          responseChats.chats.push({
+            chatId: element.id,
+            chatType: element.type,
+            countOfUsers: element.count_users,
+            chatName: element.title,
+            avatarPath: element.avatar_path,
+            send_notifications: element.send_notifications,
+          })
+        });
       }
       if (!responseChats.error) {
         const newChatResponse = responseChats.chats.find((elem) => {
@@ -35,6 +48,7 @@ export const renderMessage = async (message: TMessageWS) => {
           chatName: responseProfile.username,
           
         };
+        console.log(newChatResponse,newChatResponse.send_notifications)
 
         if (newChatResponse && newChatResponse.send_notifications) {
           chatCard.render(notificationChat, true, newChatResponse);

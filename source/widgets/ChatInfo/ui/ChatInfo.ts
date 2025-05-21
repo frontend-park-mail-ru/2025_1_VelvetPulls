@@ -104,6 +104,7 @@ export class ChatInfo {
 
 
     const handleNotification = async () => {
+      console.log(!notificationCheckbox.checked)
       await API.post(`/chat/${ChatStorage.getChat().chatId}/notifications/${!notificationCheckbox.checked}`, {});
     };
 

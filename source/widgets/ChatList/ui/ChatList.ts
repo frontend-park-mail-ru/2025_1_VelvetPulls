@@ -39,6 +39,7 @@ export class ChatList {
           countOfUsers: element.count_users,
           chatName: element.title,
           avatarPath: element.avatar_path,
+          send_notifications: element.send_notifications,
         })
       });
     }

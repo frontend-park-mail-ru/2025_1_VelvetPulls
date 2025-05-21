@@ -1,0 +1,131 @@
+<div class="group-info">
+  <div class="chat-info-header-back">
+      <img
+        id="group-info-close-button"
+        class="chat-info-close-button-img"
+        src="/assets/image/close.svg"
+        alt=""
+      />
+      <p style="
+    margin-left: 45px;
+    margin-top: 0px;
+">Информация</p>
+{{#if userType.owner}}
+        <img
+          id="update-group"
+          class="group-update-image__img"
+          src="/assets/image/Edit.svg"
+          alt=""
+        />
+        {{/if}}
+    </div>
+  <div class="group-info-header">
+    <div class="group-header-images">
+      <img class="group-info-header__img" src="{{avatar}}" alt="" />
+    </div>
+    <div>
+    <span class="group-info-header__span-group-name">{{chat.chatName}}</span>
+    </div>
+    <div class="notifications group-notifications">
+        <span class="notifications__span">Уведомления</span>
+        <label class="Toggle" for="toggle">
+        <input type="checkbox" name="toggle" id="toggle" class="Toggle__input hidden" />
+
+        <span id="notification-toggle" class="Toggle__display">
+          
+        </span>
+      </label>
+      </div>
+      {{#if chatType.group}}  
+      <button id="add-user" class="group-content-header__button">+ Пригласить</button>
+      {{/if}}
+  </div>
+  <div class="group-content">
+    <div class="group-content-header">
+      <span class="group-content-header__span">Участники</span>
+      &nbsp
+      <span id="users-count" class="users-count">{{usersCount}}</span>
+    </div>
+    <div class="horizontal-line-container">
+      <hr class="horizontal-line" />
+    </div>
+    <div class="content-buttons">
+      {{#if chatType.group}}
+        <div class="content-button" id="group-content-users">
+          <span class="content-button__name">
+            Участники
+          </span>
+        </div>
+      {{/if}}
+      <div class="content-button" id="group-content-photos">
+        <span class="content-button__name">
+          Фото
+        </span>
+      </div>
+      <div class="content-button" id="group-content-files">
+        <span class="content-button__name">
+          Файлы
+        </span>
+      </div>
+    </div>
+    <div class="content-carousel">
+      <div class="content-tabs" id="content-tabs">
+        {{#if chatType.group}}
+        <div id="users-list" class="content-tab users-list">
+
+        </div>
+        {{/if}}
+        <div class="content-tab photos-list" id="photos-list">
+          {{#each chat.photos}}
+            <a href={{url}}>
+              <img class="message-photo" src={{url}} />
+            </a>
+          {{/each}}
+        </div>
+        <div class="content-tab files-list" id="files-list">
+          {{#each chat.files}}
+            <a class="message-file" href={{url}}>
+              <div class="message-file__upper-row">
+                <img class="message-file__icon" src="/assets/image/attached-file.svg" />
+                <div class="message-file__info">
+                  <div class="message-file__meta">
+                    <span class="message-file__extention">{{extention}}</span>
+                    <span class="message-file__size">{{size}}</span>
+                  </div>  
+                  <span class="message-file__name">{{name}}</span>
+                </div>
+              </div>
+            </a>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#if chatType.group}}
+  <button id="delete-group" class="delete-group__button">
+    {{#if userType.owner}}
+      Удалить группу
+    {{else}}
+      Выйти из группы
+    {{/if}}
+  {{/if}}
+  {{#if chatType.channel}}
+    {{#if userType.owner}}
+    <button id="delete-group" class="delete-group__button">
+      Удалить канал
+    {{/if}}
+    {{#if userType.admin}}
+    <button id="delete-group" class="delete-group__button">
+      Выйти из канала
+    {{/if}}
+    {{#if userType.user}}
+    <button id="delete-group" class="delete-group__button">
+      Выйти из канала
+    {{/if}}
+  {{/if}}
+  </button>
+  
+  <div id="modal-container">
+
+  </div>
+</div>

@@ -1,0 +1,124 @@
+@import "@/shared/styles/styles.scss";
+$text-over-primary: var(--text-over-primary);
+$scroll-bar-color: var(--scroll-bar-color);
+$primary-shadow-25: var(--primary-shadow-25);
+
+.contacts-list {
+  position: relative;
+  width: 100%;
+  flex: 1;
+
+  background: var(--primary);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-list-search {
+  background: $primary-shadow-25;
+  height: 55px;
+
+  border-radius: 20px;
+
+  margin: 0 10px;
+  margin-bottom: 15px;
+}
+
+.chat-list-search-input {
+  @include search-container();
+
+  &__img {
+    padding-left: 15px;
+    width: 30px;
+    height: 30px;
+  }
+
+  &__input {
+    @include search-input();
+  }
+  
+}
+
+.contacts-list-header {
+  height: 60px;
+
+  background: var(--header);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.contacts-list-header-name {
+    color: $text-over-primary;
+    font-family: var(--main-font-family);
+    font-size: var(--form-font-size);
+}
+
+.button-add-img{
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+
+  width: 54px;
+  height: 54px;
+
+  cursor: pointer;
+}
+
+.contacts-list-header-img {
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
+
+  cursor: pointer;
+}
+
+.contacts-user-list {
+  flex: 1;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 40px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+}
+
+.contacts-list-search {
+  flex: 1;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 40px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+}
+
+.user-contacts {
+
+  &__span {
+    @include search-label-span();
+  }
+}
+
+.global-contacts {
+
+  &__span {
+    @include search-label-span();
+  }
+}
+
+.block {
+  display: block;
+}

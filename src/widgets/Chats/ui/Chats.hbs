@@ -1,0 +1,83 @@
+<div class="sidebar">
+    {{!-- Header --}}
+    <header class="sidebar-header">
+        <button id="chats-menu" class="button">
+            <img src="icons/Menu.svg" alt="Menu" class="icon">
+        </button>
+        
+        <div class="sidebar-header__search">
+            <img src="icons/Search.svg" alt="Search" class="icon">
+            <input type="text" class="sidebar-header__search-input" placeholder="Поиск чата">
+        </div>
+    </header>
+    
+    <div id="chats-menu-popover" class="popover hidden">
+        <button id="chats-menu-profile" class="popover__item">
+            <img src="icons/Profile.svg" alt="Profile" class="icon">
+            <span class="popover__item_text">Профиль</span>
+        </button>
+        <button  id="chats-menu-contacts" class="popover__item">
+            <img src="icons/Contacts.svg" alt="Contacts" class="icon">
+            <span class="popover__item_text">Контакты</span>
+        </button>
+    </div>
+    
+    <div class="horizontal-divider"></div>
+
+    {{!-- Chats --}}
+    <section class="chats">
+        <div class="sidebar-list scrollable">
+            {{#each chats}}
+            <div class="sidebar-list__item sidebar-list-item">
+                <img src="{{this.avatarSrc}}" alt="User avatar" class="avatar">
+
+                <div class="sidebar-list-item__info">
+                    <div class="sidebar-list-item__full-name">{{this.title}}</div>
+                    <div class="sidebar-list-item__message-preview">{{this.lastMessage}}</div>
+                </div>
+                
+                <div class="sidebar-list-item__meta">
+                    <time class="sidebar-list-item__time">{{this.time}}11:00</time>
+                    {{#if this.unreadCount}}
+                    <div class="sidebar-list-item__unread-count">{{this.unreadCount}}</div>
+                    {{/if}}
+                </div>
+
+                {{!-- Удалить контакт --}}
+                <button class="button">
+                    <img src="icons/delete.svg" alt="Delete" class="icon">
+                </button>
+            </div>
+            {{/each}}
+        </div>
+
+        <div class="sidebar__fixed-button-container">
+            <div class="new-chat__popover-container">
+                <div id="new-chat__popover" class="popover">
+                    <button id="new-dialog" class="popover__item">
+                        <img src="icons/plus.svg" alt="New dialog" class="icon">
+                        <span class="popover__item_text">Начать диалог</span>
+                    </button>
+
+                    <button id="new-group" class="popover__item">
+                        <img src="icons/group.svg" alt="New group" class="icon">
+                        <span class="popover__item_text">Создать группу</span>
+                    </button>
+                    
+                    <button id="new-channel" class="popover__item">
+                        <img src="icons/plus.svg" alt="New channel" class="icon">
+                        <span class="popover__item_text">Создать канал</span>
+                    </button>
+
+                    <button id="new-contact" class="popover__item">
+                        <img src="icons/Profile.svg" alt="New contact" class="icon">
+                        <span class="popover__item_text">Создать контакт</span>
+                    </button>
+                </div>
+            </div>
+            <button class="sidebar__fixed-button">
+                <img src="icons/Add.svg" alt="New chat" class="sidebar__fixed-button-icon">
+            </button>
+        </div>
+    </section>
+</div>

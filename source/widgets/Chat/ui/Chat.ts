@@ -131,22 +131,22 @@ export class Chat {
         const packsList = this.#parent.querySelector<HTMLElement>('#packs-list')!;
     
         const response = await API.get<StickerPacksResponse>('/stickerpacks');
-        const packs = response.packs;
-        // packs.map((pack) => {
-        //   packsList.insertAdjacentHTML("beforeend", `<img class="sticker-list__packs__item" src="${serverHost}${pack.photo}" alt=""/>`);
-        //   packsList.lastElementChild?.addEventListener('click', async () => {
-        //     const response = await API.get<StickersResponse>(`/stickerpacks/${pack.id}`); 
-        //     const stickers = response.stickers;
-        //     stickersList.innerHTML = '';
-        //     stickers.map((sticker) => {
-        //       stickersList.insertAdjacentHTML("beforeend", `<img class="sticker-list__stickers__item" src="${serverHost}${sticker}" alt="">`);
-        //       stickersList.lastElementChild?.addEventListener('click', () => {
-        //         SendSticker(chat.chatId, sticker);
-        //         emojiPopup.style.display = 'none';
-        //       });
-        //     });
-        //   });
-        // });
+        const packs = response.data.packs;
+        packs.map((pack) => {
+          packsList.insertAdjacentHTML("beforeend", `<img class="sticker-list__packs__item" src="${serverHost}${pack.photo}" alt=""/>`);
+          packsList.lastElementChild?.addEventListener('click', async () => {
+            const response = await API.get<StickersResponse>(`/stickerpacks/${pack.id}`); 
+            const stickers = response.data.stickers;
+            stickersList.innerHTML = '';
+            stickers.map((sticker) => {
+              stickersList.insertAdjacentHTML("beforeend", `<img class="sticker-list__stickers__item" src="${serverHost}${sticker}" alt="">`);
+              stickersList.lastElementChild?.addEventListener('click', () => {
+                SendSticker(chat.chatId, sticker);
+                emojiPopup.style.display = 'none';
+              });
+            });
+          });
+        });
       this.#parent.querySelector('#attachBtn')!.addEventListener("click", (event) => {
         event.stopPropagation();
         attachFilePopup.style.display = attachFilePopup.style.display === "none" ? "flex" : "none";

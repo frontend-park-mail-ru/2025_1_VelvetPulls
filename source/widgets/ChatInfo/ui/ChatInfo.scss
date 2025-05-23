@@ -7,7 +7,7 @@ $text-over-secondary: var(--text-over-secondary);
 
 $delete-button-color: var(--delete-button-color);
 
-.chat-info-column{
+.chat-info-column {
   flex: 1;
 
   display: flex;
@@ -18,13 +18,12 @@ $delete-button-color: var(--delete-button-color);
 .chat-info {
   position: relative;
 
-
   border-radius: 25px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
-.chat-info-header-back{
+.chat-info-header-back {
   height: 25px;
 }
 
@@ -92,7 +91,7 @@ $delete-button-color: var(--delete-button-color);
 
 .chat-user-bio {
   margin: 10px 0 20px 0;
- 
+
   &__span {
     font-size: var(--base-font-size);
     font-family: var(--main-font-family);
@@ -152,7 +151,7 @@ $delete-button-color: var(--delete-button-color);
 }
 
 .Toggle__display::before {
-  content: '';
+  content: "";
 
   width: var(--diameter);
   height: var(--diameter);
@@ -163,7 +162,7 @@ $delete-button-color: var(--delete-button-color);
 
   position: absolute;
   z-index: 2;
-  top: 50%; 
+  top: 50%;
   left: var(--offset);
   transform: translate(0, -50%);
 
@@ -172,7 +171,7 @@ $delete-button-color: var(--delete-button-color);
 }
 
 .Toggle__input:checked + .Toggle__display {
-  background-color: #30D158;
+  background-color: #30d158;
 }
 
 .Toggle__input:checked + .Toggle__display::before {

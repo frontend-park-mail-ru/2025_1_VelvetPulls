@@ -40,7 +40,7 @@ export class ContactAddForm {
         "/contacts",
         username,
       );
-      console.log(response)
+      console.log(response);
 
       const spanError = this.#parent.querySelector("#error-span")!;
 
@@ -61,12 +61,12 @@ export class ContactAddForm {
       }
 
       if (response.error) {
-        const message : string = errors[response.error] ?? errors["Default error"];
+        const message: string =
+          errors[response.error] ?? errors["Default error"];
         spanError.textContent = message;
         spanError.classList.add("error-span");
         spanError.classList.remove("not-error-span");
       }
-      
     };
 
     confirmButton.addEventListener("click", handleAddContact);

@@ -1,4 +1,8 @@
-export type  MessageType = "informational" | "default" | "with_payload" | "sticker";
+export type MessageType =
+  | "informational"
+  | "default"
+  | "with_payload"
+  | "sticker";
 
 export interface TChatMessage {
   authorID: string;

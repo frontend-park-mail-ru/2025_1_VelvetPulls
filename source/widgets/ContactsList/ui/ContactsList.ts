@@ -20,7 +20,8 @@ export class ContactsList {
     this.#parent.innerHTML = ContactsListTemplate();
 
     const response = await API.get<ContactResponse>("/contacts");
-    const contactList : HTMLElement = this.#parent.querySelector("#contacts-list")!;
+    const contactList: HTMLElement =
+      this.#parent.querySelector("#contacts-list")!;
     const contactCard = new ContactCard(contactList);
     const chatList = new ChatList(this.#parent, this.#chat);
 
@@ -58,55 +59,63 @@ export class ContactsList {
 
     addContactButton.addEventListener("click", handleAddContact);
 
-    const inputSearch : HTMLInputElement = this.#parent.querySelector("#search-input")!;
+    const inputSearch: HTMLInputElement =
+      this.#parent.querySelector("#search-input")!;
 
     const handleSearch = async () => {
-      const searchContacts : HTMLElement = this.#parent.querySelector("#contacts-list-search")!;
+      const searchContacts: HTMLElement = this.#parent.querySelector(
+        "#contacts-list-search",
+      )!;
       const globalUsers = this.#parent.querySelector("#global-users")!;
       const userContacts = this.#parent.querySelector("#user-contacts")!;
-      userContacts.innerHTML = '';
-      globalUsers.innerHTML = '';
+      userContacts.innerHTML = "";
+      globalUsers.innerHTML = "";
 
-      const contactName : string = inputSearch.value;
-        if (contactName != "") {
-          const labelUserContacts : HTMLElement = this.#parent.querySelector("#label-user-contacts")!;
-          const labelGlobalContacts : HTMLElement = this.#parent.querySelector("#label-global-contacts")!;
-          labelUserContacts.classList.add("hidden");
-          labelGlobalContacts.classList.add("hidden");
+      const contactName: string = inputSearch.value;
+      if (contactName != "") {
+        const labelUserContacts: HTMLElement = this.#parent.querySelector(
+          "#label-user-contacts",
+        )!;
+        const labelGlobalContacts: HTMLElement = this.#parent.querySelector(
+          "#label-global-contacts",
+        )!;
+        labelUserContacts.classList.add("hidden");
+        labelGlobalContacts.classList.add("hidden");
 
-          const response = await API.get<searchContactsResponse>(`/search/contacts?query=${contactName}`);
-          response.user_contacts=response.data.contacts
-          if (!response.error) {
-            contactList.classList.add("hidden");
-            searchContacts.classList.remove('hidden');
-            if (response.global_users) {
-              response.global_users.forEach((element) => {
-                const contactGlobal = new ContactCard(globalUsers);
-                contactGlobal.renderChat(element, this.#chat, chatList);
-              });
-              labelGlobalContacts.classList.remove('hidden');
-            }
-            if (response.user_contacts) {
-              response.user_contacts.forEach((element) => {
-                const contactSearch = new ContactCard(userContacts);
-                contactSearch.renderChat(element, this.#chat, chatList);
-              });
-              labelUserContacts.classList.remove("hidden");
-            }
+        const response = await API.get<searchContactsResponse>(
+          `/search/contacts?query=${contactName}`,
+        );
+        response.user_contacts = response.data.contacts;
+        if (!response.error) {
+          contactList.classList.add("hidden");
+          searchContacts.classList.remove("hidden");
+          if (response.global_users) {
+            response.global_users.forEach((element) => {
+              const contactGlobal = new ContactCard(globalUsers);
+              contactGlobal.renderChat(element, this.#chat, chatList);
+            });
+            labelGlobalContacts.classList.remove("hidden");
+          }
+          if (response.user_contacts) {
+            response.user_contacts.forEach((element) => {
+              const contactSearch = new ContactCard(userContacts);
+              contactSearch.renderChat(element, this.#chat, chatList);
+            });
+            labelUserContacts.classList.remove("hidden");
           }
         }
-        else {
-          contactList.classList.remove("hidden");
-          searchContacts.classList.add("hidden");
-        }
-        return;
+      } else {
+        contactList.classList.remove("hidden");
+        searchContacts.classList.add("hidden");
+      }
+      return;
     };
     const debouncedHandle = debounce(handleSearch, 250);
 
     inputSearch.addEventListener("input", debouncedHandle);
 
-    document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw'; 
-    this.#parent.style.left = '0';
-
+    document.querySelector<HTMLElement>("#chat-info-container")!.style.right =
+      "-100vw";
+    this.#parent.style.left = "0";
   }
 }

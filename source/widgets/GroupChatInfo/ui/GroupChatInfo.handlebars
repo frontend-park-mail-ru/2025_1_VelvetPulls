@@ -1,44 +1,51 @@
 <div class="group-info">
   <div class="chat-info-header-back">
-      <img
-        id="group-info-close-button"
-        class="chat-info-close-button-img"
-        src="/assets/image/close.svg"
-        alt=""
-      />
-      <p style="
+    <img
+      id="group-info-close-button"
+      class="chat-info-close-button-img"
+      src="/assets/image/close.svg"
+      alt=""
+    />
+    <p
+      style="
     margin-left: 45px;
     margin-top: 0px;
-">Информация</p>
-{{#if userType.owner}}
-        <img
-          id="update-group"
-          class="group-update-image__img"
-          src="/assets/image/Edit.svg"
-          alt=""
-        />
-        {{/if}}
-    </div>
+"
+    >Информация</p>
+    {{#if userType.owner}}
+      <img
+        id="update-group"
+        class="group-update-image__img"
+        src="/assets/image/Edit.svg"
+        alt=""
+      />
+    {{/if}}
+  </div>
   <div class="group-info-header">
     <div class="group-header-images">
       <img class="group-info-header__img" src="{{avatar}}" alt="" />
     </div>
     <div>
-    <span class="group-info-header__span-group-name">{{chat.chatName}}</span>
+      <span class="group-info-header__span-group-name">{{chat.chatName}}</span>
     </div>
     <div class="notifications group-notifications">
-        <span class="notifications__span">Уведомления</span>
-        <label class="Toggle" for="toggle">
-        <input type="checkbox" name="toggle" id="toggle" class="Toggle__input hidden" />
+      <span class="notifications__span">Уведомления</span>
+      <label class="Toggle" for="toggle">
+        <input
+          type="checkbox"
+          name="toggle"
+          id="toggle"
+          class="Toggle__input hidden"
+        />
 
         <span id="notification-toggle" class="Toggle__display">
-          
+
         </span>
       </label>
-      </div>
-      {{#if chatType.group}}  
+    </div>
+    {{#if chatType.group}}
       <button id="add-user" class="group-content-header__button">+ Пригласить</button>
-      {{/if}}
+    {{/if}}
   </div>
   <div class="group-content">
     <div class="group-content-header">
@@ -71,9 +78,9 @@
     <div class="content-carousel">
       <div class="content-tabs" id="content-tabs">
         {{#if chatType.group}}
-        <div id="users-list" class="content-tab users-list">
+          <div id="users-list" class="content-tab users-list">
 
-        </div>
+          </div>
         {{/if}}
         <div class="content-tab photos-list" id="photos-list">
           {{#each chat.photos}}
@@ -86,12 +93,15 @@
           {{#each chat.files}}
             <a class="message-file" href={{url}}>
               <div class="message-file__upper-row">
-                <img class="message-file__icon" src="/assets/image/attached-file.svg" />
+                <img
+                  class="message-file__icon"
+                  src="/assets/image/attached-file.svg"
+                />
                 <div class="message-file__info">
                   <div class="message-file__meta">
                     <span class="message-file__extention">{{extention}}</span>
                     <span class="message-file__size">{{size}}</span>
-                  </div>  
+                  </div>
                   <span class="message-file__name">{{name}}</span>
                 </div>
               </div>
@@ -102,29 +112,32 @@
     </div>
   </div>
   {{#if chatType.group}}
-  <button id="delete-group" class="delete-group__button">
-    {{#if userType.owner}}
-      Удалить группу
-    {{else}}
-      Выйти из группы
-    {{/if}}
+    <button id="delete-group" class="delete-group__button">
+      {{#if userType.owner}}
+        Удалить группу
+      {{else}}
+        Выйти из группы
+      {{/if}}
+    </button>
   {{/if}}
   {{#if chatType.channel}}
     {{#if userType.owner}}
-    <button id="delete-group" class="delete-group__button">
-      Удалить канал
+      <button id="delete-group" class="delete-group__button">
+        Удалить канал
+      </button>
     {{/if}}
     {{#if userType.admin}}
-    <button id="delete-group" class="delete-group__button">
-      Выйти из канала
+      <button id="delete-group" class="delete-group__button">
+        Выйти из канала
+      </button>
     {{/if}}
     {{#if userType.user}}
-    <button id="delete-group" class="delete-group__button">
-      Выйти из канала
+      <button id="delete-group" class="delete-group__button">
+        Выйти из канала
+      </button>
     {{/if}}
   {{/if}}
-  </button>
-  
+
   <div id="modal-container">
 
   </div>

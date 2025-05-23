@@ -6,12 +6,10 @@ import MainPageTemplate from "./MainPage.handlebars";
 import "./MainPage.scss";
 import { View } from "@/app/View";
 import { TUser, UserStorage } from "@/entities/User";
-import { ProfileForm } from "@/widgets/ProfileForm";
-import { ContactsList } from "@/widgets/ContactsList";
 import { wsConn } from "@/shared/api/ws";
 import { TChat } from "@/entities/Chat";
-import { newChat, renderMessage, renderMessage1, renderMessage2 } from "./handlers";
-import { serverHost, staticHost } from "@/app/config";
+import { renderMessage, renderMessage1, renderMessage2 } from "./handlers";
+import { staticHost } from "@/app/config";
 import { UserNotification } from "@/feature/Notification";
 
 /**
@@ -37,13 +35,15 @@ export class MainPage extends View {
       avatar = "/assets/image/default-avatar.svg";
     }
 
-    document.body.id = 'main';
+    document.body.id = "main";
     parent.innerHTML = MainPageTemplate({ user, avatar });
 
     UserNotification.render();
 
-    const chatUserInfo : HTMLElement = parent.querySelector("#chat-info-container")!;
-    const chatListParent : HTMLElement = parent.querySelector("#widget-import")!;
+    const chatUserInfo: HTMLElement = parent.querySelector(
+      "#chat-info-container",
+    )!;
+    const chatListParent: HTMLElement = parent.querySelector("#widget-import")!;
 
     const chatParent = parent.querySelector("#chat-content")!;
     const chat = new Chat(chatParent, chatUserInfo);

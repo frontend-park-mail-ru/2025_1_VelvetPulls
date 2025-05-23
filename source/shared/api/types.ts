@@ -3,15 +3,18 @@ import { TContact } from "@/entities/ContactCard/index.ts";
 import { TChatMessage } from "@/entities/ChatMessage";
 import { TUser } from "@/entities/User";
 import { TChatUser, TNewChat } from "@/entities/Chat/model/type";
-import { TChatMessageAttachment, TStickerPack } from "@/entities/ChatMessage/model/type";
+import {
+  TChatMessageAttachment,
+  TStickerPack,
+} from "@/entities/ChatMessage/model/type";
 
 export type TMessageWS = TChatMessage;
 
 export type NewChatWS = NewChat;
 
 export interface NewChat {
-  chatId : string;
-  users : string[];
+  chatId: string;
+  users: string[];
 }
 
 export interface ResponseChat {
@@ -190,5 +193,5 @@ export interface searchMessagesResponse {
 }
 
 export interface createBranchResponse {
-  id : string;
+  id: string;
 }

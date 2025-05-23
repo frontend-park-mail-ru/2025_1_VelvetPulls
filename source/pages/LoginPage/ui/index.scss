@@ -1,16 +1,16 @@
 .auth-form {
   display: flex;
-    flex-direction: column;
-    /* width: 50%; */
-    align-items: center;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    background-color: white;
-    margin-left: 20%;
-    margin-right: 20%;
-    border-radius: 5%;
-    border-color: black;
-    min-height: 500px;
+  flex-direction: column;
+  /* width: 50%; */
+  align-items: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  background-color: white;
+  margin-left: 20%;
+  margin-right: 20%;
+  border-radius: 20px;
+  border-color: black;
+  min-height: 500px;
 }
 
 .auth-form__form__input {

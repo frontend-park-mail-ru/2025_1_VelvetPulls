@@ -10,7 +10,7 @@ import { serverHost, staticHost } from "@/app/config";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { API } from "@/shared/api/api";
 import { MessageMenu } from "@/widgets/MessageMenu/ui/MessageMenu.ts";
-import { ChatMessagesResponse, createBranchResponse, EmptyRequest } from "@/shared/api/types";
+import { ChatMessagesResponse } from "@/shared/api/types";
 import { messageHandler } from "../api/MessageHandler";
 import { formatBytes } from "@/shared/helpers/formatBytes";
 import { InfoMessage } from "@/entities/InfoMessage/ui/InfoMessage";
@@ -25,107 +25,113 @@ export class ChatMessage {
     this.#parent = parent;
 
     let nextPageLoading = false;
-    this.#needNewMsg=true;
-    this.#parent.addEventListener('scroll', () => { 
+    this.#needNewMsg = true;
+    this.#parent.addEventListener("scroll", () => {
       //messages.clientHeight+messages.scrollTop+5>messages.scrollHeight
-      console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
-      if (this.#parent.offsetHeight - this.#parent.scrollTop >= this.#parent.scrollHeight-2) {
-
+      // console.log(
+      //   this.#parent.offsetHeight,
+      //   this.#parent.scrollTop,
+      //   this.#parent.scrollHeight - 2,
+      // );
+      if (
+        this.#parent.offsetHeight - this.#parent.scrollTop >=
+        this.#parent.scrollHeight - 2
+      ) {
         if (nextPageLoading) {
           return;
         }
-        nextPageLoading = true; 
-        
-        if(true){
-          // console.log(document.querySelector(".messages")?.lastElementChild.id)
+        nextPageLoading = true;
+
+        if (nextPageLoading) {
           API.get<ChatMessagesResponse>(
             `/chat/${ChatStorage.getChat().chatId}/messages/up/${document.querySelector(".messages").lastElementChild.id}`,
-          ).then((res) => {
-            // console.log(document.querySelector(".messages").lastElementChild)
-            // console.log(res)
-            let arr=[]
-            res.data.forEach(element => {
-              arr.push({
-                text: element.body,
-                chatId: element.chat_id,
-          messageId: element.id,
-          datetime: element.sent_at,
-          text: element.body,
-          authorID: element.user,
-          isRedacted: element.is_redacted,
-              })
-            })
-            res.messages=arr
-            const msgs=document.querySelector(".messages")
-            // res.messages.forEach(element => {
-            //   msgs.removeChild(msgs.querySelector(".message"))
-            // });
-            // document.querySelector(".messages").innerHTML=""
-            if(res.messages && res.messages.length > 0){
-              // console.log(res.messages)
-              // this.#parent.scrollTop=-this.#parent.offsetHeight
-              this.renderMessages(res.messages);
-              // this.#parent.scrollTop=-this.#parent.offsetHeight
-
-              res.messages.forEach(element => {
-                msgs.removeChild(msgs.querySelector(".message"))
+          )
+            .then((res) => {
+              const arr = [];
+              res.data.forEach((element) => {
+                arr.push({
+                  text: element.body,
+                  chatId: element.chat_id,
+                  messageId: element.id,
+                  datetime: element.sent_at,
+                  text: element.body,
+                  authorID: element.user,
+                  isRedacted: element.is_redacted,
+                });
               });
-              this.#needNewMsg=false
-            }
-            nextPageLoading = false;
-          }).catch(() => {
-            nextPageLoading = false;
-          });
+              res.messages = arr;
+              const msgs = document.querySelector(".messages");
+              // res.messages.forEach(element => {
+              //   msgs.removeChild(msgs.querySelector(".message"))
+              // });
+              // document.querySelector(".messages").innerHTML=""
+              if (res.messages && res.messages.length > 0) {
+                // console.log(res.messages)
+                // this.#parent.scrollTop=-this.#parent.offsetHeight
+                this.renderMessages(res.messages);
+                // this.#parent.scrollTop=-this.#parent.offsetHeight
+
+                res.messages.forEach(() => {
+                  msgs.removeChild(msgs.querySelector(".message"));
+                });
+                this.#needNewMsg = false;
+              }
+              nextPageLoading = false;
+            })
+            .catch(() => {
+              nextPageLoading = false;
+            });
         }
       }
-      if (this.#parent.scrollTop===0){
+      if (this.#parent.scrollTop === 0) {
         // console.log(document.querySelector(".message").id)
         API.get<ChatMessagesResponse>(
           `/chat/${ChatStorage.getChat().chatId}/messages/down/${document.querySelector(".message").id}`,
-        ).then((res) => {
-          // console.log(res.data)
-          let arr=[]
-          res.data.forEach(element => {
-            arr.push({
-              text: element.body,
-              chatId: element.chat_id,
-        messageId: element.id,
-        datetime: element.sent_at,
-        text: element.body,
-        authorID: element.user,
-        isRedacted: element.is_redacted,
-
-            })
+        )
+          .then((res) => {
+            // console.log(res.data)
+            const arr = [];
+            res.data.forEach((element) => {
+              arr.push({
+                text: element.body,
+                chatId: element.chat_id,
+                messageId: element.id,
+                datetime: element.sent_at,
+                text: element.body,
+                authorID: element.user,
+                isRedacted: element.is_redacted,
+              });
+            });
+            res.messages = arr;
+            // document.querySelector(".messages").innerHTML=""
+            if (res.messages && res.messages.length > 0) {
+              this.renderMessages1(res.messages);
+              const c = res.messages.length;
+              for (let i = 0; i < c; i++) {
+                const msgs1 = document.querySelector(".messages");
+                msgs1.removeChild(msgs1.lastElementChild);
+              }
+              if (c < 5) {
+                this.#needNewMsg = true;
+              }
+              this.#parent.scrollTop = -50;
+              // res.messages.forEach(element => {
+              //   console.log("msgs1.lastElementChild()")
+              //   // msgs1.removeChild(msgs1.lastElementChild())
+              // });
+            }
+            //   nextPageLoading = false;
+          })
+          .catch(() => {
+            // nextPageLoading = false;
           });
-          res.messages=arr
-          // document.querySelector(".messages").innerHTML=""
-          if(res.messages && res.messages.length > 0){
-            this.renderMessages1(res.messages);
-            let c=res.messages.length
-            for (let i=0;i<c;i++){
-              const msgs1=document.querySelector(".messages")
-              msgs1.removeChild(msgs1.lastElementChild)
-            }
-            if (c<5){
-              this.#needNewMsg=true
-            }
-            this.#parent.scrollTop=-50
-            // res.messages.forEach(element => {
-            //   console.log("msgs1.lastElementChild()")
-            //   // msgs1.removeChild(msgs1.lastElementChild())
-            // });
-          }
-        //   nextPageLoading = false;
-        }).catch(() => {
-          // nextPageLoading = false;
-        });
-      }  
+      }
     });
   }
 
   async renderMessages(messages: TChatMessage[], chatIsNotBranch = true) {
     // console.log(messages);
-    if ( 
+    if (
       this.#parent.innerHTML &&
       this.#oldestMessage?.first &&
       this.#oldestMessage.authorID === messages[0].authorID
@@ -135,55 +141,65 @@ export class ChatMessage {
 
     for (const [index, message] of messages.entries()) {
       const isFirst =
-          index === messages.length - 1 ||
-          message.authorID !== messages[index + 1].authorID;
-        const isLast =
-          !this.#oldestMessage || this.#oldestMessage.authorID !== message.authorID;
-        const isFromOtherUser = message.authorID !== UserStorage.getUser().username;
+        index === messages.length - 1 ||
+        message.authorID !== messages[index + 1].authorID;
+      const isLast =
+        !this.#oldestMessage ||
+        this.#oldestMessage.authorID !== message.authorID;
+      const isFromOtherUser =
+        message.authorID !== UserStorage.getUser().username;
 
-        const messageWithFlags: TChatMessageWithFlags = {
-          ...message,
-          first: isFirst,
-          last: isLast,
-          isFromOtherUser: isFromOtherUser,
-        };
-        // console.log(messageWithFlags)
+      const messageWithFlags: TChatMessageWithFlags = {
+        ...message,
+        first: isFirst,
+        last: isLast,
+        isFromOtherUser: isFromOtherUser,
+      };
+      // console.log(messageWithFlags)
 
-        this.#oldestMessage = messageWithFlags;
-      if (message.message_type === undefined || message.message_type === "with_payload" || message.message_type === "sticker") {
-        
-
+      this.#oldestMessage = messageWithFlags;
+      if (
+        message.message_type === undefined ||
+        message.message_type === "with_payload" ||
+        message.message_type === "sticker"
+      ) {
         if (!this.#newestMessage) {
           this.#newestMessage = messageWithFlags;
         }
 
-        const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
+        const user = ChatStorage.getUsers().find(
+          (user) => user.username === message.authorID,
+        )!;
         const avatarURL = user.avatarURL
           ? staticHost + user.avatarURL
           : "/assets/image/default-avatar.svg";
-      
-      const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
-      })) : [];
 
-      const extentionRegex = /\.([^.]+)$/;
-      const nameRegex = /^(.+)\.[^.]+$/;
+        const photos = message.photos
+          ? message.photos.map((photo) => ({
+              url: `${serverHost}${photo.url}`,
+            }))
+          : [];
 
-      const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
-      })) : [];
-    //   console.log({
-    //     ...messageWithFlags,
-    //     datetime: getTimeString(messageWithFlags.datetime),
-    //     avatarURL: avatarURL,
-    //     authorName: user?.username,
-    //     photos: photos,
-    //     files: files,
-    //     sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
-    // },)
+        const extentionRegex = /\.([^.]+)$/;
+        const nameRegex = /^(.+)\.[^.]+$/;
+
+        const files = message.files
+          ? message.files.map((file) => ({
+              url: `${serverHost}${file.url}`,
+              name: nameRegex.exec(file.filename)![1],
+              extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
+              size: formatBytes(file.size),
+            }))
+          : [];
+        //   console.log({
+        //     ...messageWithFlags,
+        //     datetime: getTimeString(messageWithFlags.datetime),
+        //     avatarURL: avatarURL,
+        //     authorName: user?.username,
+        //     photos: photos,
+        //     files: files,
+        //     sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
+        // },)
 
         this.#parent.insertAdjacentHTML(
           "beforeend",
@@ -196,18 +212,20 @@ export class ChatMessage {
               photos: photos,
               files: files,
               sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
-          },
-            chatIsNotBranch
+            },
+            chatIsNotBranch,
           }),
         );
         // console.log(message)
         if (message.isRedacted) {
-          const redactedMessage = this.#parent.querySelector(`[id='${message.messageId}']`)!.querySelector("#redacted");
+          const redactedMessage = this.#parent
+            .querySelector(`[id='${message.messageId}']`)!
+            .querySelector("#redacted");
           if (redactedMessage) {
             redactedMessage.classList.remove("hidden");
           }
         }
-        
+
         const currentMessageId = this.#parent.lastElementChild!.id;
         messageHandler(currentMessageId, messages, this);
       }
@@ -220,7 +238,7 @@ export class ChatMessage {
 
   async renderMessages1(messages: TChatMessage[], chatIsNotBranch = true) {
     // console.log(messages);
-    if ( 
+    if (
       this.#parent.innerHTML &&
       this.#oldestMessage?.first &&
       this.#oldestMessage.authorID === messages[0].authorID
@@ -230,55 +248,65 @@ export class ChatMessage {
 
     for (const [index, message] of messages.entries()) {
       const isFirst =
-          index === messages.length - 1 ||
-          message.authorID !== messages[index + 1].authorID;
-        const isLast =
-          !this.#oldestMessage || this.#oldestMessage.authorID !== message.authorID;
-        const isFromOtherUser = message.authorID !== UserStorage.getUser().username;
+        index === messages.length - 1 ||
+        message.authorID !== messages[index + 1].authorID;
+      const isLast =
+        !this.#oldestMessage ||
+        this.#oldestMessage.authorID !== message.authorID;
+      const isFromOtherUser =
+        message.authorID !== UserStorage.getUser().username;
 
-        const messageWithFlags: TChatMessageWithFlags = {
-          ...message,
-          first: isFirst,
-          last: isLast,
-          isFromOtherUser: isFromOtherUser,
-        };
-        // console.log(messageWithFlags)
+      const messageWithFlags: TChatMessageWithFlags = {
+        ...message,
+        first: isFirst,
+        last: isLast,
+        isFromOtherUser: isFromOtherUser,
+      };
+      // console.log(messageWithFlags)
 
-        this.#oldestMessage = messageWithFlags;
-      if (message.message_type === undefined || message.message_type === "with_payload" || message.message_type === "sticker") {
-        
-
+      this.#oldestMessage = messageWithFlags;
+      if (
+        message.message_type === undefined ||
+        message.message_type === "with_payload" ||
+        message.message_type === "sticker"
+      ) {
         if (!this.#newestMessage) {
           this.#newestMessage = messageWithFlags;
         }
 
-        const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
+        const user = ChatStorage.getUsers().find(
+          (user) => user.username === message.authorID,
+        )!;
         const avatarURL = user.avatarURL
           ? staticHost + user.avatarURL
           : "/assets/image/default-avatar.svg";
-      
-      const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
-      })) : [];
 
-      const extentionRegex = /\.([^.]+)$/;
-      const nameRegex = /^(.+)\.[^.]+$/;
+        const photos = message.photos
+          ? message.photos.map((photo) => ({
+              url: `${serverHost}${photo.url}`,
+            }))
+          : [];
 
-      const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
-      })) : [];
-    //   console.log({
-    //     ...messageWithFlags,
-    //     datetime: getTimeString(messageWithFlags.datetime),
-    //     avatarURL: avatarURL,
-    //     authorName: user?.username,
-    //     photos: photos,
-    //     files: files,
-    //     sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
-    // },)
+        const extentionRegex = /\.([^.]+)$/;
+        const nameRegex = /^(.+)\.[^.]+$/;
+
+        const files = message.files
+          ? message.files.map((file) => ({
+              url: `${serverHost}${file.url}`,
+              name: nameRegex.exec(file.filename)![1],
+              extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
+              size: formatBytes(file.size),
+            }))
+          : [];
+        //   console.log({
+        //     ...messageWithFlags,
+        //     datetime: getTimeString(messageWithFlags.datetime),
+        //     avatarURL: avatarURL,
+        //     authorName: user?.username,
+        //     photos: photos,
+        //     files: files,
+        //     sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
+        // },)
 
         this.#parent.insertAdjacentHTML(
           "afterbegin",
@@ -291,42 +319,60 @@ export class ChatMessage {
               photos: photos,
               files: files,
               sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
-          },
-            chatIsNotBranch
+            },
+            chatIsNotBranch,
           }),
         );
 
         const newMessageElement = document.getElementById(message.messageId)!;
-      const handleMessageClick = (event : MouseEvent) => {
-        
-        const messageId = newMessageElement.id;
-        const messageInChat = document.getElementById(messageId)!;
-        if (message) {
-          const menu = messageInChat.querySelector("#menu-context")!;
-          const messageText = messageInChat.querySelector("#message-text-content")?.textContent;
-          const messageMenu = new MessageMenu(menu);
-          if (messageText) {
-            // console.log("hihihi")
-            if (ChatStorage.getCurrentBranchId()) {
-              messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
-              return;
+        const handleMessageClick = (event: MouseEvent) => {
+          const messageId = newMessageElement.id;
+          const messageInChat = document.getElementById(messageId)!;
+          if (message) {
+            const menu = messageInChat.querySelector("#menu-context")!;
+            const messageText = messageInChat.querySelector(
+              "#message-text-content",
+            )?.textContent;
+            const messageMenu = new MessageMenu(menu);
+            if (messageText) {
+              // console.log("hihihi")
+              if (ChatStorage.getCurrentBranchId()) {
+                messageMenu.render(
+                  message,
+                  messageId,
+                  messageText,
+                  event.x - 100,
+                  event.y - 25,
+                  this,
+                  true,
+                );
+                return;
+              }
+              messageMenu.render(
+                message,
+                messageId,
+                messageText,
+                event.x - 100,
+                event.y - 25,
+                this,
+                false,
+              );
             }
-            messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, false);
           }
-        }
-      };
+        };
 
-      
-      newMessageElement.addEventListener("contextmenu", handleMessageClick);
+        newMessageElement.addEventListener("contextmenu", handleMessageClick);
 
         // console.log(message)
         if (message.isRedacted) {
-          const redactedMessage = this.#parent.querySelector(`[id='${message.messageId}']`)!.querySelector("#redacted");
+          const redactedMessage = this.#parent
+            .querySelector(`[id='${message.messageId}']`)!
+            .querySelector("#redacted");
           if (redactedMessage) {
             redactedMessage.classList.remove("hidden");
           }
         }
-        
+
         const currentMessageId = this.#parent.lastElementChild!.id;
         messageHandler(currentMessageId, messages, this);
       }
@@ -338,14 +384,14 @@ export class ChatMessage {
   }
 
   async renderNewMessage(message: TChatMessage, chatIsNotBranch = true) {
-    const placeholder= this.#parent.querySelector('#msg-placeholder');
-        // console.log(this.#needNewMsg)
-        if (!this.#needNewMsg){
-          return
-        }
+    const placeholder = this.#parent.querySelector("#msg-placeholder");
+    // console.log(this.#needNewMsg)
+    if (!this.#needNewMsg) {
+      return;
+    }
 
     // console.log(message)
-    if(placeholder) {
+    if (placeholder) {
       placeholder.remove();
     }
     if (message.text || message.sticker) {
@@ -358,7 +404,8 @@ export class ChatMessage {
         }
       }
 
-      const isFromOtherUser = message.authorID !== UserStorage.getUser().username;
+      const isFromOtherUser =
+        message.authorID !== UserStorage.getUser().username;
 
       const messageWithFlags: TChatMessageWithFlags = {
         ...message,
@@ -371,28 +418,34 @@ export class ChatMessage {
 
       this.#newestMessage = messageWithFlags;
 
-      const user = ChatStorage.getUsers().find(user => user.username === message.authorID)!;
+      const user = ChatStorage.getUsers().find(
+        (user) => user.username === message.authorID,
+      )!;
       const avatarURL = user.avatarURL
         ? staticHost + user.avatarURL
         : "/assets/image/default-avatar.svg";
 
-      const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
-      })) : [];
+      const photos = message.photos
+        ? message.photos.map((photo) => ({
+            url: `${serverHost}${photo.url}`,
+          }))
+        : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
-      const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
-      })) : [];
-    
+      const files = message.files
+        ? message.files.map((file) => ({
+            url: `${serverHost}${file.url}`,
+            name: nameRegex.exec(file.filename)![1],
+            extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
+            size: formatBytes(file.size),
+          }))
+        : [];
+
       if (ChatStorage.getCurrentBranchId()) {
         chatIsNotBranch = false;
-      }  
+      }
       this.#parent.insertAdjacentHTML(
         "afterbegin",
         ChatMessageTemplate({
@@ -405,7 +458,7 @@ export class ChatMessage {
             files: files,
             sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
           },
-          chatIsNotBranch
+          chatIsNotBranch,
         }),
       );
 
@@ -417,26 +470,42 @@ export class ChatMessage {
       }
 
       const newMessageElement = document.getElementById(message.messageId)!;
-      const handleMessageClick = (event : MouseEvent) => {
-        
+      const handleMessageClick = (event: MouseEvent) => {
         const messageId = newMessageElement.id;
         const messageInChat = document.getElementById(messageId)!;
         if (message) {
           const menu = messageInChat.querySelector("#menu-context")!;
-          const messageText = messageInChat.querySelector("#message-text-content")?.textContent;
+          const messageText = messageInChat.querySelector(
+            "#message-text-content",
+          )?.textContent;
           const messageMenu = new MessageMenu(menu);
           if (messageText) {
             // console.log("hihihi")
             if (ChatStorage.getCurrentBranchId()) {
-              messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
+              messageMenu.render(
+                message,
+                messageId,
+                messageText,
+                event.x - 100,
+                event.y - 25,
+                this,
+                true,
+              );
               return;
             }
-            messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, false);
+            messageMenu.render(
+              message,
+              messageId,
+              messageText,
+              event.x - 100,
+              event.y - 25,
+              this,
+              false,
+            );
           }
         }
       };
 
-      
       newMessageElement.addEventListener("contextmenu", handleMessageClick);
     }
   }
@@ -444,8 +513,8 @@ export class ChatMessage {
   getParent() {
     return this.#parent;
   }
-  
-  setParent(newParent : HTMLElement) {
+
+  setParent(newParent: HTMLElement) {
     this.#parent = newParent;
   }
 }

@@ -27,7 +27,7 @@ export class SignupForm extends View {
    * @returns {}
    */
   render() {
-    document.body.id = 'signup';
+    document.body.id = "signup";
     this.#parent.innerHTML = SignUpFormTemplate();
 
     const aElement = document.querySelector("#login_href")!;
@@ -148,11 +148,14 @@ export class SignupForm extends View {
       }
       const username = login;
       const name = nickname;
-      const response = await API.post<AuthResponse, SignUpRequest>("/register", {
-        name,
-        username,
-        password,
-      });
+      const response = await API.post<AuthResponse, SignUpRequest>(
+        "/register",
+        {
+          name,
+          username,
+          password,
+        },
+      );
 
       if (response.error === "A user with that username already exists") {
         log.classList.add("error");

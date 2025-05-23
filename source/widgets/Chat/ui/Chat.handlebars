@@ -1,4 +1,3 @@
-
 <div id="chat" class="chat">
   <div id="header-chat" class="header">
     <img
@@ -15,224 +14,287 @@
       <span class="info__chat-status">
         {{chat.chatType}}
       </span>
-      
+
     </div>
     <div id="search-image-container" class="search-messages">
-      <img id="search-messages" class="search-messages__img" src="/assets/image/search-icon.svg" alt="">
+      <img
+        id="search-messages"
+        class="search-messages__img"
+        src="/assets/image/search-icon.svg"
+        alt=""
+      />
     </div>
 
-    <div id="message-search-input" class="input-search hidden" >
+    <div id="message-search-input" class="input-search hidden">
       <div class="search-results">
-        <input id="input-search" class="input-search__input" type="text" name="text" placeholder="Поиск">
+        <input
+          id="input-search"
+          class="input-search__input"
+          type="text"
+          name="text"
+          placeholder="Поиск"
+        />
         <div id="search-results-messages" class="search-results-messages">
-          
+
         </div>
       </div>
 
-      <img id="cancel-search" class="search-cancel__img" src="/assets/image/cancel.svg" alt="">  
-      
+      <img
+        id="cancel-search"
+        class="search-cancel__img"
+        src="/assets/image/cancel.svg"
+        alt=""
+      />
+
     </div>
-    
-    
+
   </div>
   <div class="messages" id="chat__messages">
   </div>
-  
+
   {{#if chatType.group}}
-  <div class="input">
-    <div class="input-bubble">
-      <div class="input-files-wrapper" id="filesWrapper" style="display: none;">
-        <div class="input-files" id="filesContainer">
-  
-        </div>
-        <img class="input-files__prev-page" id="inputPrevBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
-        <img class="input-files__next-page" id="inputNextBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
-      </div>
-      <div class="input-base">
-        <img class="attach-icon" id="attachBtn" src="/assets/image/Attach.svg" />
-        <textarea
-          class="text-area"
-          id="inputTextarea"
-          placeholder="Введите сообщение"
-          maxlength="1000"
-        ></textarea>
-        <img class="emoji-icon" id="emojiBtn" src="/assets/image/Emoji.svg" />
-        
-        <div class="attach__popup" id="attachPopUp" style="display: none;">
-          <label for="attach-photo">
-            <input
-              type="file"
-              id="attach-photo"
-              name="attach-photo"
-              style="display: none;"
-              accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
-            />
-            <span 
-              class="attach__popup__item" 
-              id="attachPhoto"
-            >
-              <img
-                class="attach-item__icon"
-                src="/assets/image/user.svg"
-              />
-              Фото
-            </span>
-          </label>
-          <label for="attach-file">
-            <input
-              type="file"
-              id="attach-file"
-              name="attach-file"
-              style="display: none;"
-            />
-            <span 
-              class="attach__popup__item" 
-              id="attachFile"
-            >
-              <img class="attach-item__icon" src="/assets/image/users.svg" />
-              Файл
-            </span>
-          </label>
-        </div>
-        <div class="emoji-popup" id="emojiPopup" style="display: none;">
-          <div class="emoji-popup__header">
-            <span class="emoji-popup__header__item" id="emojiTabBtn">
-              Эмодзи
-            </span>
-            <span class="emoji-popup__header__item" id="stickersTabBtn">
-              Стикеры
-            </span>
+    <div class="input">
+      <div class="input-bubble">
+        <div
+          class="input-files-wrapper"
+          id="filesWrapper"
+          style="display: none;"
+        >
+          <div class="input-files" id="filesContainer">
 
           </div>
-          <div class="emoji-popup__body">
-            <div class="emoji-popup__carousel" id="emojiCarousel">
-              <div class="emoji-list emoji-popup__carousel__item">
-              
-              </div>
-              <div class="sticker-list emoji-popup__carousel__item">
-                <div class="sticker-list__stickers" id="stickers-list">
+          <img
+            class="input-files__prev-page"
+            id="inputPrevBtn"
+            src="/assets/image/next-20px.svg"
+            style="display: none;"
+          />
+          <img
+            class="input-files__next-page"
+            id="inputNextBtn"
+            src="/assets/image/next-20px.svg"
+            style="display: none;"
+          />
+        </div>
+        <div class="input-base">
+          <img
+            class="attach-icon"
+            id="attachBtn"
+            src="/assets/image/Attach.svg"
+          />
+          <textarea
+            class="text-area"
+            id="inputTextarea"
+            placeholder="Введите сообщение"
+            maxlength="1000"
+          ></textarea>
+          <img class="emoji-icon" id="emojiBtn" src="/assets/image/Emoji.svg" />
+
+          <div class="attach__popup" id="attachPopUp" style="display: none;">
+            <label for="attach-photo">
+              <input
+                type="file"
+                id="attach-photo"
+                name="attach-photo"
+                style="display: none;"
+                accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
+              />
+              <span class="attach__popup__item" id="attachPhoto">
+                <img class="attach-item__icon" src="/assets/image/user.svg" />
+                Фото
+              </span>
+            </label>
+            <label for="attach-file">
+              <input
+                type="file"
+                id="attach-file"
+                name="attach-file"
+                style="display: none;"
+              />
+              <span class="attach__popup__item" id="attachFile">
+                <img class="attach-item__icon" src="/assets/image/users.svg" />
+                Файл
+              </span>
+            </label>
+          </div>
+          <div class="emoji-popup" id="emojiPopup" style="display: none;">
+            <div class="emoji-popup__header">
+              <span class="emoji-popup__header__item" id="emojiTabBtn">
+                Эмодзи
+              </span>
+              <span class="emoji-popup__header__item" id="stickersTabBtn">
+                Стикеры
+              </span>
+
+            </div>
+            <div class="emoji-popup__body">
+              <div class="emoji-popup__carousel" id="emojiCarousel">
+                <div class="emoji-list emoji-popup__carousel__item">
 
                 </div>
-                <div class="sticker-list__packs" id="packs-list">
+                <div class="sticker-list emoji-popup__carousel__item">
+                  <div class="sticker-list__stickers" id="stickers-list">
 
+                  </div>
+                  <div class="sticker-list__packs" id="packs-list">
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <img
+        class="input-send-btn"
+        id="chat__input-send-btn"
+        src="/assets/image/Send.svg"
+      />
     </div>
-    <img class="input-send-btn" id="chat__input-send-btn" src="/assets/image/Send.svg" />
-  </div>
   {{/if}}
   {{#if chatType.personal}}
-  <div class="input">
-    <div class="input-bubble">
-      <div class="input-files-wrapper" id="filesWrapper" style="display: none;">
-        <div class="input-files" id="filesContainer">
-  
-        </div>
-        <img class="input-files__prev-page" id="inputPrevBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
-        <img class="input-files__next-page" id="inputNextBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
-      </div>
-      <div class="input-base">
-        <img class="attach-icon" id="attachBtn" src="/assets/image/Attach.svg" />
-        <textarea
-          class="text-area"
-          id="inputTextarea"
-          placeholder="Введите сообщение"
-          maxlength="1000"
-        ></textarea>
-        <img class="emoji-icon" id="emojiBtn" src="/assets/image/Emoji.svg" />
-        
-        <div class="attach__popup" id="attachPopUp" style="display: none;">
-          <label for="attach-photo">
-            <input
-              type="file"
-              id="attach-photo"
-              name="attach-photo"
-              style="display: none;"
-              accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
-            />
-            <span 
-              class="attach__popup__item" 
-              id="attachPhoto"
-            >
-              <img
-                class="attach-item__icon"
-                src="/assets/image/user.svg"
-              />
-              Фото
-            </span>
-          </label>
-          <label for="attach-file">
-            <input
-              type="file"
-              id="attach-file"
-              name="attach-file"
-              style="display: none;"
-            />
-            <span 
-              class="attach__popup__item" 
-              id="attachFile"
-            >
-              <img class="attach-item__icon" src="/assets/image/users.svg" />
-              Файл
-            </span>
-          </label>
-        </div>
-        <div class="emoji-popup" id="emojiPopup" style="display: none;">
-          <div class="emoji-popup__header">
-            <span class="emoji-popup__header__item" id="emojiTabBtn">
-              Эмодзи
-            </span>
-            <span class="emoji-popup__header__item" id="stickersTabBtn">
-              Стикеры
-            </span>
+    <div class="input">
+      <div class="input-bubble">
+        <div
+          class="input-files-wrapper"
+          id="filesWrapper"
+          style="display: none;"
+        >
+          <div class="input-files" id="filesContainer">
 
           </div>
-          <div class="emoji-popup__body">
-            <div class="emoji-popup__carousel" id="emojiCarousel">
-              <div class="emoji-list emoji-popup__carousel__item">
-              
-              </div>
-              <div class="sticker-list emoji-popup__carousel__item">
-                <div class="sticker-list__stickers" id="stickers-list">
+          <img
+            class="input-files__prev-page"
+            id="inputPrevBtn"
+            src="/assets/image/next-20px.svg"
+            style="display: none;"
+          />
+          <img
+            class="input-files__next-page"
+            id="inputNextBtn"
+            src="/assets/image/next-20px.svg"
+            style="display: none;"
+          />
+        </div>
+        <div class="input-base">
+          <img
+            class="attach-icon"
+            id="attachBtn"
+            src="/assets/image/Attach.svg"
+          />
+          <textarea
+            class="text-area"
+            id="inputTextarea"
+            placeholder="Введите сообщение"
+            maxlength="1000"
+          ></textarea>
+          <img class="emoji-icon" id="emojiBtn" src="/assets/image/Emoji.svg" />
+
+          <div class="attach__popup" id="attachPopUp" style="display: none;">
+            <label for="attach-photo">
+              <input
+                type="file"
+                id="attach-photo"
+                name="attach-photo"
+                style="display: none;"
+                accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
+              />
+              <span class="attach__popup__item" id="attachPhoto">
+                <img class="attach-item__icon" src="/assets/image/user.svg" />
+                Фото
+              </span>
+            </label>
+            <label for="attach-file">
+              <input
+                type="file"
+                id="attach-file"
+                name="attach-file"
+                style="display: none;"
+              />
+              <span class="attach__popup__item" id="attachFile">
+                <img class="attach-item__icon" src="/assets/image/users.svg" />
+                Файл
+              </span>
+            </label>
+          </div>
+          <div class="emoji-popup" id="emojiPopup" style="display: none;">
+            <div class="emoji-popup__header">
+              <span class="emoji-popup__header__item" id="emojiTabBtn">
+                Эмодзи
+              </span>
+              <span class="emoji-popup__header__item" id="stickersTabBtn">
+                Стикеры
+              </span>
+
+            </div>
+            <div class="emoji-popup__body">
+              <div class="emoji-popup__carousel" id="emojiCarousel">
+                <div class="emoji-list emoji-popup__carousel__item">
 
                 </div>
-                <div class="sticker-list__packs" id="packs-list">
+                <div class="sticker-list emoji-popup__carousel__item">
+                  <div class="sticker-list__stickers" id="stickers-list">
 
+                  </div>
+                  <div class="sticker-list__packs" id="packs-list">
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <img
+        class="input-send-btn"
+        id="chat__input-send-btn"
+        src="/assets/image/Send.svg"
+      />
     </div>
-    <img class="input-send-btn" id="chat__input-send-btn" src="/assets/image/Send.svg" />
-  </div>
   {{/if}}
   {{#if chatType.channel}}
     {{#if userType.owner}}
       <div class="input">
         <div class="input-bubble">
-          <div class="input-files-wrapper" id="filesWrapper" style="display: none;">
+          <div
+            class="input-files-wrapper"
+            id="filesWrapper"
+            style="display: none;"
+          >
             <div class="input-files" id="filesContainer">
-      
+
             </div>
-            <img class="input-files__prev-page" id="inputPrevBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
-            <img class="input-files__next-page" id="inputNextBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
+            <img
+              class="input-files__prev-page"
+              id="inputPrevBtn"
+              src="/assets/image/next-20px.svg"
+              style="display: none;"
+            />
+            <img
+              class="input-files__next-page"
+              id="inputNextBtn"
+              src="/assets/image/next-20px.svg"
+              style="display: none;"
+            />
           </div>
           <div class="input-base">
-            <img class="attach-icon" id="attachBtn" src="/assets/image/Attach.svg" />
+            <img
+              class="attach-icon"
+              id="attachBtn"
+              src="/assets/image/Attach.svg"
+            />
             <textarea
               class="text-area"
               id="inputTextarea"
               placeholder="Введите сообщение"
               maxlength="1000"
             ></textarea>
-            <img class="emoji-icon" id="emojiBtn" src="/assets/image/Emoji.svg" />
-            
+            <img
+              class="emoji-icon"
+              id="emojiBtn"
+              src="/assets/image/Emoji.svg"
+            />
+
             <div class="attach__popup" id="attachPopUp" style="display: none;">
               <label for="attach-photo">
                 <input
@@ -242,14 +304,8 @@
                   style="display: none;"
                   accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
                 />
-                <span 
-                  class="attach__popup__item" 
-                  id="attachPhoto"
-                >
-                  <img
-                    class="attach-item__icon"
-                    src="/assets/image/user.svg"
-                  />
+                <span class="attach__popup__item" id="attachPhoto">
+                  <img class="attach-item__icon" src="/assets/image/user.svg" />
                   Фото
                 </span>
               </label>
@@ -260,11 +316,11 @@
                   name="attach-file"
                   style="display: none;"
                 />
-                <span 
-                  class="attach__popup__item" 
-                  id="attachFile"
-                >
-                  <img class="attach-item__icon" src="/assets/image/users.svg" />
+                <span class="attach__popup__item" id="attachFile">
+                  <img
+                    class="attach-item__icon"
+                    src="/assets/image/users.svg"
+                  />
                   Файл
                 </span>
               </label>
@@ -282,7 +338,7 @@
               <div class="emoji-popup__body">
                 <div class="emoji-popup__carousel" id="emojiCarousel">
                   <div class="emoji-list emoji-popup__carousel__item">
-                  
+
                   </div>
                   <div class="sticker-list emoji-popup__carousel__item">
                     <div class="sticker-list__stickers" id="stickers-list">
@@ -297,29 +353,55 @@
             </div>
           </div>
         </div>
-        <img class="input-send-btn" id="chat__input-send-btn" src="/assets/image/Send.svg" />
+        <img
+          class="input-send-btn"
+          id="chat__input-send-btn"
+          src="/assets/image/Send.svg"
+        />
       </div>
     {{/if}}
     {{#if userType.admin}}
       <div class="input">
         <div class="input-bubble">
-          <div class="input-files-wrapper" id="filesWrapper" style="display: none;">
+          <div
+            class="input-files-wrapper"
+            id="filesWrapper"
+            style="display: none;"
+          >
             <div class="input-files" id="filesContainer">
-      
+
             </div>
-            <img class="input-files__prev-page" id="inputPrevBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
-            <img class="input-files__next-page" id="inputNextBtn" src="/assets/image/next-20px.svg" style="display: none;"/>
+            <img
+              class="input-files__prev-page"
+              id="inputPrevBtn"
+              src="/assets/image/next-20px.svg"
+              style="display: none;"
+            />
+            <img
+              class="input-files__next-page"
+              id="inputNextBtn"
+              src="/assets/image/next-20px.svg"
+              style="display: none;"
+            />
           </div>
           <div class="input-base">
-            <img class="attach-icon" id="attachBtn" src="/assets/image/Attach.svg" />
+            <img
+              class="attach-icon"
+              id="attachBtn"
+              src="/assets/image/Attach.svg"
+            />
             <textarea
               class="text-area"
               id="inputTextarea"
               placeholder="Введите сообщение"
               maxlength="1000"
             ></textarea>
-            <img class="emoji-icon" id="emojiBtn" src="/assets/image/Emoji.svg" />
-            
+            <img
+              class="emoji-icon"
+              id="emojiBtn"
+              src="/assets/image/Emoji.svg"
+            />
+
             <div class="attach__popup" id="attachPopUp" style="display: none;">
               <label for="attach-photo">
                 <input
@@ -329,14 +411,8 @@
                   style="display: none;"
                   accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
                 />
-                <span 
-                  class="attach__popup__item" 
-                  id="attachPhoto"
-                >
-                  <img
-                    class="attach-item__icon"
-                    src="/assets/image/user.svg"
-                  />
+                <span class="attach__popup__item" id="attachPhoto">
+                  <img class="attach-item__icon" src="/assets/image/user.svg" />
                   Фото
                 </span>
               </label>
@@ -347,11 +423,11 @@
                   name="attach-file"
                   style="display: none;"
                 />
-                <span 
-                  class="attach__popup__item" 
-                  id="attachFile"
-                >
-                  <img class="attach-item__icon" src="/assets/image/users.svg" />
+                <span class="attach__popup__item" id="attachFile">
+                  <img
+                    class="attach-item__icon"
+                    src="/assets/image/users.svg"
+                  />
                   Файл
                 </span>
               </label>
@@ -369,7 +445,7 @@
               <div class="emoji-popup__body">
                 <div class="emoji-popup__carousel" id="emojiCarousel">
                   <div class="emoji-list emoji-popup__carousel__item">
-                  
+
                   </div>
                   <div class="sticker-list emoji-popup__carousel__item">
                     <div class="sticker-list__stickers" id="stickers-list">
@@ -384,46 +460,71 @@
             </div>
           </div>
         </div>
-        <img class="input-send-btn" id="chat__input-send-btn" src="/assets/image/Send.svg" />
+        <img
+          class="input-send-btn"
+          id="chat__input-send-btn"
+          src="/assets/image/Send.svg"
+        />
       </div>
     {{/if}}
     {{#if userType.not_in_chat}}
-      <button id="subscribe-channel" class="subscribe-channel__button hidden">Подписаться</button>
+      <button
+        id="subscribe-channel"
+        class="subscribe-channel__button hidden"
+      >Подписаться</button>
     {{/if}}
   {{/if}}
 </div>
 <div id="chat-branch" class="chat-branch hidden">
   <div id="header-branch" class="header-branch">
     <img
-        id="cancel-branch"
-        class="header-branch__img-cancel"
-        src="/assets/image/cancel.svg"
-        alt=""
-      />
-    
+      id="cancel-branch"
+      class="header-branch__img-cancel"
+      src="/assets/image/cancel.svg"
+      alt=""
+    />
+
     <div id="branch-chat-info" class="info">
       <span class="header-branch__span">
         Обсуждение
       </span>
-      
+
     </div>
     <div id="search-image-container" class="search-messages">
-      <img id="branch-search-messages" class="search-messages__img" src="/assets/image/search-icon.svg" alt="">
+      <img
+        id="branch-search-messages"
+        class="search-messages__img"
+        src="/assets/image/search-icon.svg"
+        alt=""
+      />
     </div>
 
-    <div id="branch-search-input" class="input-search hidden" >
+    <div id="branch-search-input" class="input-search hidden">
       <div class="search-results">
-        <input id="branch-input-search" class="input-search__input" type="text" name="text" placeholder="Поиск">
-        <div id="branch-search-results-messages" class="search-results-messages">
-          
+        <input
+          id="branch-input-search"
+          class="input-search__input"
+          type="text"
+          name="text"
+          placeholder="Поиск"
+        />
+        <div
+          id="branch-search-results-messages"
+          class="search-results-messages"
+        >
+
         </div>
       </div>
 
-      <img id="branch-cancel-search" class="search-cancel__img" src="/assets/image/cancel.svg" alt="">  
-      
+      <img
+        id="branch-cancel-search"
+        class="search-cancel__img"
+        src="/assets/image/cancel.svg"
+        alt=""
+      />
+
     </div>
-    
-    
+
   </div>
   <div class="messages" id="chat__messages">
   </div>
@@ -435,15 +536,27 @@
   {{/if}}
   <div id="branch-input" class="input">
     <div class="branch-input-bubble">
-      <img class="attach-icon" src="/assets/image/Attach.svg" style="display: none;"/>
+      <img
+        class="attach-icon"
+        src="/assets/image/Attach.svg"
+        style="display: none;"
+      />
       <textarea
         id="branch-textarea"
         class="text-area"
         placeholder="Введите сообщение"
         maxlength="1000"
       ></textarea>
-      <img class="emoji-icon" src="/assets/image/Emoji.svg" style="display: none;"/>
+      <img
+        class="emoji-icon"
+        src="/assets/image/Emoji.svg"
+        style="display: none;"
+      />
     </div>
-    <img class="input-send-btn" id="branch__input-send-btn" src="/assets/image/Send.svg" />
+    <img
+      class="input-send-btn"
+      id="branch__input-send-btn"
+      src="/assets/image/Send.svg"
+    />
   </div>
 </div>

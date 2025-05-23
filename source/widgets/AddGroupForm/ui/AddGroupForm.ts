@@ -1,11 +1,7 @@
 import { API } from "@/shared/api/api";
 import AddGroupTemplate from "./AddGroupForm.handlebars";
 import "./AddGroupForm.scss";
-import {
-  ChatResponse,
-  ContactResponse,
-  NewChatRequest,
-} from "@/shared/api/types";
+import { ContactResponse, NewChatRequest } from "@/shared/api/types";
 import { ContactCard } from "@/entities/ContactCard/ui/ContactCard";
 import { validateNickname } from "@/shared/validation/nicknameValidation";
 import { validateForm } from "@/shared/validation/formValidation";
@@ -13,7 +9,6 @@ import { Chat } from "@/widgets/Chat";
 import { ChatList } from "@/widgets/ChatList";
 import { SelectedContacts } from "../lib/SelectedContacts";
 import { UserStorage } from "@/entities/User";
-import { Router } from "@/shared/Router/Router";
 export class AddGroupForm {
   #parent;
   #chat;
@@ -69,7 +64,7 @@ export class AddGroupForm {
         type: "group",
         usersToAdd: selectedContacts.getSelectedContacts(),
       };
-      newChat.usersToAdd.push(UserStorage.getUser().username)
+      newChat.usersToAdd.push(UserStorage.getUser().username);
 
       const chatNameRender: HTMLSpanElement =
         this.#parent.querySelector("#nickname")!;
@@ -100,14 +95,11 @@ export class AddGroupForm {
       //   "/addchat",
       //   formData,
       // );
-           const responseSubscribe = await API.post("/chat", newChat);
-          //  Router.go("/")
-      
+      // const responseSubscribe = await API.post("/chat", newChat);
+      //  Router.go("/")
 
-        const chatList = new ChatList(this.#parent, this.#chat);
-        chatList.render();
-
-      
+      const chatList = new ChatList(this.#parent, this.#chat);
+      chatList.render();
     };
 
     const confirmButton = this.#parent.querySelector("#confirm-button");

@@ -2,28 +2,26 @@ import { TChat } from "@/entities/Chat";
 import GroupUpdateTempalte from "./GroupUpdate.handlebars";
 import "./GroupUpdate.scss";
 import { GroupChatInfo } from "@/widgets/GroupChatInfo";
-import { serverHost, staticHost } from "@/app/config";
+import { staticHost } from "@/app/config";
 import { GroupUpdateRequest, GroupUpdateResponse } from "@/shared/api/types";
 import { API } from "@/shared/api/api";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { validateForm } from "@/shared/validation/formValidation";
 import { UserType } from "@/widgets/AddChannelForm/lib/types";
-import { routes } from "@/shared/Router/Routes";
 
 import { Router } from "@/shared/Router/Router";
-
 
 export class GroupUpdate {
   #parent;
   #userType;
-  constructor(parent: HTMLElement, userType : UserType) {
+  constructor(parent: HTMLElement, userType: UserType) {
     this.#parent = parent;
     this.#userType = userType;
   }
 
   render(chat: TChat) {
     let avatar: string;
-    if ((chat.avatarPath)&&(chat.avatarPath !== "")) {
+    if (chat.avatarPath && chat.avatarPath !== "") {
       avatar = staticHost + chat.avatarPath;
     } else {
       avatar = "/assets/image/default-avatar.svg";
@@ -33,7 +31,11 @@ export class GroupUpdate {
 
     const handleBack = () => {
       this.#parent.innerHTML = "";
-      const groupChatInfo = new GroupChatInfo(this.#parent, chat, this.#userType);
+      const groupChatInfo = new GroupChatInfo(
+        this.#parent,
+        chat,
+        this.#userType,
+      );
       groupChatInfo.render();
     };
 
@@ -87,8 +89,8 @@ export class GroupUpdate {
       const formData = new FormData();
       formData.append("chat_data", groupName);
       formData.append("avatar", groupAvatarFile);
-      formData["title"]=groupNameInput.value
-      formData["avatar"]=groupAvatarFile
+      formData["title"] = groupNameInput.value;
+      formData["avatar"] = groupAvatarFile;
 
       const response = await API.putFormData<GroupUpdateResponse>(
         `/chat/${chat.chatId}`,
@@ -111,7 +113,7 @@ export class GroupUpdate {
         }
 
         this.#parent.innerHTML = "";
-        Router.go("/")
+        Router.go("/");
       }
     };
 

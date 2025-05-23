@@ -7,16 +7,22 @@
         src="/assets/image/close.svg"
         alt=""
       />
-      <p style="
+      <p
+        style="
     margin-left: 45px;
-">Информация</p>
+"
+      >Информация</p>
     </div>
     <div class="chat-info-header">
-      <img class="chat-info-header__img" src="{{profileUser.avatarURL}}" alt="" />
+      <img
+        class="chat-info-header__img"
+        src="{{profileUser.avatarURL}}"
+        alt=""
+      />
     </div>
     <div class="chat-user-info">
       <div class="detail-item">
-        <img src="/assets/image/At.svg" alt="At" class="icon">
+        <img src="/assets/image/At.svg" alt="At" class="icon" />
         <div class="sidebar-list__item-info">
           <div>@{{profileUser.data.username}}</div>
           <div>Имя пользователя</div>
@@ -25,56 +31,63 @@
       <div class="notifications">
         <span class="notifications__span">Уведомления</span>
         <label class="Toggle" for="toggle">
-        <input type="checkbox" name="toggle" id="toggle" class="Toggle__input hidden" />
+          <input
+            type="checkbox"
+            name="toggle"
+            id="toggle"
+            class="Toggle__input hidden"
+          />
 
-        <span id="notification-toggle" class="Toggle__display">
-          
-        </span>
-      </label>
+          <span id="notification-toggle" class="Toggle__display">
+
+          </span>
+        </label>
       </div>
     </div>
   </div>
   <div class="content-buttons">
-      <div class="content-button" id="group-content-photos">
-        <span class="content-button__name">
-          Фото
-        </span>
-      </div>
-      <div class="content-button" id="group-content-files">
-        <span class="content-button__name">
-          Файлы
-        </span>
-      </div>
+    <div class="content-button" id="group-content-photos">
+      <span class="content-button__name">
+        Фото
+      </span>
     </div>
-    <div class="content-carousel">
-      <div class="content-tabs" id="content-tabs">
-        <div class="content-tab photos-list" id="photos-list">
-          {{#each chat.photos}}
-            <a href={{url}}>
-              <img class="message-photo" src={{url}} />
-            </a>
-          {{/each}}
-        </div>
-        <div class="content-tab files-list" id="files-list">
-          {{#each chat.files}}
-            <a class="message-file" href={{url}}>
-              <div class="message-file__upper-row">
-                <img class="message-file__icon" src="/assets/image/attached-file.svg" />
-                <div class="message-file__info">
-                  <div class="message-file__meta">
-                    <span class="message-file__extention">{{extention}}</span>
-                    <span class="message-file__size">{{size}}</span>
-                  </div>  
-                  <span class="message-file__name">{{name}}</span>
+    <div class="content-button" id="group-content-files">
+      <span class="content-button__name">
+        Файлы
+      </span>
+    </div>
+  </div>
+  <div class="content-carousel">
+    <div class="content-tabs" id="content-tabs">
+      <div class="content-tab photos-list" id="photos-list">
+        {{#each chat.photos}}
+          <a href={{url}}>
+            <img class="message-photo" src={{url}} />
+          </a>
+        {{/each}}
+      </div>
+      <div class="content-tab files-list" id="files-list">
+        {{#each chat.files}}
+          <a class="message-file" href={{url}}>
+            <div class="message-file__upper-row">
+              <img
+                class="message-file__icon"
+                src="/assets/image/attached-file.svg"
+              />
+              <div class="message-file__info">
+                <div class="message-file__meta">
+                  <span class="message-file__extention">{{extention}}</span>
+                  <span class="message-file__size">{{size}}</span>
                 </div>
+                <span class="message-file__name">{{name}}</span>
               </div>
-            </a>
-          {{/each}}
-        </div>
+            </div>
+          </a>
+        {{/each}}
       </div>
     </div>
   </div>
-  <button id="delete-chat" class="delete-chat-btn__button">
-    Удалить чат
-  </button>
 </div>
+<button id="delete-chat" class="delete-chat-btn__button">
+  Удалить чат
+</button>

@@ -137,7 +137,7 @@ class Api {
       return { error: "could not fetch" } as Response;
     }
   }
-  async put<TResponse, TRequest>(path: string, body: TRequest ) {
+  async put<TResponse, TRequest>(path: string, body: TRequest) {
     type Response = TResponse & ResponseError;
     try {
       const url = this.#baseURl + path;

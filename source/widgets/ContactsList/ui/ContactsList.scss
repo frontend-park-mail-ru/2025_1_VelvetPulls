@@ -36,7 +36,6 @@ $primary-shadow-25: var(--primary-shadow-25);
   &__input {
     @include search-input();
   }
-  
 }
 
 .contacts-list-header {
@@ -49,12 +48,12 @@ $primary-shadow-25: var(--primary-shadow-25);
 }
 
 .contacts-list-header-name {
-    color: $text-over-primary;
-    font-family: var(--main-font-family);
-    font-size: var(--form-font-size);
+  color: $text-over-primary;
+  font-family: var(--main-font-family);
+  font-size: var(--form-font-size);
 }
 
-.button-add-img{
+.button-add-img {
   position: absolute;
   right: 15px;
   bottom: 15px;
@@ -106,14 +105,12 @@ $primary-shadow-25: var(--primary-shadow-25);
 }
 
 .user-contacts {
-
   &__span {
     @include search-label-span();
   }
 }
 
 .global-contacts {
-
   &__span {
     @include search-label-span();
   }

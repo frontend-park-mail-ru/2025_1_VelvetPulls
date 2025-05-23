@@ -1,9 +1,9 @@
 // import { json } from "body-parser";
 
 import express from "express";
-import pkg from 'body-parser';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import pkg from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Получаем путь к текущему файлу
 const __filename = fileURLToPath(import.meta.url);

@@ -58,7 +58,7 @@ $messages-container-width: 700px;
 
       &__photos-wrapper {
         margin-bottom: 6px;
-        
+
         display: flex;
         flex-wrap: wrap;
 
@@ -67,8 +67,8 @@ $messages-container-width: 700px;
           height: 100px;
 
           object-fit: cover;
-          transform: translate3d(0, 0, 1px);        
-        
+          transform: translate3d(0, 0, 1px);
+
           border-radius: 15px;
         }
       }
@@ -82,50 +82,50 @@ $messages-container-width: 700px;
         .message-file {
           box-sizing: border-box;
           padding: 10px;
-          
+
           text-decoration: none;
           background: $text-over-primary-shadow-30;
           border-radius: 10px;
 
           display: flex;
           flex-direction: column;
-        
+
           &__upper-row {
             display: flex;
             gap: 2px;
           }
-        
+
           &__icon {
             width: 36px;
             height: 36px;
           }
-        
+
           &__info {
             flex: 1;
-            
+
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
           }
-        
+
           &__extention {
             @include font-settings("Inter", 500, 14px, $text-over-primary);
-        
+
             text-overflow: ellipsis;
             overflow: hidden;
           }
           &__size {
             @include font-settings("Inter", 500, 12px, $text-over-primary);
           }
-        
+
           &__name {
             @include font-settings("Inter", 500, 12px, $text-over-primary);
-        
+
             display: block;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 1;
-        
+
             overflow: hidden;
             line-break: anywhere;
           }
@@ -194,7 +194,6 @@ $messages-container-width: 700px;
         border-left: 7px solid $secondary;
       }
     }
-    
   }
 
   &.left-side {

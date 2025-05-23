@@ -11,7 +11,7 @@ import {
 } from "@/shared/api/types";
 import { UserStorage } from "@/entities/User";
 import { validateYear } from "@/shared/validation/yearValidation";
-import { serverHost, staticHost } from "@/app/config";
+import { staticHost } from "@/app/config";
 import { genProfileData } from "../api/updateProfile";
 import { ChatList } from "@/widgets/ChatList";
 import { Chat } from "@/widgets/Chat";
@@ -33,8 +33,8 @@ export class ProfileForm {
 
     if (response.data.avatar_path) {
       response.avatarURL = staticHost + response.avatarURL;
-      response.ava=staticHost + response.data.avatar_path
-    }  else {
+      response.ava = staticHost + response.data.avatar_path;
+    } else {
       response.avatarURL = "/assets/image/default-avatar.svg";
       response.ava = "/assets/image/default-avatar.svg";
     }
@@ -45,12 +45,12 @@ export class ProfileForm {
       response,
       currentDate,
     });
-    
-    if (response.data.birth_date){
-      response.birthdate=response.data.birth_date
+
+    if (response.data.birth_date) {
+      response.birthdate = response.data.birth_date;
     }
     const bhd = new Date(response.birthdate);
-    const birthday = `${bhd.getUTCFullYear()}-${bhd.getUTCMonth()+1}-${bhd.getUTCDate()}`
+    const birthday = `${bhd.getUTCFullYear()}-${bhd.getUTCMonth() + 1}-${bhd.getUTCDate()}`;
     const birthdayInput: HTMLInputElement =
       this.#parent.querySelector("#date")!;
     birthdayInput.value = birthday;
@@ -84,22 +84,21 @@ export class ProfileForm {
     avatarInput.addEventListener("change", handleAvatar);
 
     const bioInput: HTMLInputElement = this.#parent.querySelector("#bio")!;
-      const bioInput1: HTMLInputElement = this.#parent.querySelector("#bio1")!;
+    const bioInput1: HTMLInputElement = this.#parent.querySelector("#bio1")!;
 
-      const handleTogglePasswordVisibility = () => {
-        bioInput.type = bioInput.type === "password" ? "text" : "password";
-      };
-      this.#parent
-        .querySelector("#password-visibility-toggle")!
-        .addEventListener("click", handleTogglePasswordVisibility);
+    const handleTogglePasswordVisibility = () => {
+      bioInput.type = bioInput.type === "password" ? "text" : "password";
+    };
+    this.#parent
+      .querySelector("#password-visibility-toggle")!
+      .addEventListener("click", handleTogglePasswordVisibility);
 
-        const handleTogglePasswordVisibility1 = () => {
-          bioInput1.type = bioInput1.type === "password" ? "text" : "password";
-        };
-        this.#parent
-          .querySelector("#password-repeat-visibility-toggle")!
-          .addEventListener("click", handleTogglePasswordVisibility1);
-
+    const handleTogglePasswordVisibility1 = () => {
+      bioInput1.type = bioInput1.type === "password" ? "text" : "password";
+    };
+    this.#parent
+      .querySelector("#password-repeat-visibility-toggle")!
+      .addEventListener("click", handleTogglePasswordVisibility1);
 
     const backButton = this.#parent.querySelector("#back-button");
     const handleBack = () => {
@@ -114,11 +113,12 @@ export class ProfileForm {
         this.#parent.querySelector("#user-name")!;
       const bioInput: HTMLInputElement = this.#parent.querySelector("#bio")!;
       const bioInput1: HTMLInputElement = this.#parent.querySelector("#bio1")!;
-      const pass_ico: HTMLButtonElement = document.querySelector("#password-visibility-toggle")!;
-      const pass_repeat_ico: HTMLElement = this.#parent.querySelector("#password-repeat-visibility-toggle")!;
+      const pass_ico: HTMLButtonElement = document.querySelector(
+        "#password-visibility-toggle",
+      )!;
       pass_ico?.addEventListener("click", async () => {
-        bioInput.innerHTML=""
-          });
+        bioInput.innerHTML = "";
+      });
 
       const nickname: string = nameInput.value;
       const birthdayValue = birthdayInput.value;
@@ -147,14 +147,10 @@ export class ProfileForm {
           nicknameSpan,
         );
         flag = false;
-      } else if (profileData.bio!==profileData.bio1){
-        validateForm(
-          nameInput,
-          "Пароли не совпали",
-          pswdError,
-        );
+      } else if (profileData.bio !== profileData.bio1) {
+        validateForm(nameInput, "Пароли не совпали", pswdError);
         flag = false;
-      } else if(!validatePassword(profileData.bio)){
+      } else if (!validatePassword(profileData.bio)) {
         validateForm(
           nameInput,
           "Пароль должен состоять минимум из 8 латинских букв, цифр или нижних подчеркиваний.",
@@ -198,8 +194,7 @@ export class ProfileForm {
       }
 
       if (avatarFile) {
-        const userAvatar: HTMLImageElement =
-          document.querySelector("#avatar")!;
+        const userAvatar: HTMLImageElement = document.querySelector("#avatar")!;
         userAvatar.src = URL.createObjectURL(avatarFile);
         UserStorage.setAvatar(userAvatar.src);
       }
@@ -226,7 +221,8 @@ export class ProfileForm {
 
     exitButton.addEventListener("click", handleExitClick);
 
-    document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw'; 
-    this.#parent.style.left = '0';
+    document.querySelector<HTMLElement>("#chat-info-container")!.style.right =
+      "-100vw";
+    this.#parent.style.left = "0";
   }
 }

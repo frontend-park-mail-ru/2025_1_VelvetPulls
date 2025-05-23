@@ -6,13 +6,15 @@ body#signup {
   height: 100vh;
   display: flex;
   overflow-y: hidden;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
 }
 
-#right1{
+#right1 {
   margin-bottom: 50px;
   margin-top: 50px;
 }
-
 
 .auth-form-input {
   padding-left: 10px;
@@ -65,11 +67,14 @@ body#signup {
   }
 }
 
-#login_href{
+#login_href {
+  font-family: var(--main-font-family);
   cursor: pointer;
   color: blue;
 }
-
+#login_paragraf {
+  font-family: var(--main-font-family);
+}
 
 .auth-form-error {
   min-height: 34px;
@@ -121,8 +126,86 @@ body#signup {
   .signup-password-eye {
     margin-right: 0;
   }
-  
+
   .auth-form-user-password__img-pass_show {
     right: 10px;
+  }
+}
+
+/* Общие стили для обеих форм */
+.auth-form {
+  max-width: 30%;
+  min-width: 0 !important;
+  margin: 5% !important;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-form-user__input,
+.btn {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media screen and (max-width: 768px) {
+  .login-page,
+  .signup-page {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0;
+    align-items: flex-start;
+  }
+
+  .auth-form__p-login {
+    font-size: 24px;
+    margin-top: 10% !important;
+    margin-bottom: 10% !important;
+  }
+
+  .auth-form-user__button-enter,
+  .auth-form-user__button-create {
+    margin-top: 30px !important;
+  }
+
+  .password-visibility-toggle {
+    right: 15px !important;
+  }
+
+  /* Специфические правки для формы регистрации */
+  #right1 {
+    margin: 20px 0 !important;
+  }
+
+  .auth-form-user__p {
+    font-size: 18px !important;
+  }
+
+  #login_paragraf,
+  #signup_paragraf {
+    text-align: center;
+    padding: 0 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-form {
+    max-width: 90%;
+    margin: 10px !important;
+    padding: 15px;
+  }
+
+  .auth-form__p-login {
+    font-size: 22px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+
+  .auth-form-user__input {
+    font-size: 14px;
+    height: 40px !important;
   }
 }

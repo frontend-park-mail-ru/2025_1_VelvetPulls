@@ -137,16 +137,16 @@ $scroll-bar-color: var(--scroll-bar-color);
 
 .profile-form-confirm-img {
   margin: 0 15px 0 auto;
-  
+
   width: 54px;
   height: 54px;
 
   cursor: pointer;
 }
 
-#pswd-err{
+#pswd-err {
   font-size: 14px;
-    color: $text-error-message;
-    font-family: var(--main-font-family);
-    opacity: 100%;
+  color: $text-error-message;
+  font-family: var(--main-font-family);
+  opacity: 100%;
 }

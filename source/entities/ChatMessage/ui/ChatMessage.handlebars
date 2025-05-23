@@ -1,10 +1,10 @@
 <div
   id="{{message.messageId}}"
   class="message
-    {{#if message.first}}first-message{{/if}}
-    {{#if message.last}}last-message{{/if}}
-    {{#if message.isFromOtherUser}}left-side{{/if}}"
-    oncontextmenu="return false;"
+    {{#if message.first}} first-message{{/if}}
+    {{#if message.last}} last-message{{/if}}
+    {{#if message.isFromOtherUser}} left-side{{/if}}"
+  oncontextmenu="return false;"
 >
   <div class="message__body">
     <span class="message__body__username">
@@ -18,7 +18,7 @@
           <div class="contents__photos-wrapper">
             {{#each message.photos}}
               <a href={{url}}>
-              <img class="message-photo" src={{url}} />
+                <img class="message-photo" src={{url}} />
               </a>
             {{/each}}
           </div>
@@ -31,12 +31,15 @@
             {{#each message.files}}
               <a class="message-file" href={{url}}>
                 <div class="message-file__upper-row">
-                  <img class="message-file__icon" src="/assets/image/attached-file.svg" />
+                  <img
+                    class="message-file__icon"
+                    src="/assets/image/attached-file.svg"
+                  />
                   <div class="message-file__info">
                     <div class="message-file__meta">
                       <span class="message-file__extention">{{extention}}</span>
                       <span class="message-file__size">{{size}}</span>
-                    </div>  
+                    </div>
                     <span class="message-file__name">{{name}}</span>
                   </div>
                 </div>
@@ -53,12 +56,12 @@
       </span>
     </div>
   </div>
-  
+
   {{#if message.isFromOtherUser}}
     <div class="message__avatar">
       <img class="message__avatar__img" src="{{message.avatarURL}}" />
     </div>
   {{/if}}
-  
+
   <div id="menu-context" class="menu-context"></div>
 </div>

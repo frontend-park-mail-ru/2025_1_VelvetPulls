@@ -21,7 +21,6 @@ class Route {
         return;
       }
       this.go(event.state.url, false);
-      
     };
   }
 

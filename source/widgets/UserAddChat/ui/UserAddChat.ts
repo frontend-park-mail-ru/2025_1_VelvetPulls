@@ -31,7 +31,7 @@ export class UserAddChat {
     const contactListContainer =
       this.#parent.querySelector("#chat-contact-list")!;
     const response = await API.get<ContactResponse>("/contacts");
-    response.contacts=response.data
+    response.contacts = response.data;
     if (!response.error) {
       const contacts = response.contacts;
       if (contacts && contacts.length) {
@@ -47,9 +47,12 @@ export class UserAddChat {
       elem.addEventListener("click", async (e) => {
         const users: string[] = [];
         if (elem instanceof HTMLAnchorElement) {
-          const index = elem.href.lastIndexOf("/");
-          const href = elem.href.slice(index + 1);
-          users.push(elem.querySelector(".contact-card-name")?.innerHTML.replaceAll(' ','').replaceAll('\n',''));
+          users.push(
+            elem
+              .querySelector(".contact-card-name")
+              ?.innerHTML.replaceAll(" ", "")
+              .replaceAll("\n", ""),
+          );
         }
 
         e.preventDefault();

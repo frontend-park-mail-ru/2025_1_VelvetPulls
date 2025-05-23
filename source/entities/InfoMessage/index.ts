@@ -1,1 +1,1 @@
-export {InfoMessage} from "./ui/InfoMessage";
+export { InfoMessage } from "./ui/InfoMessage";

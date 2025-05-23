@@ -24,7 +24,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE).then((cache) => {
             try {
               cache.put(event.request, response.clone());
-            } catch (e) {
+            } catch {
               return new Response(JSON.stringify({ status: 408 }));
             }
           });

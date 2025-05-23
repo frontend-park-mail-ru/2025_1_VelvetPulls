@@ -6,7 +6,7 @@ class ChatStore {
   #role: string;
   #users: TChatUser[];
   #chatMessageInstance: ChatMessage | null;
-  #currentBranch : string;
+  #currentBranch: string;
 
   constructor() {
     this.#chat = {
@@ -64,7 +64,7 @@ class ChatStore {
     return this.#chatMessageInstance;
   }
 
-  setCurrentBranchId(branchId : string) {
+  setCurrentBranchId(branchId: string) {
     this.#currentBranch = branchId;
   }
 

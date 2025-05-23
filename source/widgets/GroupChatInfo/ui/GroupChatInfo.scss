@@ -94,7 +94,7 @@ $scroll-bar-color: var(--scroll-bar-color);
 .group-content-header {
   margin-right: 10px;
 
-  display: flex;  
+  display: flex;
   align-items: flex-end;
 
   &__span {
@@ -165,14 +165,14 @@ $scroll-bar-color: var(--scroll-bar-color);
   &::-webkit-scrollbar-track {
     background: inherit;
   }
-  
+
   .message-photo {
     width: 100px;
     height: 100px;
 
     object-fit: cover;
-    transform: translate3d(0, 0, 1px);        
-    }
+    transform: translate3d(0, 0, 1px);
+  }
 }
 
 .files-list {
@@ -191,49 +191,49 @@ $scroll-bar-color: var(--scroll-bar-color);
   .message-file {
     box-sizing: border-box;
     padding: 10px;
-    
+
     text-decoration: none;
     border-radius: 10px;
 
     display: flex;
     flex-direction: column;
-  
+
     &__upper-row {
       display: flex;
       gap: 2px;
     }
-  
+
     &__icon {
       width: 36px;
       height: 36px;
     }
-  
+
     &__info {
       flex: 1;
-      
+
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
     }
-  
+
     &__extention {
       @include font-settings("Inter", 500, 14px, $text-over-primary);
-  
+
       text-overflow: ellipsis;
       overflow: hidden;
     }
     &__size {
       @include font-settings("Inter", 500, 12px, $text-over-primary);
     }
-  
+
     &__name {
       @include font-settings("Inter", 500, 12px, $text-over-primary);
-  
+
       display: block;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
-  
+
       overflow: hidden;
       line-break: anywhere;
     }
@@ -269,17 +269,16 @@ $scroll-bar-color: var(--scroll-bar-color);
 }
 
 .subscribe-channel {
-
   &__button {
     height: 40px;
 
-  color: $text-over-primary;
-  font-size: 16px;
-  font-family: var(--main-font-family);
-  background-color: var(--secondary);
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
+    color: $text-over-primary;
+    font-size: 16px;
+    font-family: var(--main-font-family);
+    background-color: var(--secondary);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
   }
 }
 

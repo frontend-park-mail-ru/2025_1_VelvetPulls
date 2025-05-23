@@ -25,16 +25,16 @@ class wsConnection {
     this.ws.onmessage = (event: MessageEvent) => {
       try {
         const res = JSON.parse(event.data);
-        let element=res.payload
-        res.payload={
-          text:element.body,
+        const element = res.payload;
+        res.payload = {
+          text: element.body,
           chatId: element.chat_id,
-    messageId:element.id,
-    datetime:element.sent_at,
-    text:element.body,
-    authorID:element.user,
-        }
-        
+          messageId: element.id,
+          datetime: element.sent_at,
+          text: element.body,
+          authorID: element.user,
+        };
+
         if (res.messageType === "error") {
           return;
         }
@@ -69,7 +69,6 @@ class wsConnection {
     this.status = false;
     this.handlers = {};
     this.ws = null;
-
   }
 
   subscribe(messageType: string, handler: THandler) {

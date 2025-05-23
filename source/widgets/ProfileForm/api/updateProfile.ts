@@ -14,9 +14,9 @@ export const genProfileData = async (
   };
   const jsonProfileData = JSON.stringify(profileData1);
   formData.append("profile_data", jsonProfileData);
-  formData["profile_data"]=jsonProfileData
+  formData["profile_data"] = jsonProfileData;
   formData.append("avatar", avatar);
-  formData["avatar"]=avatar
+  formData["avatar"] = avatar;
 
   const response = await API.putFormData<ProfileResponse>("/profile", formData);
   if (!response.error) {

@@ -115,7 +115,7 @@ body#main {
   display: flex;
   align-items: center;
   justify-content: center;
-    
+
   &:hover {
     background-color: $button-over-background-hover;
     border-radius: 100%;
@@ -128,16 +128,15 @@ body#main {
   gap: 25px;
 }
 
-.chat-info-container{
+.chat-info-container {
   position: relative;
   height: 100%;
-  
+
   display: flex;
   flex-direction: column;
 }
 
 @media screen and (max-width: 950px) {
-
   .main-page {
     flex-direction: column-reverse;
   }
@@ -146,7 +145,8 @@ body#main {
     width: 100%;
     flex-direction: row;
 
-    .main-page-logo-img, .main-page-user-avatar-img {
+    .main-page-logo-img,
+    .main-page-user-avatar-img {
       display: none;
     }
 
@@ -187,6 +187,5 @@ body#main {
 
       width: 100%;
     }
-
   }
 }

@@ -1,7 +1,7 @@
 import { ProfileResponse } from "@/shared/api/types";
 import ChatUserCardTemplate from "./ChatUserCard.handlebars";
 import "./ChatUserCard.scss";
-import { serverHost, staticHost } from "@/app/config";
+import { staticHost } from "@/app/config";
 
 export class ChatUserCard {
   #parent;
@@ -10,7 +10,7 @@ export class ChatUserCard {
   }
 
   render(userProfile: ProfileResponse) {
-    if ((userProfile.avatarURL)&&(userProfile.avatarURL!==undefined)) {
+    if (userProfile.avatarURL && userProfile.avatarURL !== undefined) {
       userProfile.avatarURL = staticHost + userProfile.avatarURL;
     } else {
       userProfile.avatarURL = "/assets/image/default-avatar.svg";

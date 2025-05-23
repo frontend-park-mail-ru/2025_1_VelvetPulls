@@ -14,7 +14,7 @@ class UserStore {
     const response = await API.get<AuthResponse>("/profile");
     if (!response.error) {
       this.#user = response.data;
-      this.#user.avatarURL=this.#user.avatar_path
+      this.#user.avatarURL = this.#user.avatar_path;
       wsConn.start();
     }
   }

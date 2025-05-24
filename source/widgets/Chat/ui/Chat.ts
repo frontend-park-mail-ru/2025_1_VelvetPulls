@@ -360,6 +360,9 @@ export class Chat {
     text:element.body,
     authorID:element.user,
     isRedacted: element.is_redacted,
+    files:element.files,
+    photos: element.photos,
+    sticker: element.sticker,
         })
       });
     }

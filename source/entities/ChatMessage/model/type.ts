@@ -21,9 +21,9 @@ export interface TStickerPack {
 }
 
 export interface TChatMessageAttachment {
-  url: string;
-  filename: string;
-  size: number;
+  URL: string;
+  Filename: string;
+  Size: number;
 }
 
 export type TChatMessageWithFlags = TChatMessage & {

@@ -48,7 +48,7 @@ export const renderMessage = async (message: TMessageWS) => {
           chatName: responseProfile.username,
           
         };
-        console.log(newChatResponse,newChatResponse.send_notifications)
+        // console.log(newChatResponse,newChatResponse.send_notifications)
 
         if (newChatResponse && newChatResponse.send_notifications) {
           chatCard.render(notificationChat, true, newChatResponse);

@@ -14,7 +14,7 @@ export class AttachmentCard {
             "afterbegin",
             AttachmentCardTemplate({
               photo: {
-                url: URL.createObjectURL(photo)
+                URL: URL.createObjectURL(photo)
               },
             }),
         );
@@ -40,7 +40,7 @@ export class AttachmentCard {
               file: {
                 // type: file.name.split('.').pop()!.toUpperCase(),
                 type: regex1.exec(file.name)![1].toUpperCase(),
-                size: formatBytes(file.size),
+                Size: formatBytes(file.size),
                 name: regex2.exec(file.name)![1]
               },
             }),

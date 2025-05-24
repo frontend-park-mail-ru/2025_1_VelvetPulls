@@ -28,7 +28,7 @@ export class ChatMessage {
     this.#needNewMsg=true;
     this.#parent.addEventListener('scroll', () => { 
       //messages.clientHeight+messages.scrollTop+5>messages.scrollHeight
-      console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
+      // console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
       if (this.#parent.offsetHeight - this.#parent.scrollTop >= this.#parent.scrollHeight-2) {
 
         if (nextPageLoading) {
@@ -53,6 +53,8 @@ export class ChatMessage {
           text: element.body,
           authorID: element.user,
           isRedacted: element.is_redacted,
+          files:element.files,
+    photos: element.photos,
               })
             })
             res.messages=arr
@@ -94,6 +96,8 @@ export class ChatMessage {
         text: element.body,
         authorID: element.user,
         isRedacted: element.is_redacted,
+        files:element.files,
+    photos: element.photos,
 
             })
           });
@@ -163,17 +167,17 @@ export class ChatMessage {
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
+        URL: `${serverHost}${photo.URL}`
       })) : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
       const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)![1],
+        extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+        Size: formatBytes(file.Size)
       })) : [];
     //   console.log({
     //     ...messageWithFlags,
@@ -258,17 +262,17 @@ export class ChatMessage {
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
+        URL: `${serverHost}${photo.URL}`
       })) : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
       const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)![1],
+        extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+        Size: formatBytes(file.Size)
       })) : [];
     //   console.log({
     //     ...messageWithFlags,
@@ -377,17 +381,17 @@ export class ChatMessage {
         : "/assets/image/default-avatar.svg";
 
       const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
+        URL: `${serverHost}${photo.URL}`
       })) : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
       const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)![1],
+        extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+        Size: formatBytes(file.Size)
       })) : [];
     
       if (ChatStorage.getCurrentBranchId()) {

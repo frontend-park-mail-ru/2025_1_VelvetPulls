@@ -77,8 +77,6 @@ body#main {
   min-width: 0;
   flex: 1;
 
-  margin-right: 20px;
-  margin-top: $chat-padding-top;
 
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -131,7 +129,7 @@ body#main {
 .chat-info-container{
   position: relative;
   height: 100%;
-  
+  border-left: groove;
   display: flex;
   flex-direction: column;
 }

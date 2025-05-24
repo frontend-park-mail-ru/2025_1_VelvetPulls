@@ -25,7 +25,10 @@ $delete-button-color: var(--delete-button-color);
   box-sizing: border-box;
 }
 .chat-info-header-back{
-  height: 25px;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .detail-item {
@@ -72,9 +75,7 @@ $delete-button-color: var(--delete-button-color);
 
 .chat-info-close-button-img {
   position: absolute;
-  top: 15px;
   left: 15px;
-
   width: 24px;
   height: 24px;
 

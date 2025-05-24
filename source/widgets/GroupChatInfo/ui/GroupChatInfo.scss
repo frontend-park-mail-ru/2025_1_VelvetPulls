@@ -19,10 +19,9 @@ $scroll-bar-color: var(--scroll-bar-color);
 .group-info {
   flex: 1;
   min-height: 0;
-
   display: flex;
   flex-direction: column;
-
+  min-width: 240px;
   @include right-column();
 }
 

@@ -435,8 +435,8 @@ export class ChatMessage {
           const messageMenu = new MessageMenu(menu);
           if (messageText) {
             // console.log("hihihi")
-            if (ChatStorage.getCurrentBranchId()) {
-              messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
+            if (true) {
+              messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, false);
               return;
             }
             return

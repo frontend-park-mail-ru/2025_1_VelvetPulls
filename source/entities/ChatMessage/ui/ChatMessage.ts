@@ -28,7 +28,7 @@ export class ChatMessage {
     this.#needNewMsg=true;
     this.#parent.addEventListener('scroll', () => { 
       //messages.clientHeight+messages.scrollTop+5>messages.scrollHeight
-      console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
+      // console.log(this.#parent.offsetHeight, this.#parent.scrollTop , this.#parent.scrollHeight-2) 
       if (this.#parent.offsetHeight - this.#parent.scrollTop >= this.#parent.scrollHeight-2) {
 
         if (nextPageLoading) {
@@ -53,6 +53,9 @@ export class ChatMessage {
           text: element.body,
           authorID: element.user,
           isRedacted: element.is_redacted,
+          files:element.files,
+    photos: element.photos,
+    sticker: element.sticker,
               })
             })
             res.messages=arr
@@ -94,6 +97,9 @@ export class ChatMessage {
         text: element.body,
         authorID: element.user,
         isRedacted: element.is_redacted,
+        files:element.files,
+    photos: element.photos,
+    sticker: element.sticker,
 
             })
           });
@@ -163,17 +169,17 @@ export class ChatMessage {
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
+        URL: `${serverHost}${photo.URL}`
       })) : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
       const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)![1],
+        extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+        Size: formatBytes(file.Size)
       })) : [];
     //   console.log({
     //     ...messageWithFlags,
@@ -258,17 +264,17 @@ export class ChatMessage {
           : "/assets/image/default-avatar.svg";
       
       const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
+        URL: `${serverHost}${photo.URL}`
       })) : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
       const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)![1],
+        extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+        Size: formatBytes(file.Size)
       })) : [];
     //   console.log({
     //     ...messageWithFlags,
@@ -348,7 +354,9 @@ export class ChatMessage {
     if(placeholder) {
       placeholder.remove();
     }
-    if (message.text || message.sticker) {
+    message.text=message.text?message.text:""
+    if (true) {
+
       if (
         this.#newestMessage?.last &&
         this.#newestMessage.authorID === message.authorID
@@ -377,17 +385,17 @@ export class ChatMessage {
         : "/assets/image/default-avatar.svg";
 
       const photos = message.photos ? message.photos.map(photo => ({
-        url: `${serverHost}${photo.url}`
+        URL: `${serverHost}${photo.URL}`
       })) : [];
 
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
       const files = message.files ? message.files.map(file => ({
-        url: `${serverHost}${file.url}`,
-        name: nameRegex.exec(file.filename)![1],
-        extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-        size: formatBytes(file.size)
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)![1],
+        extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+        Size: formatBytes(file.Size)
       })) : [];
     
       if (ChatStorage.getCurrentBranchId()) {
@@ -427,12 +435,15 @@ export class ChatMessage {
           const messageMenu = new MessageMenu(menu);
           if (messageText) {
             // console.log("hihihi")
-            if (ChatStorage.getCurrentBranchId()) {
-              messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
+            if (true) {
+              messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, false);
               return;
             }
+            return
             messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, false);
           }
+          messageMenu.render(message, messageId, null, event.x-100, event.y-25, this, true);
+
         }
       };
 

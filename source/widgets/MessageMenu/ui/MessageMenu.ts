@@ -37,6 +37,19 @@ export class MessageMenu {
         }
         
         const editButton = this.#parent.querySelector("#edit-message")!;
+        if (!messageText){
+          editButton.innerHTML=""
+          const handlerClickOutsideModal = (e: Event) => {
+            if (e.target instanceof Element) {
+              if (e.target.className === "modal") {
+                this.#parent.innerHTML = "";
+              }
+            }
+          };
+      
+          document.addEventListener("click", handlerClickOutsideModal);
+          return
+        }
         let textArea : HTMLTextAreaElement;
         if (branch === false) {
           textArea = document.querySelector("#inputTextarea")!;

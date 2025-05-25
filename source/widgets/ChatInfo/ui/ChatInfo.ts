@@ -88,7 +88,7 @@ export class ChatInfo {
     }
 
     this.#parent.querySelector('#chat-info-close-button')!.addEventListener('click', () => {
-      //this.#parent.style.right = '-100vw';
+      this.#parent.style.right = '-100vw';
       this.#parent.innerHTML = '';
     });
 

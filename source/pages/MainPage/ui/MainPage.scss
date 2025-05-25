@@ -128,7 +128,6 @@ body#main {
 }
 
 .chat-info-container{
-  position: relative;
   height: 100%;
   border-left: groove;
   display: flex;
@@ -184,4 +183,10 @@ body#main {
     }
 
   }
+}
+
+@media screen and (max-width: 480px){
+    .chat-info-container {
+      right: -100vw;
+    }
 }

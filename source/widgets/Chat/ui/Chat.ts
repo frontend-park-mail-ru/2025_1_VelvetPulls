@@ -501,7 +501,7 @@ export class Chat {
     });
 
     document.querySelector<HTMLElement>('#widget-import')!.style.left = '-100vw'; 
-    //document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw';
+    document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw';
     
     const cancelBranchBtn = this.#parent.querySelector("#cancel-branch")!;
 

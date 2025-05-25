@@ -55,6 +55,7 @@ export class ChatMessage {
           isRedacted: element.is_redacted,
           files:element.files,
     photos: element.photos,
+    sticker: element.sticker,
               })
             })
             res.messages=arr
@@ -98,6 +99,7 @@ export class ChatMessage {
         isRedacted: element.is_redacted,
         files:element.files,
     photos: element.photos,
+    sticker: element.sticker,
 
             })
           });
@@ -352,7 +354,9 @@ export class ChatMessage {
     if(placeholder) {
       placeholder.remove();
     }
-    if (message.text || message.sticker) {
+    message.text=message.text?message.text:""
+    if (true) {
+
       if (
         this.#newestMessage?.last &&
         this.#newestMessage.authorID === message.authorID
@@ -435,8 +439,11 @@ export class ChatMessage {
               messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
               return;
             }
+            return
             messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, false);
           }
+          messageMenu.render(message, messageId, null, event.x-100, event.y-25, this, true);
+
         }
       };
 

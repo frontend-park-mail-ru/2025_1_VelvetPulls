@@ -272,8 +272,7 @@ export class Chat {
     const sendInputMessage = async (textArea : HTMLTextAreaElement, branch : boolean) => {
       const messageText = textArea.value.trim();
       textArea.value = "";
-
-      if (messageText) {
+      if (messageText || this.#files.length!==0 || this.#photos.length!==0) {
         
         if (textArea.classList.contains('edit')) {
           const messageId = textArea.classList[2]!;
@@ -476,6 +475,29 @@ export class Chat {
       const chatListImport : HTMLElement = document.querySelector('#widget-import')!;
       const chatList = new ChatList(chatListImport,this);
       chatList.render();
+      const currentChat = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
+          if (currentChat) {
+            currentChat.classList.remove('active');
+            ChatStorage.setChat(
+              {
+                avatarPath: "",
+                chatId: "",
+                chatName: "",
+                chatType: "dialog",
+                lastMessage: {
+                  authorID: "",
+                  chatId: "",
+                  branchId: "",
+                  datetime: "",
+                  isRedacted: false,
+                  messageId: "",
+                  text: "",
+                },
+                countOfUsers: 0,
+                send_notification: true,
+              }
+            )
+          }
     });
 
     document.querySelector<HTMLElement>('#widget-import')!.style.left = '-100vw'; 

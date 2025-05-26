@@ -16,7 +16,7 @@ $button-over-background-hover: var(--button-over-background-hover);
   }
 
   &:hover {
-    background-color: $button-over-background-hover;
+    background-color: var(--accent);
   }
 }
 

@@ -31,6 +31,7 @@ export const renderMessage = async (message: TMessageWS) => {
             chatName: element.title,
             avatarPath: element.avatar_path,
             send_notifications: element.send_notifications,
+            lastMessage: element.last_message,
           })
         });
       }

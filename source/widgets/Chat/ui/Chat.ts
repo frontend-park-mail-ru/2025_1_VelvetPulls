@@ -483,7 +483,7 @@ export class Chat {
                 avatarPath: "",
                 chatId: "",
                 chatName: "",
-                chatType: "dialog",
+                chatType: "Диалог",
                 lastMessage: {
                   authorID: "",
                   chatId: "",

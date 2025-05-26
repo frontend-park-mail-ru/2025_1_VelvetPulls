@@ -1,5 +1,5 @@
 export const ChatLabel = {
-  personal: "Личный чат",
+  dialog: "Личный чат",
   group: "Группа",
   channel: "Канал",
 };

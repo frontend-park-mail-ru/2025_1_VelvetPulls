@@ -38,7 +38,7 @@ $background: var(--background);
         transition-duration: 0.4s;
     }
     &:hover {
-        background-color: $button-over-background-hover;
+        background-color: var(--hover);
     }
 
     &__img {
@@ -65,7 +65,7 @@ $background: var(--background);
         transition-duration: 0.4s;
     }
     &:hover {
-        background-color: $button-over-background-hover;
+        background-color: var(--hover);
     }
 
     &__img {

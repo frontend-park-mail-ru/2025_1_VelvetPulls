@@ -46,6 +46,9 @@ export class ProfileForm {
       currentDate,
     });
     
+    if (response.data.birth_date){
+      response.birthdate=response.data.birth_date
+    }
     const bhd = new Date(response.birthdate);
     const birthday = `${bhd.getUTCFullYear()}-${bhd.getUTCMonth()+1}-${bhd.getUTCDate()}`
     const birthdayInput: HTMLInputElement =
@@ -54,6 +57,7 @@ export class ProfileForm {
 
     const avatarUser: HTMLImageElement = this.#parent.querySelector("#avatar")!;
     const avatarInput: HTMLInputElement = this.#parent.querySelector("#ava")!;
+    const pswdError: HTMLElement = this.#parent.querySelector("#pswd-err")!;
     let avatarFile: File;
     const handleAvatar = () => {
       if (avatarInput.files) {
@@ -147,14 +151,14 @@ export class ProfileForm {
         validateForm(
           nameInput,
           "Пароли не совпали",
-          nicknameSpan,
+          pswdError,
         );
         flag = false;
       } else if(!validatePassword(profileData.bio)){
         validateForm(
           nameInput,
           "Пароль должен состоять минимум из 8 латинских букв, цифр или нижних подчеркиваний.",
-          nicknameSpan,
+          pswdError,
         );
         flag = false;
       } else {

@@ -18,8 +18,7 @@ $chat-padding-top: var(--chat-padding-top);
 .chat-list-container {
   position: relative;
   width: 100%;
-
-  margin-top: $chat-padding-top;
+  background-color: var(--hover);
 
   display: flex;
   flex-direction: column;
@@ -38,6 +37,11 @@ $chat-padding-top: var(--chat-padding-top);
 .chat-list-container-chatlist {
   flex: 1;
   overflow-y: scroll;
+  display: flex;
+  gap: 5px;
+  padding-left: 5px;
+  flex-direction: column;
+  flex-wrap: nowrap;
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -115,13 +119,13 @@ $chat-padding-top: var(--chat-padding-top);
 #head-chats-container{
   display: flex;
   align-items: center;
+  background-color: var(--primary);
   border-bottom: groove;
   height: 70px;
 }
 
 .chat-list-container-search-input {
   @include search-container();
-
   &__img {
     padding-left: 15px;
     width: 30px;
@@ -159,11 +163,21 @@ $chat-padding-top: var(--chat-padding-top);
 
 .finder-opt{
   width: 33%;
+  border-bottom: groove;
+  height: 100%;
   text-align: center;
-  background-color: blue;
+  background-color: var(--primary);
+  border-radius: 5px;
   margin: 0.5%;
   cursor: pointer;
-  color: aliceblue;
+  color: var(--text-over-primary);
+  font-family: var(--main-font-family);
+  vertical-align: middle;
+  line-height: 40px;
+}
+
+.finder-opt.active{
+  background-color: var(--accent);
 }
 
 .finder-options{
@@ -175,5 +189,5 @@ $chat-padding-top: var(--chat-padding-top);
 
 .finder-options-visible{
   visibility: visible;
-  height: auto;
+  height: 40px;
 }

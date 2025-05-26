@@ -8,7 +8,7 @@
       />
       <p style="
     margin-left: 45px;
-    margin-top: 0px;
+    font-family: var(--main-font-family);
 ">Информация</p>
 {{#if userType.owner}}
         <img
@@ -18,7 +18,7 @@
           alt=""
         />
         {{/if}}
-    </div>
+  </div>
   <div class="group-info-header">
     <div class="group-header-images">
       <img class="group-info-header__img" src="{{avatar}}" alt="" />
@@ -77,8 +77,8 @@
         {{/if}}
         <div class="content-tab photos-list" id="photos-list">
           {{#each chat.photos}}
-            <a href={{url}}>
-              <img class="message-photo" src={{url}} />
+            <a href={{URL}}>
+              <img class="message-photo" src={{URL}} />
             </a>
           {{/each}}
         </div>

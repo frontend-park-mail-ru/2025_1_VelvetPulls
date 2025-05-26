@@ -39,6 +39,7 @@ export class ChatList {
           countOfUsers: element.count_users,
           chatName: element.title,
           avatarPath: element.avatar_path,
+          send_notifications: element.send_notifications,
         })
       });
     }
@@ -159,9 +160,16 @@ export class ChatList {
         const labelUserContacts : HTMLInputElement = searchChatsList.querySelector("#label-user-chats")!;
 
         const response = await API.get<searchChatsResponse>(`/search?query=${chatName}`);
+        const setActive = (element) => {
+            search_options?.querySelectorAll('.finder-opt').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            element?.classList.add('active');
+        };
         search_options?.classList.add("finder-options-visible")
         search_options?.querySelector("#finder-group").addEventListener("click", (event) => {
           event.preventDefault();
+          setActive(event.currentTarget);
           searchUserChats.innerHTML = '';
           if (response.data.groups){
             response.user_chats=[]
@@ -185,6 +193,7 @@ export class ChatList {
         });
         search_options?.querySelector("#finder-dialog").addEventListener("click", (event) => {
           event.preventDefault();
+          setActive(event.currentTarget);
           searchUserChats.innerHTML = '';
           if (response.data.dialogs){
             response.user_chats=[]
@@ -208,6 +217,7 @@ export class ChatList {
         });
         search_options?.querySelector("#finder-channel").addEventListener("click", (event) => {
           event.preventDefault();
+          setActive(event.currentTarget);
           searchUserChats.innerHTML = '';
           if (response.data.global_channels){
             response.user_chats=[]

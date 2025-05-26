@@ -6,11 +6,15 @@ body#login {
   height: 100vh;
   display: flex;
   overflow-y: hidden;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
 }
 
 .auth-form {
   flex: 1;
   min-width: 500px;
+  max-width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,8 +35,7 @@ body#login {
   }
 }
 
-
-.auth-form{
+.auth-form {
   margin-top: 100px;
   margin-bottom: 100px;
 }
@@ -78,16 +81,21 @@ body#login {
   font-size: var(--form-font-size);
   font-family: var(--main-font-family);
   cursor: pointer;
-  margin-left: 10px;
 }
-
+.btn:hover{
+  background-color: var(--accent);
+}
 .auth_btn {
   margin-left: 7px;
 }
 
-#Create{
+#Create {
+  font-family: var(--main-font-family);
   cursor: pointer;
   color: blue;
+}
+#signup_paragraf {
+  font-family: var(--main-font-family);
 }
 
 .not_error {
@@ -148,7 +156,84 @@ body#login {
         max-width: 100%;
         box-sizing: border-box;
       }
-      
     }
+  }
+}
+
+/* Общие стили для обеих форм */
+.auth-form {
+  max-width: 30%;
+  min-width: 0 !important;
+  margin: 5% !important;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-form-user__input,
+.btn {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media screen and (max-width: 768px) {
+  .login-page,
+  .signup-page {
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+
+  .auth-form__p-login {
+    font-size: 24px;
+    margin-top: 10% !important;
+    margin-bottom: 10% !important;
+  }
+
+  .auth-form-user__button-enter,
+  .auth-form-user__button-create {
+    margin-top: 30px !important;
+  }
+
+  .password-visibility-toggle {
+    right: 15px !important;
+  }
+
+  /* Специфические правки для формы регистрации */
+  #right1 {
+    margin: 20px 0 !important;
+  }
+
+  .auth-form-user__p {
+    font-size: 18px !important;
+  }
+
+  #login_paragraf,
+  #signup_paragraf {
+    text-align: center;
+    padding: 0 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-form {
+    max-width: 90%;
+    margin: 10px !important;
+    padding: 15px;
+  }
+
+  .auth-form__p-login {
+    font-size: 22px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+
+  .auth-form-user__input {
+    font-size: 14px;
+    height: 40px !important;
   }
 }

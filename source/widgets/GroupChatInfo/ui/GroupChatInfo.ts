@@ -54,13 +54,13 @@ export class GroupChatInfo {
       chat: {
         ...chat,
         files: chatInfo.files ? chatInfo.files.map(file => ({
-          url: `${serverHost}${file.url}`,
-          name: nameRegex.exec(file.filename)![1],
-          extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-          size: formatBytes(file.size),
+          URl: `${serverHost}${file.URL}`,
+          name: nameRegex.exec(file.Filename)![1],
+          extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+          Size: formatBytes(file.Size),
       })) : [],
         photos: chatInfo.photos ? chatInfo.photos.map(photo => ({
-          url: `${serverHost}${photo.url}`
+          URL: `${serverHost}${photo.URL}`
         })) : [],
       },
       chatType,
@@ -136,10 +136,10 @@ export class GroupChatInfo {
           `/chat/${chat.chatId}`,
           chat.chatId,
         );
-        console.log(response)
+        // console.log(response)
 
         if (!response.error) {
-          console.log("dele")
+          // console.log("dele")
           Router.go("/");
         }
         Router.go("/");
@@ -148,7 +148,7 @@ export class GroupChatInfo {
       }
       else {
         const response = await API.delete(`/chat/${chat.chatId}/leave`, "");
-        console.log(response)
+        // console.log(response)
         if (!response.error) {
           Router.go("/");
         }

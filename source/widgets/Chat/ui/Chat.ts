@@ -131,22 +131,22 @@ export class Chat {
         const packsList = this.#parent.querySelector<HTMLElement>('#packs-list')!;
     
         const response = await API.get<StickerPacksResponse>('/stickerpacks');
-        const packs = response.packs;
-        // packs.map((pack) => {
-        //   packsList.insertAdjacentHTML("beforeend", `<img class="sticker-list__packs__item" src="${serverHost}${pack.photo}" alt=""/>`);
-        //   packsList.lastElementChild?.addEventListener('click', async () => {
-        //     const response = await API.get<StickersResponse>(`/stickerpacks/${pack.id}`); 
-        //     const stickers = response.stickers;
-        //     stickersList.innerHTML = '';
-        //     stickers.map((sticker) => {
-        //       stickersList.insertAdjacentHTML("beforeend", `<img class="sticker-list__stickers__item" src="${serverHost}${sticker}" alt="">`);
-        //       stickersList.lastElementChild?.addEventListener('click', () => {
-        //         SendSticker(chat.chatId, sticker);
-        //         emojiPopup.style.display = 'none';
-        //       });
-        //     });
-        //   });
-        // });
+        const packs = response.data.packs;
+        packs.map((pack) => {
+          packsList.insertAdjacentHTML("beforeend", `<img class="sticker-list__packs__item" src="${serverHost}${pack.photo}" alt=""/>`);
+          packsList.lastElementChild?.addEventListener('click', async () => {
+            const response = await API.get<StickersResponse>(`/stickerpacks/${pack.id}`); 
+            const stickers = response.data.stickers;
+            stickersList.innerHTML = '';
+            stickers.map((sticker) => {
+              stickersList.insertAdjacentHTML("beforeend", `<img class="sticker-list__stickers__item" src="${serverHost}${sticker}" alt="">`);
+              stickersList.lastElementChild?.addEventListener('click', () => {
+                SendSticker(chat.chatId, sticker);
+                emojiPopup.style.display = 'none';
+              });
+            });
+          });
+        });
       this.#parent.querySelector('#attachBtn')!.addEventListener("click", (event) => {
         event.stopPropagation();
         attachFilePopup.style.display = attachFilePopup.style.display === "none" ? "flex" : "none";
@@ -272,8 +272,7 @@ export class Chat {
     const sendInputMessage = async (textArea : HTMLTextAreaElement, branch : boolean) => {
       const messageText = textArea.value.trim();
       textArea.value = "";
-
-      if (messageText) {
+      if (messageText || this.#files.length!==0 || this.#photos.length!==0) {
         
         if (textArea.classList.contains('edit')) {
           const messageId = textArea.classList[2]!;
@@ -360,6 +359,9 @@ export class Chat {
     text:element.body,
     authorID:element.user,
     isRedacted: element.is_redacted,
+    files:element.files,
+    photos: element.photos,
+    sticker: element.sticker,
         })
       });
     }
@@ -473,6 +475,29 @@ export class Chat {
       const chatListImport : HTMLElement = document.querySelector('#widget-import')!;
       const chatList = new ChatList(chatListImport,this);
       chatList.render();
+      const currentChat = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
+          if (currentChat) {
+            currentChat.classList.remove('active');
+            ChatStorage.setChat(
+              {
+                avatarPath: "",
+                chatId: "",
+                chatName: "",
+                chatType: "dialog",
+                lastMessage: {
+                  authorID: "",
+                  chatId: "",
+                  branchId: "",
+                  datetime: "",
+                  isRedacted: false,
+                  messageId: "",
+                  text: "",
+                },
+                countOfUsers: 0,
+                send_notification: true,
+              }
+            )
+          }
     });
 
     document.querySelector<HTMLElement>('#widget-import')!.style.left = '-100vw'; 

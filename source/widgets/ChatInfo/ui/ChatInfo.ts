@@ -32,8 +32,8 @@ export class ChatInfo {
         birthdate = `${bhd.getUTCFullYear()}-${bhd.getUTCMonth()+1}-${bhd.getUTCDate()}`;
       }
        
-      if (profileUser.avatarURL) {
-        profileUser.avatarURL = staticHost + profileUser.avatarURL;
+      if (profileUser.data.avatar_path) {
+        profileUser.avatarURL = staticHost + profileUser.data.avatar_path;
       } else {
         profileUser.avatarURL = "/assets/image/default-avatar.svg";
       }
@@ -45,13 +45,13 @@ export class ChatInfo {
       this.#parent.innerHTML = ChatInfoTemplate({ profileUser, birthdate,
         chat: {
           files: chatInfo.files ? chatInfo.files.map(file => ({
-            url: `${serverHost}${file.url}`,
-            name: nameRegex.exec(file.filename)![1],
-            extention: extentionRegex.exec(file.filename)![1].toUpperCase(),
-            size: formatBytes(file.size),
+            URL: `${serverHost}${file.URL}`,
+            name: nameRegex.exec(file.Filename)![1],
+            extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
+            Size: formatBytes(file.Size),
           })) : [],
           photos: chatInfo.photos ? chatInfo.photos.map(photo => ({
-            url: `${serverHost}${photo.url}`
+            URL: `${serverHost}${photo.URL}`
           })) : [],
           },
        });
@@ -71,7 +71,6 @@ export class ChatInfo {
       const deleteChatButton = this.#parent.querySelector("#delete-chat")!;
 
       const handleDeleteGroup = async () => {
-        console.log("dele")
         const response = await API.delete(
           `/chat/${this.#chat.chatId}`,
           this.#chat.chatId,

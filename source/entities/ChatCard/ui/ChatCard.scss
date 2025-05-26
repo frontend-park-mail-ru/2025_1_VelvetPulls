@@ -8,7 +8,7 @@ $button-over-background-hover: var(--button-over-background-hover);
 .chat-card {
   border-radius: 15px;
   padding-right: 10px;
-
+  background-color: var(--primary);
   cursor: pointer;
   text-decoration: none;
 
@@ -74,7 +74,7 @@ $button-over-background-hover: var(--button-over-background-hover);
 }
 
 .hover {
-  background-color: $button-over-background-hover;
+  background-color: var(--text-over-primary-shadow-50);
 }
 
 .active {

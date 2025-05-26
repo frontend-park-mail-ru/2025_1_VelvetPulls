@@ -61,6 +61,7 @@ export class ContactCard {
                 chatType: element.type,
                 countOfUsers: element.count_users,
                 chatName: element.title,
+                send_notifications: element.send_notifications,
               })
             });}
 

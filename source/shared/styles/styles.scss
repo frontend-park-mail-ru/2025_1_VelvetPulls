@@ -106,8 +106,6 @@ $chat-padding-top: var(--chat-padding-top);
 }
 
 @mixin right-column {
-  padding-top: $chat-padding-top;
-  padding-right: 20px;
   max-width: $main-page-right-column-width;
 
   background: $primary;
@@ -139,7 +137,6 @@ $chat-padding-top: var(--chat-padding-top);
 
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  box-sizing: border-box;
 
   cursor: pointer;
 

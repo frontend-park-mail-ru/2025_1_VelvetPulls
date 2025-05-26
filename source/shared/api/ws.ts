@@ -33,6 +33,9 @@ class wsConnection {
     datetime:element.sent_at,
     text:element.body,
     authorID:element.user,
+    files:element.files,
+    photos: element.photos,
+    sticker: element.sticker,
         }
         
         if (res.messageType === "error") {

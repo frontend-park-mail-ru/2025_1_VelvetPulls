@@ -48,6 +48,7 @@ body#main {
   flex: 1;
   overflow-x: scroll;
   display: flex;
+  max-width: 100vw;
 
   &::-webkit-scrollbar {
     height: 5px;
@@ -77,8 +78,6 @@ body#main {
   min-width: 0;
   flex: 1;
 
-  margin-right: 20px;
-  margin-top: $chat-padding-top;
 
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -129,9 +128,8 @@ body#main {
 }
 
 .chat-info-container{
-  position: relative;
   height: 100%;
-  
+  border-left: groove;
   display: flex;
   flex-direction: column;
 }
@@ -175,10 +173,6 @@ body#main {
       max-width: none;
     }
 
-    .chat-content {
-      margin-left: 20px;
-    }
-
     .chat-info-container {
       position: absolute;
       top: 0;
@@ -189,4 +183,10 @@ body#main {
     }
 
   }
+}
+
+@media screen and (max-width: 480px){
+    .chat-info-container {
+      right: -100vw;
+    }
 }

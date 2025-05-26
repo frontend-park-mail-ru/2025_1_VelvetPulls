@@ -16,7 +16,7 @@ export class ChatCard {
     this.#chat = chat;
   }
 
-  async render(chat: TChat, notificate = false, notificationChat : TChat | null = null) {
+  async render(chat: TChat, notificate = false, notificationChat: TChat | null = null) {
 
     // console.log(chat);
     if (notificationChat) {
@@ -24,7 +24,7 @@ export class ChatCard {
     }
     // console.log(chat)
     let avatar;
-    if ((chat.avatarPath !== "")&&(chat.avatarPath!==undefined)) {
+    if ((chat.avatarPath !== "") && (chat.avatarPath !== undefined)) {
       avatar = staticHost + chat.avatarPath;
       // console.log(avatar)
     } else {
@@ -38,28 +38,29 @@ export class ChatCard {
           ...chat,
           lastMessage: {
             ...chat.lastMessage,
-            datetime: "",//datetime: getTimeString(chat.lastMessage.datetime),
+            sent_at: chat.lastMessage ? getTimeString(chat.lastMessage.sent_at) : '',
+            body: chat.lastMessage ? chat.lastMessage.body : 'Чат только что создан!',
           },
         },
         avatar,
       }),
     );
-    //console.log(chat.lastMessage.text)
+    console.log(chat.lastMessage)
     this.#parent.lastElementChild!.addEventListener("click", (e) => {
       e.preventDefault();
-      
+
       if (ChatStorage.getChat() !== chat) {
         const newUrl = `/chat/${chat.chatId}`;
         history.pushState({ url: newUrl }, "", newUrl);
-        
+
         if (ChatStorage.getChat().chatId) {
           const currentChat = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
           if (currentChat) {
             currentChat.classList.remove('active');
           }
-          
+
         }
-        const chatCard : HTMLElement = document.querySelector(`[id='${chat.chatId}']`)!;
+        const chatCard: HTMLElement = document.querySelector(`[id='${chat.chatId}']`)!;
         if (chatCard) {
           chatCard.classList.add('active');
         }

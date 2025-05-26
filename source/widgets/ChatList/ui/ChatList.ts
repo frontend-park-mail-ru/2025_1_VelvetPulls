@@ -30,8 +30,8 @@ export class ChatList {
    */
   async render() {
     const response = await API.get<ChatsResponse>("/chats");
-    if (response.data!==null){
-      response.chats=[]
+    if (response.data !== null) {
+      response.chats = []
       response.data.forEach(element => {
         response.chats.push({
           chatId: element.id,
@@ -40,6 +40,7 @@ export class ChatList {
           chatName: element.title,
           avatarPath: element.avatar_path,
           send_notifications: element.send_notifications,
+          lastMessage: element.last_message ? element.last_message : null,
         })
       });
     }
@@ -48,7 +49,7 @@ export class ChatList {
 
     this.#parent.innerHTML = ChatListTemplate({});
 
-    const chatList : HTMLElement = this.#parent.querySelector("#chat-list")!;
+    const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
     const chatCard = new ChatCard(chatList, this.#chat);
 
     chats.forEach((chat) => {
@@ -56,7 +57,7 @@ export class ChatList {
     });
 
     if (ChatStorage.getChat().chatId) {
-      const chatCard : HTMLElement = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
+      const chatCard: HTMLElement = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
       if (chatCard) {
         chatCard.classList.add('active');
       }
@@ -68,8 +69,8 @@ export class ChatList {
     const addChatIcon1 = document.querySelector<HTMLElement>("#addChatIcon1")!;
     const addChatPopup = document.querySelector<HTMLElement>("#addChatPopUp")!;
     const addChatPopup1 = document.querySelector<HTMLElement>("#addChatPopUp1")!;
-    const toCon=addChatPopup1.querySelector<HTMLElement>("#contact-button1")!;
-    const toProf=addChatPopup1.querySelector<HTMLElement>("#profile-button1")!;
+    const toCon = addChatPopup1.querySelector<HTMLElement>("#contact-button1")!;
+    const toProf = addChatPopup1.querySelector<HTMLElement>("#profile-button1")!;
 
 
     let degrees = 0;
@@ -100,25 +101,25 @@ export class ChatList {
       .querySelector("#create-personal-chat")!
       .addEventListener("click", () => {
         const contactForm = new ContactsList(this.#parent, this.#chat);
-        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        document.querySelector("#chat-content").innerHTML = `<p class="chat-content__placeholder">
         Выберите чат
       </p>`
         contactForm.render();
       });
-      toCon
+    toCon
       .addEventListener("click", () => {
-        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        document.querySelector("#chat-content").innerHTML = `<p class="chat-content__placeholder">
         Выберите чат
       </p>`
         const contactForm = new ContactsList(this.#parent, this.#chat);
         contactForm.render();
       });
-      toProf
+    toProf
       .addEventListener("click", () => {
-        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        document.querySelector("#chat-content").innerHTML = `<p class="chat-content__placeholder">
         Выберите чат
       </p>`
-        const contactForm = new ProfileForm(this.#parent,this.#chat);
+        const contactForm = new ProfileForm(this.#parent, this.#chat);
         contactForm.render();
       });
 
@@ -126,7 +127,7 @@ export class ChatList {
       .querySelector("#create-group-chat")!
       .addEventListener("click", () => {
         const addGroupForm = new AddGroupForm(this.#parent, this.#chat);
-        document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+        document.querySelector("#chat-content").innerHTML = `<p class="chat-content__placeholder">
         Выберите чат
       </p>`
         addGroupForm.render();
@@ -136,53 +137,55 @@ export class ChatList {
 
     const handelCreateChannel = () => {
       const addChannelForm = new AddChannelForm(this.#parent, this.#chat);
-      document.querySelector("#chat-content").innerHTML=`<p class="chat-content__placeholder">
+      document.querySelector("#chat-content").innerHTML = `<p class="chat-content__placeholder">
         Выберите чат
       </p>`
       addChannelForm.render();
     };
     createChannelBtn.addEventListener('click', handelCreateChannel);
 
-    const searchInput : HTMLInputElement = this.#parent.querySelector("#search-input")!;
+    const searchInput: HTMLInputElement = this.#parent.querySelector("#search-input")!;
 
     const handleSearchChats = async () => {
-      const searchChatsList : HTMLElement = this.#parent.querySelector('#search-chats-list')!;
-      const searchUserChats : HTMLElement = searchChatsList.querySelector("#search-user-chats")!;
-      const searchGlobalChats : HTMLElement = searchChatsList.querySelector("#search-globals-chats")!;
-      const search_options=document.querySelector(".finder-options")
+      const searchChatsList: HTMLElement = this.#parent.querySelector('#search-chats-list')!;
+      const searchUserChats: HTMLElement = searchChatsList.querySelector("#search-user-chats")!;
+      const searchGlobalChats: HTMLElement = searchChatsList.querySelector("#search-globals-chats")!;
+      const search_options = document.querySelector(".finder-options")
       searchUserChats.innerHTML = '';
       searchGlobalChats.innerHTML = '';
-      
+
       const chatName = searchInput.value;
       if (chatName !== "") {
 
-        const labelGlobalContacts : HTMLInputElement = searchChatsList.querySelector("#label-global-chats")!;
-        const labelUserContacts : HTMLInputElement = searchChatsList.querySelector("#label-user-chats")!;
+        const labelGlobalContacts: HTMLInputElement = searchChatsList.querySelector("#label-global-chats")!;
+        const labelUserContacts: HTMLInputElement = searchChatsList.querySelector("#label-user-chats")!;
 
         const response = await API.get<searchChatsResponse>(`/search?query=${chatName}`);
         const setActive = (element) => {
-            search_options?.querySelectorAll('.finder-opt').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            element?.classList.add('active');
+          search_options?.querySelectorAll('.finder-opt').forEach(opt => {
+            opt.classList.remove('active');
+          });
+          element?.classList.add('active');
         };
         search_options?.classList.add("finder-options-visible")
         search_options?.querySelector("#finder-group").addEventListener("click", (event) => {
           event.preventDefault();
           setActive(event.currentTarget);
           searchUserChats.innerHTML = '';
-          if (response.data.groups){
-            response.user_chats=[]
+          if (response.data.groups) {
+            response.user_chats = []
             // response.user_chats[0].
             response.data.groups.forEach(element => {
               // response.global_channels[0].
               response.user_chats.push({
                 chatId: element.id,
                 chatName: element.title,
+                avatarPath: element.avatar_path,
                 chatType: "group",
+                lastMessage: element.last_message,
               })
             });
-            
+
             searchUserChats.innerHTML = '';
             labelUserContacts.style.display = "block";
             const userChats = new ChatCard(searchUserChats, this.#chat);
@@ -195,18 +198,20 @@ export class ChatList {
           event.preventDefault();
           setActive(event.currentTarget);
           searchUserChats.innerHTML = '';
-          if (response.data.dialogs){
-            response.user_chats=[]
+          if (response.data.dialogs) {
+            response.user_chats = []
             // response.user_chats[0].
             response.data.dialogs.forEach(element => {
               // response.global_channels[0].
               response.user_chats.push({
                 chatId: element.id,
                 chatName: element.title,
+                avatarPath: element.avatar_path,
                 chatType: "dialog",
+                lastMessage: element.last_message,
               })
             });
-            
+
             searchUserChats.innerHTML = '';
             labelUserContacts.style.display = "block";
             const userChats = new ChatCard(searchUserChats, this.#chat);
@@ -219,18 +224,20 @@ export class ChatList {
           event.preventDefault();
           setActive(event.currentTarget);
           searchUserChats.innerHTML = '';
-          if (response.data.global_channels){
-            response.user_chats=[]
+          if (response.data.global_channels) {
+            response.user_chats = []
             // response.user_chats[0].
             response.data.global_channels.forEach(element => {
               // response.global_channels[0].
               response.user_chats.push({
                 chatId: element.id,
                 chatName: element.title,
+                avatarPath: element.avatar_path,
                 chatType: "channel",
+                lastMessage: element.last_message,
               })
             });
-            
+
             searchUserChats.innerHTML = '';
             labelUserContacts.style.display = "block";
             const userChats = new ChatCard(searchUserChats, this.#chat);
@@ -284,12 +291,15 @@ export class ChatList {
               globalChats.render(element);
             });
           }
-          else{
+          else {
             labelGlobalContacts.style.display = "none";
           }
         }
       }
       else {
+        search_options?.querySelectorAll('.finder-opt').forEach(opt => {
+          opt.classList.remove('active');
+        });
         searchChatsList.style.display = "none";
         chatList.style.display = "block";
         search_options?.classList.remove("finder-options-visible")
@@ -300,7 +310,7 @@ export class ChatList {
 
     searchInput.addEventListener("input", debouncedHandle);
 
-    document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw'; 
+    document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw';
     this.#parent.style.left = '0';
 
   }

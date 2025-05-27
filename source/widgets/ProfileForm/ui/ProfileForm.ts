@@ -111,7 +111,7 @@ export class ProfileForm {
     const confirmButton = this.#parent.querySelector("#confirm-button");
     const updateProfileInfo = async () => {
       const nameInput: HTMLInputElement =
-        this.#parent.querySelector("#user-name")!;
+        this.#parent.querySelector("#nickname")!;
       const bioInput: HTMLInputElement = this.#parent.querySelector("#password")!;
       const bioInput1: HTMLInputElement = this.#parent.querySelector("#password-repeat")!;
       const pass_ico: HTMLButtonElement = document.querySelector("#password-visibility-toggle")!;

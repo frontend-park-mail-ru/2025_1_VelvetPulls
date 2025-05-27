@@ -188,10 +188,12 @@ export class ChatList {
 
             searchUserChats.innerHTML = '';
             labelUserContacts.style.display = "block";
-            const userChats = new ChatCard(searchUserChats, this.#chat);
             response.user_chats.forEach((element) => {
               userChats.render(element);
             });
+          }
+          else{
+            searchUserChats.innerHTML = '<div id="search-user-chats" class="search-user-chats" style="display: flex; flex-direction: column; align-items: center;"> <b style="font-family: var(--main-font-family)"> Ничего не найдено </b> </div>';
           }
         });
         search_options?.querySelector("#finder-dialog").addEventListener("click", (event) => {
@@ -218,6 +220,10 @@ export class ChatList {
             response.user_chats.forEach((element) => {
               userChats.render(element);
             });
+            
+          }
+          else{
+            searchUserChats.innerHTML = '<div id="search-user-chats" class="search-user-chats" style="display: flex; flex-direction: column; align-items: center;"> <b style="font-family: var(--main-font-family)"> Ничего не найдено </b> </div>';
           }
         });
         search_options?.querySelector("#finder-channel").addEventListener("click", (event) => {
@@ -244,6 +250,9 @@ export class ChatList {
             response.user_chats.forEach((element) => {
               userChats.render(element);
             });
+          }
+          else{
+            searchUserChats.innerHTML = '<div id="search-user-chats" class="search-user-chats" style="display: flex; flex-direction: column; align-items: center;"> <b style="font-family: var(--main-font-family)"> Ничего не найдено </b> </div>';
           }
         });
         // if (response.data.global_channels){

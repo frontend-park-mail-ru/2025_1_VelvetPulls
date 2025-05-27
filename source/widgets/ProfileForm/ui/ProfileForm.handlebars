@@ -1,104 +1,116 @@
+<!-- ProfileForm.handlebars -->
+
 <div class="profile-form">
   <div class="profile-form-header">
     <img
       id="back-button"
       class="profile-form-header-img"
       src="/assets/image/back-btn-img.svg"
-      alt=""
+      alt="Назад"
     />
-    <span class="profile-form-header-name">Профиль</span>
+    <span class="profile-form-header-title">Профиль</span>
   </div>
-  <form class="profile-form-user" method="post">
-    <label for="ava">
-      <img
-        id="avatar"
-        class="profile-form-user__img"
-        src={{response.ava}}
-      />
+
+  <form class="profile-form-body" method="post" enctype="multipart/form-data">
+    <!-- Аватар -->
+    <label class="profile-form-body__avatar-wrapper" for="ava">
+      <img id="avatar" src="{{response.ava}}" alt="Аватар пользователя" />
       <input
         type="file"
         id="ava"
         name="ava"
-        class="profile-form-user__input-avatar"
-        accept="image/webp, image/gif, image/jpeg, image/webp, image/png"
+        accept="image/webp,image/gif,image/jpeg,image/png"
       />
       <span id="avatar-error" class="avatar-error"></span>
-      <br />
     </label>
-    <div class="profile-error-nickname">
-      <span id="nickname" class="profile-error__span"></span>
-    </div>
-    <input
-      id="user-name"
-      class="profile-form-user__input-name profile-form-user__input"
-      type="text"
-      placeholder="Имя"
-      value="{{response.data.username}}"
-      name="text"
-    />
-    <p class="profile-form-user__p">Отображаемое имя</p>
-    <label for="date">
-      <div class="profile-error">
-        <span id="date-error" class="profile-error__span"></span>
-      </div>
+
+    <!-- Отображаемое имя -->
+    <div class="profile-form-body__group">
       <input
-        type="date"
-        class="profile-form-user__input-date profile-form-user__input"
+        id="user-name"
+        class="profile-form-body__group-input"
+        type="text"
+        name="username"
+        placeholder="Имя"
+        value="{{response.data.username}}"
+      />
+      <label class="profile-form-body__group-label" for="user-name">
+        Отображаемое имя
+      </label>
+      <span id="nickname-error" class="profile-form-body__group-error"></span>
+    </div>
+
+    <!-- Дата рождения -->
+    <div class="profile-form-body__group">
+      <input
         id="date"
+        class="profile-form-body__group-input"
+        type="date"
         name="date"
         min="1920-01-01"
         max="{{currentDate}}"
-        required
-        placeholder="Дата рождения (Опционально)"
       />
-    </label>
-    <div style="position: relative;">
-    <input
-      id="bio"
-      class="profile-form-user__input-bio profile-form-user__input"
-      type="password"
-      name="text"
-      placeholder="Новый пароль"
-      value=""
-    />
-    <img
-          id="password-visibility-toggle"
-          class="auth-form-user-password__img-pass_show signup-password-eye"
-          src="/assets/image/eye.svg"
-          style="right: 20px;top:40%;"
-        />
-    <p class="profile-form-user__p" id="pswd-err"></p>
+      <label class="profile-form-body__group-label" for="date">
+        Дата рождения (опционально)
+      </label>
+      <span id="date-error" class="profile-form-body__group-error"></span>
     </div>
-    <div style="position: relative;">
-    <input
-      id="bio1"
-      class="profile-form-user__input-bio profile-form-user__input"
-      type="password"
-      name="text"
-      placeholder="Подтверждение пароля"
-      value=""
-    />
-    <img
-          id="password-repeat-visibility-toggle"
-          class="auth-form-user-password__img-pass_show signup-password-eye"
-          src="/assets/image/eye.svg"
-          style="right: 20px;top:40%;"
+
+    <!-- Новый пароль -->
+    <div class="profile-form-body__group">
+      <div class="password-wrapper">
+        <input
+          id="password"
+          class="profile-form-body__group-input"
+          type="password"
+          name="password"
+          style="border-bottom: 0px;"
+          placeholder="Новый пароль"
         />
+        <img
+          id="password-visibility-toggle"
+          class="profile-form-body__group-icon"
+          src="/assets/image/eye.svg"
+          alt="Показать пароль"
+        />
+      </div>
+      <span id="pswd-err" class="profile-form-body__group-error"></span>
+    </div>
+
+    <!-- Подтверждение пароля -->
+    <div class="profile-form-body__group">
+      <div class="password-wrapper">
+        <input
+          id="password-repeat"
+          class="profile-form-body__group-input"
+          type="password"
+          name="passwordRepeat"
+          style="border-bottom: 0px;"
+          placeholder="Подтверждение пароля"
+        />
+        <img
+          id="password-repeat-visibility-toggle"
+          class="profile-form-body__group-icon"
+          src="/assets/image/eye.svg"
+          alt="Показать пароль"
+        />
+      </div>
+      <span id="pswd-repeat-err" class="profile-form-body__group-error"></span>
     </div>
   </form>
 
-  <div class="profile-buttons">
-  <img
-    class="exit-btn-img"
-    id="logout"
-    src="/assets/image/Logout.svg"
-    alt=""
-  />
+  <div class="profile-form-footer">
+    <img
+      id="logout"
+      class="exit-btn-img"
+      src="/assets/image/Logout.svg"
+      alt="Выйти"
+    />
     <img
       id="confirm-button"
-      class="profile-form-confirm-img"
+      class="confirm-btn-img"
       src="/assets/image/confirm.svg"
-      alt=""
+      alt="Сохранить"
     />
   </div>
 </div>

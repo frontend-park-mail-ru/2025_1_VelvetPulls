@@ -83,9 +83,9 @@ export class ProfileForm {
     };
     avatarInput.addEventListener("change", handleAvatar);
 
-    const bioInput: HTMLInputElement = this.#parent.querySelector("#bio")!;
-      const bioInput1: HTMLInputElement = this.#parent.querySelector("#bio1")!;
-
+    const bioInput: HTMLInputElement = this.#parent.querySelector("#password")!;
+    const bioInput1: HTMLInputElement = this.#parent.querySelector("#password-repeat")!;
+    console.log(this.#parent);
       const handleTogglePasswordVisibility = () => {
         bioInput.type = bioInput.type === "password" ? "text" : "password";
       };
@@ -112,8 +112,8 @@ export class ProfileForm {
     const updateProfileInfo = async () => {
       const nameInput: HTMLInputElement =
         this.#parent.querySelector("#user-name")!;
-      const bioInput: HTMLInputElement = this.#parent.querySelector("#bio")!;
-      const bioInput1: HTMLInputElement = this.#parent.querySelector("#bio1")!;
+      const bioInput: HTMLInputElement = this.#parent.querySelector("#password")!;
+      const bioInput1: HTMLInputElement = this.#parent.querySelector("#password-repeat")!;
       const pass_ico: HTMLButtonElement = document.querySelector("#password-visibility-toggle")!;
       const pass_repeat_ico: HTMLElement = this.#parent.querySelector("#password-repeat-visibility-toggle")!;
       pass_ico?.addEventListener("click", async () => {

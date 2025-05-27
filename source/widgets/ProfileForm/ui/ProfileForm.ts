@@ -132,7 +132,7 @@ export class ProfileForm {
 
       let flag = true;
       const nicknameSpan: HTMLSpanElement =
-        this.#parent.querySelector("#nickname")!;
+      this.#parent.querySelector("#nickname")!;
       if (!validateNickname(profileData.name)) {
         validateForm(
           nameInput,

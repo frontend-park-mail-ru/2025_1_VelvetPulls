@@ -93,6 +93,9 @@ export class ContactsList {
               });
               labelUserContacts.classList.remove("hidden");
             }
+            else{
+              userContacts.innerHTML = '<div id="search-user-chats" class="search-user-chats" style="display: flex; flex-direction: column; align-items: center;"> <b style="font-family: var(--main-font-family)"> Ничего не найдено </b> </div>';
+            }
           }
         }
         else {

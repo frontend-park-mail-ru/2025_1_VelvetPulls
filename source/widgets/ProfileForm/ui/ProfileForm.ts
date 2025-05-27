@@ -33,8 +33,8 @@ export class ProfileForm {
 
     if (response.data.avatar_path) {
       response.avatarURL = staticHost + response.avatarURL;
-      response.ava=staticHost + response.data.avatar_path
-    }  else {
+      response.ava = staticHost + response.data.avatar_path;
+    } else {
       response.avatarURL = "/assets/image/default-avatar.svg";
       response.ava = "/assets/image/default-avatar.svg";
     }
@@ -45,12 +45,14 @@ export class ProfileForm {
       response,
       currentDate,
     });
-    
-    if (response.data.birth_date){
-      response.birthdate=response.data.birth_date
+
+    if (response.data.birth_date) {
+      response.birthdate = response.data.birth_date;
     }
     const bhd = new Date(response.birthdate);
-    const birthday = `${bhd.getUTCFullYear()}-${bhd.getUTCMonth()+1}-${bhd.getUTCDate()}`
+    const birthday = `${bhd.getUTCFullYear()}-${(bhd.getUTCMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${bhd.getUTCDate().toString().padStart(2, "0")}`;
     const birthdayInput: HTMLInputElement =
       this.#parent.querySelector("#date")!;
     birthdayInput.value = birthday;
@@ -70,7 +72,7 @@ export class ProfileForm {
             validateForm(
               avatarInput,
               "Размер файла не должен превышать 10МБ",
-              avatarSpanError,
+              avatarSpanError
             );
             return;
           } else {
@@ -83,23 +85,26 @@ export class ProfileForm {
     };
     avatarInput.addEventListener("change", handleAvatar);
 
-    const bioInput: HTMLInputElement = this.#parent.querySelector("#password")!;
-    const bioInput1: HTMLInputElement = this.#parent.querySelector("#password-repeat")!;
-    console.log(this.#parent);
-      const handleTogglePasswordVisibility = () => {
-        bioInput.type = bioInput.type === "password" ? "text" : "password";
-      };
-      this.#parent
-        .querySelector("#password-visibility-toggle")!
-        .addEventListener("click", handleTogglePasswordVisibility);
+    const passwordInput: HTMLInputElement =
+      this.#parent.querySelector("#password")!;
+    const passwordRepeatInput: HTMLInputElement =
+      this.#parent.querySelector("#password-repeat")!;
 
-        const handleTogglePasswordVisibility1 = () => {
-          bioInput1.type = bioInput1.type === "password" ? "text" : "password";
-        };
-        this.#parent
-          .querySelector("#password-repeat-visibility-toggle")!
-          .addEventListener("click", handleTogglePasswordVisibility1);
+    const handleTogglePasswordVisibility = () => {
+      passwordInput.type =
+        passwordInput.type === "password" ? "text" : "password";
+    };
+    this.#parent
+      .querySelector("#password-visibility-toggle")!
+      .addEventListener("click", handleTogglePasswordVisibility);
 
+    const handleTogglePasswordVisibility1 = () => {
+      passwordRepeatInput.type =
+        passwordRepeatInput.type === "password" ? "text" : "password";
+    };
+    this.#parent
+      .querySelector("#password-repeat-visibility-toggle")!
+      .addEventListener("click", handleTogglePasswordVisibility1);
 
     const backButton = this.#parent.querySelector("#back-button");
     const handleBack = () => {
@@ -112,72 +117,86 @@ export class ProfileForm {
     const updateProfileInfo = async () => {
       const nameInput: HTMLInputElement =
         this.#parent.querySelector("#nickname")!;
-      const bioInput: HTMLInputElement = this.#parent.querySelector("#password")!;
-      const bioInput1: HTMLInputElement = this.#parent.querySelector("#password-repeat")!;
-      const pass_ico: HTMLButtonElement = document.querySelector("#password-visibility-toggle")!;
-      const pass_repeat_ico: HTMLElement = this.#parent.querySelector("#password-repeat-visibility-toggle")!;
-      pass_ico?.addEventListener("click", async () => {
-        bioInput.innerHTML=""
-          });
+      const dateInput: HTMLInputElement = this.#parent.querySelector("#date")!;
 
-      const nickname: string = nameInput.value;
-      const birthdayValue = birthdayInput.value;
+      const nickname = nameInput.value.trim();
+      const birthdayValue = dateInput.value;
+      const password = passwordInput.value;
+      const passwordRepeat = passwordRepeatInput.value;
 
       const profileData: ProfileRequest = {
-        bio: bioInput.value,
+        bio: password,
         birthdate: new Date(birthdayValue),
         name: nickname,
-        bio1: bioInput1.value,
+        bio1: passwordRepeat,
       };
 
       let flag = true;
-      const nicknameSpan: HTMLSpanElement =
-      this.#parent.querySelector("#nickname")!;
-      if (!validateNickname(profileData.name)) {
-        validateForm(
-          nameInput,
-          "Допустимы только латинские и русские буквы, пробелы, цифры и нижние подчеркивания.",
-          nicknameSpan,
-        );
-        flag = false;
-      } else if (profileData.name.length > 20) {
-        validateForm(
-          nameInput,
-          "Имя не может быть длиннее 20 символов",
-          nicknameSpan,
-        );
-        flag = false;
-      } else if (profileData.bio!==profileData.bio1){
-        validateForm(
-          nameInput,
-          "Пароли не совпали",
-          pswdError,
-        );
-        flag = false;
-      } else if(!validatePassword(profileData.bio)){
-        validateForm(
-          nameInput,
-          "Пароль должен состоять минимум из 8 латинских букв, цифр или нижних подчеркиваний.",
-          pswdError,
-        );
-        flag = false;
-      } else {
-        nicknameSpan.textContent = "";
-      }
-      const dateInput: HTMLInputElement = this.#parent.querySelector("#date")!;
+      const nicknameError = this.#parent.querySelector("#nickname-error")!;
+      const passwordError = this.#parent.querySelector("#pswd-err")!;
+      const dateError = this.#parent.querySelector("#date-error")!;
 
-      const spanDateError: HTMLSpanElement =
-        this.#parent.querySelector("#date-error")!;
-      if (!validateYear(profileData.birthdate)) {
-        validateForm(
-          dateInput,
-          "Введите реальную дату и год рождения от 1920 до " +
-            new Date().getFullYear(),
-          spanDateError,
-        );
+      // Валидация имени (только если не пустое)
+      if (nickname) {
+        if (!validateNickname(nickname)) {
+          validateForm(
+            nameInput,
+            "Допустимы только латинские и русские буквы, пробелы, цифры и нижние подчеркивания.",
+            nicknameError
+          );
+          flag = false;
+        } else if (nickname.length > 20) {
+          validateForm(
+            nameInput,
+            "Имя не может быть длиннее 20 символов",
+            nicknameError
+          );
+          flag = false;
+        } else {
+          nicknameError.textContent = "";
+        }
+      } else {
+        nicknameError.textContent = "";
+      }
+
+      // Валидация паролей (только если хотя бы одно поле заполнено)
+      if (password || passwordRepeat) {
+        if (password !== passwordRepeat) {
+          validateForm(passwordInput, "Пароли не совпали", passwordError);
+          flag = false;
+        } else if (!validatePassword(password)) {
+          validateForm(
+            passwordInput,
+            "Пароль должен состоять минимум из 8 латинских букв, цифр или нижних подчеркиваний.",
+            passwordError
+          );
+          flag = false;
+        } else {
+          passwordError.textContent = "";
+        }
+      } else {
+        passwordError.textContent = "";
+      }
+
+      // Валидация даты (обязательное поле)
+      if (!birthdayValue) {
+        validateForm(dateInput, "Дата рождения обязательна", dateError);
         flag = false;
       } else {
-        spanDateError.textContent = "";
+        const birthDate = new Date(birthdayValue);
+        if (isNaN(birthDate.getTime())) {
+          validateForm(dateInput, "Некорректная дата", dateError);
+          flag = false;
+        } else if (!validateYear(birthDate)) {
+          validateForm(
+            dateInput,
+            `Год рождения должен быть от 1920 до ${new Date().getFullYear()}`,
+            dateError
+          );
+          flag = false;
+        } else {
+          dateError.textContent = "";
+        }
       }
 
       if (!flag) {
@@ -185,14 +204,13 @@ export class ProfileForm {
       }
 
       const errorMessage = await genProfileData(profileData, avatarFile);
-      if (errorMessage != "" && errorMessage === "error message") {
-        validateForm(nameInput, "Вы не авторизованы", nicknameSpan);
-        return;
-      } else if (errorMessage != "") {
+      if (errorMessage) {
         validateForm(
           nameInput,
-          "Произошла какая-то ошибка, попробуйте еще раз",
-          nicknameSpan,
+          errorMessage === "error message"
+            ? "Вы не авторизованы"
+            : "Произошла ошибка, попробуйте еще раз",
+          nicknameError
         );
         return;
       }
@@ -214,7 +232,7 @@ export class ProfileForm {
     const handleExitClick = async () => {
       const response = await API.delete<EmptyResponse, EmptyRequest>(
         "/logout",
-        {},
+        {}
       );
 
       if (!response.error) {
@@ -226,7 +244,8 @@ export class ProfileForm {
 
     exitButton.addEventListener("click", handleExitClick);
 
-    document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw'; 
-    this.#parent.style.left = '0';
+    document.querySelector<HTMLElement>("#chat-info-container")!.style.right =
+      "-100vw";
+    this.#parent.style.left = "0";
   }
 }

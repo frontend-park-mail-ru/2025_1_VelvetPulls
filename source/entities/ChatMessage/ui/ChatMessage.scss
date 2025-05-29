@@ -84,7 +84,7 @@ $messages-container-width: 700px;
           padding: 10px;
           
           text-decoration: none;
-          background: $text-over-primary-shadow-30;
+          background: var(--hover);
           border-radius: 10px;
 
           display: flex;

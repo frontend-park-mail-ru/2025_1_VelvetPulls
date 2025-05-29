@@ -11,6 +11,9 @@ export type NewChatWS = NewChat;
 
 export interface NewChat {
   chat_id : string;
+  avatar_path : string,
+  chat_type: "dialog" | "group" | "channel",
+  title: string;
   users : string[];
 }
 

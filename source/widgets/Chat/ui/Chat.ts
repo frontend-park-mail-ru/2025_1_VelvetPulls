@@ -301,10 +301,8 @@ export class Chat {
         }
         if (!branch) {
           SendMessage( chat.chatId, messageText, this.#files, this.#photos);
-          await ChatList.render();
         }else {
           SendMessage(ChatStorage.getCurrentBranchId(), messageText, this.#files, this.#photos);
-          await ChatList.render();
         }
         this.#files = [];
         this.#photos = [];

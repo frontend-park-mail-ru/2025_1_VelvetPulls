@@ -48,10 +48,13 @@ class wsConnection {
             } as TMessageWS;
             break;
           
-          case 'newChat':  // Обработка нового типа
+          case 'newChat':
+            console.log(res.payload)  // Обработка нового типа
             payload = {
               chat_id: res.payload.id,
-              users: res.payload.users,
+              avatar_path: res.payload.avatar_path ? res.payload.avatar_path : "",
+              chat_type: res.payload.type,
+              title: res.payload.title,
             } as NewChatWS;
             break;
           

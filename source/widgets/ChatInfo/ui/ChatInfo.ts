@@ -42,19 +42,51 @@ export class ChatInfo {
       const extentionRegex = /\.([^.]+)$/;
       const nameRegex = /^(.+)\.[^.]+$/;
 
-      this.#parent.innerHTML = ChatInfoTemplate({ profileUser, birthdate,
+      // Собираем все файлы и фото из сообщений
+      const allFiles: any[] = [];
+      const allPhotos: any[] = [];
+
+      if (chatInfo.data?.messages) {
+        for (const message of chatInfo.data.messages) {
+          if (message.files && message.files.length > 0) {
+            allFiles.push(...message.files);
+          }
+          if (message.photos && message.photos.length > 0) {
+            allPhotos.push(...message.photos);
+          }
+        }
+      }
+
+      // Функция для форматирования размера файла
+      const formatBytes = (bytes: number, decimals = 2): string => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+      };
+
+      // Подготавливаем данные для шаблона
+      const formattedFiles = allFiles.map(file => ({
+        URL: `${serverHost}${file.URL}`,
+        name: nameRegex.exec(file.Filename)?.[1] || file.Filename,
+        extention: extentionRegex.exec(file.Filename)?.[1]?.toUpperCase() || 'FILE',
+        Size: formatBytes(file.Size),
+      }));
+
+      const formattedPhotos = allPhotos.map(photo => ({
+        URL: `${serverHost}${photo.URL}`
+      }));
+
+      this.#parent.innerHTML = ChatInfoTemplate({ 
+        profileUser, 
+        birthdate,
         chat: {
-          files: chatInfo.files ? chatInfo.files.map(file => ({
-            URL: `${serverHost}${file.URL}`,
-            name: nameRegex.exec(file.Filename)![1],
-            extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
-            Size: formatBytes(file.Size),
-          })) : [],
-          photos: chatInfo.photos ? chatInfo.photos.map(photo => ({
-            URL: `${serverHost}${photo.URL}`
-          })) : [],
-          },
-       });
+          files: formattedFiles,
+          photos: formattedPhotos,
+        },
+      });
 
       const photosButton = this.#parent.querySelector<HTMLElement>("#group-content-photos")!;
       const filesButton = this.#parent.querySelector<HTMLElement>("#group-content-files")!;

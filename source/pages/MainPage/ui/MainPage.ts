@@ -69,11 +69,11 @@ export class MainPage extends View {
     wsConn.unsubscribe<TMessageWS>("newMessage", renderMessage);
     wsConn.unsubscribe<TMessageWS>("updateMessage", renderMessage1);
     wsConn.unsubscribe<TMessageWS>("deleteMessage", renderMessage2);
-    wsConn.unsubscribe<NewChatWS>("newChat", newChatHandler);
+    //wsConn.unsubscribe<NewChatWS>("newChat", newChatHandler);
 
     wsConn.subscribe<TMessageWS>("newMessage", renderMessage);
     wsConn.subscribe<TMessageWS>("updateMessage", renderMessage1);
     wsConn.subscribe<TMessageWS>("deleteMessage", renderMessage2);
-    wsConn.subscribe<NewChatWS>("newChat", newChatHandler);
+    //wsConn.subscribe<NewChatWS>("newChat", newChatHandler);
   }
 }

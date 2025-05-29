@@ -108,9 +108,9 @@ export const renderMessage2 = async (message: TMessageWS) => {
 export const newChatHandler = async (chatInfo: NewChatWS) => {
   try {
     const responseChats = await API.get<ChatsResponse>("/chats");
-    const responseChatInfo = await API.get<ChatResponse>(`/chat/${chatInfo.chat_id}`);
+    // const responseChatInfo = await API.get<ChatResponse>(`/chat/${chatInfo.chat_id}`);
     
-    if (responseChatInfo.role === "owner") return;
+    // if (responseChatInfo.role === "owner") return;
     
     const newChat = responseChats.chats?.find(
       chat => chat.chatId === chatInfo.chat_id

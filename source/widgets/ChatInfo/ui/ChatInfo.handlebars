@@ -50,14 +50,14 @@
       <div class="content-tabs" id="content-tabs">
         <div class="content-tab photos-list" id="photos-list">
           {{#each chat.photos}}
-            <a href={{url}}>
-              <img class="message-photo" src={{url}} />
+            <a href={{URL}}>
+              <img class="message-photo" src={{URL}} />
             </a>
           {{/each}}
         </div>
         <div class="content-tab files-list" id="files-list">
           {{#each chat.files}}
-            <a class="message-file" href={{url}}>
+            <a class="message-file" href={{URL}}>
               <div class="message-file__upper-row">
                 <img class="message-file__icon" src="/assets/image/attached-file.svg" />
                 <div class="message-file__info">

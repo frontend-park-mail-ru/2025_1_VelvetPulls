@@ -12,7 +12,7 @@ import { debounce } from "@/shared/helpers/debounce";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { ProfileForm } from "@/widgets/ProfileForm";
 import { wsConn } from "@/shared/api/ws"; // Добавляем импорт
-import { NewChatWS } from "@/shared/api/types";
+import { NewChatWS, TMessageWS } from "@/shared/api/types";
 
 /**
  * ChatList class provides functions for rendering list of user's chats
@@ -23,63 +23,32 @@ export class ChatList {
   private chats: TChat[] = []; // Сохраняем список чатов
   private chatCard: ChatCard | null = null; // Сохраняем экземпляр ChatCard
   private newChatHandlerRef: (chatInfo: NewChatWS) => Promise<void>;
-
+  private newMessageHandlerRef: (message: TMessageWS) => void;
+  private updateMessageHandlerRef: (message: TMessageWS) => void;
+  private deleteMessageHandlerRef: (message: TMessageWS) => void;
   constructor(parent: HTMLElement, chat: Chat) {
     this.#parent = parent;
     this.#chat = chat;
     this.newChatHandlerRef = this.handleNewChat.bind(this);
+    this.newMessageHandlerRef = this.handleNewMessage.bind(this);
+    this.updateMessageHandlerRef = this.handleUpdateMessage.bind(this);
+    this.deleteMessageHandlerRef = this.handleDeleteMessage.bind(this);
   }
   /**
    * Render ChatList widget
    * @function render
    * @async
    */
-  async render() {
-    const response = await API.get<ChatsResponse>("/chats");
-    if (response.data !== null) {
-      response.chats = []
-      response.data.forEach(element => {
-        response.chats.push({
-          chatId: element.id,
-          chatType: element.type,
-          countOfUsers: element.count_users,
-          chatName: element.title,
-          avatarPath: element.avatar_path,
-          send_notifications: element.send_notifications,
-          lastMessage: element.last_message ? element.last_message : null,
-        })
-      });
-    }
+  private bindEventListeners() {
+    const addChat = this.#parent.querySelector("#add-chat");
 
-    const chats: TChat[] = response.chats ?? [];
-
-    this.#parent.innerHTML = ChatListTemplate({});
-    wsConn.unsubscribe<NewChatWS>("newChat", this.newChatHandlerRef);
-    wsConn.subscribe<NewChatWS>("newChat", this.newChatHandlerRef);
-    const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
-    const chatCard = new ChatCard(chatList, this.#chat);
-
-    chats.forEach((chat) => {
-      chatCard.render(chat);
-    });
-
-    if (ChatStorage.getChat().chatId) {
-      const chatCard: HTMLElement = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
-      if (chatCard) {
-        chatCard.classList.add('active');
-      }
-    }
-
-    const addChat = document.querySelector("#add-chat");
-    const addChat1 = document.querySelector("#add-chat1");
-    const addChatIcon = document.querySelector<HTMLElement>("#addChatIcon")!;
-    const addChatIcon1 = document.querySelector<HTMLElement>("#addChatIcon1")!;
-    const addChatPopup = document.querySelector<HTMLElement>("#addChatPopUp")!;
-    const addChatPopup1 = document.querySelector<HTMLElement>("#addChatPopUp1")!;
+    const addChatIcon = this.#parent.querySelector<HTMLElement>("#addChatIcon")!;
+    const addChatIcon1 = this.#parent.querySelector<HTMLElement>("#addChatIcon1")!;
+    const addChatPopup = this.#parent.querySelector<HTMLElement>("#addChatPopUp")!;
+    const addChatPopup1 = this.#parent.querySelector<HTMLElement>("#addChatPopUp1")!;
     const toCon = addChatPopup1.querySelector<HTMLElement>("#contact-button1")!;
     const toProf = addChatPopup1.querySelector<HTMLElement>("#profile-button1")!;
-
-
+    const searchInput: HTMLInputElement = this.#parent.querySelector("#search-input")!;
     let degrees = 0;
     addChatIcon.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -139,7 +108,6 @@ export class ChatList {
       </p>`
         addGroupForm.render();
       });
-
     const createChannelBtn = addChat.querySelector("#create-channel")!;
 
     const handelCreateChannel = () => {
@@ -150,10 +118,15 @@ export class ChatList {
       addChannelForm.render();
     };
     createChannelBtn.addEventListener('click', handelCreateChannel);
+    const debouncedHandle = debounce(this.handleSearchChats, 250);
 
-    const searchInput: HTMLInputElement = this.#parent.querySelector("#search-input")!;
-
-    const handleSearchChats = async () => {
+    searchInput.addEventListener("input", debouncedHandle);
+    
+  }
+  
+  private handleSearchChats = async () => {
+      const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
+      const searchInput: HTMLInputElement = this.#parent.querySelector("#search-input")!;
       const searchChatsList: HTMLElement = this.#parent.querySelector('#search-chats-list')!;
       const searchUserChats: HTMLElement = searchChatsList.querySelector("#search-user-chats")!;
       const searchGlobalChats: HTMLElement = searchChatsList.querySelector("#search-globals-chats")!;
@@ -195,6 +168,7 @@ export class ChatList {
 
             searchUserChats.innerHTML = '';
             labelUserContacts.style.display = "block";
+            const userChats = new ChatCard(searchUserChats, this.#chat);
             response.user_chats.forEach((element) => {
               userChats.render(element);
             });
@@ -262,29 +236,6 @@ export class ChatList {
             searchUserChats.innerHTML = '<div id="search-user-chats" class="search-user-chats" style="display: flex; flex-direction: column; align-items: center;"> <b style="font-family: var(--main-font-family)"> Ничего не найдено </b> </div>';
           }
         });
-        // if (response.data.global_channels){
-        //   response.global_channels=[]
-        //   response.data.global_channels.forEach(element => {
-        //     // response.global_channels[0].
-        //     response.global_channels.push({
-        //       chatId: element.id,
-        //       chatName: element.title,
-        //       chatType: "channel",
-        //     })
-        //   });
-        // }
-        // if (response.data.groups){
-        //   response.user_chats=[]
-        //   // response.user_chats[0].
-        //   response.data.groups.forEach(element => {
-        //     // response.global_channels[0].
-        //     response.user_chats.push({
-        //       chatId: element.id,
-        //       chatName: element.title,
-        //       chatType: "group",
-        //     })
-        //   });
-        // }
         if (!response.error) {
           chatList.style.display = "none";
           searchChatsList.style.display = "block";
@@ -317,14 +268,53 @@ export class ChatList {
           opt.classList.remove('active');
         });
         searchChatsList.style.display = "none";
-        chatList.style.display = "block";
+        chatList.style.display = "flex";
         search_options?.classList.remove("finder-options-visible")
       }
       return;
     };
-    const debouncedHandle = debounce(handleSearchChats, 250);
+  async render() {
+    const response = await API.get<ChatsResponse>("/chats");
+    if (response.data !== null) {
+      response.chats = []
+      response.data.forEach(element => {
+        response.chats.push({
+          chatId: element.id,
+          chatType: element.type,
+          countOfUsers: element.count_users,
+          chatName: element.title,
+          avatarPath: element.avatar_path,
+          send_notifications: element.send_notifications,
+          lastMessage: element.last_message ? element.last_message : null,
+        })
+      });
+    }
 
-    searchInput.addEventListener("input", debouncedHandle);
+    const chats: TChat[] = response.chats ?? [];
+    this.chats = chats
+    this.#parent.innerHTML = ChatListTemplate({});
+    wsConn.unsubscribe<NewChatWS>("newChat", this.newChatHandlerRef);
+    wsConn.subscribe<NewChatWS>("newChat", this.newChatHandlerRef);
+    wsConn.unsubscribe<TMessageWS>("newMessage", this.newMessageHandlerRef);
+    wsConn.unsubscribe<TMessageWS>("updateMessage", this.updateMessageHandlerRef);
+    wsConn.unsubscribe<TMessageWS>("deleteMessage", this.deleteMessageHandlerRef);
+    wsConn.subscribe<TMessageWS>("newMessage", this.newMessageHandlerRef);
+    wsConn.subscribe<TMessageWS>("updateMessage", this.updateMessageHandlerRef);
+    wsConn.subscribe<TMessageWS>("deleteMessage", this.deleteMessageHandlerRef);
+    const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
+    const chatCard = new ChatCard(chatList, this.#chat);
+
+    chats.forEach((chat) => {
+      chatCard.render(chat);
+    });
+
+    if (ChatStorage.getChat().chatId) {
+      const chatCard: HTMLElement = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`)!;
+      if (chatCard) {
+        chatCard.classList.add('active');
+      }
+    }
+    this.bindEventListeners();
 
     document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw';
     this.#parent.style.left = '0';
@@ -332,30 +322,18 @@ export class ChatList {
   }
   private async handleNewChat(chatInfo: NewChatWS) {
     try {
-      // Запрашиваем актуальный список чатов
-      const response = await API.get<ChatsResponse>("/chats");
       
       // Преобразуем ответ сервера в формат TChat[]
-      let chats: TChat[] = [];
-      if (response.data !== null) {
-        chats = response.data.map(element => ({
-          chatId: element.id,
-          chatType: element.type,
-          countOfUsers: element.count_users,
-          chatName: element.title,
-          avatarPath: element.avatar_path,
-          send_notifications: element.send_notifications,
-          lastMessage: element.last_message || null
-        }));
-      } else if (response.chats) {
-        chats = [...response.chats];
-      }
+      let newChat: TChat;
+      newChat = {
+        chatId: chatInfo.chat_id,
+        chatType: chatInfo.chat_type,
+        chatName: chatInfo.title,
+        avatarPath: chatInfo.avatar_path,
+      };
 
-      // Ищем новый чат в списке
-      const newChat = chats.find(chat => chat.chatId === chatInfo.chat_id);
 
       if (!newChat) {
-        console.warn(`Chat ${chatInfo.chat_id} not found in server response`);
         return;
       }
 
@@ -369,27 +347,125 @@ export class ChatList {
       this.chats.unshift(newChat);
       
       // Обновляем UI
-      this.updateChatList(chats);
+      this.updateChatList(this.chats);
     
     } catch (error) {
+      console.log(error)
       return;
     }
   }
   private updateChatList(newChats: TChat[]) {
     const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
     chatList.innerHTML = "";
+    const searchChatsList = this.#parent.querySelector('#search-chats-list');
+    const isSearchVisible = searchChatsList?.style.display !== "none";
     this.chats = newChats;
     this.chatCard = new ChatCard(chatList, this.#chat);
-    
     this.chats.forEach(chat => {
       this.chatCard!.render(chat);
     });
-
+    this.bindEventListeners();
+    if (isSearchVisible) {
+      searchChatsList!.style.display = "flex";
+      this.#parent.querySelector("#chat-list")!.style.display = "none";
+    }
     if (ChatStorage.getChat().chatId) {
       const activeChat = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`);
       if (activeChat) {
         activeChat.classList.add('active');
       }
+    }
+  }
+  private handleNewMessage(message: TMessageWS) {
+    const chatIndex = this.chats.findIndex(chat => chat.chatId === message.chatId);
+    if (chatIndex === -1) return;
+    
+    // Обновляем последнее сообщение
+    this.chats[chatIndex].lastMessage = message;
+    
+    // Перемещаем чат в начало списка
+    if (chatIndex > 0) {
+      const [chat] = this.chats.splice(chatIndex, 1);
+      this.chats.unshift(chat);
+    }
+    
+    // Обновляем UI
+    this.updateSingleChat(message.chatId);
+  }
+
+  private handleUpdateMessage(message: TMessageWS) {
+    const chatIndex = this.chats.findIndex(chat => chat.chatId === message.chatId);
+    if (chatIndex === -1) return;
+    
+    // Если обновленное сообщение - последнее в чате
+    if (this.chats[chatIndex].lastMessage?.messageId === message.messageId) {
+      // Обновляем текст сообщения
+      this.chats[chatIndex].lastMessage = {
+        ...this.chats[chatIndex].lastMessage,
+        text: message.text,
+        datetime: message.datetime,
+        // другие поля при необходимости
+      };
+      
+      // Перемещаем чат в начало списка
+      if (chatIndex > 0) {
+        const [chat] = this.chats.splice(chatIndex, 1);
+        this.chats.unshift(chat);
+      }
+      
+      // Обновляем UI
+      this.updateSingleChat(message.chatId);
+    }
+  }
+
+  private handleDeleteMessage(message: TMessageWS) {
+    const chatIndex = this.chats.findIndex(chat => chat.chatId === message.chatId);
+    if (chatIndex === -1) return;
+    
+    // Если удаленное сообщение - последнее в чате
+    if (this.chats[chatIndex].lastMessage?.messageId === message.messageId) {
+      this.chats[chatIndex].lastMessage = null;
+      this.updateSingleChat(message.chatId);
+    }
+  }
+
+  private updateSingleChat(chatId: string) {
+    const chatList = this.#parent.querySelector("#chat-list");
+    if (!chatList) return;
+    
+    // Находим чат в данных
+    const chatIndex = this.chats.findIndex(c => c.chatId === chatId);
+    if (chatIndex === -1) return;
+    const chat = this.chats[chatIndex];
+    
+    // Создаем новую карточку
+    const container = document.createElement('div');
+    const tempCard = new ChatCard(container, this.#chat);
+    tempCard.render(chat);
+    
+    // Находим старую карточку в DOM
+    const oldChatElement = chatList.querySelector(`[id="${chatId}"]`);
+    
+    if (oldChatElement) {
+      // Если чат должен быть первым, но не является им
+      if (chatIndex === 0 && oldChatElement !== chatList.firstElementChild) {
+        // Удаляем старый элемент
+        oldChatElement.remove();
+        // Вставляем новый в начало
+        chatList.insertBefore(container.firstChild!, chatList.firstChild);
+      } else {
+        // Заменяем старый элемент на новый
+        oldChatElement.replaceWith(container.firstChild!);
+      }
+    } else {
+      // Если элемент не найден (например, был скрыт поиском), добавляем в начало
+      chatList.insertBefore(container.firstChild!, chatList.firstChild);
+    }
+    
+    // Помечаем активный чат
+    if (ChatStorage.getChat().chatId === chatId) {
+      const newElement = document.getElementById(chatId);
+      if (newElement) newElement.classList.add('active');
     }
   }
 }

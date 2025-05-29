@@ -18,15 +18,14 @@ export class ChatCard {
 
   async render(chat: TChat, notificate = false, notificationChat: TChat | null = null) {
 
-    // console.log(chat);
     if (notificationChat) {
       chat = notificationChat;
     }
-    // console.log(chat)
+
     let avatar;
     if ((chat.avatarPath !== "") && (chat.avatarPath !== undefined)) {
       avatar = staticHost + chat.avatarPath;
-      // console.log(avatar)
+
     } else {
       avatar = "/assets/image/default-avatar.svg";
     }
@@ -36,16 +35,26 @@ export class ChatCard {
       ChatCardTemplate({
         chat: {
           ...chat,
-          lastMessage: {
-            ...chat.lastMessage,
-            sent_at: chat.lastMessage ? getTimeString(chat.lastMessage.sent_at) : '',
-            body: chat.lastMessage ? chat.lastMessage.body : 'Чат только что создан!',
-          },
+          lastMessage: chat.lastMessage
+           ? {
+              ...chat.lastMessage,
+              sent_at: getTimeString(chat.lastMessage.sent_at),
+              // Добавляем новое поле для отображения
+              displayContent: 
+                chat.lastMessage.sticker && chat.lastMessage.sticker !== "" 
+                  ? "[Стикер]" 
+                  : chat.lastMessage.body && chat.lastMessage.body !== ""
+                    ? chat.lastMessage.body
+                    : "[Вложения]"
+            }
+          : {
+              sent_at: '',
+              displayContent: 'Чат пока пуст'
+            }
         },
         avatar,
       }),
     );
-    console.log(chat.lastMessage)
     this.#parent.lastElementChild!.addEventListener("click", (e) => {
       e.preventDefault();
 

@@ -10,7 +10,7 @@ export type TMessageWS = TChatMessage;
 export type NewChatWS = NewChat;
 
 export interface NewChat {
-  chatId : string;
+  chat_id : string;
   users : string[];
 }
 

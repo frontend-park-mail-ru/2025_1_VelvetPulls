@@ -1,7 +1,6 @@
 const CACHE = "cache-v2";
 
 self.addEventListener("install", (event) => {
-  console.log("Installing service worker", event);
 
   event.waitUntil(
     caches.open(CACHE).then((cache) => {

@@ -48,14 +48,14 @@ export class ChatMessage {
               arr.push({
                 text: element.body,
                 chatId: element.chat_id,
-          messageId: element.id,
-          datetime: element.sent_at,
-          text: element.body,
-          authorID: element.user,
-          isRedacted: element.is_redacted,
-          files:element.files,
-    photos: element.photos,
-    sticker: element.sticker,
+              messageId: element.id,
+              datetime: element.sent_at,
+              text: element.body,
+              authorID: element.user,
+              isRedacted: element.is_redacted,
+              files:element.files,
+              photos: element.photos,
+              sticker: element.sticker,
               })
             })
             res.messages=arr
@@ -92,15 +92,14 @@ export class ChatMessage {
             arr.push({
               text: element.body,
               chatId: element.chat_id,
-        messageId: element.id,
-        datetime: element.sent_at,
-        text: element.body,
-        authorID: element.user,
-        isRedacted: element.is_redacted,
-        files:element.files,
-    photos: element.photos,
-    sticker: element.sticker,
-
+              messageId: element.id,
+              datetime: element.sent_at,
+              text: element.body,
+              authorID: element.user,
+              isRedacted: element.is_redacted,
+              files:element.files,
+              photos: element.photos,
+              sticker: element.sticker,
             })
           });
           res.messages=arr
@@ -153,7 +152,6 @@ export class ChatMessage {
           last: isLast,
           isFromOtherUser: isFromOtherUser,
         };
-        // console.log(messageWithFlags)
 
         this.#oldestMessage = messageWithFlags;
       if (message.message_type === undefined || message.message_type === "with_payload" || message.message_type === "sticker") {
@@ -276,15 +274,6 @@ export class ChatMessage {
         extention: extentionRegex.exec(file.Filename)![1].toUpperCase(),
         Size: formatBytes(file.Size)
       })) : [];
-    //   console.log({
-    //     ...messageWithFlags,
-    //     datetime: getTimeString(messageWithFlags.datetime),
-    //     avatarURL: avatarURL,
-    //     authorName: user?.username,
-    //     photos: photos,
-    //     files: files,
-    //     sticker: message.sticker ? `${serverHost}${message.sticker}` : "",
-    // },)
 
         this.#parent.insertAdjacentHTML(
           "afterbegin",
@@ -312,7 +301,6 @@ export class ChatMessage {
           const messageText = messageInChat.querySelector("#message-text-content")?.textContent;
           const messageMenu = new MessageMenu(menu);
           if (messageText) {
-            // console.log("hihihi")
             if (ChatStorage.getCurrentBranchId()) {
               messageMenu.render(message, messageId, messageText, event.x-100, event.y-25, this, true);
               return;

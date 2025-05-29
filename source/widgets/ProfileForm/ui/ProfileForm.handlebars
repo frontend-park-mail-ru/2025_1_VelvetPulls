@@ -26,14 +26,16 @@
 
     <!-- Отображаемое имя -->
     <div class="profile-form-body__group">
-      <input
-        id="nickname"
-        class="profile-form-body__group-input"
-        type="text"
-        name="username"
-        placeholder="Имя"
-        value="{{response.data.username}}"
-      />
+      <div class="input-wrapper">
+        <input
+          id="nickname"
+          class="profile-form-body__group-input"
+          type="text"
+          name="username"
+          placeholder="Имя"
+          value="{{response.data.username}}"
+        />
+      </div>
       <label class="profile-form-body__group-label" for="user-name">
         Отображаемое имя
       </label>
@@ -42,14 +44,16 @@
 
     <!-- Дата рождения -->
     <div class="profile-form-body__group">
-      <input
-        id="date"
-        class="profile-form-body__group-input"
-        type="date"
-        name="date"
-        min="1920-01-01"
-        max="{{currentDate}}"
-      />
+      <div class="input-wrapper">
+        <input
+          id="date"
+          class="profile-form-body__group-input"
+          type="date"
+          name="date"
+          min="1920-01-01"
+          max="{{currentDate}}"
+        />
+      </div>
       <label class="profile-form-body__group-label" for="date">
         Дата рождения (опционально)
       </label>
@@ -58,7 +62,7 @@
 
     <!-- Новый пароль -->
     <div class="profile-form-body__group">
-      <div class="password-wrapper">
+      <div class="input-wrapper">
         <input
           id="password"
           class="profile-form-body__group-input"
@@ -79,7 +83,7 @@
 
     <!-- Подтверждение пароля -->
     <div class="profile-form-body__group">
-      <div class="password-wrapper">
+      <div class="input-wrapper">
         <input
           id="password-repeat"
           class="profile-form-body__group-input"

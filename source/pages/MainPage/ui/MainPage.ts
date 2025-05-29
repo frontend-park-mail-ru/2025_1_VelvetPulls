@@ -10,9 +10,10 @@ import { ProfileForm } from "@/widgets/ProfileForm";
 import { ContactsList } from "@/widgets/ContactsList";
 import { wsConn } from "@/shared/api/ws";
 import { TChat } from "@/entities/Chat";
-import { newChat, renderMessage, renderMessage1, renderMessage2 } from "./handlers";
+import { newChatHandler, renderMessage, renderMessage1, renderMessage2 } from "./handlers";
 import { serverHost, staticHost } from "@/app/config";
 import { UserNotification } from "@/feature/Notification";
+import { NewChatWS, TMessageWS } from "@/shared/api/types";
 
 /**
  * Mainpage class provides functions for rendering main page
@@ -65,13 +66,14 @@ export class MainPage extends View {
         }
       }
     }
-    wsConn.unsubscribe("newMessage", renderMessage);
-    wsConn.unsubscribe("updateMessage", renderMessage1);
-    wsConn.unsubscribe("deleteMessage", renderMessage2);
+    wsConn.unsubscribe<TMessageWS>("newMessage", renderMessage);
+    wsConn.unsubscribe<TMessageWS>("updateMessage", renderMessage1);
+    wsConn.unsubscribe<TMessageWS>("deleteMessage", renderMessage2);
+    wsConn.unsubscribe<NewChatWS>("newChat", newChatHandler);
 
-    wsConn.subscribe("newMessage", renderMessage);
-    wsConn.subscribe("updateMessage", renderMessage1);
-    wsConn.subscribe("deleteMessage", renderMessage2);
-    // wsConn.subscribe("newChat", newChat);
+    wsConn.subscribe<TMessageWS>("newMessage", renderMessage);
+    wsConn.subscribe<TMessageWS>("updateMessage", renderMessage1);
+    wsConn.subscribe<TMessageWS>("deleteMessage", renderMessage2);
+    wsConn.subscribe<NewChatWS>("newChat", newChatHandler);
   }
 }

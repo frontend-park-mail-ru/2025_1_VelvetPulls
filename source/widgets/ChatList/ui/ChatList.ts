@@ -1,5 +1,5 @@
 import { API } from "@/shared/api/api.ts";
-import { ChatsResponse, searchChatsResponse } from "@/shared/api/types";
+import { ChatResponse, ChatsResponse, searchChatsResponse } from "@/shared/api/types";
 import { TChat } from "@/entities/Chat";
 import { ChatCard } from "@/entities/ChatCard";
 import ChatListTemplate from "./ChatList.handlebars";
@@ -11,6 +11,8 @@ import { AddChannelForm } from "@/widgets/AddChannelForm";
 import { debounce } from "@/shared/helpers/debounce";
 import { ChatStorage } from "@/entities/Chat/lib/ChatStore";
 import { ProfileForm } from "@/widgets/ProfileForm";
+import { wsConn } from "@/shared/api/ws"; // Добавляем импорт
+import { NewChatWS } from "@/shared/api/types";
 
 /**
  * ChatList class provides functions for rendering list of user's chats
@@ -18,10 +20,14 @@ import { ProfileForm } from "@/widgets/ProfileForm";
 export class ChatList {
   #parent;
   #chat;
+  private chats: TChat[] = []; // Сохраняем список чатов
+  private chatCard: ChatCard | null = null; // Сохраняем экземпляр ChatCard
+  private newChatHandlerRef: (chatInfo: NewChatWS) => Promise<void>;
 
   constructor(parent: HTMLElement, chat: Chat) {
     this.#parent = parent;
     this.#chat = chat;
+    this.newChatHandlerRef = this.handleNewChat.bind(this);
   }
   /**
    * Render ChatList widget
@@ -48,7 +54,8 @@ export class ChatList {
     const chats: TChat[] = response.chats ?? [];
 
     this.#parent.innerHTML = ChatListTemplate({});
-
+    wsConn.unsubscribe<NewChatWS>("newChat", this.newChatHandlerRef);
+    wsConn.subscribe<NewChatWS>("newChat", this.newChatHandlerRef);
     const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
     const chatCard = new ChatCard(chatList, this.#chat);
 
@@ -322,5 +329,67 @@ export class ChatList {
     document.querySelector<HTMLElement>('#chat-info-container')!.style.right = '-100vw';
     this.#parent.style.left = '0';
 
+  }
+  private async handleNewChat(chatInfo: NewChatWS) {
+    try {
+      // Запрашиваем актуальный список чатов
+      const response = await API.get<ChatsResponse>("/chats");
+      
+      // Преобразуем ответ сервера в формат TChat[]
+      let chats: TChat[] = [];
+      if (response.data !== null) {
+        chats = response.data.map(element => ({
+          chatId: element.id,
+          chatType: element.type,
+          countOfUsers: element.count_users,
+          chatName: element.title,
+          avatarPath: element.avatar_path,
+          send_notifications: element.send_notifications,
+          lastMessage: element.last_message || null
+        }));
+      } else if (response.chats) {
+        chats = [...response.chats];
+      }
+
+      // Ищем новый чат в списке
+      const newChat = chats.find(chat => chat.chatId === chatInfo.chat_id);
+
+      if (!newChat) {
+        console.warn(`Chat ${chatInfo.chat_id} not found in server response`);
+        return;
+      }
+
+      // Проверяем, не добавлен ли чат уже
+      const exists = this.chats.some(chat => chat.chatId === chatInfo.chat_id);
+      if (exists) {
+        return;
+      }
+
+      // Добавляем в начало списка
+      this.chats.unshift(newChat);
+      
+      // Обновляем UI
+      this.updateChatList(chats);
+    
+    } catch (error) {
+      return;
+    }
+  }
+  private updateChatList(newChats: TChat[]) {
+    const chatList: HTMLElement = this.#parent.querySelector("#chat-list")!;
+    chatList.innerHTML = "";
+    this.chats = newChats;
+    this.chatCard = new ChatCard(chatList, this.#chat);
+    
+    this.chats.forEach(chat => {
+      this.chatCard!.render(chat);
+    });
+
+    if (ChatStorage.getChat().chatId) {
+      const activeChat = document.querySelector(`[id='${ChatStorage.getChat().chatId}']`);
+      if (activeChat) {
+        activeChat.classList.add('active');
+      }
+    }
   }
 }

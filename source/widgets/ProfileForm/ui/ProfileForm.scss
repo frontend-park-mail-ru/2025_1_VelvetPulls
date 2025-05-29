@@ -3,7 +3,7 @@
 $text-over-primary: var(--text-over-primary);
 $text-error-message: var(--text-error-message);
 $scroll-bar-color: var(--scroll-bar-color);
-.password-wrapper{
+.input-wrapper{
   display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -118,7 +118,6 @@ $scroll-bar-color: var(--scroll-bar-color);
         height: var(--input-height);
         padding: 0 0px 0 10px;
         border: none;
-        border-bottom: 2px solid $text-over-primary;
         background: var(--primary);
         font-size: 18px;
         font-family: var(--main-font-family);
@@ -133,7 +132,7 @@ $scroll-bar-color: var(--scroll-bar-color);
 
       &-icon {
         top: 50%;
-        right: 12px;
+        margin-right: 6px;
         width: 24px;
         height: 24px;
         transform: translateY(-50%);

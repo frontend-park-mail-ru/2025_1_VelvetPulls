@@ -212,10 +212,8 @@ $messages-container-width: 700px;
 
     &.last-message {
       .message__body {
-        border-bottom-left-radius: 0px;
 
         &::before {
-          content: "";
           position: absolute;
           left: -12px;
           bottom: 0px;

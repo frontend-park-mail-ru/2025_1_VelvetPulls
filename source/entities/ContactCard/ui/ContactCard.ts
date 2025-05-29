@@ -39,7 +39,7 @@ export class ContactCard {
   }
 
   renderChat(contact: TContact, chat: Chat, chatList: ChatList) {
-    if ((contact.avatarURL !== null)&&(contact.avatarURL !== undefined)) {
+    if ((contact.avatarURL != null)&&(contact.avatarURL != undefined)) {
       contact.avatarURL = staticHost + contact.avatarURL;
     } else {
       contact.avatarURL = "/assets/image/default-avatar.svg";
@@ -113,6 +113,7 @@ export class ContactCard {
           chatType: responseSubscribe.data.type,
           countOfUsers: responseSubscribe.data.count_users,
           chatName: responseSubscribe.data.title,
+          avatarPath: responseSubscribe.data.avatar_path,
         });
       // }
     });

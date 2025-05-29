@@ -105,37 +105,30 @@ export const renderMessage2 = async (message: TMessageWS) => {
   // }
 };
 
-export const newChat = async (chatInfo: NewChatWS) => {
-  const responseChats = await API.get<ChatsResponse>("/chats");
-  const responseChatInfo = await API.get<ChatResponse>(`/chat/${chatInfo.chatId}`);
-  if (!responseChatInfo.error) {
-    if (responseChatInfo.role === "owner") {
-      return;
-    }
-  }
-  if (responseChats.chats===undefined){
-          return
-        }
-  if (!responseChats.error) {
-    const newChatResponse = responseChats.chats.find((elem) => {
-      return elem.chatId === chatInfo.chatId;
-    });
-    const chatUserInfo : HTMLElement = document.querySelector("#chat-info-container")!;
-
-    const chatParent = document.querySelector("#chat-content")!;
-    const chat = new Chat(chatParent, chatUserInfo);
-    const contentNotification = document.getElementById("notification-content")!;
-    contentNotification.innerHTML = "";
-    const chatCard = new ChatCard(contentNotification, chat);
+export const newChatHandler = async (chatInfo: NewChatWS) => {
+  try {
+    const responseChats = await API.get<ChatsResponse>("/chats");
+    const responseChatInfo = await API.get<ChatResponse>(`/chat/${chatInfo.chat_id}`);
     
-    if (newChatResponse && newChatResponse.send_notifications)
-    {
-      chatCard.render(newChatResponse, true);
-
+    if (responseChatInfo.role === "owner") return;
+    
+    const newChat = responseChats.chats?.find(
+      chat => chat.chatId === chatInfo.chat_id
+    );
+    
+    if (newChat && newChat.send_notifications) {
+      const contentNotification = document.getElementById("notification-content")!;
+      contentNotification.innerHTML = "";
+      
+      const chatUserInfo = document.querySelector("#chat-info-container") as HTMLElement;
+      const chatParent = document.querySelector("#chat-content")!;
+      const chat = new Chat(chatParent, chatUserInfo);
+      const chatCard = new ChatCard(contentNotification, chat);
+      
+      chatCard.render(newChat, true);
       UserNotification.show();
     }
-    
+  } catch (error) {
+    console.error("Error processing new chat:", error);
   }
-  return; 
-  
 };

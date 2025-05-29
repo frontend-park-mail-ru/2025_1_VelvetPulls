@@ -60,7 +60,7 @@ export class ChatCard {
       return "[Вложения]";
     }
     
-    return "Чат пока пуст";
+    return "Нет новых сообщений";
   }
 
   async render(chat: TChat, notificate = false, notificationChat: TChat | null = null) {

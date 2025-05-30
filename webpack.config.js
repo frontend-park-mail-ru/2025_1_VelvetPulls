@@ -89,8 +89,9 @@ module.exports = {
       path.resolve(__dirname, './dist'), path.resolve(__dirname, './public'),
     ],
     compress: true,
+    allowedHosts: ['telegenka.ru', '.telegenka.ru'],
     hot: true,
-    port: 8088,
+    port: 80,
   }
   
 };

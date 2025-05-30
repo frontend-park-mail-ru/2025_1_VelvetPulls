@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require("serviceworker-webpack5-plugin");
@@ -90,7 +91,22 @@ module.exports = {
     ],
     compress: true,
     hot: true,
-    port: 8088,
+    port: 443,
+    server: {
+      type: 'https',
+      options: {
+        key: fs.readFileSync(path.join(__dirname, '.ssl/certificate.key')), // Обновленный путь
+        cert: fs.readFileSync(path.join(__dirname, '.ssl/certificate.crt'))
+      }
+    },
+    host: 'telegenka.ru',
+    client: {
+      webSocketURL: {
+        hostname: 'telegenka.ru',
+        port: 443,
+        protocol: 'wss'
+      }
+    }
   }
   
 };

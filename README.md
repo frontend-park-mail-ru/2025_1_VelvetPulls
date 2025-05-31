@@ -26,6 +26,4 @@ Frontend-репозиторий проекта "Telegram" команды "Unbrea
 
  [Макет](https://www.figma.com/design/oJ8iEKcWhUmiWh77I1aw1V/Keftegram?node-id=0-1&t=12UVo6mpYY5m7czR-1)
 
- [Деплой](http://90.156.217.108)
-
- [Но деплой тут](http://90.156.217.108:8088)
+ [Деплой](http://telegenka.ru/login)
